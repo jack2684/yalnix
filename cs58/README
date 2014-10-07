@@ -1,0 +1,24 @@
+FYI:
+
+useful to look at:
+  sample/  contains some useful files; you should copy them and work from there.
+  	   (and don't forget sample/test/ !)
+
+  include/ contains the header files.
+
+useful to have acess to
+  lib*/     contains libraries used when building your kernel and user code
+
+  etc/     contains some relics of building the support library,
+    	  and the code that run in your terminal windows
+don't actually COPY these; your Makefile will find them
+
+
+irrelevant:
+  support/ contains the source code for the support libraries
+
+illegal:
+  kernel/: contains a sample kernel implementation. (FORBIDDEN!)
+  
+
+eval/ and old/ contain various relics of testing; don't go there.
