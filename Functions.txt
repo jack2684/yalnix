@@ -1,0 +1,6 @@
+//these are the main functions
+
+KernelStart()
+LoadProgram()
+SetKernelBrk()
+SetKernelData()
