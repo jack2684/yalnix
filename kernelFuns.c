@@ -4,7 +4,7 @@
 
 #include "hardware.h"
 
-int KernelStartt(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt ) {
+int KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt ) {
     // Initialize vector table mapping from interrupt/exception/trap to a handler fun
 
     // REG_VECTOR_BASE point to vector table
