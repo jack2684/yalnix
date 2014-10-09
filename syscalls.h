@@ -247,7 +247,7 @@ int Y_Reclaim(int id){
 	//DESTROY the pipe
 }
 
-//Below is some extra syscalls that could help implements some extra functions
+//Here are some extra syscalls below that could help implement some extra functions
 //We will complete them if possible
 
 //These are 3 custom syscalls
@@ -324,8 +324,4 @@ int Y_WriteSector (int, void *){
 
 }
 
-
-int Y_TtyPrintf(int, char *, ...){
-
-}
 
