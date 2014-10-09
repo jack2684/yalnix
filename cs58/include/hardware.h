@@ -47,6 +47,7 @@
 
 // Over the years, yalnix has been run on host systems with varying
 // page sizes. Here, we define standard sizes for the Yalnix platform
+
 // ...overriding previous definitions, if necessary.
 
 // The critical thing is that the Yalnix page size be a multiple
