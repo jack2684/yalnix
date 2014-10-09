@@ -1,12 +1,25 @@
-#ifndef KERNEL_LIB 
-#define KERNEL_LIB
-
 /* Some Yalnix kernel data structures
  */
+#ifndef KERNEL_LIB 
+#define KERNEL_LIB
+#include "hardware.h"
+
+// Page struct
+typedef struct y_page {
+    unsigned long   base;
+    unsigned long   offset;
+    struct y_page   *next;
+    struct y_page   *prev;
+} page_t;
 
 // Memory management
-typedef struct y_Mem {
-
+typedef struct y_mm {
+//   struct y_VMA     *vma_list;                  // List of VMAs ??
+   unsigned long    code_start, code_end;
+   unsigned long    data_start, data_end;      
+   unsigned long    env_start, env_end;         
+   unsigned long    stack_start, stack_end;     
+   unsigned long    size;                       // Size of a process memory space
 } mm_t;
 
 typedef struct y_PCB {
@@ -46,7 +59,7 @@ typedef struct y_Pipe {
 typedef struct y_TTY {} tty_t;
 
 // This is done in hardware.h
-// typedef y_PTE {} pet_t
+// typedef y_PTE {} pte_t
 
 // typedef ReadyQueue
 
