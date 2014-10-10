@@ -28,7 +28,9 @@ typedef struct y_PCB {
     long            priority;
     mm_t            *mm;            // Memory management
     int             exit_code;
-    int             exit_signal;
+    int             exit_signail;
+    UserContext     user_context;
+    KernelContext   kernel_context;
     
     // Identity
     int             pid;
@@ -37,8 +39,10 @@ typedef struct y_PCB {
     unsigned long   gid;
 
     // Connected
-    struct y_PCB*   *next_task;
-    struct y_PCB*   *prev_task;
+    struct y_PCB    *next_task;
+    struct y_PCB    *prev_task;
+    struct y_PBC    *children;
+    struct y_PBC    *wait;
 } pcb_t;
 
 typedef struct y_Lock {
@@ -52,8 +56,11 @@ typedef struct y_Sem {
 } sem_t;
 
 typedef struct y_Pipe {
-    char*   data;
-    lock_t  lock;
+    char*   buff;
+    int     max_len;
+    int     len;
+    int     readIdx;
+    int     writeIdx;
 } pipe_t;
 
 typedef struct y_TTY {} tty_t;
