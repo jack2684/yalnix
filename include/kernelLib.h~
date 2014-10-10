@@ -6,7 +6,6 @@
 #include "proc.h"
 #include "memory.h"
 #include "lock.h"
-#include "tty.h"
 
 // Page struct
 typedef struct y_page page_t;

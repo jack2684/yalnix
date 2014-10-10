@@ -1,0 +1,13 @@
+#include "kernelLib.h"
+
+//These are destroy syscalls
+int Y_Reclaim(int id){
+	//FIND the lock using id
+	//DESTROY the lock
+
+	//FIND the cvar using id
+	//DESTROY the cvar
+
+	//FIND the pipe using id
+	//DESTROY the pipe
+}
