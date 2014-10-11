@@ -14,6 +14,7 @@ struct y_mm {
    unsigned long    code_start, code_end;
    unsigned long    data_start, data_end;      
    unsigned long    env_start, env_end;         
+   unsigned long    brk_start, brk_end;
    unsigned long    stack_start, stack_end;     
    unsigned long    size;                       // Size of a process memory space
 };
