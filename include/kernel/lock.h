@@ -1,5 +1,5 @@
-#ifndef LOCK_H
-#define LOCK_H
+#ifndef _LOCK_H
+#define _LOCK_H
 struct y_Lock {
     int             id;
     unsigned long   uid; 

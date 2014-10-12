@@ -1,15 +1,15 @@
-#include "standardLib.h"
+#include "../standardLib.h"
 #include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
-int list_init(list_t *list) {
-    list = (list_t*)malloc(sizeof(list_t));
+list_t *list_init() {
+    list_t *list = (list_t*)malloc(sizeof(list_t));
     if(list) {
         list->size = 0; 
         list->rc = 0; 
-        return 0;
+        return list;
     } else {
         list->rc = ERR_NULL_POINTER; 
-        return ERR_NULL_POINTER;
+        return NULL;
     }
 }
 
@@ -28,7 +28,7 @@ int list_clear(list_t *list) {
     return 0;
 }
 
-void list_deconstruct(list_t *list) {
+int list_deleteall(list_t *list) {
     list->rc = list_clear(list);
     if(list->rc) {
         free(list);
@@ -56,11 +56,11 @@ int list_pushRear(list_t *list, node_t *node) {
         list->rc = ERR_NULL_POINTER; 
         return ERR_NULL_POINTER;
     }
-    if(list->rear) {
-        list->rear->next = node;
+    if(list->tail) {
+        list->tail->next = node;
     } 
     node->next = NULL;
-    list->rear = node;
+    list->tail = node;
     list->size++;
     return 0;
 }
@@ -68,11 +68,11 @@ int list_pushRear(list_t *list, node_t *node) {
 node_t* list_findIdx(list_t *list, int idx) {
     if(!list) {
         list->rc = ERR_NULL_POINTER;
-        return ERR_NULL_POINTER;
+        return NULL;
     }
     if(idx >= list->size || idx < 0) {
         list->rc = ERR_OUT_OF_RANGE; 
-        return ERR_OUT_OF_RANGE;
+        return NULL;
     }
 
     int i = -1;
@@ -108,7 +108,7 @@ int list_insert(list_t *list, node_t *node, int idx) {
 node_t* list_popFront(list_t *list) {
     if(!list || !list->size) {
         list->rc = ERR_NULL_POINTER;
-        return ERR_NULL_POINTER;
+        return NULL;
     }
     node_t *node = list->head;
     list->head = list->head->next;

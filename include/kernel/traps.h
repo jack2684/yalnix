@@ -1,3 +1,6 @@
+#ifndef _TRAP_H
+#define _TRAP_H
+
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 
@@ -42,4 +45,5 @@ buffer of data previously given to the controller on a TtyTransmit instruction h
 void trap_tty_transmit_handler(UserContext *user_context);
 
 void trap_disk_handler(UserContext *user_context);
+#endif
 

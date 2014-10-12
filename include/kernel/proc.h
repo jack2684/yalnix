@@ -1,5 +1,5 @@
-#ifndef PROC_H
-#define PROC_H
+#ifndef _PROC_H
+#define _PROC_H
 struct y_PCB {
     // State
     int             state;
