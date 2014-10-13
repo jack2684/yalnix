@@ -1,6 +1,6 @@
 .SUFFIXES: .c
 
-SRCS = list.test.c ../include/standard/list.c
+SRCS = list.test.c ../include/standard/list.c ../include/standard/node.c 
 OBJS = $(SRCS:.c=.o)
 OUTPUT = list.test
 

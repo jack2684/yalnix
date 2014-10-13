@@ -23,19 +23,21 @@ int list_clear(list_t *list) {
         prev = p;
         p = p->next;
         free(prev);
+        list->size--;
     }
-    list->size = 0;
+    list->head = NULL;
+    list->tail = NULL;
     return 0;
 }
 
-int list_deleteall(list_t *list) {
-    list->rc = list_clear(list);
-    if(list->rc) {
-        free(list);
+int list_destroy(void *list) {
+    int rc = list_clear((list_t*)list);
+    if(rc) {
+        return rc;
+    } else {
+        free((list_t*)(list));
         list = NULL;
         return 0;
-    } else {
-        return list->rc;
     }
 }
 
@@ -46,18 +48,22 @@ int list_pushFront(list_t *list, node_t *node) {
     }
     node->next = list->head;
     list->head = node;
+    if(!list->size) {
+        list->tail = node;
+    }
     list->size++;
     return 0;
 }
-
 
 int list_pushRear(list_t *list, node_t *node) {
     if(!list) {
         list->rc = ERR_NULL_POINTER; 
         return ERR_NULL_POINTER;
     }
-    if(list->tail) {
+    if(list->size) {
         list->tail->next = node;
+    } else {
+        list->head = node;
     } 
     node->next = NULL;
     list->tail = node;
@@ -102,6 +108,7 @@ int list_insert(list_t *list, node_t *node, int idx) {
     }
     node->next = prev->next;
     prev->next = node;
+    list->size++;
     return 0;
 }
 
@@ -113,7 +120,7 @@ node_t* list_popFront(list_t *list) {
     node_t *node = list->head;
     list->head = list->head->next;
     list->size--;
-    if(list->size == 0) {
+    if(!list->size) {
         list->tail = NULL;
     }
     node->next = NULL;
@@ -157,5 +164,19 @@ node_t* list_popRear(list_t *list) {
     return list_rmIdx(list, list->size - 1);
 }
 
-
+void list_print(list_t *list) {
+    if(!list) {
+        printf("NULL list\n");
+        return;
+    }
+ 
+    node_t *p = list->head;
+    printf("size: %d\n", list->size);
+    printf("[");
+    while(p) {
+        printf("%d,", (*((int*)p->data)));
+        p = p->next;
+    }
+    printf("]\n");
+}
 

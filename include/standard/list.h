@@ -10,7 +10,7 @@ typedef struct y_List {
 
 list_t *list_init();
 int list_clear(list_t *list);
-int list_deleteall(list_t *list);
+int list_destroy(void *list);
 int list_pushFront(list_t *list, node_t *node);
 int list_pushRear(list_t *list, node_t *node);
 node_t* list_findIdx(list_t *list, int idx);

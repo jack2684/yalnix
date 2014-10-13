@@ -1,12 +1,14 @@
 
 /* Some useful library for both user and kernal
  */
-#ifndef STANDARD_LIB
-#define STANDARD_LIB
+#ifndef _STANDARD_LIB
+#define _STANDARD_LIB
 
+#include "common.h"
 #include "standard/node.h"
 #include "standard/list.h"
 #include "standard/vector.h"
+
 
 #define ERR_NULL_POINTER    1
 #define ERR_OUT_OF_RANGE    2

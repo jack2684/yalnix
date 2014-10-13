@@ -1,12 +1,14 @@
 #ifndef _NODE_H
 #define _NODE_H
 typedef struct y_Node {
-    void            *value;
+    void            *data;
     struct y_Node   *next;
 } node_t;
 
+node_t *node_init(void *data);
+
 struct y_DoublyNode {
-    void            *value;
+    void            *data;
     struct y_Node   *next;
     struct y_Node   *prev;
 };
