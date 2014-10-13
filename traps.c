@@ -1,6 +1,10 @@
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 
+void TrapsInit(){
+    
+}
+
 void trap(UserContext *user_context) {
     switch(user_context->code) {
         case TRAP_KERNAL:
