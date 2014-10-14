@@ -1,4 +1,4 @@
-#include "../standardLib.h"
+#include "include/standardLib.h"
 #include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
 node_t *node_init(void* data) {
