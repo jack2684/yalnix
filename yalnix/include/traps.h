@@ -1,6 +1,8 @@
 #ifndef _TRAP_H
 #define _TRAP_H
 
+typedef void (*trap_handler)(UserContext*);
+
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 

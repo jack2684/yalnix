@@ -7,10 +7,12 @@ typedef struct y_Node {
 
 node_t *node_init(void *data);
 
-struct y_DoublyNode {
-    void            *data;
-    struct y_Node   *next;
-    struct y_Node   *prev;
-};
+typedef struct y_DNode {
+    void             *data;
+    struct y_DNode   *next;
+    struct y_DNode   *prev;
+} dnode_t;
+
+dnode_t *dnode_init(void *data);
 #endif
 

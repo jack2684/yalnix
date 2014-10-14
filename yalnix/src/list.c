@@ -41,11 +41,13 @@ int list_destroy(void *list) {
     }
 }
 
-int list_pushFront(list_t *list, node_t *node) {
+int list_add_head(list_t *list, void *data) {
     if(!list) {
         list->rc = ERR_NULL_POINTER; 
         return ERR_NULL_POINTER;
     }
+    node_t* node = node_init(data);
+
     node->next = list->head;
     list->head = node;
     if(!list->size) {
@@ -55,7 +57,7 @@ int list_pushFront(list_t *list, node_t *node) {
     return 0;
 }
 
-int list_pushRear(list_t *list, node_t *node) {
+int list_add_tail(list_t *list, void *data) {
     if(!list) {
         list->rc = ERR_NULL_POINTER; 
         return ERR_NULL_POINTER;
@@ -65,13 +67,15 @@ int list_pushRear(list_t *list, node_t *node) {
     } else {
         list->head = node;
     } 
+    
+    node_t* node = node_init(data);
     node->next = NULL;
     list->tail = node;
     list->size++;
     return 0;
 }
 
-node_t* list_findIdx(list_t *list, int idx) {
+node_t* list_find_idx(list_t *list, int idx) {
     if(!list) {
         list->rc = ERR_NULL_POINTER;
         return NULL;
@@ -94,7 +98,7 @@ node_t* list_findIdx(list_t *list, int idx) {
     return node;
 }
 
-int list_insert(list_t *list, node_t *node, int idx) {
+int list_insert(list_t *list, void* data, int idx) {
     if(idx == 0) {
         return list_pushFront(list, node);        
     }
@@ -102,7 +106,8 @@ int list_insert(list_t *list, node_t *node, int idx) {
         return list_pushRear(list, node);
     }
 
-    node_t *prev = list_findIdx(list, idx - 1);
+    node_t* node = node_init(data);
+    node_t *prev = list_find_idx(list, idx - 1);
     if(!node) {
         return list->rc;
     }
@@ -112,24 +117,13 @@ int list_insert(list_t *list, node_t *node, int idx) {
     return 0;
 }
 
-node_t* list_popFront(list_t *list) {
-    if(!list || !list->size) {
-        list->rc = ERR_NULL_POINTER;
-        return NULL;
-    }
-    node_t *node = list->head;
-    list->head = list->head->next;
-    list->size--;
-    if(!list->size) {
-        list->tail = NULL;
-    }
-    node->next = NULL;
-    return node;
+void* list_rm_head(list_t *list) {
+    return list_rm_idx(0);
 }
 
 /* Noted that, list_rmIdx do not free the memory of the removed node!
  */
-node_t* list_rmIdx(list_t *list, int idx) {
+void* list_rm_idx(list_t *list, int idx) {
     if(!list) {
         list->rc = ERR_NULL_POINTER;
         return NULL;
@@ -139,29 +133,35 @@ node_t* list_rmIdx(list_t *list, int idx) {
         return NULL;
     }
 
-    if(idx = 0) {
-        return list_popFront(list);
-    } else {
-        node_t* prev = NULL;
-        int i = -1;
-        while(i < idx - 1) {
-            if(!prev) {
-                prev = list->head;
-            } else {
-                prev = prev->next;
-            }
-            i++;
-        }
-        node_t *rmNode = prev->next;
-        prev->next = rmNode->next;
-        rmNode->next = NULL;
-        list->size--;
-        return rmNode;
+    // Locate index
+    node_t* prev = init_node(NULL);
+    prev->next = head;
+    int i = 0;
+    while(i < idx) {
+        prev = prev->next;
+        i++;
     }
+
+    // Sanity check
+    if(prev->next == list->head) {
+        list->head = list->head->next;
+    }
+    if(prev->next == list->tail) {
+        list->tail = prev;
+    }
+   
+    // Removing node
+    node_t *rmNode = prev->next;
+    prev->next = rmNode->next;
+    list->size--;
+    
+    void *data = rmNode->data;
+    free(rmNode);
+    return data;
 }
 
-node_t* list_popRear(list_t *list) {
-    return list_rmIdx(list, list->size - 1);
+node_t* list_rm_tail(list_t *list) {
+    return list_rm_idx(list, list->size - 1);
 }
 
 void list_print(list_t *list) {
@@ -180,3 +180,13 @@ void list_print(list_t *list) {
     printf("]\n");
 }
 
+int list_is_empty(list_t *list) {
+    if(list->head && list->tail && list->size) {
+        return 0;
+    } else if (!list->head && !list->tail && !lisgt->size) {
+        return 1;
+    } else {
+        _debug("List inconsistency occurs!\n");
+        return -1;
+    }
+}
