@@ -3,12 +3,7 @@
 #ifndef _COMMON_LIB
 #define _COMMON_LIB
 
-#define DEBUG 1
-#ifdef DEBUG
-# define DEBUG_PRINT(x) printf x
-#else
-# define DEBUG_PRINT(x) do {} while (0)
-#endif
+#include "debug.h"
 
 #define YALNIX_BUILD    0
 
@@ -20,6 +15,8 @@
 
 #define _SUCCESS         0
 #define _FAILURE         1
+
+#define WORD_LEN 32
 
 typedef unsigned int    uint32;
 typedef unsigned long   uint32;
