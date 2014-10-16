@@ -6,12 +6,6 @@
 #include "traps.h"
 #include "common.h"
 
-//以下为原本未声明变量
-#define VMEM_0_PNUM 0
-#define VMEM_1_PNUM 1
-uint32 current_addr;
-uint32 kernel_data_high;
-
 trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
 
 void SetKernelData(void *_Kernel_Data_Start, void *_Kernel_Data_End) {
@@ -20,9 +14,7 @@ void SetKernelData(void *_Kernel_Data_Start, void *_Kernel_Data_End) {
     kernel_memory->text_low     = (unsigned long)PMEM_BASE;
     kernel_memory->data_low     = (unsigned long)_Kernel_Data_Start;
     kernel_memory->brk_low      = (unsigned long)_Kernel_Data_End;
-    // kernel_memory->stack_low
-    // @TODO: calculate the stack size
-    kernel_memory->stack_high   = (unsigned long)KERNEL_STACK_BASE;
+    kernel_memory->stack_low    = (unsigned long)KERNEL_STACK_LIMIT - WORD_LEN / 8;
 }
 
 /* 
@@ -54,6 +46,8 @@ void write_kernel_pte(uint32 addr_low, uint32 addr_high, int isValid, int prot) 
     }
 }
 
+/* This function make perfect mapping from kernel virtual memory phyical memory 
+ */
 void init_kernel_page_table() {
     kernel_page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_0_SIZE));
     
@@ -69,7 +63,7 @@ void init_kernel_page_table() {
     write_kernel_pte(kernel_memory->stack_low, kernel_memory->stack_high
             , _VALID, PROT_READ | PROT_WRITE);
     
-   // @TODO: add all those free frames using add_tail_available_frame 
+    // @TODO: add all those free frames using add_tail_available_frame 
 }
 
 /*
@@ -101,9 +95,9 @@ int Kernel_Start(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
 
     // Build page tables using REG_PTBR0/1 REG_PTLR0/1 
     WriteRegister(REG_PTBR0, (uint32)kernel_page_table);
-    WriteRegister(REG_PTLR0, (uint32)VMEM_0_PNUM);
+    WriteRegister(REG_PTLR0, GET_PAGE_NUMBER(VMEM_0_SIZE));
     WriteRegister(REG_PTBR1, (uint32)user_page_table);
-    WriteRegister(REG_PTLR1, (uint32)VMEM_1_PNUM);
+    WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
 
     // Enable virtual memroy 
     WriteRegister(REG_VM_ENABLE, _ENABLE);
@@ -123,50 +117,49 @@ int SetKernelBrk (void *addr) {
     TracePrintf(0, "SetKernelBrk: Current Addr = %p\n", addr);
     int page_cnt, rc;
     uint32 new_addr = (uint32)addr;
-    uint32 new_page_bond = UP_TO_PAGE(current_addr);
-    uint32 current_page_bond = UP_TO_PAGE(kernel_memory->brk_high);
+    uint32 new_page_bound = UP_TO_PAGE(new_addr);
+    uint32 current_page_bound = UP_TO_PAGE(kernel_memory->brk_high);
     
     // Boudaries check
-    if(current_addr > kernel_memory->stack_low) {
-        TracePrintf(0, "Kernel Break Warning: Trying to Access Stack Addr = %p\n", current_addr);
+    if(new_addr > kernel_memory->stack_low) {
+        TracePrintf(0, "Kernel Break Warning: Trying to Access Stack Addr = %p\n", new_addr);
         return _FAILURE;
     } // Check if trying to access below brk base line
-    else if(addr < kernel_memory->brk_low) {
+    else if(new_addr < kernel_memory->brk_low) {
         TracePrintf(0, "Kernel Break Warning: Trying to Access Text Addr = %p\n", addr);
         return _FAILURE;
     }
     // Before the virual memory is enabled
     if(!ReadRegister(REG_VM_ENABLE)) {
-        kernel_memory->brk_high = current_addr;
+        kernel_memory->brk_high = new_addr;
         return _SUCCESS;
     } 
     
     // Modify the brk 
-    if(current_addr > kernel_memory->brk_high) { 
-        page_cnt = GET_PAGE_NUMBER(new_page_bond) - GET_PAGE_NUMBER(current_page_bond);
+    if(new_addr > kernel_memory->brk_high) { 
+        page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
         rc = map_page_to_frame(kernel_page_table, 
-                            current_page_bond, 
+                            current_page_bound, 
                             page_cnt, 
                             PROT_READ | PROT_WRITE);
         if(rc) {
             TracePrintf(0, "Kernel Break Warning: Not enough phycial memory\n");
             return _FAILURE;
         }
-    } else if (new_page_bond < kernel_data_high) {
-        int count = ((int)addr >> PAGESHIFT) - ((kernel_data_high) >> PAGESHIFT);
-        rc = unmap_page_to_frame(kernel_page_table, 
-                                current_page_bond, 
+    } else if (new_page_bound < kernel_memory->brk_high) {
+        page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        rc = unmap_page_to_frame(kernel_page_table,
+                                new_page_bound, 
                                 page_cnt);
         if(rc) {
             cePrintf(0, "Kernel Break Warning: Not able to release pages\n");
             return _FAILURE;
         }
     }
-    kernel_memory->brk_high = current_addr;
+    kernel_memory->brk_high = new_addr;
     return _SUCCESS;
 }
 
-//用不到,暂时注释
 // int KernelContextSwitch(KCSFunc_t *, void *, void *) {
 //     return _SUCCESS;
 // }

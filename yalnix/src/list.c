@@ -1,4 +1,4 @@
-#include "include/standardLib.h"
+#include "list.h"
 #include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
 list_t *list_init() {
@@ -42,37 +42,11 @@ int list_destroy(void *list) {
 }
 
 int list_add_head(list_t *list, void *data) {
-    if(!list) {
-        list->rc = ERR_NULL_POINTER; 
-        return ERR_NULL_POINTER;
-    }
-    node_t* node = node_init(data);
-
-    node->next = list->head;
-    list->head = node;
-    if(!list->size) {
-        list->tail = node;
-    }
-    list->size++;
-    return 0;
+    return list_insert(list, data, 0);
 }
 
 int list_add_tail(list_t *list, void *data) {
-    if(!list) {
-        list->rc = ERR_NULL_POINTER; 
-        return ERR_NULL_POINTER;
-    }
-    if(list->size) {
-        list->tail->next = node;
-    } else {
-        list->head = node;
-    } 
-    
-    node_t* node = node_init(data);
-    node->next = NULL;
-    list->tail = node;
-    list->size++;
-    return 0;
+    return list_insert(list, data, list->size);
 }
 
 node_t* list_find_idx(list_t *list, int idx) {
@@ -85,40 +59,38 @@ node_t* list_find_idx(list_t *list, int idx) {
         return NULL;
     }
 
-    int i = -1;
-    node_t *node = NULL;
+    int i = 0;
+    node_t *node = list->head;
     while(i < idx) {
-        if(!node) {
-            node = list->head;
-        } else {
-            node = node->next;
-        }
+        node = node->next;
         i++;
     }
     return node;
 }
 
 int list_insert(list_t *list, void* data, int idx) {
-    if(idx == 0) {
-        return list_pushFront(list, node);        
-    }
-    if(idx == list->size) {
-        return list_pushRear(list, node);
+    node_t* node = node_init(data);
+    if(!list->size) {       // Handle empty list
+        list->head = node;
+        list->tail = node;
+    } else if (idx == 0) {  // Handle head insert
+        node->next = list->head;
+        list->head = node;
+    } else {                // Normal case
+        node_t *prev = list_find_idx(list, idx - 1);
+        if(!prev) {
+            return list->rc;
+        }
+        node->next = prev->next;
+        prev->next = node;
     }
 
-    node_t* node = node_init(data);
-    node_t *prev = list_find_idx(list, idx - 1);
-    if(!node) {
-        return list->rc;
-    }
-    node->next = prev->next;
-    prev->next = node;
     list->size++;
     return 0;
 }
 
 void* list_rm_head(list_t *list) {
-    return list_rm_idx(0);
+    return list_rm_idx(list, 0);
 }
 
 /* Noted that, list_rmIdx do not free the memory of the removed node!
@@ -134,8 +106,8 @@ void* list_rm_idx(list_t *list, int idx) {
     }
 
     // Locate index
-    node_t* prev = init_node(NULL);
-    prev->next = head;
+    node_t* prev = node_init(NULL);
+    prev->next = list->head;
     int i = 0;
     while(i < idx) {
         prev = prev->next;
@@ -160,7 +132,7 @@ void* list_rm_idx(list_t *list, int idx) {
     return data;
 }
 
-node_t* list_rm_tail(list_t *list) {
+void* list_rm_tail(list_t *list) {
     return list_rm_idx(list, list->size - 1);
 }
 
@@ -183,10 +155,35 @@ void list_print(list_t *list) {
 int list_is_empty(list_t *list) {
     if(list->head && list->tail && list->size) {
         return 0;
-    } else if (!list->head && !list->tail && !lisgt->size) {
+    } else if (!list->head && !list->tail && !list->size) {
         return 1;
     } else {
         _debug("List inconsistency occurs!\n");
         return -1;
     }
 }
+
+node_t *node_init(void* data) {
+    node_t *node = (node_t*)malloc(sizeof(node_t));
+    if(node) {
+        node->data = data;
+        node->next = NULL;
+        return node;
+    } else {
+        return NULL;
+    }   
+}
+
+dnode_t *dnode_init(void* data) {
+    dnode_t *node = (dnode_t*)malloc(sizeof(dnode_t));
+    if(node) {
+        node->data = data;
+        node->next = NULL;
+        node->prev = NULL;
+        return node;
+    } else {
+        return NULL;
+    }   
+}
+
+

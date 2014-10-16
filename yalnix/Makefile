@@ -26,7 +26,7 @@ KERNEL_SRCS =  src/memory.c src/kernel.c
 #List the objects to be formed form the kernel source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
 KERNEL_OBJS = src/kernel.o src/memory.o
 #List all of the header files necessary for your kernel
-KERNEL_INCS = include/common.h include/debug.h include/kernelLib.h include/memory.h include/standardLib.h include/traps.h include/hardware.h
+KERNEL_INCS = include/common.h include/memory.h include/traps.h include/hardware.h
 
 
 #List all user programs here.
@@ -67,6 +67,7 @@ INCDIR = $(DDIR58)/include
 LD_EXTRA = 
 
 KERNEL_LIBS = $(LIBDIR)/libkernel.a $(LIBDIR)/libhardware.so
+KERNEL_LIBS = 
 
 # the "kernel.x" argument tells the loader to use the memory layout
 # in the kernel.x file..

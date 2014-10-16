@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include "../include/standardLib.h"
-#include "../include/debug.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "../include/list.h"
+#include "../include/common.h"
 
 int main(int argc, char* argv[]) {
     int rc;
@@ -14,7 +15,7 @@ int main(int argc, char* argv[]) {
     list = list_init();
     list_print(list);
     if(!list) {
-        debug("Init list error\n");
+        _debug("Init list error\n");
         return -1;
     }
 
@@ -23,11 +24,11 @@ int main(int argc, char* argv[]) {
     *data = 1;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_pushFront(list, node);
+    rc = list_add_head(list, data);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -37,9 +38,9 @@ int main(int argc, char* argv[]) {
     *data = 2;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_pushFront(list, node);
+    rc = list_add_head(list, data);
     list_print(list);
     printf("\n");
  
@@ -48,11 +49,11 @@ int main(int argc, char* argv[]) {
     *data = 3;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_pushFront(list, node);
+    rc = list_add_head(list, data);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -62,11 +63,11 @@ int main(int argc, char* argv[]) {
     *data = 4;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, 0);
+    rc = list_insert(list, data, 0);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -76,11 +77,11 @@ int main(int argc, char* argv[]) {
     *data = 5;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, list->size - 1);
+    rc = list_insert(list, data, list->size - 1);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -90,19 +91,67 @@ int main(int argc, char* argv[]) {
     *data = 6;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, list->size);
+    rc = list_insert(list, data, list->size);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
 
     printf("-------------------------------------\n");   
-    rc = list_clear(list);
-    if(rc && list) {
-        debug("List error code: %d\n", list->rc);
+    rc = list_rm_tail(list);
+    if(rc) {
+        _debug("List error code: %d\n", list->rc);
+    }
+    list_print(list);
+    printf("\n");
+
+    printf("-------------------------------------\n");   
+    rc = list_rm_head(list);
+    if(rc) {
+        _debug("List error code: %d\n", list->rc);
+    }
+    list_print(list);
+    printf("\n");
+
+    printf("-------------------------------------\n");   
+    rc = list_rm_tail(list);
+    if(rc ) {
+        _debug("List error code: %d\n", list->rc);
+    }
+    list_print(list);
+    printf("\n");
+
+    printf("-------------------------------------\n");   
+    rc = list_rm_head(list);
+    if(rc ) {
+        _debug("List error code: %d\n", list->rc);
+    }
+    list_print(list);
+    printf("\n");
+
+    printf("-------------------------------------\n");   
+    rc = list_rm_head(list);
+    if(rc) {
+        _debug("List error code: %d\n", list->rc);
+    }
+    list_print(list);
+    printf("\n");
+
+    printf("-------------------------------------\n");   
+    rc = list_rm_tail(list);
+    if(rc ) {
+        _debug("List error code: %d\n", list->rc);
+    }
+    list_print(list);
+    printf("\n");
+
+    printf("-------------------------------------\n");   
+    rc = list_rm_head(list);
+    if(rc ) {
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -112,11 +161,11 @@ int main(int argc, char* argv[]) {
     *data = 7;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, list->size);
+    rc = list_insert(list, data, list->size);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -126,11 +175,11 @@ int main(int argc, char* argv[]) {
     *data = 0;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, list->size);
+    rc = list_insert(list, data, list->size);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -138,7 +187,7 @@ int main(int argc, char* argv[]) {
     printf("-------------------------------------\n");   
     rc = list_clear(list);
     if(rc && list) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -148,11 +197,11 @@ int main(int argc, char* argv[]) {
     *data = 8;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_pushRear(list, node);
+    rc = list_add_tail(list, data);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -162,11 +211,11 @@ int main(int argc, char* argv[]) {
     *data = 9;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_pushRear(list, node);
+    rc = list_add_tail(list, data);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -176,11 +225,11 @@ int main(int argc, char* argv[]) {
     *data = 10;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, 0);
+    rc = list_insert(list, data, 0);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -190,11 +239,11 @@ int main(int argc, char* argv[]) {
     *data = 11;
     node = node_init(data);
     if(!node) {
-        debug("Cannot init node\n");
+        _debug("Cannot init node\n");
     }
-    rc = list_insert(list, node, list->size);
+    rc = list_insert(list, data, list->size);
     if(rc) {
-        debug("List error code: %d\n", list->rc);
+        _debug("List error code: %d\n", list->rc);
     }
     list_print(list);
     printf("\n");
@@ -204,10 +253,10 @@ int main(int argc, char* argv[]) {
     free(list);
     list = NULL;
     if(list == NULL) {
-        debug("list is empty!!\n");
+        _debug("list is empty!!\n");
     }
     if(rc) {
-        debug("List error code: %d\n", rc);
+        _debug("List error code: %d\n", rc);
     }
     list_print(list);
     printf("\n");
