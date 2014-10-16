@@ -2,9 +2,10 @@
 #include "memory.h"
 #include "list.h"
 
-pte_t* kernel_page_table = NULL;        // Page table for kernel
-list_t* available_frames = NULL;       // For physcial memories
-vm_t *kernel_memory = NULL;             // Kernel virtual memories
+pte_t   *kernel_page_table = NULL;          // Page table for kernel
+list_t  *available_frames = NULL;           // For physcial memories
+vm_t    kernel_memory;              // Kernel virtual memories
+uint32  PAGE_SIZE;
 
 frame_t *init_frame(uint32 idx) {
     frame_t *f = (uint32*) malloc(sizeof(frame_t));

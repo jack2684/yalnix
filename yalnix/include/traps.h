@@ -1,5 +1,6 @@
 #ifndef _TRAP_H
 #define _TRAP_H
+#include "hardware.h"
 
 typedef void (*trap_handler)(UserContext*);
 

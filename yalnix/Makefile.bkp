@@ -21,15 +21,12 @@
 ALL = $(KERNEL_ALL) $(USER_APPS)
 KERNEL_ALL = yalnix
 
-MY_INC = include/
-MY_SRC = src/
-
 #List all kernel source files here.  
-KERNEL_SRCS = $(MY_SRC)kernel_init.c $(MY_SRC)memory.c $(MY_SRC)list.c $(MY_SRC)traps.c
+KERNEL_SRCS =  src/memory.c src/kernel_init.c
 #List the objects to be formed form the kernel source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-KERNEL_OBJS = $(MY_SRC)kernel_init.o $(MY_SRC)memory.o $(MY_SRC)list.o $(MY_SRC)traps.o
+KERNEL_OBJS = src/kernel.o src/memory.o
 #List all of the header files necessary for your kernel
-KERNEL_INCS = $(MY_INC)list.h $(MY_INC)memory.h $(MY_INC)traps.h
+KERNEL_INCS = include/common.h include/memory.h include/traps.h include/hardware.h
 
 
 #List all user programs here.
@@ -55,7 +52,13 @@ YALNIX_OUTPUT = yalnix
 #Use the gcc compiler for compiling and linking
 CC = gcc
 
-DDIR58 = /net/class/cs58/yalnix
+#DDIR58 = /net/
+#LIBDIR = $(DDIR58)/lib
+#INCDIR = $(DDIR58)/include
+#ETCDIR = $(DDIR58)/etc
+
+ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+DDIR58 = $(ROOT_DIR)
 LIBDIR = $(DDIR58)/lib
 INCDIR = $(DDIR58)/include
 ETCDIR = $(DDIR58)/etc
@@ -64,6 +67,7 @@ ETCDIR = $(DDIR58)/etc
 LD_EXTRA = 
 
 KERNEL_LIBS = $(LIBDIR)/libkernel.a $(LIBDIR)/libhardware.so
+KERNEL_LIBS = 
 
 # the "kernel.x" argument tells the loader to use the memory layout
 # in the kernel.x file..
@@ -78,7 +82,7 @@ LINK_KERNEL = $(LINK.c)
 
 USER_LIBS = $(LIBDIR)/libuser.a
 ASFLAGS = -D__ASM__
-CPPFLAGS= -m32 -fno-builtin -I. -I$(INCDIR) -I$(MY_INC) -g -DLINUX 
+CPPFLAGS= -m32 -fno-builtin -I. -I$(INCDIR) -g -DLINUX 
 
 
 ##########################
@@ -110,7 +114,7 @@ kill:
 no-core:
 	rm -f core.*
 
-$(KERNEL_ALL): $(KERNEL_OBJS) $(KERNEL_LIBS) $(KERNEL_INCS)
+$(KERNEL_ALL):  $(KERNEL_OBJS) $(KERNEL_LIBS) $(KERNEL_INCS)
 	$(LINK_KERNEL) -o $@ $(KERNEL_OBJS) $(KERNEL_LDFLAGS)
 
 $(USER_APPS): $(USER_OBJS) $(USER_INCS)

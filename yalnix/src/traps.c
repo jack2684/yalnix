@@ -1,38 +1,38 @@
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
-
+#include "traps.h"
 void TrapsInit(){
     
 }
 
-void trap(UserContext *user_context) {
-    switch(user_context->code) {
-        case TRAP_KERNAL:
-            trap_kernel_handler(user_context);
-            break;
-        case TRAP_MATH:
-            trap_math_handler(user_context);
-            break;
-        case TRAP_ILLEGAL:
-            trap_illegal_handler(user_context);
-            break;
-        case TRAP_MEMORY:
-            trap_memory_handler(user_context);
-            break;
-        case TRAP_CLOCK:
-            trap_clock_handler(user_context);
-            break;
-        case TRAP_TTY_RECEIVE:
-            trap_tty_receive_handler(user_context);
-            break;
-        case TRAP_TTY_TRANSMIT:
-            trap_tty_transmit_handler(user_context);
-            break;
-        case TRAP_DISK:
-            trap_disk_handler(user_context);
-            break;
-    })
-}
+//void trap(UserContext *user_context) {
+//    switch(user_context->code) {
+//        case TRAP_KERNAL:
+//            trap_kernel_handler(user_context);
+//            break;
+//        case TRAP_MATH:
+//            trap_math_handler(user_context);
+//            break;
+//        case TRAP_ILLEGAL:
+//            trap_illegal_handler(user_context);
+//            break;
+//        case TRAP_MEMORY:
+//            trap_memory_handler(user_context);
+//            break;
+//        case TRAP_CLOCK:
+//            trap_clock_handler(user_context);
+//            break;
+//        case TRAP_TTY_RECEIVE:
+//            trap_tty_receive_handler(user_context);
+//            break;
+//        case TRAP_TTY_TRANSMIT:
+//            trap_tty_transmit_handler(user_context);
+//            break;
+//        case TRAP_DISK:
+//            trap_disk_handler(user_context);
+//            break;
+//    })
+//}
 
 /*This trap results from a “kernel call” trap instruction executed by the current user processes. 
 Such a trap is used by user processes to request some type of service from the operating system kernel, 

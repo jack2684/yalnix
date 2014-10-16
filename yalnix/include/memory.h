@@ -1,6 +1,7 @@
 #ifndef _MEMORY_H
 #define _MEMORY_H
 #include "hardware.h"
+#include "list.h"
 #include "common.h"
 
 #define GET_PAGE_NUMBER(addr) (((uint32)addr) >> PAGESHIFT)
@@ -11,10 +12,12 @@
 #define MALLOC_ERR          1
 #define NO_AVAILABLE_ERR    2
 
-// Page table
+// Some globals
 typedef struct      pte pte_t;
 typedef uint32      frame_t;
 extern pte_t        *kernel_page_table;                // Global for every one
+extern uint32       PAGE_SIZE;
+extern list_t       *available_frames;
 
 // Memory management of virtual memory
 typedef struct y_vm {
@@ -26,8 +29,6 @@ typedef struct y_vm {
    uint32 size;                       // Size of a process memory space
 } vm_t;
 
-extern vm_t *kernel_memory;
-
 frame_t *init_frame(uint32 idx);
 uint32 frame_get_pfn(frame_t* f);
 int add_tail_available_frame(uint32 pfn);
@@ -36,5 +37,7 @@ void flush_region_TLB(pte_t* table);
 int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot);
 int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt);
 
+// Some globals
+extern vm_t kernel_memory;
 #endif
 

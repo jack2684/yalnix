@@ -1,0 +1,2528 @@
+** Hardware level 3 tracing enabled **
+** Yalnix level 5 tracing enabled **
+Yalnix     Start=0x24504, End=0x2e000
+Yalnix     SetKernelBrk: Current Addr = 0x2e000
+Hardware   TTYs disabled due to '-n' flag.
+Hardware   HEAP my_malloc(0x160)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x160)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x160)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x160)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x160)
+Hardware   HEAP found a block
+Hardware   setting primary signal action
+Hardware   NEW VERSION OF DISK CODE!
+Hardware   _InitDisk: num_inodes = 0 (0 blocks), errno = 0
+Hardware   Waiting for disk to initialize...
+Hardware   yalnixdisk args[1] = 1000
+Hardware   SignalHanlder(10 User defined signal 1), depth 1
+Hardware   sp 0x00000000
+Hardware   sp 0x000ffac0
+Hardware   null PTRB0
+Hardware   Preparing to pad: signals_in 1 sig 10 sp 0x000ffac0 pc = 0xf77d2d70 
+Hardware   SignalHandler depth 1 sig 10
+Hardware   Entering RealSignalHandler
+Hardware   
+Hardware   >>> sig 10, addr 0xe21, page 0
+Hardware   unblocking stackable sigs
+Hardware   
+SignalHandler: sig 10 (User defined signal 1), code 00000000, context 000ffb8c, addr 00000e21
+Hardware   sp 0xffe4e46c, pc 0xf77d2d70, eax 0xfffffffc ebp 0xffe4e4b4
+Hardware   Disk initialization done
+Hardware   returning from SignalHandler
+Hardware   sp 0xffe4e46c, pc 0xf77d2d70,  eax 0xfffffffc ebp 0xffe4e4b4
+Hardware   Returning from signal handler depth 1
+Hardware   SignalHanlder(11 Segmentation fault), depth 1
+Hardware   sp 0x000ffac0
+Hardware   sp 0x000ffac0
+Hardware   null PTRB0
+Hardware   Preparing to pad: signals_in 1 sig 11 sp 0x000ffac0 pc = 0xf776c525 
+Hardware   SignalHandler depth 1 sig 11
+Hardware   Entering RealSignalHandler
+Hardware   
+Hardware   >>> sig 11, addr 0x0, page 0
+Hardware   unblocking stackable sigs
+Hardware   
+SignalHandler: sig 11 (Boot ROM), code 00000080, context 000ffb8c, addr 00000000
+Hardware   sp 0xffe4e680, pc 0xf776c525, eax 0xabcdefff ebp 0xffe4e728
+Hardware   Starting kernel
+Yalnix     Start the kernel
+Hardware   HEAP my_malloc(0x10)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x200)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP not enough space, so going to try to grow
+Hardware   HEAP grow_heap(0x8)
+Hardware   HEAP rounding up to 0x30000
+Hardware   MyBrk(0x30000)
+Yalnix     SetKernelBrk: Current Addr = 0x30000
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x4)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x8)
+Hardware   HEAP found a block
+Hardware   HEAP my_malloc(0x200)
+Hardware   HEAP found a block
+Hardware   munmapping for Alex
+Hardware   EnableVM: PTBR0 0x00026910, PTLR0 128
+Hardware   EnableVM: PTBR1 0x0002fb68, PTLR1 128
+EnableVM: kernel PTE addr 0x00024000 not valid
+Hardware   
+** Machine Halted **
