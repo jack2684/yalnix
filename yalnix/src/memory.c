@@ -1,9 +1,9 @@
-#include "../include/kernelLib.h"
-#include "../include/standardLib.h"
-#include "../include/debug.h"
+#include "common.h"
+#include "memory.h"
+#include "list.h"
 
 pte_t* kernel_page_table = NULL;        // Page table for kernel
-dlist_t* available_frames = NULL;       // For physcial memories
+list_t* available_frames = NULL;       // For physcial memories
 vm_t *kernel_memory = NULL;             // Kernel virtual memories
 
 frame_t *init_frame(uint32 idx) {
@@ -24,7 +24,7 @@ int add_tail_available_frame(uint32 pfn) {
     int rc;
     frame_t *frame = init_frame(pfn);
     
-    rc = list_add_tail(available_frames, frame);
+    rc = list_add_tail(available_frames, (void*)frame);
     if(rc) {
         _debug("Cannot add more free frame\n");
         return MALLOC_ERR;
@@ -38,9 +38,9 @@ frame_t *rm_head_available_frame() {
         return NULL;
     }
 
-    frame_t *frame = list_rm_head(available_frames);
+    frame_t *frame = (frame_t*)list_rm_head(available_frames);
     if(!frame) {
-        _debug("list_rm_head error code: %d\n", available_frame->rc);
+        _debug("list_rm_head error code: %d\n", available_frames->rc);
     }
     return frame;
 }
@@ -54,7 +54,7 @@ void flush_region_TLB(pte_t* table) {
 }
 
 int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot) {
-    int end_page_idx = start_page_idx + cnt;
+    int end_page_idx = start_page_idx + page_cnt;
     int rc = 0, i;
 
     // Try mapping
@@ -76,7 +76,7 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
 }
 
 int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt) {
-    int end_page_idx = start_page_idx + cnt;
+    int end_page_idx = start_page_idx + page_cnt;
     int rc = 0, i;
    
     // Try unmapping

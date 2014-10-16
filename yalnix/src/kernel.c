@@ -1,10 +1,10 @@
 /* Some kernal functions
  * 
  */
-#include "../include/hardware.h"
-#include "../include/memory.h"
-#include "../include/traps.h"
-#include "../include/common.h"
+#include "hardware.h"
+#include "memory.h"
+#include "traps.h"
+#include "common.h"
 
 //以下为原本未声明变量
 #define VMEM_0_PNUM 0

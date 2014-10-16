@@ -1,5 +1,8 @@
 #ifndef _PROC_H
 #define _PROC_H
+#include "kernelLib.h"
+#include "standardLib.h"
+
 struct y_PCB {
     // State
     int             state;

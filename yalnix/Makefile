@@ -52,12 +52,13 @@ YALNIX_OUTPUT = yalnix
 #Use the gcc compiler for compiling and linking
 CC = gcc
 
-#DDIR58 = /net/class/cs58/yalnix
+#DDIR58 = /net/
 #LIBDIR = $(DDIR58)/lib
 #INCDIR = $(DDIR58)/include
 #ETCDIR = $(DDIR58)/etc
 
-DDIR58 = /net/class/cs58/yalnix
+ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+DDIR58 = $(ROOT_DIR)
 LIBDIR = $(DDIR58)/lib
 INCDIR = $(DDIR58)/include
 #ETCDIR = $(DDIR58)/etc

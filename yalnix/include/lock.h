@@ -1,23 +1,26 @@
 #ifndef _LOCK_H
 #define _LOCK_H
-struct y_Lock {
+#include "kernelLib.h"
+#include "standardLib.h"
+
+typedef struct y_Lock {
     int             id;
     unsigned long   uid; 
     pcb_t           *wait;
-};
+} lock_t;
 
 // pcb_t*      ready;      // Ready queue, global variable, in *.c file
-struct y_CVar {
+typedef struct y_CVar {
     lock_t          *lock;
     unsigned long   pid;
     pcb_t*          wait;
-};
+} cvar_t;
 
-struct y_Sem {
+typedef struct y_Sem {
     int       count;
     int       waking;
-    queue_t   waitings;
+    //queue_t   waitings;
     lock_t    *lock;
-};
+} sem_t;
 #endif
 

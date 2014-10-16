@@ -19,7 +19,7 @@ node_t* list_rm_head(list_t *list);
 node_t* list_rm_idx(list_t *list, int idx);
 node_t* list_rm_tail(list_t *list);
 
-typedef struct y_List {
+typedef struct y_DList {
     int         size;
     int         rc;
     dnode_t     *head;    
