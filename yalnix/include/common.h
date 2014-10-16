@@ -19,6 +19,6 @@
 #define WORD_LEN 32
 
 typedef unsigned int    uint32;
-typedef unsigned long   uint32;
+
 
 #endif

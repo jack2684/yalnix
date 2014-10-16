@@ -22,11 +22,11 @@ ALL = $(KERNEL_ALL) $(USER_APPS)
 KERNEL_ALL = yalnix
 
 #List all kernel source files here.  
-KERNEL_SRCS = 
+KERNEL_SRCS =  src/memory.c src/kernel.c
 #List the objects to be formed form the kernel source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-KERNEL_OBJS = 
+KERNEL_OBJS = src/kernel.o src/memory.o
 #List all of the header files necessary for your kernel
-KERNEL_INCS = 
+KERNEL_INCS = include/common.h include/debug.h include/kernelLib.h include/memory.h include/standardLib.h include/traps.h include/hardware.h
 
 
 #List all user programs here.
@@ -52,10 +52,15 @@ YALNIX_OUTPUT = yalnix
 #Use the gcc compiler for compiling and linking
 CC = gcc
 
+#DDIR58 = /net/class/cs58/yalnix
+#LIBDIR = $(DDIR58)/lib
+#INCDIR = $(DDIR58)/include
+#ETCDIR = $(DDIR58)/etc
+
 DDIR58 = /net/class/cs58/yalnix
 LIBDIR = $(DDIR58)/lib
 INCDIR = $(DDIR58)/include
-ETCDIR = $(DDIR58)/etc
+#ETCDIR = $(DDIR58)/etc
 
 # any extra loading flags...
 LD_EXTRA = 
@@ -107,7 +112,7 @@ kill:
 no-core:
 	rm -f core.*
 
-$(KERNEL_ALL): $(KERNEL_OBJS) $(KERNEL_LIBS) $(KERNEL_INCS)
+$(KERNEL_ALL):  $(KERNEL_OBJS) $(KERNEL_LIBS) $(KERNEL_INCS)
 	$(LINK_KERNEL) -o $@ $(KERNEL_OBJS) $(KERNEL_LDFLAGS)
 
 $(USER_APPS): $(USER_OBJS) $(USER_INCS)

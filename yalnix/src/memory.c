@@ -1,6 +1,7 @@
-#include "kernelLib.h"
-#include "standardLib.h"
-#include "debug.h"
+#include "../include/kernelLib.h"
+#include "../include/standardLib.h"
+#include "../include/debug.h"
+
 pte_t* kernel_page_table = NULL;        // Page table for kernel
 dlist_t* available_frames = NULL;       // For physcial memories
 vm_t *kernel_memory = NULL;             // Kernel virtual memories

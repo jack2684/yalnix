@@ -1,10 +1,16 @@
 /* Some kernal functions
  * 
  */
-#include "hardware.h"
-#include "memory.h"
-#include "traps.h"
-#include "common.h"
+#include "../include/hardware.h"
+#include "../include/memory.h"
+#include "../include/traps.h"
+#include "../include/common.h"
+
+//以下为原本未声明变量
+#define VMEM_0_PNUM 0
+#define VMEM_1_PNUM 1
+uint32 current_addr;
+uint32 kernel_data_high;
 
 trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
 
@@ -16,7 +22,7 @@ void SetKernelData(void *_Kernel_Data_Start, void *_Kernel_Data_End) {
     kernel_memory->brk_low      = (unsigned long)_Kernel_Data_End;
     // kernel_memory->stack_low
     // @TODO: calculate the stack size
-    kernel_memory->stack_high   = (unsigned long)KERNEL_STACK_LIMIT;
+    kernel_memory->stack_high   = (unsigned long)KERNEL_STACK_BASE;
 }
 
 /* 
@@ -28,8 +34,8 @@ void init_trap_vector() {
     interrupt_vector[TRAP_ILLEGAL] = trap_illegal_handler;
     interrupt_vector[TRAP_MEMORY] = trap_memory_handler;
     interrupt_vector[TRAP_MATH] = trap_math_handler;
-    interrupt_vector[TRAP_TTY_RECEIVE] = trap_tty_rev_handler;
-    interrupt_vector[TRAP_TTY_TRANSMIT] = trap_tty_trans_handler;
+    interrupt_vector[TRAP_TTY_RECEIVE] = trap_tty_receive_handler;
+    interrupt_vector[TRAP_TTY_TRANSMIT] = trap_tty_transmit_handler;
     interrupt_vector[TRAP_DISK] = trap_disk_handler;
 }
 
@@ -40,8 +46,8 @@ void init_trap_vector() {
  *  in order to aligned with phyical memory.
  */
 void write_kernel_pte(uint32 addr_low, uint32 addr_high, int isValid, int prot) {
-    int i = GET_PAGE_NUMBER(addr_low);
-    for(; i < GET_PAGE_NUMBER(addr_high); i++) {
+    int i;
+    for(i = GET_PAGE_NUMBER(addr_low); i < GET_PAGE_NUMBER(addr_high); i++) {
         kernel_page_table[i].valid = isValid;
         kernel_page_table[i].prot = prot;
         kernel_page_table[i].pfn = i;
@@ -52,7 +58,7 @@ void init_kernel_page_table() {
     kernel_page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // For text segment mapping
-    write_kernel_pte(kernel_memory->code_low, kernel_memory->code_high
+    write_kernel_pte(kernel_memory->text_low, kernel_memory->text_high
             , _VALID, PROT_READ | PROT_EXEC);
     
     // For data segment mapping
@@ -73,9 +79,11 @@ pte_t *init_user_page_table() {
     return (void*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
 }
 
-int KernelStart(char* cmd_args[],  uint32 pmem_size, UserContext* uctxt ) {
+//hardware.h 提供KernelStart(char*, unsigned int, UserContext *)函数,参数类型不对
+//int Kernel_Start(char* cmd_args[],  uint32 pmem_size, UserContext* uctxt ) {
+int Kernel_Start(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt ) {
     TracePrintf(0, "Start the kernel\n");
-    pte *user_page_table;
+    pte_t *user_page_table;
     
     // Initialize vector table mapping from interrupt/exception/trap to a handler fun
     init_trap_vector();
@@ -88,7 +96,7 @@ int KernelStart(char* cmd_args[],  uint32 pmem_size, UserContext* uctxt ) {
     user_page_table = init_user_page_table();
     if(!kernel_page_table || !user_page_table) {
         _debug("Cannot allocate memory for page tables.\n");
-        return FAILURE;
+        return _FAILURE;
     }
 
     // Build page tables using REG_PTBR0/1 REG_PTLR0/1 
@@ -98,7 +106,7 @@ int KernelStart(char* cmd_args[],  uint32 pmem_size, UserContext* uctxt ) {
     WriteRegister(REG_PTLR1, (uint32)VMEM_1_PNUM);
 
     // Enable virtual memroy 
-    WriteRegister(REG_VM_ENABLE, ENABLE);
+    WriteRegister(REG_VM_ENABLE, _ENABLE);
 
     // Create idle kernel proc, maybe
     // ...
@@ -129,7 +137,8 @@ int SetKernelBrk (void *addr) {
     }
     // Before the virual memory is enabled
     if(!ReadRegister(REG_VM_ENABLE)) {
-        kernel_memroy->brk_low = current_addr;
+        kernel_memory->brk_high = current_addr;
+        return _SUCCESS;
     } 
     
     // Modify the brk 
@@ -144,22 +153,23 @@ int SetKernelBrk (void *addr) {
             return _FAILURE;
         }
     } else if (new_page_bond < kernel_data_high) {
-        count = ((int)addr >> PAGESHIFT) - ((kernel_data_high) >> PAGESHIFT);
+        int count = ((int)addr >> PAGESHIFT) - ((kernel_data_high) >> PAGESHIFT);
         rc = unmap_page_to_frame(kernel_page_table, 
                                 current_page_bond, 
                                 page_cnt);
         if(rc) {
             cePrintf(0, "Kernel Break Warning: Not able to release pages\n");
-            return _FAILURE
+            return _FAILURE;
         }
     }
     kernel_memory->brk_high = current_addr;
     return _SUCCESS;
 }
 
-int KernelContextSwitch(KCSFunc_t *, void *, void *) {
-    return _SUCCESS;
-}
+//用不到,暂时注释
+// int KernelContextSwitch(KCSFunc_t *, void *, void *) {
+//     return _SUCCESS;
+// }
 
 
 

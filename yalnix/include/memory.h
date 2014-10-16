@@ -3,8 +3,8 @@
 #include "hardware.h"
 #include "common.h"
 
-#define GET_PAGE_NUMBER(addr) (((uint32)addr) >> PAGESHIFT);
-#define GET_PAGE_OFFSET(addr) (addr << PAGESHIFT);
+#define GET_PAGE_NUMBER(addr) (((uint32)addr) >> PAGESHIFT)
+#define GET_PAGE_OFFSET(addr) (addr << PAGESHIFT)
 #define KERNEL_PAGE_TO_ADDR(idx) (idx << PAGESHIFT)
 #define USER_PAGE_TO_ADDR(idx) (idx << PAGESHIFT + VMEM_1_BASE)
 
@@ -18,7 +18,7 @@ extern pte_t        *kernel_page_table;                // Global for every one
 
 // Memory management of virtual memory
 typedef struct y_vm {
-   uint32 text_low, code_high;
+   uint32 text_low, text_high;
    uint32 data_low, data_high;      
    uint32 env_low, env_high;         
    uint32 brk_low, brk_high;

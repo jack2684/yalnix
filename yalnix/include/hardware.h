@@ -42,11 +42,14 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/param.h>
-#include <ucontext.h>
-
+//#include <ucontext.h>
+#if defined(XP_MACOSX)
+#include <sys/ucontext.h>
+#endif
 
 // Over the years, yalnix has been run on host systems with varying
 // page sizes. Here, we define standard sizes for the Yalnix platform
+
 // ...overriding previous definitions, if necessary.
 
 // The critical thing is that the Yalnix page size be a multiple
@@ -301,8 +304,8 @@ typedef ucontext_t KernelContext;
  * alleged TRAP_MEMORY codes (gleaned from examination of Linux host behavior)
  */
 
-#define YALNIX_MAPERR 0
-#define YALNIX_ACCERR 1
+#define YALNIX_MAPERR 1
+#define YALNIX_ACCERR 0
 
 
 /*
