@@ -1,6 +1,6 @@
 ** Hardware level 3 tracing enabled **
 ** Yalnix level 5 tracing enabled **
-Yalnix     Start=0x24504, End=0x2e000
+Yalnix     Start=0x24668, End=0x2e000
 Yalnix     SetKernelBrk: Current Addr = 0x2e000
 Hardware   TTYs disabled due to '-n' flag.
 Hardware   HEAP my_malloc(0x160)
@@ -22,24 +22,24 @@ Hardware   SignalHanlder(10 User defined signal 1), depth 1
 Hardware   sp 0x00000000
 Hardware   sp 0x000ffac0
 Hardware   null PTRB0
-Hardware   Preparing to pad: signals_in 1 sig 10 sp 0x000ffac0 pc = 0xf77d2d70 
+Hardware   Preparing to pad: signals_in 1 sig 10 sp 0x000ffac0 pc = 0xf7727d70 
 Hardware   SignalHandler depth 1 sig 10
 Hardware   Entering RealSignalHandler
 Hardware   
-Hardware   >>> sig 10, addr 0xe21, page 0
+Hardware   >>> sig 10, addr 0x1126, page 0
 Hardware   unblocking stackable sigs
 Hardware   
-SignalHandler: sig 10 (User defined signal 1), code 00000000, context 000ffb8c, addr 00000e21
-Hardware   sp 0xffe4e46c, pc 0xf77d2d70, eax 0xfffffffc ebp 0xffe4e4b4
+SignalHandler: sig 10 (User defined signal 1), code 00000000, context 000ffb8c, addr 00001126
+Hardware   sp 0xff83f5ac, pc 0xf7727d70, eax 0xfffffffc ebp 0xff83f5f4
 Hardware   Disk initialization done
 Hardware   returning from SignalHandler
-Hardware   sp 0xffe4e46c, pc 0xf77d2d70,  eax 0xfffffffc ebp 0xffe4e4b4
+Hardware   sp 0xff83f5ac, pc 0xf7727d70,  eax 0xfffffffc ebp 0xff83f5f4
 Hardware   Returning from signal handler depth 1
 Hardware   SignalHanlder(11 Segmentation fault), depth 1
 Hardware   sp 0x000ffac0
 Hardware   sp 0x000ffac0
 Hardware   null PTRB0
-Hardware   Preparing to pad: signals_in 1 sig 11 sp 0x000ffac0 pc = 0xf776c525 
+Hardware   Preparing to pad: signals_in 1 sig 11 sp 0x000ffac0 pc = 0xf76c1525 
 Hardware   SignalHandler depth 1 sig 11
 Hardware   Entering RealSignalHandler
 Hardware   
@@ -47,13 +47,44 @@ Hardware   >>> sig 11, addr 0x0, page 0
 Hardware   unblocking stackable sigs
 Hardware   
 SignalHandler: sig 11 (Boot ROM), code 00000080, context 000ffb8c, addr 00000000
-Hardware   sp 0xffe4e680, pc 0xf776c525, eax 0xabcdefff ebp 0xffe4e728
+Hardware   sp 0xff83f7c0, pc 0xf76c1525, eax 0xabcdefff ebp 0xff83f868
 Hardware   Starting kernel
 Yalnix     Start the kernel
 Hardware   HEAP my_malloc(0x10)
 Hardware   HEAP found a block
 Hardware   HEAP my_malloc(0x200)
 Hardware   HEAP found a block
+Yalnix     Text page from 0 to 149096 
+Yalnix     About to alloc page from 0 to 18 
+Yalnix     Page 0 created, with prot 5 
+Yalnix     Page 1 created, with prot 5 
+Yalnix     Page 2 created, with prot 5 
+Yalnix     Page 3 created, with prot 5 
+Yalnix     Page 4 created, with prot 5 
+Yalnix     Page 5 created, with prot 5 
+Yalnix     Page 6 created, with prot 5 
+Yalnix     Page 7 created, with prot 5 
+Yalnix     Page 8 created, with prot 5 
+Yalnix     Page 9 created, with prot 5 
+Yalnix     Page 10 created, with prot 5 
+Yalnix     Page 11 created, with prot 5 
+Yalnix     Page 12 created, with prot 5 
+Yalnix     Page 13 created, with prot 5 
+Yalnix     Page 14 created, with prot 5 
+Yalnix     Page 15 created, with prot 5 
+Yalnix     Page 16 created, with prot 5 
+Yalnix     Page 17 created, with prot 5 
+Yalnix     Data page from 149096 to 188416 
+Yalnix     About to alloc page from 18 to 23 
+Yalnix     Page 18 created, with prot 3 
+Yalnix     Page 19 created, with prot 3 
+Yalnix     Page 20 created, with prot 3 
+Yalnix     Page 21 created, with prot 3 
+Yalnix     Page 22 created, with prot 3 
+Yalnix     Stack page from 1032192 to 1048576 
+Yalnix     About to alloc page from 126 to 128 
+Yalnix     Page 126 created, with prot 3 
+Yalnix     Page 127 created, with prot 3 
 Hardware   HEAP my_malloc(0x4)
 Hardware   HEAP found a block
 Hardware   HEAP my_malloc(0x8)
@@ -2523,6 +2554,6 @@ Hardware   HEAP found a block
 Hardware   munmapping for Alex
 Hardware   EnableVM: PTBR0 0x00026910, PTLR0 128
 Hardware   EnableVM: PTBR1 0x0002fb68, PTLR1 128
-EnableVM: kernel PTE addr 0x00024000 not valid
-Hardware   
+Hardware   Back from KernelStart
+Invalid exception frame: pc and sp both are 0Hardware   
 ** Machine Halted **

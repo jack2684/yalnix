@@ -1,5 +1,5 @@
 #include "list.h"
-#include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
+//#include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
 list_t *list_init() {
     list_t *list = (list_t*)malloc(sizeof(list_t));
