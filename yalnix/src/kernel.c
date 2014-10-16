@@ -59,11 +59,23 @@ void init_kernel_page_table() {
     write_kernel_pte(kernel_memory->brk_low, kernel_memory->brk_high
             , _VALID, PROT_READ | PROT_WRITE);
     
-    // For stack segment mapping
-    write_kernel_pte(kernel_memory->stack_low, kernel_memory->stack_high
+    // For stack segment mapping, noted that stack space is reserved even if it is not used
+    write_kernel_pte(GET_PAGE_NUMBER(KERNEL_STACK_BASE), GET_PAGE_NUMBER(KERNEL_STACK_LIMIT)
             , _VALID, PROT_READ | PROT_WRITE);
     
-    // @TODO: add all those free frames using add_tail_available_frame 
+    int i;
+    // Add free pages between heap and stack
+    int start_pfn = GET_PAGE_NUMBER(kenerl_memory->brk_high);
+    int end_pfn = GET_PAGE_NUMBER(KERNEL_STACK_BASE);
+    for(i = start_pfn; i < end_pfn; i++) {
+        add_tail_available_frame(i);
+    }
+    // Add free pages above kernel space
+    start_pfn = GET_PAGE_NUMBER(kernel_memory->stack_high);
+    end_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(PMEM_BASE)) + PAGE_SIZE;
+    for(i = start_pfn; i < end_pfn; i++) {
+        add_tail_available_frame(i);
+    }
 }
 
 /*
@@ -73,8 +85,6 @@ pte_t *init_user_page_table() {
     return (void*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
 }
 
-//hardware.h 提供KernelStart(char*, unsigned int, UserContext *)函数,参数类型不对
-//int Kernel_Start(char* cmd_args[],  uint32 pmem_size, UserContext* uctxt ) {
 int Kernel_Start(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt ) {
     TracePrintf(0, "Start the kernel\n");
     pte_t *user_page_table;
@@ -86,6 +96,8 @@ int Kernel_Start(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
     WriteRegister(REG_VECTOR_BASE, (uint32)&interrupt_vector);
     
     // Memory management, linked list of frames of free memory
+    available_frames = list_init();
+    PAGE_SIZE = GET_PAGE_NUMBER(pmem_size);
     init_kernel_page_table();
     user_page_table = init_user_page_table();
     if(!kernel_page_table || !user_page_table) {
