@@ -41,9 +41,7 @@ void init_trap_vector() {
  */
 void write_kernel_pte(uint32 addr_low, uint32 addr_high, int isValid, int prot) {
     int i;
-    TracePrintf(0, "About to alloc page from %d to %d \n", GET_PAGE_NUMBER(addr_low), GET_PAGE_NUMBER(addr_high));       
     for(i = GET_PAGE_NUMBER(addr_low); i < GET_PAGE_NUMBER(addr_high); i++) {
-        TracePrintf(0, "Page %d created, with prot %d \n", i, prot);       
         kernel_page_table[i].valid = isValid;
         kernel_page_table[i].prot = prot;
         kernel_page_table[i].pfn = i;
@@ -56,17 +54,14 @@ void init_kernel_page_table() {
     kernel_page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // For text segment mapping
-    TracePrintf(0, "Text page from %d to %d \n", kernel_memory.text_low, kernel_memory.data_low);       
     write_kernel_pte(kernel_memory.text_low, kernel_memory.data_low
             , _VALID, PROT_READ | PROT_EXEC);
     
     // For data segment mapping
-    TracePrintf(0, "Data page from %d to %d \n", kernel_memory.data_low, kernel_memory.brk_low);       
     write_kernel_pte(kernel_memory.data_low, kernel_memory.brk_low
             , _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
-    TracePrintf(0, "Stack page from %d to %d \n", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);       
     write_kernel_pte(KERNEL_STACK_BASE, KERNEL_STACK_LIMIT
             , _VALID, PROT_READ | PROT_WRITE);
     
@@ -90,6 +85,13 @@ void init_kernel_page_table() {
  */
 pte_t *init_user_page_table() {
     return (void*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+}
+
+void DoIdle(void) {
+    while(1) {
+        TracePrintf(1,"DoIdle\n");
+        pause();
+    }
 }
 
 void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt ) {
@@ -122,7 +124,7 @@ void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
     WriteRegister(REG_VM_ENABLE, _ENABLE);
 
     // Create idle kernel proc, maybe
-    // while(1) {}
+    DoIdle();
 
     // Load init process (in checkpoint 3)
     
