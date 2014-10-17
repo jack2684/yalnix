@@ -54,27 +54,30 @@ void init_kernel_page_table() {
     kernel_page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // For text segment mapping
+    TracePrintf(0, "Text Start=%p, End=%p\n", kernel_memory.text_low, kernel_memory.data_low);
     write_kernel_pte(kernel_memory.text_low, kernel_memory.data_low
             , _VALID, PROT_READ | PROT_EXEC);
     
     // For data segment mapping
+    TracePrintf(0, "Data Start=%p, End=%p\n", kernel_memory.data_low, kernel_memory.brk_low);
     write_kernel_pte(kernel_memory.data_low, kernel_memory.brk_low
             , _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
+    TracePrintf(0, "Stack Start=%p, End=%p\n", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
     write_kernel_pte(KERNEL_STACK_BASE, KERNEL_STACK_LIMIT
             , _VALID, PROT_READ | PROT_WRITE);
     
     int i;
     // Add free pages between heap and stack
-    int start_pfn = GET_PAGE_NUMBER(kernel_memory.brk_high);
-    int end_pfn = GET_PAGE_NUMBER(KERNEL_STACK_BASE);
+    int start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
+    int end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(KERNEL_STACK_BASE));
     for(i = start_pfn; i < end_pfn; i++) {
         add_tail_available_frame(i);
     }
     // Add free pages above kernel space
-    start_pfn = GET_PAGE_NUMBER(kernel_memory.stack_high);
-    end_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(PMEM_BASE)) + PAGE_SIZE;
+    start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.stack_high));
+    end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(PMEM_BASE)) + PAGE_SIZE;
     for(i = start_pfn; i < end_pfn; i++) {
         add_tail_available_frame(i);
     }
@@ -89,7 +92,7 @@ pte_t *init_user_page_table() {
 
 void DoIdle(void) {
     while(1) {
-        TracePrintf(1,"DoIdle\n");
+        TracePrintf(1, "DoIdle\n");
         pause();
     }
 }
@@ -124,10 +127,12 @@ void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
     WriteRegister(REG_VM_ENABLE, _ENABLE);
 
     // Create idle kernel proc, maybe
-    DoIdle();
+    uctxt->pc = &DoIdle;
+    uctxt->sp = (void*)(VMEM_0_LIMIT - WORD_LEN / 8); 
 
     // Load init process (in checkpoint 3)
     
+    TracePrintf(0, "Leave the kernel\n");
     return;
 }
 
@@ -135,7 +140,7 @@ void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
  *  Not necessary in checkpoint 2
  */ 
 int SetKernelBrk (void *addr) {
-    TracePrintf(0, "SetKernelBrk: Current Addr = %p\n", addr);
+    TracePrintf(0, "SetKernelBrk Start = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
     int page_cnt, rc;
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = UP_TO_PAGE(new_addr);
@@ -155,9 +160,12 @@ int SetKernelBrk (void *addr) {
         kernel_memory.brk_high = new_addr;
         return _SUCCESS;
     } 
-    
+    TracePrintf(0, "SetKernelBrk CHECK DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
+   
+
     // Modify the brk 
     if(new_addr > kernel_memory.brk_high) { 
+        TracePrintf(0, "SetKernelBrk ADD = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
         page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
         rc = map_page_to_frame(kernel_page_table, 
                             current_page_bound, 
@@ -168,6 +176,7 @@ int SetKernelBrk (void *addr) {
             return _FAILURE;
         }
     } else if (new_page_bound < kernel_memory.brk_high) {
+        TracePrintf(0, "SetKernelBrk RM = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
         page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
         rc = unmap_page_to_frame(kernel_page_table,
                                 new_page_bound, 
@@ -177,6 +186,7 @@ int SetKernelBrk (void *addr) {
             return _FAILURE;
         }
     }
+    TracePrintf(0, "SetKernelBrk DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
     kernel_memory.brk_high = new_addr;
     return _SUCCESS;
 }

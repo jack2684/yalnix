@@ -21,8 +21,9 @@
 ALL = $(KERNEL_ALL) $(USER_APPS)
 KERNEL_ALL = yalnix
 
-MY_INC = include/
-MY_SRC = src/
+MY_ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+MY_INC = $(MY_ROOT_DIR)/include/
+MY_SRC = $(MY_ROOT_DIR)/src/
 
 #List all kernel source files here.  
 KERNEL_SRCS = $(MY_SRC)kernel_init.c $(MY_SRC)memory.c $(MY_SRC)list.c $(MY_SRC)traps.c
@@ -33,11 +34,11 @@ KERNEL_INCS = $(MY_INC)list.h $(MY_INC)memory.h $(MY_INC)traps.h
 
 
 #List all user programs here.
-USER_APPS = 
+USER_APPS = #init 
 #List all user program source files here.  SHould be the same as the previous list, with ".c" added to each file
-USER_SRCS = 
+USER_SRCS = #$(MY_SRC)init.c
 #List the objects to be formed form the user  source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-USER_OBJS = 
+USER_OBJS = #$(MY_SRC)init.o 
 #List all of the header files necessary for your user programs
 USER_INCS = 
 
