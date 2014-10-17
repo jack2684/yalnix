@@ -1,8 +1,9 @@
 /src
-kernel_init.c:  used to set kernel data, init the vector, page table, registers, and enable the VM,  to start the kernel
-memory.c: used to init frams and  map pages to frames
-list.c: used to define the list data structure which used in memory.c
-traps.c: write the skeletal code of the trap_memory_handler function
+kernel_init.c: Initiate trap vectors and memory management (including page table building and frames mapping), implement SetKernelBrk
+memory.c: Memory management for paging, mapping
+traps.c: Write the skeletal code of the trap_memory_handler function
+list.c: used to define the list data structure which used in memory.c and some future purpose
+bitmap.c: used for memory.c, going to replace list.c at next checkpoint
 
 Future work:
 dlist.c
@@ -14,12 +15,6 @@ tty.c
 malloc.c
 lock.c
 load_program.c
-
-/include
-list.h: define some data used to implement the list data structure
-memory.h: define vm data structure and some other related data structures
-traps.h: define the trap handler functions
-common.h: define the common use macros
 
 reference:
 debug.h: Code reference from: Zed's Awesome Debug Macros (url: http://c.learncodethehardway.org/book/ex20.html
