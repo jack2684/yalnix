@@ -35,7 +35,8 @@ int add_tail_available_frame(uint32 pfn) {
 }
 
 frame_t *rm_head_available_frame() {
-    if(list_is_empty(available_frames) != 1) {
+    if(list_is_empty(available_frames) == 1) {
+        _debug("Frame list is empty, double check size: %d!\n", available_frames->size);
         return NULL;
     }
 
@@ -58,6 +59,7 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
     int end_page_idx = start_page_idx + page_cnt;
     int rc = 0, i;
 
+    _debug("Start to map from page %d\n", start_page_idx);
     // Try mapping
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         frame_t *frame = rm_head_available_frame();
@@ -65,12 +67,14 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
             _debug("No more available frame\n");
             rc = NO_AVAILABLE_ERR;
         } else {
+            _debug("Map pfn: %d\n", frame_get_pfn(frame));
             this_page_table[i].valid = _VALID;
             this_page_table[i].prot = prot;
             this_page_table[i].pfn = frame_get_pfn(frame);
         }
     }
 
+    _debug("Map done\n");
     // Flush the toilet!
     flush_region_TLB(this_page_table);
     return rc;
