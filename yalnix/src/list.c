@@ -1,4 +1,5 @@
 #include "list.h"
+#include "common.h"
 //#include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
 list_t *list_init() {
@@ -90,6 +91,18 @@ int list_insert(list_t *list, void* data, int idx) {
 }
 
 void* list_rm_head(list_t *list) {
+    if(!list) {
+        list->rc = ERR_NULL_POINTER;
+        return NULL;
+    }
+    if(list->size) {
+        void* data = list->head->data;
+        node_t *node = list->head;
+        list->head = list->head->next;
+        return data;
+    } else {
+        return NULL;
+    } 
     return list_rm_idx(list, 0);
 }
 
