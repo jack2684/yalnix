@@ -69,7 +69,19 @@ or because the access violates the page protection specified in the correspondin
 */
 void trap_memory_handler(UserContext *user_context){
 	//INVOKE the TRAP_MEMORY_HANDLER
+	//Get the current address
+	unsigned int * addr = (unsigned int)DOWN_TO_PAGE(user_context->addr);
+	//Check the addr is valid, then give the enough memory to it 
+	if (addr > user_memory->brk || addr_int < VMEM_1_BASE) {
+        //Get the startpage
+        //Get pages count
+        //allocate the pages
+    }
 	//KILL the process that cause the the disallowed memory access
+	else{
+		TracePrintf(0, "Process invalid access at %x \n",user_context->addr);
+		//Kill 
+	}
 }
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
