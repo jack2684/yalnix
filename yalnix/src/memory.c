@@ -59,7 +59,7 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
     int end_page_idx = start_page_idx + page_cnt;
     int rc = 0, i;
 
-    _debug("Start to map from page %d\n", start_page_idx);
+    _debug("Start to map from page %d to page %d\n", start_page_idx, end_page_idx);
     // Try mapping
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         frame_t *frame = rm_head_available_frame();
@@ -78,6 +78,17 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
     // Flush the toilet!
     flush_region_TLB(this_page_table);
     return rc;
+}
+
+int set_ptes(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot) {
+    int end_page_idx = start_page_idx + page_cnt;
+    int rc = 0, i;
+
+    _debug("Start to set from page %d to page %d\n", start_page_idx, end_page_idx);
+    for(i = start_page_idx; i < end_page_idx; i++ ) {
+        this_page_table[i].prot = prot;
+    }
+    _debug("Map done\n");
 }
 
 int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt) {

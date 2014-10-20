@@ -16,6 +16,7 @@
 typedef struct      pte pte_t;
 typedef uint32      frame_t;
 extern pte_t        *kernel_page_table;                // Global for every one
+extern pte_t *user_page_table;
 extern uint32       PAGE_SIZE;
 extern list_t       *available_frames;
 
@@ -35,6 +36,7 @@ int add_tail_available_frame(uint32 pfn);
 frame_t *rm_head_available_frame();
 void flush_region_TLB(pte_t* table);
 int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot);
+int set_ptes(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot);
 int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt);
 
 // Some globals

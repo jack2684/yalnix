@@ -8,8 +8,6 @@
 
 trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
 
-pte_t *user_page_table;
-
 void SetKernelData(void *_Kernel_Data_Start, void *_Kernel_Data_End) {
     // Set kernel vm boundaries, noted that most of the *_high is implicitly represented by other's *_low 
     TracePrintf(0, "Start=%p, End=%p\n", _Kernel_Data_Start, _Kernel_Data_End);

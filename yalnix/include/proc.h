@@ -3,7 +3,7 @@
 #include "kernelLib.h"
 #include "standardLib.h"
 
-struct y_PCB {
+typedef struct y_PCB {
     // State
     int             state;
     long            priority;
@@ -24,6 +24,6 @@ struct y_PCB {
     struct y_PCB    *prev_task;
     struct y_PBC    *children;
     struct y_PBC    *wait;
-};
+} pcb_t;
 #endif
 

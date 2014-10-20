@@ -1,6 +1,6 @@
 ** Hardware level 3 tracing enabled **
 ** Yalnix level 5 tracing enabled **
-Yalnix     Start=0x24a68, End=0x2e000
+Yalnix     Start=0x24a38, End=0x2e000
 Yalnix     SetKernelBrk Start = 0x2e000, End = 0x2e000, New Addr = 0x2e000
 Hardware   TTYs disabled due to '-n' flag.
 Hardware   HEAP my_malloc(0x160)
@@ -22,24 +22,24 @@ Hardware   SignalHanlder(10 User defined signal 1), depth 1
 Hardware   sp 0x00000000
 Hardware   sp 0x000ffac0
 Hardware   null PTRB0
-Hardware   Preparing to pad: signals_in 1 sig 10 sp 0x000ffac0 pc = 0xf7706d70 
+Hardware   Preparing to pad: signals_in 1 sig 10 sp 0x000ffac0 pc = 0xf77dbd70 
 Hardware   SignalHandler depth 1 sig 10
 Hardware   Entering RealSignalHandler
 Hardware   
-Hardware   >>> sig 10, addr 0x15a9, page 0
+Hardware   >>> sig 10, addr 0x15dd, page 0
 Hardware   unblocking stackable sigs
 Hardware   
-SignalHandler: sig 10 (User defined signal 1), code 00000000, context 000ffb8c, addr 000015a9
-Hardware   sp 0xffae501c, pc 0xf7706d70, eax 0xfffffffc ebp 0xffae5064
+SignalHandler: sig 10 (User defined signal 1), code 00000000, context 000ffb8c, addr 000015dd
+Hardware   sp 0xffa005bc, pc 0xf77dbd70, eax 0xfffffffc ebp 0xffa00604
 Hardware   Disk initialization done
 Hardware   returning from SignalHandler
-Hardware   sp 0xffae501c, pc 0xf7706d70,  eax 0xfffffffc ebp 0xffae5064
+Hardware   sp 0xffa005bc, pc 0xf77dbd70,  eax 0xfffffffc ebp 0xffa00604
 Hardware   Returning from signal handler depth 1
 Hardware   SignalHanlder(11 Segmentation fault), depth 1
 Hardware   sp 0x000ffac0
 Hardware   sp 0x000ffac0
 Hardware   null PTRB0
-Hardware   Preparing to pad: signals_in 1 sig 11 sp 0x000ffac0 pc = 0xf76a0525 
+Hardware   Preparing to pad: signals_in 1 sig 11 sp 0x000ffac0 pc = 0xf7775525 
 Hardware   SignalHandler depth 1 sig 11
 Hardware   Entering RealSignalHandler
 Hardware   
@@ -47,15 +47,15 @@ Hardware   >>> sig 11, addr 0x0, page 0
 Hardware   unblocking stackable sigs
 Hardware   
 SignalHandler: sig 11 (Boot ROM), code 00000080, context 000ffb8c, addr 00000000
-Hardware   sp 0xffae5230, pc 0xf76a0525, eax 0xabcdefff ebp 0xffae52d8
+Hardware   sp 0xffa007d0, pc 0xf7775525, eax 0xabcdefff ebp 0xffa00878
 Hardware   Starting kernel
 Yalnix     Start the kernel
 Hardware   HEAP my_malloc(0x10)
 Hardware   HEAP found a block
 Hardware   HEAP my_malloc(0x200)
 Hardware   HEAP found a block
-Yalnix     Text Start=(nil), End=0x24a68
-Yalnix     Data Start=0x24a68, End=0x2e000
+Yalnix     Text Start=(nil), End=0x24a38
+Yalnix     Data Start=0x24a38, End=0x2e000
 Yalnix     Stack Start=0xfc000, End=0x100000
 Hardware   HEAP my_malloc(0x4)
 Hardware   HEAP found a block
@@ -2012,95 +2012,27 @@ Hardware   EnableVM: PTBR0 0x00026910, PTLR0 128
 Hardware   EnableVM: PTBR1 0x0002dd4c, PTLR1 128
 Yalnix     Leave the kernel
 Hardware   Back from KernelStart
-Hardware   returning from SignalHandler
-Hardware   sp 0x00101ffc, pc 0x00020d8d,  eax 0x00000000 ebp 0xffae52d8
-Hardware   Returning from signal handler depth 1
-Yalnix     DoIdle
-Hardware   SignalHanlder(14 Alarm clock), depth 1
+Hardware   SignalHanlder(11 Segmentation fault), depth 2
 Hardware   sp 0x000ffac0
-Hardware   sp 0x000ffac0
+Hardware   sp 0x000ff1c0
 Hardware   current kernel stack frames 126 127
-Hardware   Preparing to pad: signals_in 1 sig 14 sp 0x000ffac0 pc = 0xf7706d70 
-Hardware   SignalHandler depth 1 sig 14
+Hardware   Preparing to pad: signals_in 2 sig 11 sp 0x000ff1c0 pc = 0xf7776036 
+Hardware   SignalHandler depth 2 sig 11
 Hardware   Entering RealSignalHandler
 Hardware   
-Hardware   >>> sig 14, addr 0x0, page 0
+Hardware   >>> sig 11, addr 0x101ffc, page 128
+Hardware   signal 11 mapping addr 0x101ffc page 128 in TLB
+Hardware   About to load TLB 128
+Hardware   Page 128 already in TLB
 Hardware   unblocking stackable sigs
 Hardware   
-SignalHandler: sig 14 (Alarm clock), code 00000080, context 000ffb8c, addr 00000000
-Hardware   sp 0x00101fcc, pc 0xf7706d70, eax 0xfffffffc ebp 0x00101ff8
-Hardware   Calling vector 1, VectorBase = 00025480
-Hardware   handler 00021aa1
-Hardware   Back from vector 1
-Hardware   Frame validated
-Hardware   Set running pc,sp
-Hardware   returning from SignalHandler
-Hardware   sp 0x00101fcc, pc 0xf7706d70,  eax 0xfffffffc ebp 0x00101ff8
-Hardware   Returning from signal handler depth 1
-Yalnix     DoIdle
-Hardware   SignalHanlder(14 Alarm clock), depth 1
-Hardware   sp 0x000ffac0
-Hardware   sp 0x000ffac0
-Hardware   current kernel stack frames 126 127
-Hardware   Preparing to pad: signals_in 1 sig 14 sp 0x000ffac0 pc = 0xf7706d70 
-Hardware   SignalHandler depth 1 sig 14
-Hardware   Entering RealSignalHandler
-Hardware   
-Hardware   >>> sig 14, addr 0x0, page 0
-Hardware   unblocking stackable sigs
-Hardware   
-SignalHandler: sig 14 (Alarm clock), code 00000080, context 000ffb8c, addr 00000000
-Hardware   sp 0x00101fcc, pc 0xf7706d70, eax 0xfffffffc ebp 0x00101ff8
-Hardware   Calling vector 1, VectorBase = 00025480
-Hardware   handler 00021aa1
-Hardware   Back from vector 1
-Hardware   Frame validated
-Hardware   Set running pc,sp
-Hardware   returning from SignalHandler
-Hardware   sp 0x00101fcc, pc 0xf7706d70,  eax 0xfffffffc ebp 0x00101ff8
-Hardware   Returning from signal handler depth 1
-Yalnix     DoIdle
-Hardware   SignalHanlder(14 Alarm clock), depth 1
-Hardware   sp 0x000ffac0
-Hardware   sp 0x000ffac0
-Hardware   current kernel stack frames 126 127
-Hardware   Preparing to pad: signals_in 1 sig 14 sp 0x000ffac0 pc = 0xf7706d70 
-Hardware   SignalHandler depth 1 sig 14
-Hardware   Entering RealSignalHandler
-Hardware   
-Hardware   >>> sig 14, addr 0x0, page 0
-Hardware   unblocking stackable sigs
-Hardware   
-SignalHandler: sig 14 (Alarm clock), code 00000080, context 000ffb8c, addr 00000000
-Hardware   sp 0x00101fcc, pc 0xf7706d70, eax 0xfffffffc ebp 0x00101ff8
-Hardware   Calling vector 1, VectorBase = 00025480
-Hardware   handler 00021aa1
-Hardware   Back from vector 1
-Hardware   Frame validated
-Hardware   Set running pc,sp
-Hardware   returning from SignalHandler
-Hardware   sp 0x00101fcc, pc 0xf7706d70,  eax 0xfffffffc ebp 0x00101ff8
-Hardware   Returning from signal handler depth 1
-Yalnix     DoIdle
-Hardware   SignalHanlder(14 Alarm clock), depth 1
-Hardware   sp 0x000ffac0
-Hardware   sp 0x000ffac0
-Hardware   current kernel stack frames 126 127
-Hardware   Preparing to pad: signals_in 1 sig 14 sp 0x000ffac0 pc = 0xf7706d70 
-Hardware   SignalHandler depth 1 sig 14
-Hardware   Entering RealSignalHandler
-Hardware   
-Hardware   >>> sig 14, addr 0x0, page 0
-Hardware   unblocking stackable sigs
-Hardware   
-SignalHandler: sig 14 (Alarm clock), code 00000080, context 000ffb8c, addr 00000000
-Hardware   sp 0x00101fcc, pc 0xf7706d70, eax 0xfffffffc ebp 0x00101ff8
-Hardware   Calling vector 1, VectorBase = 00025480
-Hardware   handler 00021aa1
-Hardware   Back from vector 1
-Hardware   Frame validated
-Hardware   Set running pc,sp
-Hardware   returning from SignalHandler
-Hardware   sp 0x00101fcc, pc 0xf7706d70,  eax 0xfffffffc ebp 0x00101ff8
-Hardware   Returning from signal handler depth 1
-Yalnix     DoIdle
+SignalHandler: sig 11 (Segmentation fault), code 00000001, context 000ff28c, addr 00101ffc
+Hardware   sp 0x000ff6e0, pc 0xf7776036, eax 0x00101ffc ebp 0x000ff7a8
+Hardware   Generating Kernel exception sig 11 addr 0x00101ffc
+Hardware   >>>> 
+
+
+ BIG GREEN SCREEN O' DEATH!!!!!!
+
+
+Hardware   Returning from signal handler depth 2
