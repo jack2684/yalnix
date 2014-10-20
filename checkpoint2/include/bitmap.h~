@@ -1,4 +1,3 @@
-// team stderr, Junjie Guan, Ziyang Wang
 #ifndef _BV_H
 #define _BV_H
 #include "common.h"

@@ -1,4 +1,3 @@
-// team stderr, Junjie Guan, Ziyang Wang
 #include "bitmap.h"
 
 int get_word_number(uint32 idx) {

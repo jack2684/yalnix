@@ -1,4 +1,3 @@
-// team stderr, Junjie Guan, Ziyang Wang
 /* Some kernal functions
  */
 #include "hardware.h"

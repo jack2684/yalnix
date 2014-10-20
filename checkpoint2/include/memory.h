@@ -1,3 +1,4 @@
+//team stderr Ziyang Wang Junjie Guan
 #ifndef _MEMORY_H
 #define _MEMORY_H
 #include "hardware.h"

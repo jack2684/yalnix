@@ -1,4 +1,3 @@
-// team stderr, Junjie Guan, Ziyang Wang
 #include "list.h"
 #include "common.h"
 //#include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
