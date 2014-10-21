@@ -6,6 +6,7 @@ pte_t   *kernel_page_table = NULL;          // Page table for kernel
 pte_t   *user_page_table = NULL;            // Page table for kernel
 list_t  *available_frames = NULL;           // For physcial memories
 vm_t    kernel_memory;                      // Kernel virtual memories
+vm_t    user_memory;                        // User virtual memories
 uint32  PAGE_SIZE;
 
 frame_t *init_frame(uint32 idx) {
@@ -60,7 +61,6 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
     int end_page_idx = start_page_idx + page_cnt;
     int rc = 0, i;
 
-    _debug("Start to map from page %d to page %d\n", start_page_idx, end_page_idx);
     // Try mapping
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         frame_t *frame = rm_head_available_frame();
@@ -73,7 +73,7 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
         }
     }
 
-    _debug("Map done\n");
+    _debug("Map from page %d to page %d DONE\n", start_page_idx, end_page_idx);
     // Flush the toilet!
     flush_region_TLB(this_page_table);
     return rc;

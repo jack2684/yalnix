@@ -22,8 +22,7 @@
  *  to the process or PCB structure for the process into which the program
  *  is to be loaded. 
  */
-int
-LoadProgram(char *name, char *args[], pcb_t *proc) 
+int LoadProgram(char *name, char *args[], pcb_t *proc) 
 //==>> Declare the argument "proc" to be a pointer to your PCB or
 //==>> process descriptor data structure.  We assume you have a member
 //==>> of this structure used to hold the cpu context 
@@ -51,7 +50,7 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
    */
     if ((fd = open(name, O_RDONLY)) < 0) {
         TracePrintf(0, "LoadProgram: can't open file '%s'\n", name);
-        return ERROR;
+        return _FAILURE;
     }
 
     if (LoadInfo(fd, &li) != LI_NO_ERROR) {
@@ -63,7 +62,7 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
     if (li.entry < VMEM_1_BASE) {
         TracePrintf(0, "LoadProgram: '%s' not linked for Yalnix\n", name);
         close(fd);
-        return ERROR;
+        return _FAILURE;
     }
 
   /*
@@ -126,7 +125,7 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
     /* leave at least one page between heap and stack */
     if (stack_npg + data_pg1 + data_npg >= MAX_PT_LEN) {
         close(fd);
-        return ERROR;
+        return _FAILURE;
     }
 
     /*
@@ -141,7 +140,7 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
 
 // ==>> Here you replace your data structure proc
 // ==>> proc->context.sp = cp2;
-    proc->user_context.cp = cp2; // @TODO: user context or kernel context?
+    proc->user_context.pc = cp2; // @TODO: user context or kernel context?
 
     /*
      * Now save the arguments in a separate buffer in region 0, since
@@ -190,7 +189,7 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> the    "data_pg1" in region 1 address space.    
 // ==>> These pages should be marked valid, with a protection of 
 // ==>> (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_NUMBER(data_pg1), li.data_npg, PROT_WRITE | PROT_READ);
+    map_page_to_frame(user_page_table, GET_PAGE_NUMBER(data_pg1), data_npg, PROT_WRITE | PROT_READ);
 
     /*
      * Allocate memory for the user stack too.
@@ -244,7 +243,7 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
   /*
    * Zero out the uninitialized data area
    */
-    bzero(li.id_end, li.ud_end - li.id_end);
+    bzero((void*)li.id_end, li.ud_end - li.id_end);
 
   /*
    * Set the entry point in the exception frame.
@@ -273,6 +272,6 @@ LoadProgram(char *name, char *args[], pcb_t *proc)
     *cpp++ = NULL;			/* the last argv is a NULL pointer */
     *cpp++ = NULL;			/* a NULL pointer for an empty envp */
 
-    return SUCCESS;
+    return _SUCCESS;
 }
 

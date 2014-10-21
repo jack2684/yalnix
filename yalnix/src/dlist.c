@@ -1,5 +1,4 @@
 #include "dlist.h"
-#include "common.h"
 //#include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
 dlist_t *dlist_init() {
@@ -72,14 +71,14 @@ dnode_t* dlist_find_idx(dlist_t *list, int idx) {
 }
 
 dnode_t *dlist_insert(dlist_t *list, void* data, int idx) {
-    dnode_t* node = node_init(data);
+    dnode_t* node = dnode_init(data);
     if(!list->size) {               // Handle empty list
         list->head = node;
         list->tail = node;
     } else if (idx == 0) {          // Handle head insert
         node->next = list->head;
         list->head = node;
-    else if (idx == list->size) {
+    } else if (idx == list->size) {
         node->prev = list->tail;
         list->tail = node;
     } else {                        // Normal case
@@ -157,7 +156,7 @@ void* dlist_rm_idx(dlist_t *list, int idx) {
     }
 
     // Locate index
-    dnode_t* prev = node_init(NULL);
+    dnode_t* prev = dnode_init(NULL);
     prev->next = list->head;
     int i = 0;
     while(i < idx) {

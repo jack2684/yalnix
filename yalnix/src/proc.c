@@ -20,19 +20,19 @@ void init_pcb(void) {
 
     running_proc = user_proc;
     ready_queue = dlist_init(kernel_proc);
-    en_ready_queue(ready_queue, kernel_proc);
+    en_ready_queue(kernel_proc);
 }
 
-int en_ready_queue(void *proc) {
-    node_t *n = dlist_add_tail(ready_queue, proc);
+int en_ready_queue(pcb_t *proc) {
+    dnode_t *n = dlist_add_tail(ready_queue, proc);
     if(!n) {
         _debug("Cannot enqueue the pcb\n");
         return 1;
     }
-    proc->dlist_node = n; 
+    proc->list_node = n; 
 }
 
-void* de_ready_queue(pcb_t *proc) {
+pcb_t* de_ready_queue(pcb_t *proc) {
     return dlist_rm_this(ready_queue, proc->list_node);
 }
 

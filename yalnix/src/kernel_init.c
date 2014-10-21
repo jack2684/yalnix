@@ -4,6 +4,8 @@
 #include "memory.h"
 #include "traps.h"
 #include "list.h"
+#include "proc.h"
+#include "load.h"
 #include "common.h"
 
 trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
@@ -146,20 +148,10 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // Enable virtual memroy 
     _debug("+-+-+-Init VM+-+-+-\n");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
-    int *a;
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-    a= (int*) malloc(sizeof(int) * 1000);
-
+    
     // Create idle proc
-    Cooking(user_page_table, uctxt);
+    init_pcb();
+    LoadProgram("src/init", NULL, user_proc);
 
     // Load init process (in checkpoint 3)
     

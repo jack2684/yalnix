@@ -3,7 +3,8 @@
 
 #include "hardware.h"
 #include "memory.h"
-#include "list.h"
+#include "dlist.h"
+
 
 enum proc_stat {
     RUN,
@@ -11,13 +12,13 @@ enum proc_stat {
     WAIT,
     ZOMBIE,
     EXIT,
-}
+};
 
 typedef struct y_PCB {
     // State
     int             state;
     long            priority;
-    mm_t            *mm;            // Memory management
+    vm_t            *mm;            // Memory management
     int             exit_code;
     int             exit_signail;
     UserContext     user_context;
@@ -30,14 +31,20 @@ typedef struct y_PCB {
     unsigned long   gid;
 
     // Connected
-    node_t          *list_node;          // For high performance list operation
+    dnode_t         *list_node;          // For high performance list operation
     struct y_PBC    *children;
     struct y_PBC    *wait;
 } pcb_t;
 
+extern pcb_t   *kernel_proc;          // A kernel proc
+extern pcb_t   *user_proc;          // A user proc
+extern pcb_t   *running_proc;      // Current running proc
+extern dlist_t  *ready_queue;   
+extern dlist_t  *wait_queue;
+
 void init_pcb(void);
-int en_ready_queue(void *proc);
-void* de_ready_queue(pcb_t *proc);
+int en_ready_queue(pcb_t *proc);
+pcb_t* de_ready_queue(pcb_t *proc);
 void init_kernel_proc(void);
 
 #endif
