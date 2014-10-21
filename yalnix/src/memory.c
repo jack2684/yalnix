@@ -65,16 +65,11 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         frame_t *frame = rm_head_available_frame();
         if(!frame) {
-            _debug("No more available frame\n");
             rc = NO_AVAILABLE_ERR;
         } else {
-            _debug("Map pfn: %d\n", frame_get_pfn(frame));
             this_page_table[i].valid = _VALID;
-            _debug("Map set valid: %d\n", frame_get_pfn(frame));
             this_page_table[i].prot = prot;
-            _debug("Map set prot: %d\n", frame_get_pfn(frame));
             this_page_table[i].pfn = frame_get_pfn(frame);
-            _debug("Map set pfn: %d\n", frame_get_pfn(frame));
         }
     }
 

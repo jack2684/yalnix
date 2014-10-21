@@ -39,12 +39,12 @@ void init_trap_vector() {
  *  so I set all the manually here, 
  *  in order to aligned with phyical memory.
  */
-void write_kernel_pte(uint32 addr_low, uint32 addr_high, int isValid, int prot) {
+void write_page_table(pte_t *page_table, uint32 idx_start, uint32 idx_end, int isValid, int prot) {
     int i;
-    for(i = GET_PAGE_NUMBER(addr_low); i < GET_PAGE_NUMBER(addr_high); i++) {
-        kernel_page_table[i].valid = isValid;
-        kernel_page_table[i].prot = prot;
-        kernel_page_table[i].pfn = i;
+    for(i = idx_start; i < idx_end; i++) {
+        page_table[i].valid = isValid;
+        page_table[i].prot = prot;
+        page_table[i].pfn = i;
     }
 }
 
@@ -55,18 +55,24 @@ void init_kernel_page_table() {
     
     // For text segment mapping
     TracePrintf(0, "Text Start=%p, End=%p\n", kernel_memory.text_low, kernel_memory.data_low);
-    write_kernel_pte(kernel_memory.text_low, kernel_memory.data_low
-            , _VALID, PROT_READ | PROT_EXEC);
+    write_page_table(kernel_page_table, 
+                    GET_PAGE_NUMBER(kernel_memory.text_low), 
+                    GET_PAGE_NUMBER(kernel_memory.data_low), 
+                    _VALID, PROT_READ | PROT_EXEC);
     
     // For data segment mapping
     TracePrintf(0, "Data Start=%p, End=%p\n", kernel_memory.data_low, kernel_memory.brk_low);
-    write_kernel_pte(kernel_memory.data_low, kernel_memory.brk_low
-            , _VALID, PROT_READ | PROT_WRITE);
+    write_page_table(kernel_page_table,
+                    GET_PAGE_NUMBER(kernel_memory.data_low), 
+                    GET_PAGE_NUMBER(kernel_memory.brk_low), 
+                    _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
     TracePrintf(0, "Stack Start=%p, End=%p\n", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
-    write_kernel_pte(KERNEL_STACK_BASE, KERNEL_STACK_LIMIT
-            , _VALID, PROT_READ | PROT_WRITE);
+    write_page_table(kernel_page_table,
+                    GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
+                    GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
+                    _VALID, PROT_READ | PROT_WRITE);
     
     int i;
     // Add free pages between heap and stack
@@ -86,8 +92,11 @@ void init_kernel_page_table() {
 /*
  * A dummy user page table for the init process
  */
-pte_t *init_user_page_table() {
-    return (void*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+void *init_user_page_table() {
+    user_page_table = (void*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+   // write_page_table(user_page_table,
+   //                 0, GET_PAGE_NUMBER(VMEM_1_SIZE),
+   //                 _VALID, PROT_READ)
 }
 
 void DoIdle(void) {
@@ -120,8 +129,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // Memory management, linked list of frames of free memory
     available_frames = list_init();
     PAGE_SIZE = GET_PAGE_NUMBER(pmem_size);
-    user_page_table = init_user_page_table();   // It is every import to init user earlier than kernel,
-    init_kernel_page_table();                   // due to the malloc and SetKernelBrk
+    init_user_page_table();   
+    init_kernel_page_table();           
     if(!kernel_page_table || !user_page_table) {
         _debug("Cannot allocate memory for page tables.\n");
         return;
@@ -135,6 +144,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
 
     // Enable virtual memroy 
+    _debug("+-+-+-Init VM+-+-+-\n");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     int *a;
     a= (int*) malloc(sizeof(int) * 1000);
@@ -165,10 +175,9 @@ int SetKernelBrk _PARAMS((void *addr)) {
     
     int page_cnt, rc;
     uint32 new_addr = (uint32)addr;
-    uint32 new_page_bound = UP_TO_PAGE(new_addr);
-    uint32 current_page_bound = UP_TO_PAGE(kernel_memory.brk_high);
+    uint32 new_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(new_addr));
+    uint32 current_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
     
-    _debug("VM not enabled 0, current brk: %p, new addr: %p \n", kernel_memory.brk_high, new_addr); 
     // Boudaries check
     if(new_addr > kernel_memory.stack_low) {
         TracePrintf(0, "Kernel Break Warning: Trying to Access Stack Addr = %p\n", new_addr);
@@ -189,7 +198,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
     // Modify the brk 
     if(new_addr > kernel_memory.brk_high) { 
         TracePrintf(0, "SetKernelBrk ADD = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-        page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        page_cnt = new_page_bound - current_page_bound;
         rc = map_page_to_frame(kernel_page_table, 
                             current_page_bound, 
                             page_cnt, 
@@ -199,9 +208,9 @@ int SetKernelBrk _PARAMS((void *addr)) {
             return _FAILURE;
         }
         TracePrintf(0, "SetKernelBrk ADD DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-    } else if (new_page_bound < kernel_memory.brk_high) {
+    } else if (new_addr < kernel_memory.brk_high) {
         TracePrintf(0, "SetKernelBrk RM = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-        page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        page_cnt = new_page_bound - current_page_bound;
         rc = unmap_page_to_frame(kernel_page_table,
                                 new_page_bound, 
                                 page_cnt);
@@ -212,7 +221,6 @@ int SetKernelBrk _PARAMS((void *addr)) {
     }
     kernel_memory.brk_high = new_addr;
     TracePrintf(0, "SetKernelBrk DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-    _debug("VM enabled 0, current brk: %p, new addr: %p \n", kernel_memory.brk_high, new_addr); 
     return _SUCCESS;
 }
 

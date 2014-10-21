@@ -34,5 +34,11 @@ typedef struct y_PCB {
     struct y_PBC    *children;
     struct y_PBC    *wait;
 } pcb_t;
+
+void init_pcb(void);
+int en_ready_queue(void *proc);
+void* de_ready_queue(pcb_t *proc);
+void init_kernel_proc(void);
+
 #endif
 

@@ -186,6 +186,7 @@ void *dlist_rm_this(dlist_t *list, dnode_t *node) {
         list->head = node->next;
     } else {
         _debug("Node is not the head of this list\n");
+        return NULL;
     }
     if(node->next) {
         node->next->prev = node->prev;
@@ -193,6 +194,7 @@ void *dlist_rm_this(dlist_t *list, dnode_t *node) {
         list->tail = node->prev;
     } else {
         _debug("Node is not the tail of this list\n");
+        return NULL;
     }
     free(node);
     list->size--;
