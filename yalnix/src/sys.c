@@ -1,4 +1,6 @@
 #include "sys.h"
+#include "common.h"
+#include "proc.h"
 
 //These are process syscalls
 int Y_Fork(void){
@@ -80,7 +82,35 @@ int Y_WaitPid(int pid, int* status_ptr, int options){
 }
 
 int Y_GetPid(void){
-	//RETURN current process's pid
+    return running_proc -> pid;
+}
+
+int Y_Delay(int clock_ticks, UserContext *user_context){
+	//IF clock_ticks < 0
+		//REPORT ERROR
+	//END IF
+
+	if(clock_ticks < 0){
+		return _FAILURE;	
+	}
+	
+	//IF clock_ticks == 0
+		//RETURN 
+	//END IF
+
+	if(clock_ticks == 0){
+		return _SUCCESS;	
+	}
+
+	//SET remaining clock_ticks to the current clock_ticks
+	//BLOCK the calling process with the clock_ticks
+
+	current_Proc -> remaining_clock_ticks = clock_ticks;
+	//en_ready_queue(current_proc);  ???
+	//ContextSwitch(user_context);
+
+	TracePrintf(0, "Syscall Delay finishes\n");
+	return _SUCCESS;
 }
 
 //These are destroy syscalls
