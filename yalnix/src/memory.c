@@ -126,4 +126,57 @@ int Y_Brk(void * addr){
 	//IF new break segment is smaller than the current user break segment
 		//SHRINK the heap space
 	//END IF
+	TracePrintf(0, "Y_Brk Start = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+    
+    	int page_cnt, rc;
+    	uint32 new_addr = (uint32)addr;
+    	uint32 new_page_bound = UP_TO_PAGE(new_addr);
+    	uint32 current_page_bound = UP_TO_PAGE(user_memory.brk_high);
+    
+    	_debug("VM not enabled 0, current brk: %p, new addr: %p \n", user_memory.brk_high, new_addr); 
+    	// Boudaries check
+    	if(new_addr > user_memory.stack_low) {
+        	TracePrintf(0, "User Break Warning: Trying to Access Stack Addr = %p\n", new_addr);
+        	return _FAILURE;
+    	} // Check if trying to access below brk base line
+    	else if(new_addr < user_memory.brk_low) {
+        	TracePrintf(0, "User Break Warning: Trying to Access Text Addr = %p\n", addr);
+        	return _FAILURE;
+    	}
+    	// Before the virual memory is enabled
+    	if(!ReadRegister(REG_VM_ENABLE)) {
+        	_debug("VM not enabled, current brk: %p, new addr: %p \n", user_memory.brk_high, new_addr); 
+        	user_memory.brk_high = new_addr;
+        	return _SUCCESS;
+    	} 
+    	TracePrintf(0, "Y_Brk CHECK DONE = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+
+    	// Modify the brk 
+    	if(new_addr > user_memory.brk_high) { 
+        	TracePrintf(0, "Y_Brk ADD = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+        	page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        	rc = map_page_to_frame(user_page_table, 
+                            current_page_bound, 
+                            page_cnt, 
+                            PROT_READ | PROT_WRITE);
+        	if(rc) {
+            		TracePrintf(0, "uUser Break Warning: Not enough phycial memory\n");
+            		return _FAILURE;
+        	}
+        	TracePrintf(0, "Y_Brk ADD DONE = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+    	} else if (new_page_bound < user_memory.brk_high) {
+        	TracePrintf(0, "Y_Brk RM = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+        	page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        	rc = unmap_page_to_frame(user_page_table,
+                                new_page_bound, 
+                                page_cnt);
+        	if(rc) {
+            		TracePrintf(0, "User Break Warning: Not able to release pages\n");
+            		return _FAILURE;
+        	}
+    	}
+    	user_memory.brk_high = new_addr;
+    	TracePrintf(0, "Y_Brk DONE = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+    	_debug("VM enabled 0, current brk: %p, new addr: %p \n", user_memory.brk_high, new_addr); 
+    	return _SUCCESS;
 }

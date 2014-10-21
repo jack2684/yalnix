@@ -41,5 +41,6 @@ int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt
 
 // Some globals
 extern vm_t kernel_memory;
+extern vm_t user_memory;
 #endif
 
