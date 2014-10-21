@@ -23,7 +23,7 @@
  *  is to be loaded. 
  */
 int
-LoadProgram(char *name, char *args[], proc) 
+LoadProgram(char *name, char *args[], pcb_t *proc) 
 //==>> Declare the argument "proc" to be a pointer to your PCB or
 //==>> process descriptor data structure.  We assume you have a member
 //==>> of this structure used to hold the cpu context 
@@ -238,7 +238,7 @@ LoadProgram(char *name, char *args[], proc)
 ==>> into the TLB.  It's nice for the TLB and the page tables to remain
 ==>> consistent.
 
-  close(fd);			/* we've read it all now */     //@TODO: What is this? Should we uncomment it?
+    close(fd);			/* we've read it all now */     //@TODO: What is this? Should we uncomment it?
     set_ptes(user_page_table, GET_PAGE_NUMBER(text_pg1), li.t_npg, PROT_READ | PROT_EXEC); 
 
   /*
@@ -258,21 +258,21 @@ LoadProgram(char *name, char *args[], proc)
    */
 
 #ifdef LINUX
-  memset(cpp, 0x00, VMEM_1_LIMIT - ((int) cpp));
+    memset(cpp, 0x00, VMEM_1_LIMIT - ((int) cpp));
 #endif
 
-  *cpp++ = (char *)argcount;		/* the first value at cpp is argc */
-  cp2 = argbuf;
-  for (i = 0; i < argcount; i++) {      /* copy each argument and set argv */
-    *cpp++ = cp;
-    strcpy(cp, cp2);
-    cp += strlen(cp) + 1;
-    cp2 += strlen(cp2) + 1;
-  }
-  free(argbuf);
-  *cpp++ = NULL;			/* the last argv is a NULL pointer */
-  *cpp++ = NULL;			/* a NULL pointer for an empty envp */
+    *cpp++ = (char *)argcount;		/* the first value at cpp is argc */
+    cp2 = argbuf;
+    for (i = 0; i < argcount; i++) {      /* copy each argument and set argv */
+        *cpp++ = cp;
+        strcpy(cp, cp2);
+        cp += strlen(cp) + 1;
+        cp2 += strlen(cp2) + 1;
+    }
+    free(argbuf);
+    *cpp++ = NULL;			/* the last argv is a NULL pointer */
+    *cpp++ = NULL;			/* a NULL pointer for an empty envp */
 
-  return SUCCESS;
+    return SUCCESS;
 }
 

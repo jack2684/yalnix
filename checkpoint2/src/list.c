@@ -92,18 +92,18 @@ int list_insert(list_t *list, void* data, int idx) {
 }
 
 void* list_rm_head(list_t *list) {
-    if(!list) {
-        list->rc = ERR_NULL_POINTER;
-        return NULL;
-    }
-    if(list->size) {
-        void* data = list->head->data;
-        node_t *node = list->head;
-        list->head = list->head->next;
-        return data;
-    } else {
-        return NULL;
-    } 
+//    if(!list) {
+//        list->rc = ERR_NULL_POINTER;
+//        return NULL;
+//    }
+//    if(list->size) {
+//        void* data = list->head->data;
+//        node_t *node = list->head;
+//        list->head = list->head->next;
+//        return data;
+//    } else {
+//        return NULL;
+//    } 
     return list_rm_idx(list, 0);
 }
 
@@ -146,7 +146,7 @@ void* list_rm_idx(list_t *list, int idx) {
     return data;
 }
 
-void* list_rm_tail(list_t *list) {
+void *list_rm_tail(list_t *list) {
     return list_rm_idx(list, list->size - 1);
 }
 
@@ -182,18 +182,6 @@ node_t *node_init(void* data) {
     if(node) {
         node->data = data;
         node->next = NULL;
-        return node;
-    } else {
-        return NULL;
-    }   
-}
-
-dnode_t *dnode_init(void* data) {
-    dnode_t *node = (dnode_t*)malloc(sizeof(dnode_t));
-    if(node) {
-        node->data = data;
-        node->next = NULL;
-        node->prev = NULL;
         return node;
     } else {
         return NULL;

@@ -1,84 +1,42 @@
-#include "kernelLib.h"
+#include "proc.h"
 
-//These are process syscalls
-int Y_Fork(void){
-	//SAVE the current user-context
-	//COPY Parent's user-context
-	//COPY address space
-	//GET child's pid
+pcb_t   *kernel_proc;          // A kernel proc
+pcb_t   *user_proc;          // A user proc
+pcb_t   *running_proc;      // Current running proc
+list_t  *ready_queue;   
+list_t  *wait_queue;
 
-	//IF child's pid equals current pid
-		//RETURN 0
-	//ELSE
-		//RETURN 1
-	//END IF
+/* Init the pcb of two original processes, 
+ * which run in user and kernel land respectively
+ */
+void init_pcb(void) {
+    kernel_proc = (pcb_t*) malloc(sizeof(pcb_t));
+    user_proc = (pcb_t*) malloc(sizeof(pcb_t));
+    bzero(kernel_proc, sizeof(pcb_t));
+    bzero(user_proc, sizeof(pcb_t));
+
+    kernel_proc->pid = 0;
+    user_proc->pid = 1;
+
+    running_proc = user_proc;
+    ready_queue = list_init(kernel_proc);
+    en_ready_queue(ready_queue, kernel_proc);
 }
 
-int Y_Exec(char * filename, char* argvec[]){
-	//CHECK if filename is valid
-	//COPY filename into the heap
-	//CHECK if arguments are valid
-	//COPY arguments into the heap
-	//INIT all the text, data, stack segments
-	//RENEW the user context
-	//FREE the content in heap
+int en_ready_queue(void *proc) {
+    node_t *n = list_add_tail(ready_queue, proc);
+    if(!n) {
+        _debug("Cannot enqueue the pcb\n");
+        return 1;
+    }
+    proc->list_node = n; 
 }
 
-int Y_Exit(int status){
-	//WHILE lock list is not empty
-		//RELEASE all the locks
-	//END WHILE
-
-	//WHILE child process PCB list is not empty
-		//SET the id  of parent process of the children to 1 (INIT)
-		//IF a child process is zombie
-			//CLEAN this child process
-		//END IF
-	//END WHILE	
-
-	//RELEASE all the buffers
-	//RELEASE all the frames
-
-	//IF there is still a parent
-		//MOVE process to its zombie children list
-	//ELSE
-		//RELEASE PCBs
-	//END IF
+void* de_ready_queue() {
+    return list_rm_head();
 }
 
-int Y_Wait(int * status_ptr){
-	//IF there are zombie children
-		//REMOVE their PCB from PCB list
-		//FREE PCB
-	//END IF
-
-	//IF there are no live children
-		//REPORT ERROR
-	//END IF
-
-	//BLOCK current process
+void init_kernel_proc(void) {
+    
 }
 
-int Y_WaitPid(int pid, int* status_ptr, int options){
-	//IF pid < -1
-		//WAIT for any child process in a process group whose pid is -pid
-	//END IF	
-	
-	//IF pid == -1
-		//CALL Wait()
-	//END IF
-	
-	//IF pid == 0
-		//WAIT for any child process in the same process group as the parent process
-	//END IF
-
-	//IF pid > 0
-		//WAIT for the child process whose pid equals the given pid argument
-	//END IF
-	
-	//SET the options argument to the default number 0
-}
-
-int Y_GetPid(void){
-	//RETURN current process's pid
-}

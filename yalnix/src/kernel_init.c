@@ -8,7 +8,7 @@
 
 trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
 
-void SetKernelData(void *_Kernel_Data_Start, void *_Kernel_Data_End) {
+void SetKernelData _PARAMS((void *_Kernel_Data_Start, void *_Kernel_Data_End)) {
     // Set kernel vm boundaries, noted that most of the *_high is implicitly represented by other's *_low 
     TracePrintf(0, "Start=%p, End=%p\n", _Kernel_Data_Start, _Kernel_Data_End);
     kernel_memory.text_low     = (unsigned int)VMEM_BASE;
@@ -102,13 +102,13 @@ void Cooking(pte_t *user_page_table, UserContext* uctxt) {
     int i = GET_PAGE_NUMBER(VMEM_1_LIMIT);
     user_page_table[0].valid = _VALID;
     user_page_table[0].prot = PROT_READ | PROT_WRITE;
-    user_page_table[0].pfn = frame_get_pfn(list_rm_head(available_frames));
+    user_page_table[0].pfn = frame_get_pfn(list_rm_idx(available_frames, 0));
 
     uctxt->pc = &DoIdle;
     uctxt->sp = (void*)(VMEM_1_BASE + PAGESIZE - 4); 
 }
 
-void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt ) {
+void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )) {
     TracePrintf(0, "Start the kernel\n");
     
     // Initialize vector table mapping from interrupt/exception/trap to a handler fun
@@ -120,12 +120,13 @@ void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
     // Memory management, linked list of frames of free memory
     available_frames = list_init();
     PAGE_SIZE = GET_PAGE_NUMBER(pmem_size);
-    init_kernel_page_table();
-    user_page_table = init_user_page_table();
+    user_page_table = init_user_page_table();   // It is every import to init user earlier than kernel,
+    init_kernel_page_table();                   // due to the malloc and SetKernelBrk
     if(!kernel_page_table || !user_page_table) {
         _debug("Cannot allocate memory for page tables.\n");
         return;
     }
+
 
     // Build page tables using REG_PTBR0/1 REG_PTLR0/1 
     WriteRegister(REG_PTBR0, (uint32)kernel_page_table);
@@ -135,6 +136,17 @@ void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
 
     // Enable virtual memroy 
     WriteRegister(REG_VM_ENABLE, _ENABLE);
+    int *a;
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
+    a= (int*) malloc(sizeof(int) * 1000);
 
     // Create idle proc
     Cooking(user_page_table, uctxt);
@@ -148,13 +160,15 @@ void KernelStart(char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )
 /*
  *  Not necessary in checkpoint 2
  */ 
-int SetKernelBrk (void *addr) {
+int SetKernelBrk _PARAMS((void *addr)) {
     TracePrintf(0, "SetKernelBrk Start = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
+    
     int page_cnt, rc;
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = UP_TO_PAGE(new_addr);
     uint32 current_page_bound = UP_TO_PAGE(kernel_memory.brk_high);
     
+    _debug("VM not enabled 0, current brk: %p, new addr: %p \n", kernel_memory.brk_high, new_addr); 
     // Boudaries check
     if(new_addr > kernel_memory.stack_low) {
         TracePrintf(0, "Kernel Break Warning: Trying to Access Stack Addr = %p\n", new_addr);
@@ -166,6 +180,7 @@ int SetKernelBrk (void *addr) {
     }
     // Before the virual memory is enabled
     if(!ReadRegister(REG_VM_ENABLE)) {
+        _debug("VM not enabled, current brk: %p, new addr: %p \n", kernel_memory.brk_high, new_addr); 
         kernel_memory.brk_high = new_addr;
         return _SUCCESS;
     } 
@@ -183,6 +198,7 @@ int SetKernelBrk (void *addr) {
             TracePrintf(0, "Kernel Break Warning: Not enough phycial memory\n");
             return _FAILURE;
         }
+        TracePrintf(0, "SetKernelBrk ADD DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
     } else if (new_page_bound < kernel_memory.brk_high) {
         TracePrintf(0, "SetKernelBrk RM = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
         page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
@@ -194,8 +210,9 @@ int SetKernelBrk (void *addr) {
             return _FAILURE;
         }
     }
-    TracePrintf(0, "SetKernelBrk DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
     kernel_memory.brk_high = new_addr;
+    TracePrintf(0, "SetKernelBrk DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
+    _debug("VM enabled 0, current brk: %p, new addr: %p \n", kernel_memory.brk_high, new_addr); 
     return _SUCCESS;
 }
 

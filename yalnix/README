@@ -1,0 +1,1 @@
+./yalnix -n -t -lk 5 -lh 3 init a b c

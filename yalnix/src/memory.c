@@ -3,8 +3,9 @@
 #include "list.h"
 
 pte_t   *kernel_page_table = NULL;          // Page table for kernel
+pte_t   *user_page_table = NULL;            // Page table for kernel
 list_t  *available_frames = NULL;           // For physcial memories
-vm_t    kernel_memory;              // Kernel virtual memories
+vm_t    kernel_memory;                      // Kernel virtual memories
 uint32  PAGE_SIZE;
 
 frame_t *init_frame(uint32 idx) {
@@ -25,8 +26,8 @@ int add_tail_available_frame(uint32 pfn) {
     int rc;
     frame_t *frame = init_frame(pfn);
     
-    rc = list_add_tail(available_frames, (void*)frame);
-    if(rc) {
+    node_t *n = list_add_tail(available_frames, (void*)frame);
+    if(!n) {
         _debug("Cannot add more free frame\n");
         return MALLOC_ERR;
     }
@@ -69,8 +70,11 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
         } else {
             _debug("Map pfn: %d\n", frame_get_pfn(frame));
             this_page_table[i].valid = _VALID;
+            _debug("Map set valid: %d\n", frame_get_pfn(frame));
             this_page_table[i].prot = prot;
+            _debug("Map set prot: %d\n", frame_get_pfn(frame));
             this_page_table[i].pfn = frame_get_pfn(frame);
+            _debug("Map set pfn: %d\n", frame_get_pfn(frame));
         }
     }
 

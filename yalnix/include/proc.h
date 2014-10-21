@@ -1,7 +1,17 @@
 #ifndef _PROC_H
 #define _PROC_H
-#include "kernelLib.h"
-#include "standardLib.h"
+
+#include "hardware.h"
+#include "memory.h"
+#include "list.h"
+
+enum proc_stat {
+    RUN,
+    READY,
+    WAIT,
+    ZOMBIE,
+    EXIT,
+}
 
 typedef struct y_PCB {
     // State
@@ -20,8 +30,7 @@ typedef struct y_PCB {
     unsigned long   gid;
 
     // Connected
-    struct y_PCB    *next_task;
-    struct y_PCB    *prev_task;
+    node_t          *list_node;          // For high performance list operation
     struct y_PBC    *children;
     struct y_PBC    *wait;
 } pcb_t;
