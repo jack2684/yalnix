@@ -17,7 +17,6 @@ void SetKernelData _PARAMS((void *_Kernel_Data_Start, void *_Kernel_Data_End)) {
     kernel_memory.data_low     = (unsigned int)_Kernel_Data_Start;
     kernel_memory.brk_low      = (unsigned int)_Kernel_Data_End;
     kernel_memory.brk_high     = (unsigned int)_Kernel_Data_End;
-    // kernel_memory.stack_low    = (unsigned long)KERNEL_STACK_LIMIT - WORD_LEN / 8;
     kernel_memory.stack_low    = (unsigned int)KERNEL_STACK_BASE;
 }
 
@@ -44,6 +43,7 @@ void init_trap_vector() {
 void write_page_table(pte_t *page_table, uint32 idx_start, uint32 idx_end, int isValid, int prot) {
     int i;
     for(i = idx_start; i < idx_end; i++) {
+        // _debug("Writing idx %d with pte at %p\n", i, page_table + i);
         page_table[i].valid = isValid;
         page_table[i].prot = prot;
         page_table[i].pfn = i;
@@ -62,8 +62,9 @@ void init_kernel_page_table() {
                     GET_PAGE_NUMBER(kernel_memory.data_low), 
                     _VALID, PROT_READ | PROT_EXEC);
     
-    // For data segment mapping
-    TracePrintf(0, "Data Start=%p, End=%p\n", kernel_memory.data_low, kernel_memory.brk_low);
+    // For data and heap segment mapping
+    _debug("heap low %p and high %p\n", kernel_memory.brk_low, kernel_memory.brk_high);
+    TracePrintf(0, "Data Start=%p, End=%p\n", kernel_memory.data_low, kernel_memory.brk_high);
     write_page_table(kernel_page_table,
                     GET_PAGE_NUMBER(kernel_memory.data_low), 
                     GET_PAGE_NUMBER(kernel_memory.brk_low), 
@@ -96,9 +97,10 @@ void init_kernel_page_table() {
  */
 void *init_user_page_table() {
     user_page_table = (void*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-   // write_page_table(user_page_table,
-   //                 0, GET_PAGE_NUMBER(VMEM_1_SIZE),
-   //                 _VALID, PROT_READ)
+    write_page_table(user_page_table,
+                    0, GET_PAGE_NUMBER(VMEM_REGION_SIZE),
+                    _INVALID, 0);
+    _debug("Init user page done\n");
 }
 
 void DoIdle(void) {
@@ -138,7 +140,6 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
         return;
     }
 
-
     // Build page tables using REG_PTBR0/1 REG_PTLR0/1 
     WriteRegister(REG_PTBR0, (uint32)kernel_page_table);
     WriteRegister(REG_PTLR0, GET_PAGE_NUMBER(VMEM_0_SIZE));
@@ -146,14 +147,17 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
 
     // Enable virtual memroy 
-    _debug("+-+-+-Init VM+-+-+-\n");
+    _debug("Init VM\n");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     
     // Create idle proc
-    init_pcb();
-    LoadProgram("src/init", NULL, user_proc);
+    init_processes();
 
     // Load init process (in checkpoint 3)
+    LoadProgram(cmd_args[0], cmd_args, user_proc);
+    *uctxt = user_proc->user_context;
+    _debug("uctxt->pc: %p\n", uctxt->pc);
+    _debug("uctxt->sp: %p\n", uctxt->sp);
     
     TracePrintf(0, "Leave the kernel\n");
     return;
@@ -163,56 +167,46 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
  *  Not necessary in checkpoint 2
  */ 
 int SetKernelBrk _PARAMS((void *addr)) {
-    TracePrintf(0, "SetKernelBrk Start = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-    
-    int page_cnt, rc;
+    int rc;
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(new_addr));
     uint32 current_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
     
     // Boudaries check
     if(new_addr > kernel_memory.stack_low) {
-        TracePrintf(0, "Kernel Break Warning: Trying to Access Stack Addr = %p\n", new_addr);
+        _debug("Kernel Break: Trying to Access Stack Addr = %p\n", new_addr);
         return _FAILURE;
     } // Check if trying to access below brk base line
     else if(new_addr < kernel_memory.brk_low) {
-        TracePrintf(0, "Kernel Break Warning: Trying to Access Text Addr = %p\n", addr);
+        _debug("Kernel Break: Trying to Access Data Addr = %p\n", addr);
         return _FAILURE;
     }
     // Before the virual memory is enabled
     if(!ReadRegister(REG_VM_ENABLE)) {
-        _debug("VM not enabled, current brk: %p, new addr: %p \n", kernel_memory.brk_high, new_addr); 
         kernel_memory.brk_high = new_addr;
         return _SUCCESS;
     } 
-    TracePrintf(0, "SetKernelBrk CHECK DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
 
     // Modify the brk 
     if(new_addr > kernel_memory.brk_high) { 
-        TracePrintf(0, "SetKernelBrk ADD = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-        page_cnt = new_page_bound - current_page_bound;
         rc = map_page_to_frame(kernel_page_table, 
                             current_page_bound, 
-                            page_cnt, 
+                            new_page_bound, 
                             PROT_READ | PROT_WRITE);
         if(rc) {
-            TracePrintf(0, "Kernel Break Warning: Not enough phycial memory\n");
+            _debug("Kernel Break: Not enough phycial memory\n");
             return _FAILURE;
         }
-        TracePrintf(0, "SetKernelBrk ADD DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
     } else if (new_addr < kernel_memory.brk_high) {
-        TracePrintf(0, "SetKernelBrk RM = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
-        page_cnt = new_page_bound - current_page_bound;
         rc = unmap_page_to_frame(kernel_page_table,
                                 new_page_bound, 
-                                page_cnt);
+                                current_page_bound);
         if(rc) {
-            TracePrintf(0, "Kernel Break Warning: Not able to release pages\n");
+            _debug("Kernel Break Warning: Not able to release pages\n");
             return _FAILURE;
         }
     }
     kernel_memory.brk_high = new_addr;
-    TracePrintf(0, "SetKernelBrk DONE = %p, End = %p, New Addr = %p\n", kernel_memory.brk_low, kernel_memory.brk_high, addr);
     return _SUCCESS;
 }
 

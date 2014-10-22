@@ -5,9 +5,11 @@
 #include "common.h"
 
 #define GET_PAGE_NUMBER(addr) (((uint32)addr) >> PAGESHIFT)
-#define GET_PAGE_OFFSET(addr) (addr << PAGESHIFT)
+#define GET_PAGE_FLOOR_NUMBER(addr) (DOWN_TO_PAGE((uint32)addr) >> PAGESHIFT)
+#define GET_PAGE_CEILING_NUMBER(addr) (UP_TO_PAGE((uint32)addr) >> PAGESHIFT)
+#define GET_PAGE_OFFSET(addr) (addr & PAGEMASK)
 #define KERNEL_PAGE_TO_ADDR(idx) (idx << PAGESHIFT)
-#define USER_PAGE_TO_ADDR(idx) (idx << PAGESHIFT + VMEM_1_BASE)
+#define USER_PAGE_TO_ADDR(idx) ((idx << PAGESHIFT) + VMEM_1_BASE)
 
 #define MALLOC_ERR          1
 #define NO_AVAILABLE_ERR    2
@@ -35,9 +37,9 @@ uint32 frame_get_pfn(frame_t* f);
 int add_tail_available_frame(uint32 pfn);
 frame_t *rm_head_available_frame();
 void flush_region_TLB(pte_t* table);
-int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot);
-int set_ptes(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot);
-int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt);
+int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot);
+int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot);
+int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx);
 
 // Some globals
 extern vm_t kernel_memory;

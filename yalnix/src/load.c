@@ -44,6 +44,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     long segment_size;
     char *argbuf;
 
+    _debug("Load program: name => %s\n", name);
   
   /*
    * Open the executable file 
@@ -65,6 +66,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         return _FAILURE;
     }
 
+    _debug("Open file DONE.\n");
   /*
    * Figure out in what region 1 page the different program sections
    * start and end
@@ -77,14 +79,17 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
    *  the new stack that we are building.  Also count the number of
    *  arguments, to become the argc that the new "main" gets called with.
    */
+    _debug("LoadProgram: Set boundaries done, about to calculate the args\n");
     size = 0;
     for (i = 0; args[i] != NULL; i++) {
+        _debug("counting arg %d = '%s'\n", i, args[i]);
         TracePrintf(3, "counting arg %d = '%s'\n", i, args[i]);
         size += strlen(args[i]) + 1;
     }
     argcount = i;
 
     TracePrintf(2, "LoadProgram: argsize %d, argcount %d\n", size, argcount);
+    _debug("LoadProgram: argsize %d, argcount %d\n", size, argcount);
   
   /*
    *  The arguments will get copied starting at "cp", and the argv
@@ -120,6 +125,8 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
     TracePrintf(1, "LoadProgram: heap_size %d, stack_size %d\n",
 	            li.t_npg + data_npg, stack_npg);
+    _debug("LoadProgram: heap_size %d, stack_size %d\n",
+                     li.t_npg + data_npg, stack_npg);
 
 
     /* leave at least one page between heap and stack */
@@ -140,7 +147,8 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
 // ==>> Here you replace your data structure proc
 // ==>> proc->context.sp = cp2;
-    proc->user_context.pc = cp2; // @TODO: user context or kernel context?
+    proc->user_context.sp = cp2; // @TODO: user context or kernel context?
+    _debug("proc->user_context: %p\n", proc->user_context.pc);
 
     /*
      * Now save the arguments in a separate buffer in region 0, since
@@ -177,19 +185,23 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> of the new process.
 
     // Clean slate
-    unmap_page_to_frame(user_page_table, 0, VMEM_REGION_SIZE);
+    _debug("LoadProgram: About to clean\n");
+    unmap_page_to_frame(user_page_table, 0, GET_PAGE_NUMBER(VMEM_REGION_SIZE));
+    _debug("LoadProgram: Clean DONE\n");
 
 // ==>> Allocate "li.t_npg" physical pages and map them starting at
 // ==>> the "text_pg1" page in region 1 address space.    
 // ==>> These pages should be marked valid, with a protection of 
 // ==>> (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_NUMBER(text_pg1), li.t_npg, PROT_WRITE | PROT_READ);
+    map_page_to_frame(user_page_table, GET_PAGE_FLOOR_NUMBER(text_pg1), GET_PAGE_CEILING_NUMBER(text_pg1) + li.t_npg + 1, PROT_WRITE | PROT_READ);
+    _debug("LoadProgram: Map user text DONE\n");
     
 // ==>> Allocate "data_npg" physical pages and map them starting at
 // ==>> the    "data_pg1" in region 1 address space.    
 // ==>> These pages should be marked valid, with a protection of 
 // ==>> (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_NUMBER(data_pg1), data_npg, PROT_WRITE | PROT_READ);
+    map_page_to_frame(user_page_table, GET_PAGE_FLOOR_NUMBER(data_pg1), GET_PAGE_CEILING_NUMBER(data_pg1) + data_npg + 1, PROT_WRITE | PROT_READ);
+    _debug("LoadProgram: Map user data DONE\n");
 
     /*
      * Allocate memory for the user stack too.
@@ -198,7 +210,8 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> of the region 1 virtual address space.
 // ==>> These pages should be marked valid, with a
 // ==>> protection of (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_NUMBER(VMEM_1_LIMIT) - stack_npg, stack_npg, PROT_READ | PROT_WRITE);
+    map_page_to_frame(user_page_table, GET_PAGE_FLOOR_NUMBER(VMEM_REGION_SIZE) - stack_npg - 1, GET_PAGE_CEILING_NUMBER(VMEM_REGION_SIZE), PROT_READ | PROT_WRITE);
+    _debug("LoadProgram: Map user stack DONE\n");
 
     /*
      * All pages for the new address space are now in the page table.    
@@ -227,6 +240,8 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         return KILL;
     }
 
+    _debug("LoadProgram: Read file DONE\n");
+
     /*
      * Now set the page table entries for the program text to be readable
 ==>> that these pages will have indices starting at text_pg1 in 
@@ -238,12 +253,16 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 ==>> consistent.
 
     close(fd);			/* we've read it all now */     //@TODO: What is this? Should we uncomment it?
-    set_ptes(user_page_table, GET_PAGE_NUMBER(text_pg1), li.t_npg, PROT_READ | PROT_EXEC); 
+    set_ptes(user_page_table, GET_PAGE_FLOOR_NUMBER(text_pg1), GET_PAGE_CEILING_NUMBER(text_pg1) + li.t_npg + 1, PROT_READ | PROT_EXEC); 
+    _debug("LoadProgram: Set ptes DONE\n");
 
   /*
    * Zero out the uninitialized data area
    */
-    bzero((void*)li.id_end, li.ud_end - li.id_end);
+    _debug("LoadProgram: About to bzero from %p to %p\n", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
+    // bzero((void*)li.id_end, li.ud_end - li.id_end);
+    _debug("LoadProgram: Bzero DONE\n");
+
 
   /*
    * Set the entry point in the exception frame.

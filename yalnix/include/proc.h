@@ -16,7 +16,7 @@ enum proc_stat {
 
 typedef struct y_PCB {
     // State
-    int             state;
+    enum proc_stat  state;
     long            priority;
     vm_t            *mm;            // Memory management
     int             exit_code;
@@ -42,10 +42,12 @@ extern pcb_t   *running_proc;      // Current running proc
 extern dlist_t  *ready_queue;   
 extern dlist_t  *wait_queue;
 
-void init_pcb(void);
+void init_processes(void);
+void DoIdle(void);
+void init_kernel_proc(void);
+void init_user_proc(void);
 int en_ready_queue(pcb_t *proc);
 pcb_t* de_ready_queue(pcb_t *proc);
-void init_kernel_proc(void);
 
 #endif
 

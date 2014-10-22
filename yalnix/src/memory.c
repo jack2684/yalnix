@@ -57,12 +57,14 @@ void flush_region_TLB(pte_t* table) {
     }
 }
 
-int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot) {
-    int end_page_idx = start_page_idx + page_cnt;
+int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot) {
     int rc = 0, i;
 
     // Try mapping
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
+        if(this_page_table[i].valid == _VALID) {
+            continue;
+        }
         frame_t *frame = rm_head_available_frame();
         if(!frame) {
             rc = NO_AVAILABLE_ERR;
@@ -73,29 +75,36 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt, 
         }
     }
 
-    _debug("Map from page %d to page %d DONE\n", start_page_idx, end_page_idx);
+    _debug("Map from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
     // Flush the toilet!
     flush_region_TLB(this_page_table);
     return rc;
 }
 
-int set_ptes(pte_t* this_page_table, int start_page_idx, int page_cnt, int prot) {
-    int end_page_idx = start_page_idx + page_cnt;
+int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot) {
     int rc = 0, i;
 
-    _debug("Start to set from page %d to page %d\n", start_page_idx, end_page_idx);
     for(i = start_page_idx; i < end_page_idx; i++ ) {
         this_page_table[i].prot = prot;
+        if(this_page_table == kernel_page_table) {
+            WriteRegister(REG_TLB_FLUSH, KERNEL_PAGE_TO_ADDR(i));
+        } else {
+            WriteRegister(REG_TLB_FLUSH, USER_PAGE_TO_ADDR(i));
+        }
     }
-    _debug("Map done\n");
+    _debug("Set from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
 }
 
-int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int page_cnt) {
-    int end_page_idx = start_page_idx + page_cnt;
+int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx) {
     int rc = 0, i;
    
     // Try unmapping
+    _debug("About to unmap from %d to %d\n", start_page_idx, end_page_idx);
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
+        //_debug("unmapping idx %d to %p with pte at %p\n", i, frame_get_pfn(frame), this_page_table + i);
+        if(this_page_table[i].valid == _INVALID) {
+            continue;
+        }
         this_page_table[i].valid = _INVALID;
         rc = add_tail_available_frame(this_page_table[i].pfn);
         if(rc) {

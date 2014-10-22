@@ -34,11 +34,11 @@ KERNEL_INCS =
 
 
 #List all user programs here.
-USER_APPS = #init 
+USER_APPS = $(MY_SRC)init 
 #List all user program source files here.  SHould be the same as the previous list, with ".c" added to each file
-USER_SRCS = #$(MY_SRC)init.c
+USER_SRCS = $(MY_SRC)init.c
 #List the objects to be formed form the user  source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-USER_OBJS = #$(MY_SRC)init.o 
+USER_OBJS = $(MY_SRC)init.o 
 #List all of the header files necessary for your user programs
 USER_INCS = 
 
