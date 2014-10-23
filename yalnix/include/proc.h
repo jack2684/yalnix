@@ -24,7 +24,7 @@ typedef struct y_PCB {
     int             exit_signail;
     UserContext     user_context;
     KernelContext   kernel_context;
-    pte_t           page_table;
+    pte_t*          page_table;
     int             remaining_clock_ticks;
     
     // Identity
