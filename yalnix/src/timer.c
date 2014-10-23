@@ -8,7 +8,6 @@ void timer_init(void) {
 }
 
 int round_robin_timeout(void) {
-    log_info("Current tick %d", timer.tick);
     timer.tick--;
     if(!timer.tick) {
         timer.tick = timer.round_robin_quantumn;

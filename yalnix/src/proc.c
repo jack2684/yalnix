@@ -75,13 +75,13 @@ pcb_t* de_ready_queue() {
 
 void stall_running_and_en_ready_queue(UserContext *user_context) {
     // Swtich out the running proc
-    log_info("START stall_running_and_en_ready_queue with ready queue size: %d", ready_queue->size);
+    // log_info("START stall_running_and_en_ready_queue with ready queue size: %d", ready_queue->size);
     en_ready_queue(running_proc);
-    log_info("DONE stall_running_and_en_ready_queue with ready queue size: %d", ready_queue->size);
+    // log_info("DONE stall_running_and_en_ready_queue with ready queue size: %d", ready_queue->size);
     memcpy(&(running_proc->user_context), user_context, sizeof(UserContext));
     memcpy(running_proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&(running_proc->mm), &user_memory, sizeof(vm_t));
-    log_info("DONE backup with ready queue size: %d", ready_queue->size);
+    // log_info("DONE backup with ready queue size: %d", ready_queue->size);
     
     // Switch in the kernel idle proc
     memcpy(user_context, &(kernel_proc->user_context), sizeof(UserContext));
@@ -94,12 +94,13 @@ void stall_running_and_en_ready_queue(UserContext *user_context) {
  *  4. If the process is delaying, decrement the tick and switch to kernel proc
  */
 void round_robin_schedule(UserContext *user_context) {
-    log_info("Round robin with ready queue size: %d", ready_queue->size);
+    //log_info("Round robin with ready queue size: %d", ready_queue->size);
     if(!ready_queue->size)
         return;
   
-    if(running_proc != kernel_proc)
+    if(running_proc != kernel_proc) {
         stall_running_and_en_ready_queue(user_context);
+    }
     pcb_t *next_proc;
     next_proc = de_ready_queue();
     if(next_proc->remaining_clock_ticks > 0) {
@@ -111,6 +112,7 @@ void round_robin_schedule(UserContext *user_context) {
         memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
         memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
         memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
+        running_proc = next_proc;
     }
 }
 

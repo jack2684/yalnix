@@ -21,9 +21,7 @@ void trap_kernel_handler(UserContext *user_context){
             user_context->regs[0] = Y_Brk((void*)user_context->regs[0]);
             break;
         case YALNIX_DELAY:
-            log_info("trap_kernel_handler invoked Y_Delay()");
             Y_Delay(user_context);
-            log_info("trap_kernel_handler DONE with Y_Delay()");
         default:
             break;
     }
@@ -58,7 +56,6 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
-    log_info("Clocking ticking with pid %d", Y_GetPid());
     if(round_robin_timeout()) {
         round_robin_schedule(user_context);
     }
