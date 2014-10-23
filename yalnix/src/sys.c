@@ -141,6 +141,8 @@ int Y_Delay(UserContext *user_context){
 	running_proc -> remaining_clock_ticks = clock_ticks;
     log_info("Delay %d seconds for pid %d DONE", clock_ticks, running_proc->pid);
 
+    stall_running_and_en_ready_queue(user_context);
+
 	return _SUCCESS;
 }
 

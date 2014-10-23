@@ -12,7 +12,8 @@ dlist_t  *wait_queue;
 void init_processes(void) {
     init_kernel_proc();
     init_user_proc();
-
+    timer_init();
+    
     ready_queue = dlist_init(kernel_proc);
     en_ready_queue(user_proc);
 }
@@ -67,6 +68,17 @@ pcb_t* de_ready_queue() {
     return about_to_run;
 }
 
+void stall_running_and_en_ready_queue(UserContext *user_context) {
+    // Swtich out the running proc
+    en_ready_queue(running_proc);
+    memcpy(&(running_proc->user_context), user_context, sizeof(UserContext));
+    memcpy(&(running_proc->page_table), user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    memcpy(&(running_proc->mm), &user_memory, sizeof(vm_t));
+    
+    // Switch in the kernel idle proc
+    memcpy(user_context, &(kernel_proc->user_context), sizeof(UserContext));
+}
+
 /* Round robin schedule 
  *  1. Enqueue the running proc
  *  2. Dequeue the next proc in ready queue
@@ -75,17 +87,12 @@ pcb_t* de_ready_queue() {
 void round_robin_schedule(UserContext *user_context) {
     if(!ready_queue->size)
         return;
-
-    en_ready_queue(running_proc);
-    memcpy(&(running_proc->user_context), user_context, sizeof(UserContext));
-    memcpy(&(running_proc->page_table), user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    memcpy(&(running_proc->mm), &user_memory, sizeof(vm_t));
-    
+   
+    stall_running_and_en_ready_queue(user_context);
     pcb_t *next_proc;
     next_proc = de_ready_queue();
     if(next_proc->remaining_clock_ticks > 0) {
         next_proc->remaining_clock_ticks--;
-        memcpy(user_context, &(kernel_proc->user_context), sizeof(UserContext));
     } else {
         memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
         memcpy(user_page_table, &(next_proc->page_table), sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));

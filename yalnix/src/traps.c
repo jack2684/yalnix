@@ -9,7 +9,7 @@ Such a trap is used by user processes to request some type of service from the o
 such as creating a new process, allocating memory, or performing I/O. 
 All different kernel call requests enter the kernel through this single type of trap*/
 void trap_kernel_handler(UserContext *user_context){
-    log_info("trap_kernel_handler invoked for sys call");
+    log_info("trap_kernel_handler invoked for sys call %p", user_context->code);
     switch(user_context->code) {
         case YALNIX_EXIT:
             user_context->regs[0] = Y_Exit(user_context);
@@ -58,9 +58,7 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
-    return;
     log_info("Clocking ticking with pid %d", Y_GetPid());
-    return;
     if(round_robin_timeout()) {
         round_robin_schedule(user_context);
     }
