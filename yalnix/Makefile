@@ -40,7 +40,7 @@ USER_APPS = $(MY_SRC)init $(MY_SRC)gjj
 #List all user program source files here.  SHould be the same as the previous list, with ".c" added to each file
 USER_SRCS = $(MY_SRC)init.c $(MY_SRC)gjj.c
 #List the objects to be formed form the user  source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-USER_OBJS = $(MY_SRC)init.o $(MY_SRC)timer.o
+USER_OBJS = $(MY_SRC)init.o $(MY_SRC)gjj.o
 #List all of the header files necessary for your user programs
 USER_INCS = 
 
