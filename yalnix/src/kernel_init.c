@@ -156,24 +156,40 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     _debug("Init VM\n");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     
-    // Create one kernel and one user proc, 
-    // set the user as RUN, let kernel proc wait in queue 
+    // Create one kernel proc
     init_processes();
 
     // Load init process (in checkpoint 3)
+    init_user_proc();
     LoadProgram(cmd_args[0], cmd_args, user_proc);
+    log_info("Load program done\n");
     *uctxt = user_proc->user_context;
-    rm_ready_queue(user_proc);
+    _debug("uctxt->pc: %p\n", uctxt->pc);
+    _debug("uctxt->sp: %p\n", uctxt->sp);
+    safe_and_en_ready_queue(user_proc, uctxt); 
+    log_info("Program %s safed to ready queue", cmd_args[0]);
+
+    // Load gjj process (in checkpoint 3, as the othe process)
+    init_user_proc();
+    LoadProgram(cmd_args[1], cmd_args, user_proc);
+    log_info("Load program done\n");
+    *uctxt = user_proc->user_context;
+    _debug("uctxt->pc: %p\n", uctxt->pc);
+    _debug("uctxt->sp: %p\n", uctxt->sp);
+    safe_and_en_ready_queue(user_proc, uctxt); 
+    log_info("Program %s safed to ready queue", cmd_args[1]);
+  
+    // Run the first proc in ready queue
+    de_ready_queue_and_run(uctxt);
     //Cooking(user_page_table, uctxt);
    // int i;
    // for(i = 0; i < GET_PAGE_NUMBER(VMEM_1_SIZE); i++) {
    //     _debug("user_page_table[%d]: at: %p, valid: %d, frame: %d\n", i, USER_PAGE_TO_ADDR(i), user_page_table[i].valid, user_page_table[i].pfn);
    // }
     
-    _debug("uctxt->pc: %p\n", uctxt->pc);
-    _debug("uctxt->sp: %p\n", uctxt->sp);
 
    // KernelContextSwitch(MYKCSFun, (void*)user_proc, (void*)kernel_proc);
+    log_info("Leaving the kernel");
     return;
 }
 
