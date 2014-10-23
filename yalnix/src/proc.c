@@ -16,12 +16,12 @@ void init_processes(void) {
     ready_queue = dlist_init(kernel_proc);
     en_ready_queue(kernel_proc);
     en_ready_queue(user_proc);
-de_ready_queue(user_proc);
+    de_ready_queue(user_proc);
 }
 
 void DoDoIdle(void) {
     while (1) {
-        _debug("...... in %s() ....\n", __func__);
+        _debug("Doing DoIdle in kernel proc\n");
         Pause();
     }   
     return;
@@ -32,7 +32,7 @@ void init_kernel_proc(void) {
     bzero(kernel_proc, sizeof(pcb_t));
     kernel_proc->pid = 0;
     kernel_proc->user_context.pc = DoDoIdle;
-    kernel_proc->user_context.sp = (void*)kernel_memory.stack_low;
+    kernel_proc->user_context.sp = (void*)(VMEM_0_LIMIT - WORD_LEN / 8);
     return;
 }
 

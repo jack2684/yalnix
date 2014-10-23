@@ -58,23 +58,23 @@ void init_kernel_page_table() {
     // For text segment mapping
     TracePrintf(0, "Text Start=%p, End=%p\n", kernel_memory.text_low, kernel_memory.data_low);
     write_page_table(kernel_page_table, 
-                    GET_PAGE_NUMBER(kernel_memory.text_low), 
-                    GET_PAGE_NUMBER(kernel_memory.data_low), 
+                    GET_PAGE_FLOOR_NUMBER(kernel_memory.text_low), 
+                    GET_PAGE_CEILING_NUMBER(kernel_memory.data_low), 
                     _VALID, PROT_READ | PROT_EXEC);
     
     // For data and heap segment mapping
     _debug("heap low %p and high %p\n", kernel_memory.brk_low, kernel_memory.brk_high);
     TracePrintf(0, "Data Start=%p, End=%p\n", kernel_memory.data_low, kernel_memory.brk_high);
     write_page_table(kernel_page_table,
-                    GET_PAGE_NUMBER(kernel_memory.data_low), 
-                    GET_PAGE_NUMBER(kernel_memory.brk_low), 
+                    GET_PAGE_FLOOR_NUMBER(kernel_memory.data_low), 
+                    GET_PAGE_CEILING_NUMBER(kernel_memory.brk_low), 
                     _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
     TracePrintf(0, "Stack Start=%p, End=%p\n", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
     write_page_table(kernel_page_table,
-                    GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
-                    GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
+                    GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE), 
+                    GET_PAGE_CEILING_NUMBER(KERNEL_STACK_LIMIT), 
                     _VALID, PROT_READ | PROT_WRITE);
     
     int i;
@@ -106,16 +106,16 @@ void *init_user_page_table() {
 void DoIdle(void) {
     while(1) {
         TracePrintf(1, "DoIdle\n");
-        pause();
+        Pause();
     }
 }
 
 void Cooking(pte_t *user_page_table, UserContext* uctxt) {
-    // map_page_to_frame(user_page_table, GET_PAGE_NUMBER(VMEM_1_BASE), 1, PROT_READ | PROT_WRITE);
-    int i = GET_PAGE_NUMBER(VMEM_1_LIMIT);
-    user_page_table[0].valid = _VALID;
-    user_page_table[0].prot = PROT_READ | PROT_WRITE;
-    user_page_table[0].pfn = frame_get_pfn(list_rm_idx(available_frames, 0));
+    map_page_to_frame(user_page_table, 0, 1, PROT_READ | PROT_WRITE);
+    //int i = GET_PAGE_NUMBER(VMEM_1_LIMIT);
+    //user_page_table[0].valid = _VALID;
+    //user_page_table[0].prot = PROT_READ | PROT_WRITE;
+    //user_page_table[0].pfn = frame_get_pfn(list_rm_idx(available_frames, 0));
 
     uctxt->pc = &DoIdle;
     uctxt->sp = (void*)(VMEM_1_BASE + PAGESIZE - 4); 
@@ -156,6 +156,12 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // Load init process (in checkpoint 3)
     LoadProgram(cmd_args[0], cmd_args, user_proc);
     *uctxt = user_proc->user_context;
+    //Cooking(user_page_table, uctxt);
+   // int i;
+   // for(i = 0; i < GET_PAGE_NUMBER(VMEM_1_SIZE); i++) {
+   //     _debug("user_page_table[%d]: at: %p, valid: %d, frame: %d\n", i, USER_PAGE_TO_ADDR(i), user_page_table[i].valid, user_page_table[i].pfn);
+   // }
+    
     _debug("uctxt->pc: %p\n", uctxt->pc);
     _debug("uctxt->sp: %p\n", uctxt->sp);
     

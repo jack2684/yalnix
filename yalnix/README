@@ -1,1 +1,2 @@
-./yalnix -n -t -lk 5 -lh 3 src/init a b c
+./yalnix -n -t -lk 5 -lu 5 -lh 0 src/init a b c
+./yalnix -n -t -lk 5 -lu 5 src/init a b c

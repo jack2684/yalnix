@@ -23,6 +23,7 @@ typedef struct y_PCB {
     int             exit_signail;
     UserContext     user_context;
     KernelContext   kernel_context;
+    pte_t           *page_table;
     
     // Identity
     int             pid;
@@ -43,7 +44,7 @@ extern dlist_t  *ready_queue;
 extern dlist_t  *wait_queue;
 
 void init_processes(void);
-void DoIdle(void);
+void DoDoIdle(void);
 void init_kernel_proc(void);
 void init_user_proc(void);
 int en_ready_queue(pcb_t *proc);

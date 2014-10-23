@@ -148,7 +148,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> Here you replace your data structure proc
 // ==>> proc->context.sp = cp2;
     proc->user_context.sp = cp2; // @TODO: user context or kernel context?
-    _debug("proc->user_context: %p\n", proc->user_context.pc);
+    _debug("proc->user_context: %p\n", proc->user_context.sp);
 
     /*
      * Now save the arguments in a separate buffer in region 0, since
@@ -184,23 +184,36 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> deallocate a few pages to fit the size of memory to the requirements
 // ==>> of the new process.
 
+    int rc;
     // Clean slate
     _debug("LoadProgram: About to clean\n");
-    unmap_page_to_frame(user_page_table, 0, GET_PAGE_NUMBER(VMEM_REGION_SIZE));
+    rc = unmap_page_to_frame(user_page_table, 0, GET_PAGE_NUMBER(VMEM_REGION_SIZE));
+    if(rc) {
+        _debug("LoadProgram: unmap error\n");
+        return _FAILURE;
+    }
     _debug("LoadProgram: Clean DONE\n");
 
 // ==>> Allocate "li.t_npg" physical pages and map them starting at
 // ==>> the "text_pg1" page in region 1 address space.    
 // ==>> These pages should be marked valid, with a protection of 
 // ==>> (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_FLOOR_NUMBER(text_pg1), GET_PAGE_CEILING_NUMBER(text_pg1) + li.t_npg + 1, PROT_WRITE | PROT_READ);
+    rc = map_page_to_frame(user_page_table, text_pg1, text_pg1 + li.t_npg, PROT_WRITE | PROT_READ);
+    if(rc) {
+        _debug("LoadProgram: map text seg error\n");
+        return _FAILURE;
+    }
     _debug("LoadProgram: Map user text DONE\n");
     
 // ==>> Allocate "data_npg" physical pages and map them starting at
 // ==>> the    "data_pg1" in region 1 address space.    
 // ==>> These pages should be marked valid, with a protection of 
 // ==>> (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_FLOOR_NUMBER(data_pg1), GET_PAGE_CEILING_NUMBER(data_pg1) + data_npg + 1, PROT_WRITE | PROT_READ);
+    rc = map_page_to_frame(user_page_table, data_pg1, data_pg1 + data_npg, PROT_WRITE | PROT_READ);
+    if(rc) {
+        _debug("LoadProgram: map data seg error\n");
+        return _FAILURE;
+    }
     _debug("LoadProgram: Map user data DONE\n");
 
     /*
@@ -210,8 +223,15 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> of the region 1 virtual address space.
 // ==>> These pages should be marked valid, with a
 // ==>> protection of (PROT_READ | PROT_WRITE).
-    map_page_to_frame(user_page_table, GET_PAGE_FLOOR_NUMBER(VMEM_REGION_SIZE) - stack_npg - 1, GET_PAGE_CEILING_NUMBER(VMEM_REGION_SIZE), PROT_READ | PROT_WRITE);
-    _debug("LoadProgram: Map user stack DONE\n");
+    rc = map_page_to_frame(user_page_table, 
+                            GET_PAGE_NUMBER(cpp - VMEM_0_LIMIT), 
+                            GET_PAGE_NUMBER(cpp - VMEM_0_LIMIT) + stack_npg, 
+                            PROT_READ | PROT_WRITE);
+    if(rc) {
+        _debug("LoadProgram: map stack seg error\n");
+        return _FAILURE;
+    }
+    _debug("LoadProgram: Map user stack with #%d pages DONE\n", stack_npg);
 
     /*
      * All pages for the new address space are now in the page table.    
@@ -250,18 +270,19 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 ==>> If any of these page table entries is also in the TLB, either
 ==>> invalidate their entries in the TLB or write the updated entries
 ==>> into the TLB.  It's nice for the TLB and the page tables to remain
-==>> consistent.
+==>> consistent.*/
 
     close(fd);			/* we've read it all now */     //@TODO: What is this? Should we uncomment it?
-    set_ptes(user_page_table, GET_PAGE_FLOOR_NUMBER(text_pg1), GET_PAGE_CEILING_NUMBER(text_pg1) + li.t_npg + 1, PROT_READ | PROT_EXEC); 
+    set_ptes(user_page_table, text_pg1, text_pg1 + li.t_npg, PROT_READ | PROT_EXEC); 
     _debug("LoadProgram: Set ptes DONE\n");
 
   /*
    * Zero out the uninitialized data area
    */
     _debug("LoadProgram: About to bzero from %p to %p\n", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
-    // bzero((void*)li.id_end, li.ud_end - li.id_end);
+    bzero((void*)li.id_end, li.ud_end - li.id_end);
     _debug("LoadProgram: Bzero DONE\n");
+    
 
 
   /*

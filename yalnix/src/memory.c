@@ -61,12 +61,15 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_i
     int rc = 0, i;
 
     // Try mapping
+    _debug("Map from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         if(this_page_table[i].valid == _VALID) {
+            _debug("Page %d is valid already with prot %d\n", i, this_page_table[i].prot);
             continue;
         }
         frame_t *frame = rm_head_available_frame();
         if(!frame) {
+            _debug("Page %d cannot find available frame\n", i);
             rc = NO_AVAILABLE_ERR;
         } else {
             this_page_table[i].valid = _VALID;
@@ -75,7 +78,6 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_i
         }
     }
 
-    _debug("Map from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
     // Flush the toilet!
     flush_region_TLB(this_page_table);
     return rc;
@@ -84,6 +86,7 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_i
 int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot) {
     int rc = 0, i;
 
+    _debug("Set from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
     for(i = start_page_idx; i < end_page_idx; i++ ) {
         this_page_table[i].prot = prot;
         if(this_page_table == kernel_page_table) {
@@ -92,7 +95,8 @@ int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int p
             WriteRegister(REG_TLB_FLUSH, USER_PAGE_TO_ADDR(i));
         }
     }
-    _debug("Set from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
+    flush_region_TLB(this_page_table);
+    return rc;
 }
 
 int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx) {
