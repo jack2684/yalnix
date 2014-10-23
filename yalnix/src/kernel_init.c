@@ -161,10 +161,10 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     init_processes();
 
     // Load init process (in checkpoint 3)
-    //LoadProgram(cmd_args[0], cmd_args, user_proc);
-    //*uctxt = user_proc->user_context;
-    //rm_ready_queue(user_proc);
-    Cooking(user_page_table, uctxt);
+    LoadProgram(cmd_args[0], cmd_args, user_proc);
+    *uctxt = user_proc->user_context;
+    rm_ready_queue(user_proc);
+    //Cooking(user_page_table, uctxt);
    // int i;
    // for(i = 0; i < GET_PAGE_NUMBER(VMEM_1_SIZE); i++) {
    //     _debug("user_page_table[%d]: at: %p, valid: %d, frame: %d\n", i, USER_PAGE_TO_ADDR(i), user_page_table[i].valid, user_page_table[i].pfn);

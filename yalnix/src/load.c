@@ -272,7 +272,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 ==>> into the TLB.  It's nice for the TLB and the page tables to remain
 ==>> consistent.*/
 
-    close(fd);			/* we've read it all now */     //@TODO: What is this? Should we uncomment it?
+    close(fd);			/* we've read it all now */
     set_ptes(user_page_table, text_pg1, text_pg1 + li.t_npg, PROT_READ | PROT_EXEC); 
     _debug("LoadProgram: Set ptes DONE\n");
 

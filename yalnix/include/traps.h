@@ -2,6 +2,7 @@
 #define _TRAP_H
 #include "hardware.h"
 #include "yalnix.h"
+#include "common.h"
 #include "sys.h"
 
 typedef void (*trap_handler)(UserContext*);

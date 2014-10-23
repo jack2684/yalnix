@@ -53,7 +53,9 @@ int en_ready_queue(pcb_t *proc) {
 }
 
 pcb_t* rm_ready_queue(pcb_t *proc) {
-    return dlist_rm_this(ready_queue, proc->list_node);
+    pcb_t *about_to_run = dlist_rm_this(ready_queue, proc->list_node);
+    about_to_run->state = RUN;
+    running_proc = about_to_run;
 }
 
 pcb_t* de_ready_queue() {
