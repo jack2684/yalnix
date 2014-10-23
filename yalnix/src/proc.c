@@ -14,9 +14,7 @@ void init_processes(void) {
     init_user_proc();
 
     ready_queue = dlist_init(kernel_proc);
-    en_ready_queue(kernel_proc);
     en_ready_queue(user_proc);
-    de_ready_queue(user_proc);
 }
 
 void DoDoIdle(void) {
@@ -54,10 +52,42 @@ int en_ready_queue(pcb_t *proc) {
     return 0;
 }
 
-pcb_t* de_ready_queue(pcb_t *proc) {
-    pcb_t *about_to_run = dlist_rm_this(ready_queue, proc->list_node);
-    about_to_run->state = RUN;
-    running_proc = user_proc;
+pcb_t* rm_ready_queue(pcb_t *proc) {
+    return dlist_rm_this(ready_queue, proc->list_node);
+}
+
+pcb_t* de_ready_queue() {
+    pcb_t *about_to_run = dlist_rm_head(ready_queue);
+    if(about_to_run == NULL) {
+        log_info("Ready queue is empty, suck it.");
+        return NULL;
+    }
     return about_to_run;
+}
+
+/* Round robin schedule 
+ *  1. Enqueue the running proc
+ *  2. Dequeue the next proc in ready queue
+ *  4. If the process is delaying, decrement the tick and switch to kernel proc
+ */
+void round_robin_schedule(UserContext *user_context) {
+    if(!ready_queue->size)
+        return;
+
+    en_ready_queue(running_proc);
+    memcpy(&(running_proc->user_context), user_context, sizeof(UserContext));
+    memcpy(&(running_proc->page_table), user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    memcpy(&(running_proc->mm), &user_memory, sizeof(vm_t));
+    
+    pcb_t *next_proc;
+    next_proc = de_ready_queue();
+    if(next_proc->remaining_clock_ticks > 0) {
+        next_proc->remaining_clock_ticks--;
+        memcpy(user_context, &(kernel_proc->user_context), sizeof(UserContext));
+    } else {
+        memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
+        memcpy(user_page_table, &(next_proc->page_table), sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+        memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
+    }
 }
 

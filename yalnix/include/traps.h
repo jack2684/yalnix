@@ -1,13 +1,15 @@
 #ifndef _TRAP_H
 #define _TRAP_H
 #include "hardware.h"
+#include "yalnix.h"
+#include "sys.h"
 
 typedef void (*trap_handler)(UserContext*);
 
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 
-void trap(UserContext *user_context);
+//void trap(UserContext *user_context);
 
 /*This trap results from a “kernel call” trap instruction executed by the current user processes. 
 Such a trap is used by user processes to request some type of service from the operating system kernel, 

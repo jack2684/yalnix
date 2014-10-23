@@ -1,5 +1,5 @@
 void main(void) {
-    int delay = 2;
+    int delay = 10;
     int delays[512];
     int delays2[1024];
     //int delays3[1024 * 2];

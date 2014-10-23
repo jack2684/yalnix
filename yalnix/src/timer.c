@@ -1,14 +1,19 @@
-#include "kernelLib.h"
+#include "timer.h"
 
-int Y_Delay(int clock_ticks){
-	//IF clock_ticks < 0
-		//REPORT ERROR
-	//END IF
+ytimer_t timer;
 
-	//IF clock_ticks == 0
-		//RETURN 
-	//END IF
-
-	//SET remaining clock_ticks to the current clock_ticks
-	//BLOCK the calling process with the clock_ticks
+void timer_init(void) {
+    timer.round_robin_quantumn = DEFAULT_QUANTUMN;
+    timer.tick = timer.round_robin_quantumn;
 }
+
+int round_robin_timeout(void) {
+    timer.tick--;
+    if(!timer.tick) {
+        timer.tick = timer.round_robin_quantumn;
+        return 1;
+    } else {
+        return 0;
+    }
+}
+

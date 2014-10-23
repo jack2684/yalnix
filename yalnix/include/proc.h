@@ -3,6 +3,7 @@
 
 #include "hardware.h"
 #include "memory.h"
+#include "timer.h"
 #include "dlist.h"
 
 
@@ -18,12 +19,13 @@ typedef struct y_PCB {
     // State
     enum proc_stat  state;
     long            priority;
-    vm_t            *mm;            // Memory management
+    vm_t            mm;            // Memory management
     int             exit_code;
     int             exit_signail;
     UserContext     user_context;
     KernelContext   kernel_context;
-    pte_t           *page_table;
+    pte_t           page_table;
+    int             remaining_clock_ticks;
     
     // Identity
     int             pid;
@@ -48,7 +50,9 @@ void DoDoIdle(void);
 void init_kernel_proc(void);
 void init_user_proc(void);
 int en_ready_queue(pcb_t *proc);
-pcb_t* de_ready_queue(pcb_t *proc);
+pcb_t* de_ready_queue();
+pcb_t* rm_ready_queue(pcb_t *proc);
+void round_robin_schedule(UserContext *user_context);
 
 #endif
 

@@ -281,7 +281,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
    */
     _debug("LoadProgram: About to bzero from %p to %p\n", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
     bzero((void*)li.id_end, li.ud_end - li.id_end);
-    _debug("LoadProgram: Bzero DONE\n");
+    log_info("LoadProgram: Bzero DONE");
     
 
 

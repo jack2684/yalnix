@@ -4,45 +4,29 @@
 void TrapsInit(){
     
 }
-
-//void trap(UserContext *user_context) {
-//    switch(user_context->code) {
-//        case TRAP_KERNAL:
-//            trap_kernel_handler(user_context);
-//            break;
-//        case TRAP_MATH:
-//            trap_math_handler(user_context);
-//            break;
-//        case TRAP_ILLEGAL:
-//            trap_illegal_handler(user_context);
-//            break;
-//        case TRAP_MEMORY:
-//            trap_memory_handler(user_context);
-//            break;
-//        case TRAP_CLOCK:
-//            trap_clock_handler(user_context);
-//            break;
-//        case TRAP_TTY_RECEIVE:
-//            trap_tty_receive_handler(user_context);
-//            break;
-//        case TRAP_TTY_TRANSMIT:
-//            trap_tty_transmit_handler(user_context);
-//            break;
-//        case TRAP_DISK:
-//            trap_disk_handler(user_context);
-//            break;
-//    })
-//}
-
 /*This trap results from a “kernel call” trap instruction executed by the current user processes. 
 Such a trap is used by user processes to request some type of service from the operating system kernel, 
 such as creating a new process, allocating memory, or performing I/O. 
 All different kernel call requests enter the kernel through this single type of trap*/
 void trap_kernel_handler(UserContext *user_context){
-	//INVOKE the TRAP_KERNAL_HANDLER
-	//SWITCH(code in user context){
-		//EXECUTE different system calls
-	//END SWITCH
+    log_info("trap_kernel_handler invoked for sys call");
+    switch(user_context->code) {
+        case YALNIX_EXIT:
+            user_context->regs[0] = Y_Exit(user_context);
+            break;
+        case YALNIX_GETPID:
+            user_context->regs[0] = Y_GetPid();
+            break;
+        case YALNIX_BRK:
+            user_context->regs[0] = Y_Brk((void*)user_context->regs[0]);
+            break;
+        case YALNIX_DELAY:
+            log_info("trap_kernel_handler invoked Y_Delay()");
+            Y_Delay(user_context);
+            log_info("trap_kernel_handler DONE with Y_Delay()");
+        default:
+            break;
+    }
 }
 
 
@@ -74,7 +58,10 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
-	//INVOKE the TRAP_CLOCK_HANDLER
+    log_info("Clocking ticking with pid %d", Y_GetPid());
+    if(round_robin_timeout()) {
+        round_robin_schedule(user_context);
+    }
 }
 
 /*
