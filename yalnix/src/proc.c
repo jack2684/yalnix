@@ -85,13 +85,11 @@ pcb_t* rm_ready_queue(pcb_t *proc) {
 }
 
 pcb_t* de_ready_queue() {
-    log_info("About to de ready queue, size: %d", ready_queue->size);
     pcb_t *about_to_run = dlist_rm_head(ready_queue);
     if(about_to_run == NULL) {
         log_info("Ready queue is empty, suck it.");
         return NULL;
     }
-    log_info("De ready queue successfully");
     return about_to_run;
 }
 
@@ -105,17 +103,24 @@ void stall_running_and_en_ready_queue(UserContext *user_context) {
 }
 
 pcb_t* de_ready_queue_and_run(UserContext *user_context) {
-    log_info("De ready queue");
     pcb_t *next_proc = de_ready_queue();
-    log_info("De ready queue DONE");
     memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
-    log_info("Copy uctxt done");
     memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    log_info("Copy page table done");
     memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
-    log_info("Copy mem done");
     running_proc = next_proc;
     return next_proc;
+}
+
+void ticking_down(){
+    if(!ready_queue->size) {
+        return;
+    }
+    dnode_t* node = ready_queue->head;
+    while(node) {
+        pcb_t* proc = (pcb_t*)node->data;
+        proc->ticks = proc->ticks == 0 ? 0 : proc->ticks -1;
+        node = node->next;
+    }
 }
 
 /* Round robin schedule 
@@ -134,9 +139,7 @@ void round_robin_schedule(UserContext *user_context) {
     }
     pcb_t *next_proc;
     next_proc = de_ready_queue();
-    if(next_proc->remaining_clock_ticks > 0) {
-        log_info("PID %d keeps delaying with remaining %d", next_proc->pid, next_proc->remaining_clock_ticks);
-        next_proc->remaining_clock_ticks--;
+    if(next_proc->ticks > 0) {
         en_ready_queue(next_proc);
     } else {
         log_info("PID %d get back to live!", next_proc->pid);

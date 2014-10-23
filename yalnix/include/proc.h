@@ -26,7 +26,7 @@ typedef struct y_PCB {
     UserContext     user_context;
     KernelContext   kernel_context;
     pte_t*          page_table;
-    int             remaining_clock_ticks;
+    int             ticks;
     
     // Identity
     int             pid;
@@ -57,6 +57,7 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context);
 pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
+void ticking_down();
 
 #endif
 

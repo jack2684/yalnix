@@ -140,17 +140,12 @@ void* dlist_rm_idx(dlist_t *list, int idx) {
         list->size = 0;
         return data;
     } else if (idx == 0) {               // Remove the head
-        log_info("About to de from head");
         rm_node = list->head;
         data = rm_node->data;
         list->head = rm_node->next;
-        log_info("At de head 5, and list->head is %p", list->head);
         list->head->prev = NULL;
-        log_info("At de head before free");
         free(rm_node);
-        log_info("At de head after free");
         list->size--;
-        log_info("Return from de from head");
         return data;
     } else if (idx == list->size - 1) { // Remove the tail
         rm_node = list->tail;

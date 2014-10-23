@@ -56,6 +56,7 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
+    ticking_down();
     if(round_robin_timeout()) {
         round_robin_schedule(user_context);
     }
