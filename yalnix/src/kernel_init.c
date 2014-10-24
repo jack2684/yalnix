@@ -165,19 +165,25 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     char* tmp[] = {NULL};
     LoadProgram("src/idle", tmp, idle_proc);
     *uctxt = idle_proc->user_context;
-    safe_user_runtime(idle_proc, uctxt);
+    save_user_runtime(idle_proc, uctxt);
+    _debug("uctxt->pc: %p\n", uctxt->pc);
+    _debug("uctxt->sp: %p\n", uctxt->sp);
+    log_info("Load program done\n");
     //*uctxt = idle_proc->user_context;
-    //safe_and_en_ready_queue(idle_proc, uctxt); 
+    //save_and_en_ready_queue(idle_proc, uctxt); 
 
     // Load init process (in checkpoint 3)
     pcb_t *user_proc = init_user_proc();
-    LoadProgram(cmd_args[0], cmd_args, user_proc);
-    log_info("Load program done\n");
+    if(cmd_args[0] == NULL) {
+        LoadProgram("src/init", tmp, user_proc);
+    } else {
+        LoadProgram(cmd_args[0], cmd_args, user_proc);
+    }
     *uctxt = user_proc->user_context;
+    save_and_en_ready_queue(user_proc, uctxt); 
     _debug("uctxt->pc: %p\n", uctxt->pc);
     _debug("uctxt->sp: %p\n", uctxt->sp);
-    safe_and_en_ready_queue(user_proc, uctxt); 
-    log_info("Program %s safed to ready queue", cmd_args[0]);
+    log_info("Load program done\n");
 
     // Load init process (in checkpoint 3)
     //user_proc = init_user_proc();
@@ -186,8 +192,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     //*uctxt = user_proc->user_context;
     //_debug("uctxt->pc: %p\n", uctxt->pc);
     //_debug("uctxt->sp: %p\n", uctxt->sp);
-    //safe_and_en_ready_queue(user_proc, uctxt); 
-    //log_info("Program %s safed to ready queue", cmd_args[1]);
+    //save_and_en_ready_queue(user_proc, uctxt); 
+    //log_info("Program %s saved to ready queue", cmd_args[1]);
 
     // Run the first proc in ready queue
     de_ready_queue_and_run(uctxt);

@@ -5,7 +5,7 @@
 #include "proc.h"
 #include "dlist.h"
 
-#define DEFAULT_QUANTUMN 2
+#define DEFAULT_QUANTUMN 1
 
 typedef struct Timer {
     int tick;

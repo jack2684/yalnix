@@ -103,10 +103,12 @@ int en_ready_queue(pcb_t *proc) {
  * @param proc: the pcb to be saved
  * @param user_context: current user context
  */
-void safe_user_runtime(pcb_t *proc, UserContext *user_context) {
+void save_user_runtime(pcb_t *proc, UserContext *user_context) {
+    log_info("Before save, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
     memcpy(&(proc->user_context), user_context, sizeof(UserContext));
     memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&(proc->mm), &user_memory, sizeof(vm_t));
+    log_info("After save, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
 }
 
 /* Safe user land runtime info
@@ -114,10 +116,12 @@ void safe_user_runtime(pcb_t *proc, UserContext *user_context) {
  * @param proc: the pcb to be restored
  * @param user_context: current user context
  */
-void restore_user_runtime(pcb_t *next_proc, UserContext *user_context) {
-    memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
-    memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
+void restore_user_runtime(pcb_t *proc, UserContext *user_context) {
+    log_info("Before restore, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
+    memcpy(user_context, &(proc->user_context), sizeof(UserContext));
+    memcpy(user_page_table, proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    memcpy(&user_memory, &(proc->mm), sizeof(vm_t));
+    log_info("After restore, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
 }
 
 /* Safe user land runtime info and push into queue
@@ -125,9 +129,9 @@ void restore_user_runtime(pcb_t *next_proc, UserContext *user_context) {
  * @param proc: the pcb to be restored
  * @param user_context: current user context
  */
-void safe_and_en_ready_queue(pcb_t *proc, UserContext *user_context) {
+void save_and_en_ready_queue(pcb_t *proc, UserContext *user_context) {
     en_ready_queue(proc);
-    safe_user_runtime(proc, user_context);
+    save_user_runtime(proc, user_context);
 }
 
 /* Remove a specified proc from the queue 
@@ -159,6 +163,7 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     restore_user_runtime(next_proc, user_context);
     memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     running_proc = next_proc;
+    switch_to_process(next_proc, user_context);
     return next_proc;
 }
 
@@ -182,10 +187,10 @@ void round_robin_schedule(UserContext *user_context) {
         return;
     }   
     if(running_proc != idle_proc) {
-        safe_and_en_ready_queue(running_proc, user_context);
-    } else {
-        safe_user_runtime(running_proc, user_context);   
-    }
+        save_and_en_ready_queue(running_proc, user_context);
+    } //else {
+    //    save_user_runtime(running_proc, user_context);   
+    //}
     
     next_schedule(user_context);
 }
@@ -199,12 +204,15 @@ void next_schedule(UserContext *user_context) {
     pcb_t *next_proc;    
     if(!ready_queue->size) {
         next_proc = idle_proc;
+        log_info(">->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-");
+        save_user_runtime(running_proc, user_context);
     } else {
         next_proc = de_ready_queue();
     }
     
     log_info("PID %d about to switch back to live!", next_proc->pid);
     restore_user_runtime(next_proc, user_context);
+    log_info("<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-");
     switch_to_process(next_proc, user_context);
     running_proc = next_proc;
 }
@@ -268,20 +276,29 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     // Init kernel stack if needed
     if(next_proc->kernel_stack_pages[0].pfn == 0) { 
         log_info("next_proc->kernel_stack_pages addr initializing %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
+        memcpy(&next_proc->kernel_context, kernel_context, sizeof(KernelContext));
         map_page_to_frame(next_proc->kernel_stack_pages, 0, KERNEL_STACK_MAXSIZE / PAGESIZE, PROT_READ | PROT_WRITE);
+    }
+
+    if (next_proc == idle_proc || prev_proc == idle_proc) {
+        return kernel_context; 
     }
    
     log_info("The sizeof(next_proc->kernel_stack_pages) is %d, the page number is %d", sizeof(next_proc->kernel_stack_pages), KERNEL_STACK_MAXSIZE / PAGESIZE );
+    log_info("next_proc->kernel_stack_pages %p, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)] %p", next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)]);
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
-            sizeof(next_proc->kernel_stack_pages) );
+            sizeof(next_proc->kernel_stack_pages)  );
     //WriteRegister(REG_PTBR1, (unsigned int)next_proc -> page_table);
     //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
+    log_info("Write kernel stack done");
     int addr;
     for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
         WriteRegister(REG_TLB_FLUSH, addr);
     }
+    log_info("Flush done");
 
+    *kernel_context  = next_proc->kernel_context;
     return kernel_context;
 }
 
