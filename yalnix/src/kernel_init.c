@@ -164,8 +164,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     idle_proc = init_user_proc();
     char* tmp[] = {NULL};
     LoadProgram("src/idle", tmp, idle_proc);
-    *uctxt = idle_proc->user_context;
-    safe_and_en_ready_queue(idle_proc, uctxt); 
+    //*uctxt = idle_proc->user_context;
+    //safe_and_en_ready_queue(idle_proc, uctxt); 
 
     // Load init process (in checkpoint 3)
     pcb_t *user_proc = init_user_proc();

@@ -1,218 +1,159 @@
 ** Yalnix level 5 tracing enabled **
 ** User Prog level 5 tracing enabled **
-Yalnix     Start=0x28814, End=0x32000
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:212) SetKernelBrk!!!!!!!!!!!!!!!!!!!!!
+Yalnix     Start=0x28ab4, End=0x32000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:212) SetKernelBrk!!!!!!!!!!!!!!!!!!!!!
 Yalnix     Start the kernel
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:106: Init user page done
-Yalnix     Text Start=(nil), End=0x28814
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:66: heap low 0x32000 and high 0x32000
-Yalnix     Data Start=0x28814, End=0x32000
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:106: Init user page done
+Yalnix     Text Start=(nil), End=0x28ab4
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:66: heap low 0x32000 and high 0x32000
+Yalnix     Data Start=0x28ab4, End=0x32000
 Yalnix     Stack Start=0xfc000, End=0x100000
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 126(0xfc000): valid => 1, prot => 3
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 127(0xfe000): valid => 1, prot => 3
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:159: Init VM
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:212) SetKernelBrk!!!!!!!!!!!!!!!!!!!!!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 25 (0x132000) to page 26 (0x134000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:47: Load program: name => src/idle
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:69: Open file DONE.
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:82: LoadProgram: Set boundaries done, about to calculate the args
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 126(0xfc000): valid => 1, prot => 3
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 127(0xfe000): valid => 1, prot => 3
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:159: Init VM
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:212) SetKernelBrk!!!!!!!!!!!!!!!!!!!!!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 25 (0x132000) to page 26 (0x134000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:47: Load program: name => src/idle
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:69: Open file DONE.
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:82: LoadProgram: Set boundaries done, about to calculate the args
 Yalnix     LoadProgram: argsize 0, argcount 0
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:92: LoadProgram: argsize 0, argcount 0
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:92: LoadProgram: argsize 0, argcount 0
 Yalnix     prog_size 4, text 2 data 1 bss 1 pages
 Yalnix     LoadProgram: heap_size 4, stack_size 1
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:129: LoadProgram: heap_size 4, stack_size 1
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:151: proc->user_context: 0x1fff70
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:189: LoadProgram: About to clean
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:106: About to unmap from 0 to 128
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:195: LoadProgram: Clean DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:206: LoadProgram: Map user text DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 2 (0x104000) to page 4 (0x108000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:217: LoadProgram: Map user data DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 127 (0x1fe000) to page 128 (0x200000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:234: LoadProgram: Map user stack with #1 pages DONE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:263: LoadProgram: Read file DONE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:89: Set from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:277: LoadProgram: Set ptes DONE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:282: LoadProgram: About to bzero from 0x105610 to 0x106650
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:284) LoadProgram: Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:47: Load program: name => src/init
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:69: Open file DONE.
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:82: LoadProgram: Set boundaries done, about to calculate the args
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:85: counting arg 0 = 'src/init'
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:129: LoadProgram: heap_size 4, stack_size 1
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:151: proc->user_context: 0x1fff70
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:189: LoadProgram: About to clean
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:106: About to unmap from 0 to 128
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:195: LoadProgram: Clean DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:207) text_pg1 => (nil), text_npg => 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208) data_pg1 => 0x2, data_npg => 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209) stack_pg1 => 0x1fff70, stack_npg => 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:220: LoadProgram: Map user text DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:231: LoadProgram: Map user data DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:248: LoadProgram: Map user stack with #1 pages DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:277: LoadProgram: Read file DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:89: Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:291: LoadProgram: Set ptes DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:296: LoadProgram: About to bzero from 0x105610 to 0x106650
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:298) LoadProgram: Bzero DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:47: Load program: name => src/init
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:69: Open file DONE.
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:82: LoadProgram: Set boundaries done, about to calculate the args
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:85: counting arg 0 = 'src/init'
 Yalnix     counting arg 0 = 'src/init'
 Yalnix     LoadProgram: argsize 9, argcount 1
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:92: LoadProgram: argsize 9, argcount 1
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:92: LoadProgram: argsize 9, argcount 1
 Yalnix     prog_size 4, text 2 data 1 bss 1 pages
 Yalnix     LoadProgram: heap_size 4, stack_size 1
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:129: LoadProgram: heap_size 4, stack_size 1
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:151: proc->user_context: 0x1fff60
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:129: LoadProgram: heap_size 4, stack_size 1
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:151: proc->user_context: 0x1fff60
 Yalnix     saving arg 0 = 'src/init'
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:189: LoadProgram: About to clean
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:106: About to unmap from 0 to 128
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:195: LoadProgram: Clean DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:206: LoadProgram: Map user text DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 2 (0x104000) to page 4 (0x108000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:217: LoadProgram: Map user data DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 127 (0x1fe000) to page 128 (0x200000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:234: LoadProgram: Map user stack with #1 pages DONE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:263: LoadProgram: Read file DONE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:89: Set from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:277: LoadProgram: Set ptes DONE
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:282: LoadProgram: About to bzero from 0x1056a0 to 0x1066d0
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/load.c:284) LoadProgram: Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:173) Load program done
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:189: LoadProgram: About to clean
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:106: About to unmap from 0 to 128
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:195: LoadProgram: Clean DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:207) text_pg1 => (nil), text_npg => 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208) data_pg1 => 0x2, data_npg => 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209) stack_pg1 => 0x1fff60, stack_npg => 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:220: LoadProgram: Map user text DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:231: LoadProgram: Map user data DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:248: LoadProgram: Map user stack with #1 pages DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:277: LoadProgram: Read file DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:89: Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:291: LoadProgram: Set ptes DONE
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:296: LoadProgram: About to bzero from 0x1056a0 to 0x1066d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:298) LoadProgram: Bzero DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:173) Load program done
 
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:175: uctxt->pc: 0x100120
-Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:176: uctxt->sp: 0x1fff60
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:178) Program src/init safed to ready queue
-Yalnix     [ERROR] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:115: errno: None) Cannot malloc next_proc->kernel_stack_pages with size: 2
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:117) de_ready_queue_and_run next_proc->kernel_stack_pages addr 0x2afb4 with PID 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:119) de_ready_queue_and_run next_proc->kernel_stack_pages addr 0x2afb4 with PID 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:200) Leaving the kernel
-User Prog  KEEP IDLING...
-User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:148) PID 2 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:159) Before set context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:163) Before flush
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:167) Before set running
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:172) Before magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:194) Start Save And Switch Kernel Context from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:197) Save kernel_context to PID 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:201) Start copy stack with #page
-Yalnix     [ERROR] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:209: errno: None) Cannot malloc next_proc->kernel_stack_pages with size: 2
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:211) next_proc->kernel_stack_pages addr 0x32aec with PID 2
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:214) About to restore kernel stack from addr 0x32aec
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:217) Start flushing reg 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:220) Start flushing k stack
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:226) About to return kernel_context addr 0x32738
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:176) Succesfully switched kernel context to PID 2!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:181) Done magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:185) Done context swtiching
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:155) Done with next_schedule
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:175: uctxt->pc: 0x100120
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:176: uctxt->sp: 0x1fff60
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:178) Program src/init safed to ready queue
+Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/proc.c:115: errno: None) Cannot malloc next_proc->kernel_stack_pages with size: 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:117) de_ready_queue_and_run next_proc->kernel_stack_pages addr 0x2afb4 with PID 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:119) de_ready_queue_and_run next_proc->kernel_stack_pages addr 0x2afb4 with PID 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:200) Leaving the kernel
 User Prog  HEAP my_malloc(0x190)
 User Prog  warning: unitialized heap!
 User Prog  initializing heap
 User Prog  brk_unlocked(10e6d0)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef06
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:23) About to brk
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:90) pid 2 call brk!!!!!!!!!!!!!!!!!!!!!!
-User Prog  brk call failed; user heap will function oddly
-User Prog  brk did not give enough memory; user heap will function oddly
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef06
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:23) About to brk
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:90) pid 2 call user brk with current brk 0x100004
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:64) Map from page 1056768 (0x4100000) to page 7 (0x10e000)
+Yalnix     Y_Brk ADD DONE = 0x100004, End = 0x100004, New Addr = 0x110000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:129) pid 2 user brk done, new addr at 0x110000
 User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
 User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106878 lies outside heap [0x1066d0 -> 0x1066d0]
 User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106878 lies outside heap [0x1066d0 -> 0x1066d0]
 User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106878 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106a20 lies outside heap [0x1066d0 -> 0x1066d0]
 User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106a20 lies outside heap [0x1066d0 -> 0x1066d0]
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:19) About to getpid
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
 User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:19) About to getpid
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
 User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:148) PID 1 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:159) Before set context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:163) Before flush
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:167) Before set running
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:172) Before magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:194) Start Save And Switch Kernel Context from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:197) Save kernel_context to PID 2
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:201) Start copy stack with #page
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:214) About to restore kernel stack from addr 0x2afb4
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:217) Start flushing reg 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:220) Start flushing k stack
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:226) About to return kernel_context addr 0x322ec
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:176) Succesfully switched kernel context to PID 1!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:181) Done magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:185) Done context swtiching
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:155) Done with next_schedule
-User Prog  KEEP IDLING...
-User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:148) PID 2 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:159) Before set context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:163) Before flush
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:167) Before set running
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:172) Before magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:194) Start Save And Switch Kernel Context from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:197) Save kernel_context to PID 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:201) Start copy stack with #page
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:214) About to restore kernel stack from addr 0x32aec
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:217) Start flushing reg 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:220) Start flushing k stack
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:226) About to return kernel_context addr 0x32738
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:176) Succesfully switched kernel context to PID 2!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:181) Done magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:185) Done context swtiching
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:155) Done with next_schedule
-User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106878 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106a20 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106bc8 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106bc8 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106878 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106a20 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106bc8 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106d70 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106d70 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1066d0 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106878 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106a20 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106bc8 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106d70 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP Warning: heap block at 0x106f18 lies outside heap [0x1066d0 -> 0x1066d0]
-User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106f18 lies outside heap [0x1066d0 -> 0x1066d0]
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:19) About to getpid
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
 User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:19) About to getpid
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
 User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:62) ENENENENENENEN QUEUEUEUEUEUE
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:148) PID 1 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:159) Before set context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:163) Before flush
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:167) Before set running
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:172) Before magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:194) Start Save And Switch Kernel Context from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:197) Save kernel_context to PID 2
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:201) Start copy stack with #page
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:214) About to restore kernel stack from addr 0x2afb4
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:217) Start flushing reg 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:220) Start flushing k stack
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:226) About to return kernel_context addr 0x322ec
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:176) Succesfully switched kernel context to PID 1!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:181) Done magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:185) Done context swtiching
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:155) Done with next_schedule
-User Prog  KEEP IDLING...
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:85) Getting piiiiiid
+User Prog  Hahahah Inside init proc, PID 2, going to sleep 10 seconds

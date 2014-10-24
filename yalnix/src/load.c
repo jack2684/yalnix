@@ -194,6 +194,20 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     }
     _debug("LoadProgram: Clean DONE\n");
 
+    /* Set user memory boundaries*/
+    user_memory.text_low     = (unsigned int)VMEM_1_BASE;
+    user_memory.text_high    = (unsigned int)(text_pg1 + li.t_npg + VMEM_1_BASE);
+    user_memory.data_low     = (unsigned int)(data_pg1 + VMEM_1_BASE);
+    user_memory.data_high    = (unsigned int)(data_pg1 + data_npg + VMEM_1_BASE);
+    user_memory.brk_low      = user_memory.data_high;
+    user_memory.brk_high     = user_memory.data_high;
+    user_memory.stack_low    = (unsigned int)cpp;
+    user_memory.stack_high   = (unsigned int)(cpp + stack_npg); 
+
+    log_info("text_pg1 => %p, text_npg => %d", text_pg1, li.t_npg);
+    log_info("data_pg1 => %p, data_npg => %d", data_pg1, data_npg);
+    log_info("stack_pg1 => %p, stack_npg => %d", cpp, stack_npg);
+
 // ==>> Allocate "li.t_npg" physical pages and map them starting at
 // ==>> the "text_pg1" page in region 1 address space.    
 // ==>> These pages should be marked valid, with a protection of 

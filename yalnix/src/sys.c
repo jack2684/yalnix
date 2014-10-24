@@ -87,17 +87,19 @@ int Y_GetPid(void){
 }
 
 int Y_Brk(void * addr){
-    log_info("pid %d call brk!!!!!!!!!!!!!!!!!!!!!!", running_proc->pid);
+    log_info("pid %d call user brk with current brk %p", running_proc->pid, user_memory.brk_high);
     int page_cnt, rc; 
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = UP_TO_PAGE(new_addr);
     uint32 current_page_bound = UP_TO_PAGE(user_memory.brk_high);
 
     // Boudaries check
-    if(new_addr > user_memory.stack_low) {
+    if(new_addr > user_memory.stack_low - PAGESIZE) {
+        log_err("New addr trepass the stack area!");
         return _FAILURE;
     } // Check if trying to access below brk base line
     else if(new_addr < user_memory.brk_low) {
+        log_err("New addr trepass the data area!");
         return _FAILURE;
     }   
 
@@ -124,6 +126,7 @@ int Y_Brk(void * addr){
         }   
     }   
     user_memory.brk_high = new_addr;
+    log_info("pid %d user brk done, new addr at %p", running_proc->pid, new_addr);
     return _SUCCESS;
 }
 
