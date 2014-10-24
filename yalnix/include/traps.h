@@ -7,6 +7,8 @@
 
 typedef void (*trap_handler)(UserContext*);
 
+extern int no_traps;
+
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 

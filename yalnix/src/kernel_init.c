@@ -159,11 +159,14 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     _debug("Init VM\n");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     
-    // Create one kernel proc
+    // Create one kernel proc and idle user proc
     init_processes();
+    idle_proc = init_user_proc();
+    char* tmp[] = {NULL};
+    LoadProgram("src/idle", tmp, idle_proc);
 
     // Load init process (in checkpoint 3)
-    init_user_proc();
+    pcb_t *user_proc = init_user_proc();
     LoadProgram(cmd_args[0], cmd_args, user_proc);
     log_info("Load program done\n");
     *uctxt = user_proc->user_context;
@@ -172,16 +175,6 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     safe_and_en_ready_queue(user_proc, uctxt); 
     log_info("Program %s safed to ready queue", cmd_args[0]);
 
-    // Load gjj process (in checkpoint 3, as the othe process)
-    init_user_proc();
-    LoadProgram(cmd_args[1], cmd_args, user_proc);
-    log_info("Load program done\n");
-    *uctxt = user_proc->user_context;
-    _debug("uctxt->pc: %p\n", uctxt->pc);
-    _debug("uctxt->sp: %p\n", uctxt->sp);
-    safe_and_en_ready_queue(user_proc, uctxt); 
-    log_info("Program %s safed to ready queue", cmd_args[1]);
-  
     // Run the first proc in ready queue
     de_ready_queue_and_run(uctxt);
     //Cooking(user_page_table, uctxt);

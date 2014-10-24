@@ -1,7 +1,7 @@
 #include "proc.h"
 
 pcb_t   *kernel_proc;          // A kernel proc
-pcb_t   *user_proc;          // A user proc
+pcb_t   *idle_proc;          // A idle user proc
 pcb_t   *running_proc;      // Current running proc
 dlist_t  *ready_queue;   
 dlist_t  *wait_queue;
@@ -45,7 +45,7 @@ void init_kernel_proc(void) {
 }
 
 pcb_t *init_user_proc(void) {
-    user_proc = (pcb_t*) malloc(sizeof(pcb_t));
+    pcb_t *user_proc = (pcb_t*) malloc(sizeof(pcb_t));
     if(!kernel_proc) {
         log_err("Cannot malloc user proc!");
         return NULL;
@@ -59,6 +59,7 @@ pcb_t *init_user_proc(void) {
 }
 
 int en_ready_queue(pcb_t *proc) {
+    log_info("ENENENENENENEN QUEUEUEUEUEUE");
     dnode_t *n = dlist_add_tail(ready_queue, proc);
     if(!n) {
         _debug("Cannot enqueue the pcb\n");
@@ -120,18 +121,6 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     return next_proc;
 }
 
-void ticking_down(){
-    if(!ready_queue->size) {
-        return;
-    }
-    dnode_t* node = ready_queue->head;
-    while(node) {
-        pcb_t* proc = (pcb_t*)node->data;
-        proc->ticks = proc->ticks == 0 ? 0 : proc->ticks -1;
-        node = node->next;
-    }
-}
-
 /* Round robin schedule 
  *  1. Enqueue the running proc
  *  2. Dequeue the next proc in ready queue
@@ -139,30 +128,30 @@ void ticking_down(){
  */
 void round_robin_schedule(UserContext *user_context) {
     //log_info("Round robin with ready queue size: %d", ready_queue->size);
+    
     if(!ready_queue->size) {
         return;
     }
   
-    log_info("Before save next_proc->kernel_stack_pages addr %p with PID %d", running_proc->kernel_stack_pages, running_proc->pid);
-    //if(running_proc != kernel_proc) {
-        
-    //    stall_running_and_en_ready_queue(user_context);
-    //}
     safe_and_en_ready_queue(running_proc, user_context);
-    pcb_t *next_proc;
-    next_proc = de_ready_queue();
-    log_info("next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
-    if(next_proc->ticks > 0) {
-        en_ready_queue(next_proc);
+    next_schedule(user_context);
+}
+
+void next_schedule(UserContext *user_context) {
+    pcb_t *next_proc;    
+    if(!ready_queue->size) {
+        next_proc = idle_proc;
     } else {
-        log_info("PID %d get back to live!", next_proc->pid);
-        
-        memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
-        memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-        memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
-        switch_to_process(next_proc, user_context);
-        running_proc = next_proc;
+        next_proc = de_ready_queue();
     }
+    
+    log_info("PID %d about to switch back to live!", next_proc->pid);
+    
+    memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
+    memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
+    switch_to_process(next_proc, user_context);
+    running_proc = next_proc;
 }
 
 void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
@@ -182,6 +171,7 @@ void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
     log_info("Before magic");
     int rc = KernelContextSwitch(&kernel_context_switch, prev_proc, next_proc);
     if (_SUCCESS == rc) {
+        log_info("get return proc:");
         log_info("Succesfully switched kernel context to PID %d!", running_proc->pid);
     } else {
         log_err("Failed to save kernel context!");
@@ -203,6 +193,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     log_info("Start Save And Switch Kernel Context from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
 
     if(prev_proc != NULL) {
+        log_info("Save kernel_context to PID %d", prev_proc->pid);
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
     }
     

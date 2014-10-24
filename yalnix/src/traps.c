@@ -1,6 +1,7 @@
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 #include "traps.h"
+int no_traps;
 void TrapsInit(){
     
 }

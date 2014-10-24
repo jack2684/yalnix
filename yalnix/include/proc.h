@@ -3,7 +3,6 @@
 
 #include "hardware.h"
 #include "memory.h"
-#include "timer.h"
 #include "dlist.h"
 
 #define MAX_PROC 256
@@ -14,6 +13,7 @@ enum proc_stat {
     WAIT,
     ZOMBIE,
     EXIT,
+    PAUSE,
 };
 
 typedef struct y_PCB {
@@ -42,7 +42,7 @@ typedef struct y_PCB {
 } pcb_t;
 
 extern pcb_t   *kernel_proc;          // A kernel proc
-extern pcb_t   *user_proc;          // A user proc
+extern pcb_t   *idle_proc;          // A user proc
 extern pcb_t   *running_proc;      // Current running proc
 extern dlist_t  *ready_queue;   
 extern dlist_t  *wait_queue;
@@ -58,7 +58,7 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context);
 pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
-void ticking_down();
+void next_schedule(UserContext *user_context);
 
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 void switch_to_process(pcb_t * next_proc, UserContext * user_context);
