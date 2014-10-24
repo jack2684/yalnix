@@ -16,9 +16,11 @@ void trap_kernel_handler(UserContext *user_context){
             user_context->regs[0] = Y_Exit(user_context);
             break;
         case YALNIX_GETPID:
+            log_info("About to getpid");
             user_context->regs[0] = Y_GetPid();
             break;
         case YALNIX_BRK:
+            log_info("About to brk");
             user_context->regs[0] = Y_Brk((void*)user_context->regs[0]);
             break;
         case YALNIX_DELAY:
@@ -59,7 +61,6 @@ void trap_memory_handler(UserContext *user_context){
 void trap_clock_handler(UserContext *user_context){
     ticking_down();
     if(round_robin_timeout()) {
-        log_info("About to round robin");
         round_robin_schedule(user_context);
     }
 }

@@ -82,10 +82,12 @@ int Y_WaitPid(int pid, int* status_ptr, int options){
 }
 
 int Y_GetPid(void){
+    log_info("Getting piiiiiid");
     return running_proc -> pid;
 }
 
 int Y_Brk(void * addr){
+    log_info("pid %d call brk!!!!!!!!!!!!!!!!!!!!!!", running_proc->pid);
     int page_cnt, rc; 
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = UP_TO_PAGE(new_addr);

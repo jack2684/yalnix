@@ -164,6 +164,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     idle_proc = init_user_proc();
     char* tmp[] = {NULL};
     LoadProgram("src/idle", tmp, idle_proc);
+    *uctxt = idle_proc->user_context;
+    safe_and_en_ready_queue(idle_proc, uctxt); 
 
     // Load init process (in checkpoint 3)
     pcb_t *user_proc = init_user_proc();
@@ -176,14 +178,14 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Program %s safed to ready queue", cmd_args[0]);
 
     // Load init process (in checkpoint 3)
-    user_proc = init_user_proc();
-    LoadProgram(cmd_args[1], cmd_args, user_proc);
-    log_info("Load program done\n");
-    *uctxt = user_proc->user_context;
-    _debug("uctxt->pc: %p\n", uctxt->pc);
-    _debug("uctxt->sp: %p\n", uctxt->sp);
-    safe_and_en_ready_queue(user_proc, uctxt); 
-    log_info("Program %s safed to ready queue", cmd_args[1]);
+    //user_proc = init_user_proc();
+    //LoadProgram(cmd_args[1], cmd_args, user_proc);
+    //log_info("Load program done\n");
+    //*uctxt = user_proc->user_context;
+    //_debug("uctxt->pc: %p\n", uctxt->pc);
+    //_debug("uctxt->sp: %p\n", uctxt->sp);
+    //safe_and_en_ready_queue(user_proc, uctxt); 
+    //log_info("Program %s safed to ready queue", cmd_args[1]);
 
     // Run the first proc in ready queue
     de_ready_queue_and_run(uctxt);
@@ -207,14 +209,15 @@ int SetKernelBrk _PARAMS((void *addr)) {
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(new_addr));
     uint32 current_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
+    log_info("SetKernelBrk!!!!!!!!!!!!!!!!!!!!!");
     
     // Boudaries check
     if(new_addr > kernel_memory.stack_low) {
-        _debug("Kernel Break: Trying to Access Stack Addr = %p\n", new_addr);
+        log_err("Kernel Break: Trying to Access Stack Addr = %p\n", new_addr);
         return _FAILURE;
     } // Check if trying to access below brk base line
     else if(new_addr < kernel_memory.brk_low) {
-        _debug("Kernel Break: Trying to Access Data Addr = %p\n", addr);
+        log_err("Kernel Break: Trying to Access Data Addr = %p\n", addr);
         return _FAILURE;
     }
     // Before the virual memory is enabled
@@ -230,7 +233,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
                             new_page_bound, 
                             PROT_READ | PROT_WRITE);
         if(rc) {
-            _debug("Kernel Break: Not enough phycial memory\n");
+            log_err("Kernel Break: Not enough phycial memory\n");
             return _FAILURE;
         }
     } else if (new_addr < kernel_memory.brk_high) {
@@ -238,7 +241,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
                                 new_page_bound, 
                                 current_page_bound);
         if(rc) {
-            _debug("Kernel Break Warning: Not able to release pages\n");
+            log_err("Kernel Break Warning: Not able to release pages\n");
             return _FAILURE;
         }
     }
