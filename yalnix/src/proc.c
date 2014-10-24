@@ -150,3 +150,58 @@ void round_robin_schedule(UserContext *user_context) {
     }
 }
 
+void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
+    log_info("Before set context");
+    running_proc->user_context = *user_context;
+    *user_context = next_proc->user_context;
+
+    log_info("Before flush");
+    WriteRegister(REG_PTBR1, (unsigned int)user_page_table);
+    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
+
+    log_info("Before set running");
+    pcb_t *prev_proc = running_proc;
+    running_proc = next_proc;
+
+    // Using the magic function
+    log_info("Before magic");
+    int rc = KernelContextSwitch(&kernel_context_switch, prev_proc, next_proc);
+    if (_SUCCESS == rc) {
+        log_info("Succesfully switched kernel context to PID %d!", running_proc->pid);
+    } else {
+        log_err("Failed to save kernel context!");
+        Halt();
+    }
+    log_info("Done magic");
+    
+    // Load the new user context
+    *user_context = running_proc->user_context;
+    log_info("Done context swtiching");
+}
+
+KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb)
+{
+    log_info("Start Save And Switch Kernel Context");
+
+    pcb_t *prev_proc = (pcb_t *) _prev_pcb;
+    pcb_t *next_proc = (pcb_t *) _next_pcb;
+
+    if(prev_proc != NULL) {
+        memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
+    }
+    if(next_proc->ever_run == 0) {
+        next_proc->kernel_context = *kernel_context;       
+    }
+
+    // Copy kernel stack 
+    memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], next_proc->kernel_stack_pages, sizeof(next_proc->kernel_stack_pages));
+    WriteRegister(REG_PTBR1, (unsigned int)next_proc -> page_table);
+    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
+    int addr;
+    for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
+        WriteRegister(REG_TLB_FLUSH, addr);
+    }
+
+    return &next_proc->kernel_context;
+}
+

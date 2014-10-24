@@ -26,7 +26,9 @@ typedef struct y_PCB {
     UserContext     user_context;
     KernelContext   kernel_context;
     pte_t*          page_table;
+    pte_t           kernel_stack_pages[KERNEL_STACK_MAXSIZE / PAGESIZE];
     int             ticks;
+    int             ever_run;
     
     // Identity
     int             pid;
@@ -58,6 +60,9 @@ pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
 void ticking_down();
+
+KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
+void switch_to_process(pcb_t * next_proc, UserContext * user_context);
 
 #endif
 
