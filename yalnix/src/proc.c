@@ -113,7 +113,9 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     if(next_proc->kernel_stack_pages) {
         log_err("Cannot malloc next_proc->kernel_stack_pages");
     }
+    log_info("de_ready_queue_and_run next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
     memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    log_info("de_ready_queue_and_run next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
     running_proc = next_proc;
     return next_proc;
 }
@@ -141,15 +143,20 @@ void round_robin_schedule(UserContext *user_context) {
         return;
     }
   
-    if(running_proc != kernel_proc) {
-        stall_running_and_en_ready_queue(user_context);
-    }
+    log_info("Before save next_proc->kernel_stack_pages addr %p with PID %d", running_proc->kernel_stack_pages, running_proc->pid);
+    //if(running_proc != kernel_proc) {
+        
+    //    stall_running_and_en_ready_queue(user_context);
+    //}
+    safe_and_en_ready_queue(running_proc, user_context);
     pcb_t *next_proc;
     next_proc = de_ready_queue();
+    log_info("next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
     if(next_proc->ticks > 0) {
         en_ready_queue(next_proc);
     } else {
         log_info("PID %d get back to live!", next_proc->pid);
+        
         memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
         memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
         memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
@@ -203,13 +210,13 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
 
     // Copy kernel stack 
     if(!next_proc->kernel_stack_pages) {
-        log_info("kernel_context addr %p", kernel_context);
+        
         next_proc->kernel_context = *kernel_context; 
         next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
         if(next_proc->kernel_stack_pages) {
             log_err("Cannot malloc next_proc->kernel_stack_pages");
         }
-        log_info("next_proc->kernel_stack_pages addr %p", next_proc->kernel_stack_pages);
+        log_info("next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
         map_page_to_frame(next_proc->kernel_stack_pages, 0, KERNEL_STACK_MAXSIZE / PAGESIZE, PROT_READ | PROT_WRITE);
     }
     log_info("About to restore kernel stack from addr %p", next_proc->kernel_stack_pages);
@@ -224,6 +231,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         WriteRegister(REG_TLB_FLUSH, addr);
     }
 
+    log_info("About to return kernel_context addr %p", &next_proc->kernel_context);
     return &next_proc->kernel_context;
 }
 

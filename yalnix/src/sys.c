@@ -131,7 +131,7 @@ int Y_Delay(UserContext *user_context){
     int clock_ticks = user_context->regs[0];
 
 	if(clock_ticks < 0){
-		return _FAILURE;	
+		return _FAILURE;
 	}
 	
 	if(clock_ticks == 0){
