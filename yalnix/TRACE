@@ -1,11 +1,11 @@
 ** Yalnix level 5 tracing enabled **
 ** User Prog level 5 tracing enabled **
-Yalnix     Start=0x28174, End=0x32000
+Yalnix     Start=0x282d0, End=0x32000
 Yalnix     Start the kernel
 Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:106: Init user page done
-Yalnix     Text Start=(nil), End=0x28174
+Yalnix     Text Start=(nil), End=0x282d0
 Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:66: heap low 0x32000 and high 0x32000
-Yalnix     Data Start=0x28174, End=0x32000
+Yalnix     Data Start=0x282d0, End=0x32000
 Yalnix     Stack Start=0xfc000, End=0x100000
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 126(0xfc000): valid => 1, prot => 3
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 127(0xfe000): valid => 1, prot => 3
@@ -79,6 +79,7 @@ Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:178) Load 
 Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:180: uctxt->pc: 0x100120
 Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:181: uctxt->sp: 0x1fff58
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:183) Program src/gjj safed to ready queue
+Yalnix     [ERROR] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:114: errno: None) Cannot malloc next_proc->kernel_stack_pages
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/kernel_init.c:195) Leaving the kernel
 User Prog  Hahahah Inside init proc, going to work 8 seconds
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/traps.c:12) trap_kernel_handler invoked for sys call 0xabcdef07
@@ -86,31 +87,34 @@ Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:130) Delay pid 0
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/sys.c:142) Set delay 8 seconds for pid 0 DONE
 Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:27: Doing DoIdle in kernel proc
 Yalnix     DEBUG /net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:27: Doing DoIdle in kernel proc
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:149) PID 2 get back to live!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:159) Before set context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:163) Before flush
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:167) Before set running
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:172) Before magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:189) Start Save And Switch Kernel Context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:198) Start copy stack with #page
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:202) kernel_context addr 0x829200
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:205) next_proc->kernel_stack_pages addr 0x32ac4
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:152) PID 2 get back to live!
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:162) Before set context
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:166) Before flush
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:170) Before set running
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) Before magic
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:196) Start Save And Switch Kernel Context from PID(0) to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:202) Start copy stack with #page
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:206) kernel_context addr 0x829360
+Yalnix     [ERROR] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:210: errno: None) Cannot malloc next_proc->kernel_stack_pages
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:212) next_proc->kernel_stack_pages addr 0x32ac4
 Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/memory.c:64) Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:210) Start flushing reg 1
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:213) Start flushing k stack
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) Succesfully switched kernel context to PID 2!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:180) Done magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:184) Done context swtiching
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:215) About to restore kernel stack from addr 0x32ac4
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:218) Start flushing reg 1
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:221) Start flushing k stack
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:178) Succesfully switched kernel context to PID 2!
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:183) Done magic
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:187) Done context swtiching
 User Prog  THIS IS GJJ PROGRAM
 User Prog  GJJ PROGRAM PRINTING
 User Prog  GJJ PROGRAM PRINTING
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:149) PID 1 get back to live!
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:159) Before set context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:163) Before flush
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:167) Before set running
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:172) Before magic
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:189) Start Save And Switch Kernel Context
-Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:198) Start copy stack with #page
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:152) PID 1 get back to live!
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:162) Before set context
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:166) Before flush
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:170) Before set running
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:175) Before magic
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:196) Start Save And Switch Kernel Context from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:202) Start copy stack with #page
+Yalnix     [INFO] (/net/grad/gjj/tmpy/yalnix/yalnix/src/proc.c:215) About to restore kernel stack from addr 0x8
 Hardware   >>>> 
 
 

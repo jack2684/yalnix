@@ -110,6 +110,9 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
     next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    if(next_proc->kernel_stack_pages) {
+        log_err("Cannot malloc next_proc->kernel_stack_pages");
+    }
     memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     running_proc = next_proc;
     return next_proc;
@@ -186,10 +189,11 @@ void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
 
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb)
 {
-    log_info("Start Save And Switch Kernel Context");
+    
 
     pcb_t *prev_proc = (pcb_t *) _prev_pcb;
     pcb_t *next_proc = (pcb_t *) _next_pcb;
+    log_info("Start Save And Switch Kernel Context from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
 
     if(prev_proc != NULL) {
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
@@ -202,9 +206,13 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         log_info("kernel_context addr %p", kernel_context);
         next_proc->kernel_context = *kernel_context; 
         next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+        if(next_proc->kernel_stack_pages) {
+            log_err("Cannot malloc next_proc->kernel_stack_pages");
+        }
         log_info("next_proc->kernel_stack_pages addr %p", next_proc->kernel_stack_pages);
         map_page_to_frame(next_proc->kernel_stack_pages, 0, KERNEL_STACK_MAXSIZE / PAGESIZE, PROT_READ | PROT_WRITE);
     }
+    log_info("About to restore kernel stack from addr %p", next_proc->kernel_stack_pages);
     
     memcpy(&kernel_page_table[GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE)], next_proc->kernel_stack_pages, sizeof(next_proc->kernel_stack_pages));
     log_info("Start flushing reg 1");
