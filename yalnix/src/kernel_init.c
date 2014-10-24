@@ -73,11 +73,14 @@ void init_kernel_page_table() {
     // For stack segment mapping, noted that stack space is reserved even if it is not used
     TracePrintf(0, "Stack Start=%p, End=%p\n", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
     write_page_table(kernel_page_table,
-                    GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE), 
-                    GET_PAGE_CEILING_NUMBER(KERNEL_STACK_LIMIT), 
+                    GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
+                    GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
                     _VALID, PROT_READ | PROT_WRITE);
+    int i = 0;
+    for(i = GET_PAGE_NUMBER(KERNEL_STACK_BASE); i < GET_PAGE_NUMBER(KERNEL_STACK_LIMIT); i++ ) {
+        log_info("HAHAHAHAHAHAHA page %d(%p): valid => %d, prot => %d", i, KERNEL_PAGE_TO_ADDR(i), kernel_page_table[i].valid, kernel_page_table[i].prot);
+    }
     
-    int i;
     // Add free pages between heap and stack
     int start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
     int end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(KERNEL_STACK_BASE));
@@ -170,14 +173,14 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Program %s safed to ready queue", cmd_args[0]);
 
     // Load gjj process (in checkpoint 3, as the othe process)
-    //init_user_proc();
-    //LoadProgram(cmd_args[1], cmd_args, user_proc);
-    //log_info("Load program done\n");
-    //*uctxt = user_proc->user_context;
-    //_debug("uctxt->pc: %p\n", uctxt->pc);
-    //_debug("uctxt->sp: %p\n", uctxt->sp);
-    //safe_and_en_ready_queue(user_proc, uctxt); 
-    //log_info("Program %s safed to ready queue", cmd_args[1]);
+    init_user_proc();
+    LoadProgram(cmd_args[1], cmd_args, user_proc);
+    log_info("Load program done\n");
+    *uctxt = user_proc->user_context;
+    _debug("uctxt->pc: %p\n", uctxt->pc);
+    _debug("uctxt->sp: %p\n", uctxt->sp);
+    safe_and_en_ready_queue(user_proc, uctxt); 
+    log_info("Program %s safed to ready queue", cmd_args[1]);
   
     // Run the first proc in ready queue
     de_ready_queue_and_run(uctxt);

@@ -40,6 +40,7 @@ void init_kernel_proc(void) {
     kernel_proc->pid = 0;
     kernel_proc->user_context.pc = DoDoIdle;
     kernel_proc->user_context.sp = (void*)(VMEM_0_LIMIT - WORD_LEN / 8);
+    kernel_proc->kernel_stack_pages = NULL;
     return;
 }
 
@@ -53,6 +54,7 @@ pcb_t *init_user_proc(void) {
     user_proc->pid = next_pid;
     next_pid = (next_pid + 1);
     user_proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    user_proc->kernel_stack_pages = NULL;
     return user_proc;
 }
 
@@ -107,6 +109,8 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
     memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
+    next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     running_proc = next_proc;
     return next_proc;
 }
@@ -146,6 +150,7 @@ void round_robin_schedule(UserContext *user_context) {
         memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
         memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
         memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
+        switch_to_process(next_proc, user_context);
         running_proc = next_proc;
     }
 }
@@ -189,14 +194,23 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     if(prev_proc != NULL) {
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
     }
-    if(next_proc->ever_run == 0) {
-        next_proc->kernel_context = *kernel_context;       
-    }
+    
+    log_info("Start copy stack with #page");
 
     // Copy kernel stack 
-    memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], next_proc->kernel_stack_pages, sizeof(next_proc->kernel_stack_pages));
+    if(!next_proc->kernel_stack_pages) {
+        log_info("kernel_context addr %p", kernel_context);
+        next_proc->kernel_context = *kernel_context; 
+        next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+        log_info("next_proc->kernel_stack_pages addr %p", next_proc->kernel_stack_pages);
+        map_page_to_frame(next_proc->kernel_stack_pages, 0, KERNEL_STACK_MAXSIZE / PAGESIZE, PROT_READ | PROT_WRITE);
+    }
+    
+    memcpy(&kernel_page_table[GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE)], next_proc->kernel_stack_pages, sizeof(next_proc->kernel_stack_pages));
+    log_info("Start flushing reg 1");
     WriteRegister(REG_PTBR1, (unsigned int)next_proc -> page_table);
     WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
+    log_info("Start flushing k stack");
     int addr;
     for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
         WriteRegister(REG_TLB_FLUSH, addr);
