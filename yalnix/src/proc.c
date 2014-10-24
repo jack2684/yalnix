@@ -136,11 +136,21 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
 void round_robin_schedule(UserContext *user_context) {
     //log_info("Round robin with ready queue size: %d", ready_queue->size);
     
+    // Don't round robin if there is no one in ready queue
     if(!ready_queue->size) {
         return;
     }
-  
-    safe_and_en_ready_queue(running_proc, user_context);
+ 
+    // Don't push running_proc into ready quueue if it is a idle proc
+    if(!ready_queue->size) {
+        return;
+    }   
+    if(running_proc != idle_proc) {
+        safe_and_en_ready_queue(running_proc, user_context);
+    } else {
+        safe_user_runtime(running_proc, user_context);   
+    }
+    
     next_schedule(user_context);
 }
 
@@ -209,8 +219,8 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
 
     // Copy kernel stack 
     if(next_proc->kernel_stack_pages[0].pfn == 0) { 
-        next_proc->kernel_context = *kernel_context; 
-        log_info("next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
+        log_info("next_proc->kernel_stack_pages addr initializing %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
+        // next_proc->kernel_context = *kernel_context; 
         map_page_to_frame(next_proc->kernel_stack_pages, 0, KERNEL_STACK_MAXSIZE / PAGESIZE, PROT_READ | PROT_WRITE);
     }
     log_info("About to restore kernel stack from addr %p", next_proc->kernel_stack_pages);
@@ -226,6 +236,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     }
 
     log_info("About to return kernel_context addr %p", &next_proc->kernel_context);
-    return &next_proc->kernel_context;
+    return kernel_context;
 }
 

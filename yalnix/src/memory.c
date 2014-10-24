@@ -61,7 +61,11 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_i
     int rc = 0, i;
 
     // Try mapping
-    log_info("Map from page %d (%p) to page %d (%p)", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
+    if(this_page_table == kernel_page_table) {
+        log_info("Map from page %d (%p) to page %d (%p)", start_page_idx, KERNEL_PAGE_TO_ADDR(start_page_idx), end_page_idx, KERNEL_PAGE_TO_ADDR(end_page_idx));
+    } else {
+        log_info("Map from page %d (%p) to page %d (%p)", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
+    }
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         if(this_page_table[i].valid == _VALID) {
             _debug("Page %d is valid already with prot %d\n", i, this_page_table[i].prot);
@@ -103,7 +107,7 @@ int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page
     int rc = 0, i;
    
     // Try unmapping
-    _debug("About to unmap from %d to %d\n", start_page_idx, end_page_idx);
+    log_info("About to unmap from %d to %d", start_page_idx, end_page_idx);
     for(i = start_page_idx; i < end_page_idx && !rc; i++) {
         //_debug("unmapping idx %d to %p with pte at %p\n", i, frame_get_pfn(frame), this_page_table + i);
         if(this_page_table[i].valid == _INVALID) {
