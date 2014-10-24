@@ -152,6 +152,7 @@ void next_schedule(UserContext *user_context) {
     memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
     switch_to_process(next_proc, user_context);
     running_proc = next_proc;
+    log_info("Done with %s", __func__);
 }
 
 void switch_to_process(pcb_t *next_proc, UserContext *user_context) {

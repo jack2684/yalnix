@@ -59,6 +59,7 @@ void trap_memory_handler(UserContext *user_context){
 void trap_clock_handler(UserContext *user_context){
     ticking_down();
     if(round_robin_timeout()) {
+        log_info("About to round robin");
         round_robin_schedule(user_context);
     }
 }
