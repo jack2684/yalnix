@@ -82,12 +82,11 @@ int Y_WaitPid(int pid, int* status_ptr, int options){
 }
 
 int Y_GetPid(void){
-    log_info("Getting piiiiiid");
     return running_proc -> pid;
 }
 
 int Y_Brk(void * addr){
-    log_info("pid %d call user brk with current brk %p", running_proc->pid, user_memory.brk_high);
+    log_info("PID %d call user brk with current brk %p", running_proc->pid, user_memory.brk_high);
     int page_cnt, rc; 
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = UP_TO_PAGE(new_addr);
@@ -126,13 +125,12 @@ int Y_Brk(void * addr){
         }   
     }   
     user_memory.brk_high = new_addr;
-    log_info("pid %d user brk done, new addr at %p", running_proc->pid, new_addr);
+    log_info("PID %d user brk done, new addr at %p", running_proc->pid, new_addr);
     return _SUCCESS;
 }
 
 
 int Y_Delay(UserContext *user_context){
-    log_info("Delay pid %d", running_proc->pid);
     int clock_ticks = user_context->regs[0];
 
 	if(clock_ticks < 0){
@@ -144,7 +142,7 @@ int Y_Delay(UserContext *user_context){
 	}
 
 	running_proc -> ticks = clock_ticks;
-    log_info("Set delay %d seconds for pid %d DONE", clock_ticks, running_proc->pid);
+    log_info("PID %d delay for %d sec", running_proc->pid, clock_ticks);
 
     en_delay_queue(running_proc);
     next_schedule(user_context);

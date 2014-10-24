@@ -53,13 +53,13 @@ void init_kernel_proc(void);
 pcb_t* init_user_proc(void);
 int en_ready_queue(pcb_t *proc);
 void safe_and_en_ready_queue(pcb_t *proc, UserContext *user_context);
-void stall_running_and_en_ready_queue(UserContext *user_context);
 pcb_t* de_ready_queue_and_run(UserContext *user_context);
 pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
 void next_schedule(UserContext *user_context);
 void safe_user_runtime(pcb_t *proc, UserContext *user_context);
+void restore_user_runtime(pcb_t *proc, UserContext *user_context);
 
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 void switch_to_process(pcb_t * next_proc, UserContext * user_context);
