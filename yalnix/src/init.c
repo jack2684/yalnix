@@ -11,7 +11,7 @@ void main(void) {
     //int delays5[1024 * 8];
     while(1) {
         TracePrintf(1, "Hahahah Inside init proc, PID %d, going to sleep %d seconds\n", GetPid(), delay);
-        //Delay(delay);
+        Delay(delay);
         Pause();
     }
     return;

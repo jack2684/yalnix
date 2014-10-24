@@ -164,6 +164,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     idle_proc = init_user_proc();
     char* tmp[] = {NULL};
     LoadProgram("src/idle", tmp, idle_proc);
+    *uctxt = idle_proc->user_context;
+    safe_user_runtime(idle_proc, uctxt);
     //*uctxt = idle_proc->user_context;
     //safe_and_en_ready_queue(idle_proc, uctxt); 
 
@@ -207,9 +209,9 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
 int SetKernelBrk _PARAMS((void *addr)) {
     int rc;
     uint32 new_addr = (uint32)addr;
-    uint32 new_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(new_addr));
-    uint32 current_page_bound = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
-    log_info("SetKernelBrk!!!!!!!!!!!!!!!!!!!!!");
+    uint32 new_page_bound = GET_PAGE_NUMBER(new_addr);
+    uint32 current_page_bound = GET_PAGE_NUMBER(kernel_memory.brk_high);
+    log_info("SetKernelBrk current brk %p and new arrd", kernel_memory.brk_high, new_addr);
     
     // Boudaries check
     if(new_addr > kernel_memory.stack_low) {
@@ -222,6 +224,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
     }
     // Before the virual memory is enabled
     if(!ReadRegister(REG_VM_ENABLE)) {
+        log_info("SetKernelBrk current brk directly to %p Done", kernel_memory.brk_high);
         kernel_memory.brk_high = new_addr;
         return _SUCCESS;
     } 
@@ -246,6 +249,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
         }
     }
     kernel_memory.brk_high = new_addr;
+    log_info("SetKernelBrk current brk to %p Done", kernel_memory.brk_high);
     return _SUCCESS;
 }
 

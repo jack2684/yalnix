@@ -59,6 +59,7 @@ pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
 void next_schedule(UserContext *user_context);
+void safe_user_runtime(pcb_t *proc, UserContext *user_context);
 
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 void switch_to_process(pcb_t * next_proc, UserContext * user_context);

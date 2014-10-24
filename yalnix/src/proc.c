@@ -54,7 +54,14 @@ pcb_t *init_user_proc(void) {
     user_proc->pid = next_pid;
     next_pid = (next_pid + 1);
     user_proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    user_proc->kernel_stack_pages = NULL;
+    if(!user_proc->page_table) {
+        log_err("user_proc->page_table cannot be malloc!");
+    }
+    user_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    if(!user_proc->kernel_stack_pages) {
+        log_err("user_proc->kernel_stack_pages cannot be malloc!");
+    }
+    bzero(user_proc->kernel_stack_pages, sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     return user_proc;
 }
 
@@ -70,14 +77,18 @@ int en_ready_queue(pcb_t *proc) {
     return 0;
 }
 
+void safe_user_runtime(pcb_t *proc, UserContext *user_context) {
+    memcpy(&(proc->user_context), user_context, sizeof(UserContext));
+    memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    memcpy(&(proc->mm), &user_memory, sizeof(vm_t));
+}
+
 void safe_and_en_ready_queue(pcb_t *proc, UserContext *user_context) {
     // Safe the states
     // log_info("START stall_running_and_en_ready_queue with ready queue size: %d", ready_queue->size);
     en_ready_queue(proc);
     // log_info("DONE stall_running_and_en_ready_queue with ready queue size: %d", ready_queue->size);
-    memcpy(&(proc->user_context), user_context, sizeof(UserContext));
-    memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    memcpy(&(proc->mm), &user_memory, sizeof(vm_t));
+    safe_user_runtime(proc, user_context);
     // log_info("DONE backup with ready queue size: %d", ready_queue->size);
 }
 
@@ -110,10 +121,6 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     memcpy(user_context, &(next_proc->user_context), sizeof(UserContext));
     memcpy(user_page_table, next_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&user_memory, &(next_proc->mm), sizeof(vm_t));
-    next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-    if(next_proc->kernel_stack_pages) {
-        log_err("Cannot malloc next_proc->kernel_stack_pages with size: %d", KERNEL_STACK_MAXSIZE / PAGESIZE);
-    }
     log_info("de_ready_queue_and_run next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
     memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_FLOOR_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     log_info("de_ready_queue_and_run next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
@@ -201,13 +208,8 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     log_info("Start copy stack with #page");
 
     // Copy kernel stack 
-    if(!next_proc->kernel_stack_pages) {
-        
+    if(next_proc->kernel_stack_pages[0].pfn == 0) { 
         next_proc->kernel_context = *kernel_context; 
-        next_proc->kernel_stack_pages = (pte_t*)malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-        if(next_proc->kernel_stack_pages) {
-            log_err("Cannot malloc next_proc->kernel_stack_pages with size: %d", KERNEL_STACK_MAXSIZE / PAGESIZE);
-        }
         log_info("next_proc->kernel_stack_pages addr %p with PID %d", next_proc->kernel_stack_pages, next_proc->pid);
         map_page_to_frame(next_proc->kernel_stack_pages, 0, KERNEL_STACK_MAXSIZE / PAGESIZE, PROT_READ | PROT_WRITE);
     }
