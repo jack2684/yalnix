@@ -9,6 +9,8 @@ vm_t    kernel_memory;                      // Kernel virtual memories
 vm_t    user_memory;                        // User virtual memories
 uint32  PAGE_SIZE;
 
+/* Init a frame strcut with frame number
+ */
 frame_t *init_frame(uint32 idx) {
     frame_t *f = (uint32*) malloc(sizeof(frame_t));
     if(!f) {
@@ -19,10 +21,16 @@ frame_t *init_frame(uint32 idx) {
     return f;
 }
 
+/* Get the actual frame number from frame struct
+ */
 uint32 frame_get_pfn(frame_t* f) {
     return (uint32)(*f);
 }
 
+/* Add available frame to frame list
+ *
+ * @param pfn: the page frame number
+ */
 int add_tail_available_frame(uint32 pfn) {
     int rc;
     frame_t *frame = init_frame(pfn);
@@ -36,6 +44,8 @@ int add_tail_available_frame(uint32 pfn) {
     return 0;
 }
 
+/* Remove the first available frame in the frame list
+ */
 frame_t *rm_head_available_frame() {
     if(list_is_empty(available_frames) == 1) {
         _debug("Frame list is empty, double check size: %d!\n", available_frames->size);
@@ -49,6 +59,8 @@ frame_t *rm_head_available_frame() {
     return frame;
 }
 
+/* Flush the TLB
+ */
 void flush_region_TLB(pte_t* table) {
     if(table == kernel_page_table) {
         WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
@@ -57,6 +69,15 @@ void flush_region_TLB(pte_t* table) {
     }
 }
 
+/* Map pages to frames, for each pte to be mapped, 
+ * get a free frame from the available frame list
+ *
+ * @param this_page_table: pointer to a page table 
+ * @param start_idx: start index in the page table
+ * @param end_idx: end index in the page table (exclusive)
+ * @param prot: page protection
+ * @return: whether the mapping is successful
+ */
 int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot) {
     int rc = 0, i;
 
@@ -87,6 +108,14 @@ int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_i
     return rc;
 }
 
+/* Set pages prot
+ *
+ * @param this_page_table: pointer to a page table 
+ * @param start_idx: start index in the page table
+ * @param end_idx: end index in the page table (exclusive)
+ * @param prot: page protection
+ * @return: whether the setting is successful
+ */
 int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot) {
     int rc = 0, i;
 
@@ -103,6 +132,13 @@ int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int p
     return rc;
 }
 
+/* Unmap pages to frames
+ *
+ * @param this_page_table: pointer to a page table 
+ * @param start_idx: start index in the page table
+ * @param end_idx: end index in the page table (exclusive)
+ * @return: whether the unmapping is successful
+ */
 int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx) {
     int rc = 0, i;
    

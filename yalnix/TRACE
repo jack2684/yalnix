@@ -1,19 +1,19 @@
 ** Yalnix level 5 tracing enabled **
 ** User Prog level 5 tracing enabled **
-Yalnix     Start=0x28eb0, End=0x32000
+Yalnix     Start=0x28764, End=0x32000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:220) SetKernelBrk current brk 0x32000 and new arrd
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:233) SetKernelBrk current brk directly to 0x32000 Done
 Yalnix     Start the kernel
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:106: Init user page done
-Yalnix     Text Start=(nil), End=0x28eb0
+Yalnix     Text Start=(nil), End=0x28764
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:66: heap low 0x32000 and high 0x32000
-Yalnix     Data Start=0x28eb0, End=0x32000
+Yalnix     Data Start=0x28764, End=0x32000
 Yalnix     Stack Start=0xfc000, End=0x100000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 126(0xfc000): valid => 1, prot => 3
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:81) HAHAHAHAHAHAHA page 127(0xfe000): valid => 1, prot => 3
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:159: Init VM
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:220) SetKernelBrk current brk 0x32000 and new arrd
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65) Map from page 25 (0x32000) to page 26 (0x34000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:86) Map from page 25 (0x32000) to page 26 (0x34000)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:258) SetKernelBrk current brk to 0x34000 Done
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:47: Load program: name => src/idle
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:69: Open file DONE.
@@ -25,24 +25,22 @@ Yalnix     LoadProgram: heap_size 4, stack_size 1
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:129: LoadProgram: heap_size 4, stack_size 1
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:151: proc->user_context: 0x1fff70
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:189: LoadProgram: About to clean
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:110) About to unmap from 0 to 128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146) About to unmap from 0 to 128
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:195: LoadProgram: Clean DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:207) text_pg1 => (nil), text_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208) data_pg1 => 0x2, data_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209) stack_pg1 => 0x1fff70, stack_npg => 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 0 (0x100000) to page 2 (0x104000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:220: LoadProgram: Map user text DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 2 (0x104000) to page 4 (0x108000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:231: LoadProgram: Map user data DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 127 (0x1fe000) to page 128 (0x200000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:248: LoadProgram: Map user stack with #1 pages DONE
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:277: LoadProgram: Read file DONE
-Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:93: Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:122: Set from page 0 (0x100000) to page 2 (0x104000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:291: LoadProgram: Set ptes DONE
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:296: LoadProgram: About to bzero from 0x105610 to 0x106650
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:298) LoadProgram: Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107) Before save, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:112) After save, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(1)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:169: uctxt->pc: 0x100120
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:170: uctxt->sp: 0x1fff70
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:171) Load program done
@@ -57,46 +55,40 @@ Yalnix     LoadProgram: heap_size 4, stack_size 1
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:129: LoadProgram: heap_size 4, stack_size 1
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:151: proc->user_context: 0x1fff70
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:189: LoadProgram: About to clean
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:110) About to unmap from 0 to 128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146) About to unmap from 0 to 128
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:195: LoadProgram: Clean DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:207) text_pg1 => (nil), text_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208) data_pg1 => 0x2, data_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209) stack_pg1 => 0x1fff70, stack_npg => 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 0 (0x100000) to page 2 (0x104000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:220: LoadProgram: Map user text DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 2 (0x104000) to page 4 (0x108000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:231: LoadProgram: Map user data DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 127 (0x1fe000) to page 128 (0x200000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:248: LoadProgram: Map user stack with #1 pages DONE
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:277: LoadProgram: Read file DONE
-Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:93: Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/memory.c:122: Set from page 0 (0x100000) to page 2 (0x104000)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:291: LoadProgram: Set ptes DONE
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/load.c:296: LoadProgram: About to bzero from 0x10583c to 0x106870
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:298) LoadProgram: Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107) Before save, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:112) After save, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(2)
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:184: uctxt->pc: 0x100120
 Yalnix     DEBUG /net/grad/gjj/yalnix/yalnix/src/kernel_init.c:185: uctxt->sp: 0x1fff70
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:186) Load program done
 
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:121) Before restore, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:126) After restore, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:292) The sizeof(next_proc->kernel_stack_pages) is 4, the page number is 2
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:293) next_proc->kernel_stack_pages 0x2ae88, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)] 0x2ad20
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:299) Write kernel stack done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:304) Flush done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:247) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:248) Succesfully switched kernel context to PID 2!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:257) Switch Context from PID(2) to PID(2) DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:280) The sizeof(next_proc->kernel_stack_pages) is 4, the page number is 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:281) next_proc->kernel_stack_pages 0x2ae88, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)] 0x2ad20
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:287) Write kernel stack done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:292) Flush done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:235) get return proc:
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:236) Succesfully switched kernel context to PID 2!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:245) Switch Context from PID(2) to PID(2) DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:208) Leaving the kernel
 User Prog  HEAP my_malloc(0x190)
 User Prog  warning: unitialized heap!
 User Prog  initializing heap
 User Prog  brk_unlocked(10e870)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef06
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:23) About to brk
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:89) PID 2 call user brk with current brk 0x100004
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 1056768 (0x4100000) to page 7 (0x10e000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 1056768 (0x4100000) to page 7 (0x10e000)
 Yalnix     Y_Brk ADD DONE = 0x100004, End = 0x100004, New Addr = 0x110000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:128) PID 2 user brk done, new addr at 0x110000
 User Prog  HEAP found a block
@@ -105,126 +97,61 @@ User Prog  HEAP found a block
 User Prog  HEAP my_malloc(0x190)
 User Prog  HEAP found a block
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Hahahah Inside init proc, PID 0 
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, going to sleep 5 seconds, cnt 0
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef07
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:135) At delay, pc(0x100442) sp(0x1fe6d4)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:146) PID 2 delay for 5 sec
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:210) >->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107) Before save, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:112) After save, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:216) PID 1 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:121) Before restore, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:126) After restore, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:218) <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:219) Before swtich, ppc(0x100442) pc(0x100120) psp(0x1fe6d4) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:283) next_proc->kernel_stack_pages addr initializing 0x2ad5c with PID 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:247) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:248) Succesfully switched kernel context to PID 1!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:257) Switch Context from PID(2) to PID(1) DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:221) After swtich, ppc(0x100442) pc(0x100120) psp(0x1fe6d4) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:151) PID(2) DONE INTI DELAY pc(0x100442) sp(0x1fe6d4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:145) PID 2 delay for 5 sec
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:271) next_proc->kernel_stack_pages addr initializing 0x2ad5c with PID 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:88) Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:235) get return proc:
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:236) Succesfully switched kernel context to PID 1!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:245) Switch Context from PID(2) to PID(1) DONE
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:216) PID 2 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:121) Before restore, ppc(0x100442) pc(0xf775ad70) psp(0x1fe6d4) sp(0x1ffe10), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:126) After restore, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:218) <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:219) Before swtich, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:247) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:248) Succesfully switched kernel context to PID 2!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:257) Switch Context from PID(1) to PID(2) DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:221) After swtich, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:235) get return proc:
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:236) Succesfully switched kernel context to PID 2!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:245) Switch Context from PID(1) to PID(2) DONE
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, right back from 5 seconds sleep
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, Pause done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, going to sleep 5 seconds, cnt 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef07
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:135) At delay, pc(0x100442) sp(0x1fe6d4)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:146) PID 2 delay for 5 sec
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:210) >->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107) Before save, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:112) After save, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:216) PID 1 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:121) Before restore, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:126) After restore, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:218) <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:219) Before swtich, ppc(0x100442) pc(0x100120) psp(0x1fe6d4) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:247) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:248) Succesfully switched kernel context to PID 1!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:257) Switch Context from PID(2) to PID(1) DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:221) After swtich, ppc(0x100442) pc(0x100120) psp(0x1fe6d4) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:151) PID(2) DONE INTI DELAY pc(0x100442) sp(0x1fe6d4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:145) PID 2 delay for 5 sec
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:235) get return proc:
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:236) Succesfully switched kernel context to PID 1!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:245) Switch Context from PID(2) to PID(1) DONE
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
-User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:216) PID 2 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:121) Before restore, ppc(0x100442) pc(0xf775ad70) psp(0x1fe6d4) sp(0x1ffe10), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:126) After restore, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:218) <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:219) Before swtich, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:247) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:248) Succesfully switched kernel context to PID 2!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:257) Switch Context from PID(1) to PID(2) DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:221) After swtich, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:235) get return proc:
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:236) Succesfully switched kernel context to PID 2!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:245) Switch Context from PID(1) to PID(2) DONE
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, right back from 5 seconds sleep
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, Pause done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef05
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:19) About to getpid
 User Prog  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID 2, going to sleep 5 seconds, cnt 2
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:13) trap_kernel_handler invoked for sys call 0xabcdef07
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:135) At delay, pc(0x100442) sp(0x1fe6d4)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:146) PID 2 delay for 5 sec
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:210) >->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107) Before save, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:112) After save, ppc(0x100442) pc(0x100442) psp(0x1fe6d4) sp(0x1fe6d4), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:216) PID 1 about to switch back to live!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:121) Before restore, ppc(0x100120) pc(0x100442) psp(0x1fff70) sp(0x1fe6d4), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:126) After restore, ppc(0x100120) pc(0x100120) psp(0x1fff70) sp(0x1fff70), PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:218) <-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:219) Before swtich, ppc(0x100442) pc(0x100120) psp(0x1fe6d4) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:247) get return proc:
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:248) Succesfully switched kernel context to PID 1!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:257) Switch Context from PID(2) to PID(1) DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:221) After swtich, ppc(0x100442) pc(0x100120) psp(0x1fe6d4) sp(0x1fff70), PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:151) PID(2) DONE INTI DELAY pc(0x100442) sp(0x1fe6d4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:145) PID 2 delay for 5 sec
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:235) get return proc:
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:236) Succesfully switched kernel context to PID 1!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:245) Switch Context from PID(2) to PID(1) DONE
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
-User Prog  KEEP IDLING...
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:37) ticking
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:48) ticking
 User Prog  KEEP IDLING...

@@ -1,6 +1,8 @@
 #include "dlist.h"
 //#include "stdlib.h"     // For the use of malloc, will be replace with yalnix malloc 
 
+/* Init doubly list
+ */
 dlist_t *dlist_init() {
     dlist_t *list = (dlist_t*)malloc(sizeof(dlist_t));
     if(list) {

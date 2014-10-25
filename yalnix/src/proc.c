@@ -281,7 +281,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     log_info("next_proc->kernel_stack_pages %p, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)] %p", next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)]);
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
-            sizeof(next_proc->kernel_stack_pages)  );
+            sizeof(next_proc->kernel_stack_pages) * KERNEL_STACK_MAXSIZE / PAGESIZE );
     //WriteRegister(REG_PTBR1, (unsigned int)next_proc -> page_table);
     //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
     log_info("Write kernel stack done");

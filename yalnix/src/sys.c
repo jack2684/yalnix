@@ -132,7 +132,6 @@ int Y_Brk(void * addr){
 
 int Y_Delay(UserContext *user_context){
     int clock_ticks = user_context->regs[0];
-    log_info("At delay, pc(%p) sp(%p)", user_context->pc, user_context->sp);
 
 	if(clock_ticks < 0){
 		return _FAILURE;
@@ -148,7 +147,6 @@ int Y_Delay(UserContext *user_context){
     en_delay_queue(running_proc);
     next_schedule(user_context);
     pcb_t* tmp = delay_queue->head->data;
-    log_info("PID(%d) DONE INTI DELAY pc(%p) sp(%p)", tmp->pid, tmp->user_context.pc, tmp->user_context.sp);
 
 	return _SUCCESS;
 }
