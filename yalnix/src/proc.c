@@ -105,8 +105,8 @@ int en_ready_queue(pcb_t *proc) {
  */
 void save_user_runtime(pcb_t *proc, UserContext *user_context) {
     proc->user_context = *user_context;
-    memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    memcpy(&(proc->mm), &user_memory, sizeof(vm_t));
+    //memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    proc->mm = user_memory;
 }
 
 /* Safe user land runtime info
@@ -116,8 +116,8 @@ void save_user_runtime(pcb_t *proc, UserContext *user_context) {
  */
 void restore_user_runtime(pcb_t *proc, UserContext *user_context) {
     *user_context = proc->user_context;
-    memcpy(user_page_table, proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    memcpy(&user_memory, &(proc->mm), sizeof(vm_t));
+    set_user_page_table(proc->page_table);
+    user_memory = proc->mm;
 }
 
 /* Safe user land runtime info and push into queue
@@ -220,10 +220,6 @@ void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
     //log_info("Before set context");
     *user_context = next_proc->user_context;
 
-    //log_info("Before flush");
-    WriteRegister(REG_PTBR1, (unsigned int)user_page_table);
-    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
-
     //log_info("Before set running");
     pcb_t *prev_proc = running_proc;
     running_proc = next_proc;
@@ -282,8 +278,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
             sizeof(next_proc->kernel_stack_pages) * KERNEL_STACK_MAXSIZE / PAGESIZE );
-    //WriteRegister(REG_PTBR1, (unsigned int)next_proc -> page_table);
-    //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
     log_info("Write kernel stack done");
     int addr;
     for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {

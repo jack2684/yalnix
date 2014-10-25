@@ -186,13 +186,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
     int rc;
     // Clean slate
-    _debug("LoadProgram: About to clean\n");
-    rc = unmap_page_to_frame(user_page_table, 0, GET_PAGE_NUMBER(VMEM_REGION_SIZE));
-    if(rc) {
-        _debug("LoadProgram: unmap error\n");
-        return _FAILURE;
-    }
-    _debug("LoadProgram: Clean DONE\n");
+    set_user_page_table(proc->page_table);
 
     /* Set user memory boundaries*/
     user_memory.text_low     = (unsigned int)VMEM_1_BASE;

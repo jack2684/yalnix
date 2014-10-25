@@ -152,8 +152,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // Build page tables using REG_PTBR0/1 REG_PTLR0/1 
     WriteRegister(REG_PTBR0, (uint32)kernel_page_table);
     WriteRegister(REG_PTLR0, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    WriteRegister(REG_PTBR1, (uint32)user_page_table);
-    WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
+    //WriteRegister(REG_PTBR1, (uint32)user_page_table);
+    //WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
 
     // Enable virtual memroy 
     _debug("Init VM\n");

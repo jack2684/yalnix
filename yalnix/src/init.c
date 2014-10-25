@@ -14,9 +14,8 @@ void main(void) {
     while(1) {
         TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID %d, going to sleep %d seconds, cnt %d\n", GetPid(), delay, cnt++);
         Delay(delay);
-        TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID %d, right back from %d seconds sleep\n", GetPid(), delay);
+        TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Init back from sleep\n");
         Pause();
-        TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID %d, Pause done\n", GetPid());
     }
     return;
 }

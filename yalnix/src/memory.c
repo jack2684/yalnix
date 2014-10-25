@@ -162,3 +162,13 @@ int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page
     return rc;
 }
 
+/* Set global user page table to a new one
+ *
+ * @param page_table: the new page table to be set
+ */
+void set_user_page_table(pte_t* page_table) {
+    user_page_table = page_table;
+    WriteRegister(REG_PTBR1, (uint32)user_page_table);
+    WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
+    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
+}
