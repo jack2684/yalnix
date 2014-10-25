@@ -1,6 +1,7 @@
 #ifndef _SYS_H
 #define _SYS_H
 #include "common.h"
+#include "timer.h"
 #include "hardware.h"
 
 int Y_Delay(UserContext *user_context);

@@ -104,11 +104,9 @@ int en_ready_queue(pcb_t *proc) {
  * @param user_context: current user context
  */
 void save_user_runtime(pcb_t *proc, UserContext *user_context) {
-    log_info("Before save, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
-    memcpy(&(proc->user_context), user_context, sizeof(UserContext));
+    proc->user_context = *user_context;
     memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&(proc->mm), &user_memory, sizeof(vm_t));
-    log_info("After save, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
 }
 
 /* Safe user land runtime info
@@ -117,11 +115,9 @@ void save_user_runtime(pcb_t *proc, UserContext *user_context) {
  * @param user_context: current user context
  */
 void restore_user_runtime(pcb_t *proc, UserContext *user_context) {
-    log_info("Before restore, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
-    memcpy(user_context, &(proc->user_context), sizeof(UserContext));
+    *user_context = proc->user_context;
     memcpy(user_page_table, proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     memcpy(&user_memory, &(proc->mm), sizeof(vm_t));
-    log_info("After restore, ppc(%p) pc(%p) psp(%p) sp(%p), PID(%d)", proc->user_context.pc, user_context->pc, proc->user_context.sp, user_context->sp, proc->pid);
 }
 
 /* Safe user land runtime info and push into queue
@@ -202,17 +198,15 @@ void round_robin_schedule(UserContext *user_context) {
  */
 void next_schedule(UserContext *user_context) {
     pcb_t *next_proc;    
+    pcb_t *proc = running_proc;
     if(!ready_queue->size) {
         next_proc = idle_proc;
-        log_info(">->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->-");
         save_user_runtime(running_proc, user_context);
     } else {
         next_proc = de_ready_queue();
     }
     
-    log_info("PID %d about to switch back to live!", next_proc->pid);
     restore_user_runtime(next_proc, user_context);
-    log_info("<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-<-");
     switch_to_process(next_proc, user_context);
     running_proc = next_proc;
 }
@@ -224,7 +218,6 @@ void next_schedule(UserContext *user_context) {
  */
 void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
     //log_info("Before set context");
-    running_proc->user_context = *user_context;
     *user_context = next_proc->user_context;
 
     //log_info("Before flush");
