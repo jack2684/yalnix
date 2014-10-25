@@ -89,7 +89,7 @@ void init_kernel_page_table() {
     }
     // Add free pages above kernel space
     start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(VMEM_0_LIMIT));
-    end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(PMEM_BASE)) + PAGE_SIZE;
+    end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(PMEM_BASE)) + total_page_number;
     for(i = start_pfn; i < end_pfn; i++) {
         add_tail_available_frame(i);
     }
@@ -141,7 +141,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     
     // Memory management, linked list of frames of free memory
     available_frames = list_init();
-    PAGE_SIZE = GET_PAGE_NUMBER(pmem_size);
+    total_page_number = GET_PAGE_NUMBER(pmem_size);
     init_user_page_table();   
     init_kernel_page_table();           
     if(!kernel_page_table || !user_page_table) {

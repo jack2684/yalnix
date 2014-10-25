@@ -2,6 +2,9 @@ void main(void) {
     int delay = 5;
     int delays[512];
     int delays2[1024];
+    int delays3[1024 * 2];
+    int delays4[1024 * 2 * 2];
+    int delays5[1024 * 2 * 2 * 2];
     int* a;
     a = (int*)malloc(sizeof(int) * 100);
     a = (int*)malloc(sizeof(int) * 100);

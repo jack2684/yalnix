@@ -210,6 +210,51 @@ void next_schedule(UserContext *user_context) {
     switch_to_process(next_proc, user_context);
     running_proc = next_proc;
 }
+/* Grow or shrink usre stack by doign page management
+ *
+ * @param proc: the corresponding process
+ * @param addr: the new address the trigers
+ */
+int user_stack_resize(pcb_t *proc, uint32 new_addr) {
+    if(!proc) {
+        log_err("Process not found for stask resize");
+        return 1;
+    }
+    if(proc == running_proc) {
+        proc->mm = user_memory;
+    }
+    if(proc->mm.brk_high + PAGESIZE >= new_addr) {
+        log_err("Stack to low. Red zone err!!!");
+        return 1;
+    }
+    if(VMEM_1_LIMIT < new_addr) {
+        log_err("Stack shrink beyond 0.");
+        return 1;
+    }
+
+    int rc = 0;
+    if(new_addr > proc->mm.stack_low) {
+        rc = unmap_page_to_frame(proc->page_table,
+                                USER_PAGE_NUMBER(proc->mm.stack_low),
+                                USER_PAGE_NUMBER(new_addr));
+        if(rc) {
+            log_err("Cannot shrink user stack");
+            return 1;
+        }
+    } else if (new_addr < proc->mm.stack_low) {
+        rc = map_page_to_frame(proc->page_table,
+                                USER_PAGE_NUMBER(new_addr),
+                                USER_PAGE_NUMBER(proc->mm.stack_low),
+                                PROT_READ | PROT_WRITE);
+        if(rc) {
+            log_err("Cannot enlarge user stack");
+            return 1;
+        } 
+    }
+    log_info("Resize PID(%d) stack low from %p to %p", proc->pid, proc->mm.stack_low, new_addr);
+    proc->mm.stack_low = new_addr;
+    return 0;
+}
 
 /* Wrapper of kernel context switch
  *
@@ -273,8 +318,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         return kernel_context; 
     }
    
-    log_info("The sizeof(next_proc->kernel_stack_pages) is %d, the page number is %d", sizeof(next_proc->kernel_stack_pages), KERNEL_STACK_MAXSIZE / PAGESIZE );
-    log_info("next_proc->kernel_stack_pages %p, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)] %p", next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)]);
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
             sizeof(next_proc->kernel_stack_pages) * KERNEL_STACK_MAXSIZE / PAGESIZE );

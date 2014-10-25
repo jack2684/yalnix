@@ -60,6 +60,7 @@ void round_robin_schedule(UserContext *user_context);
 void next_schedule(UserContext *user_context);
 void save_user_runtime(pcb_t *proc, UserContext *user_context);
 void restore_user_runtime(pcb_t *proc, UserContext *user_context);
+int user_stack_resize(pcb_t *proc, uint32 addr);
 
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 void switch_to_process(pcb_t * next_proc, UserContext * user_context);

@@ -5,6 +5,7 @@
 #include "common.h"
 
 #define GET_PAGE_NUMBER(addr) (((uint32)addr) >> PAGESHIFT)
+#define USER_PAGE_NUMBER(addr) (((uint32)addr - VMEM_1_BASE) >> PAGESHIFT)
 #define GET_PAGE_FLOOR_NUMBER(addr) (DOWN_TO_PAGE((uint32)addr) >> PAGESHIFT)
 #define GET_PAGE_CEILING_NUMBER(addr) (UP_TO_PAGE((uint32)addr) >> PAGESHIFT)
 #define GET_PAGE_OFFSET(addr) (addr & PAGEMASK)
@@ -19,7 +20,7 @@ typedef struct      pte pte_t;
 typedef uint32      frame_t;
 extern pte_t        *kernel_page_table;                // Global for every one
 extern pte_t *user_page_table;
-extern uint32       PAGE_SIZE;
+extern uint32       total_page_number;
 extern list_t       *available_frames;
 
 // Memory management of virtual memory
@@ -37,9 +38,9 @@ uint32 frame_get_pfn(frame_t* f);
 int add_tail_available_frame(uint32 pfn);
 frame_t *rm_head_available_frame();
 void flush_region_TLB(pte_t* table);
-int map_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot);
-int set_ptes(pte_t* this_page_table, int start_page_idx, int end_page_idx, int prot);
-int unmap_page_to_frame(pte_t* this_page_table, int start_page_idx, int end_page_idx);
+int map_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx, int prot);
+int set_ptes(pte_t* page_table, int start_page_idx, int end_page_idx, int prot);
+int unmap_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx);
 
 // Some globals
 extern vm_t kernel_memory;

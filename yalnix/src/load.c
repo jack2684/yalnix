@@ -232,8 +232,8 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> These pages should be marked valid, with a
 // ==>> protection of (PROT_READ | PROT_WRITE).
     rc = map_page_to_frame(user_page_table, 
-                            GET_PAGE_NUMBER(cpp - VMEM_0_LIMIT), 
-                            GET_PAGE_NUMBER(cpp - VMEM_0_LIMIT) + stack_npg, 
+                            GET_PAGE_NUMBER(VMEM_1_SIZE) - stack_npg, 
+                            GET_PAGE_NUMBER(VMEM_1_SIZE), 
                             PROT_READ | PROT_WRITE);
     if(rc) {
         _debug("LoadProgram: map stack seg error\n");

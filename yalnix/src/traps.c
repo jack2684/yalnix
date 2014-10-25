@@ -50,8 +50,24 @@ because the address is not mapped in the current page tables,
 or because the access violates the page protection specified in the corresponding page table entry.
 */
 void trap_memory_handler(UserContext *user_context){
-	//INVOKE the TRAP_MEMORY_HANDLER
-	//KILL the process that cause the the disallowed memory access
+    uint32 offending_addr = (uint32)user_context->addr;
+    int rc = 0;
+
+    switch(user_context->code) {
+        case YALNIX_MAPERR:
+            log_info("User addr %p map err", offending_addr);
+            rc = user_stack_resize(running_proc, offending_addr);
+            if(rc) {
+                log_err("Cannot resize proc user stack");
+                // @TODO: exit process
+            }
+            break;
+        case YALNIX_ACCERR:
+            log_err("User addr %p acc err", offending_addr);
+            break;
+        default:
+            break;
+    }
 }
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
