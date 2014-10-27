@@ -78,7 +78,7 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
             // so after copying original data from src_data_addr,
             // swap_pte give this frame to the newly created pte
             swap_pte->valid = _VALID;
-            swap_pte->prot = PROT_ALL;
+            swap_pte->prot = PROT_ALL;              // Set prot for copy purpose
             swap_pte->pfn = frame_get_pfn(frame);
             
             // Copying
@@ -89,9 +89,11 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
             } 
             WriteRegister(REG_TLB_FLUSH, swap_addr);
             if(src_table[i].valid == _VALID) {
+                log_info("Copy data to phy frame %d", swap_pte->pfn);
                 memcpy((void*)swap_addr, (void*)src_data_addr, PAGESIZE);
             }
             dest_table[i - start_idx] = *swap_pte;
+            dest_table[i - start_idx].prot = src_table[i].prot;     //Restore the prot
         }
     }
     return rc;

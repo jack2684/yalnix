@@ -125,12 +125,6 @@ void Cooking(pte_t *user_page_table, UserContext* uctxt) {
     uctxt->sp = (void*)(VMEM_1_BASE + PAGESIZE - 4); 
 }
 
-KernelContext *MYKCSFun(KernelContext *kernel_ctx, void *running, void *next) {
-    // Copy the kernel contxt to the pcb that is about to be switched out
-    memcpy(&(((pcb_t*)running)->kernel_context), kernel_ctx, sizeof(KernelContext));
-    return kernel_ctx;
-}
-
 void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext* uctxt )) {
     TracePrintf(0, "Start the kernel\n");
     

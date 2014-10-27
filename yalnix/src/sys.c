@@ -25,7 +25,7 @@ int Y_Fork(UserContext *user_context){
     //init_process_kernel(next_proc);
     //log_info("Init kernel context done");
     
-    next_schedule(user_context);
+    round_robin_schedule(user_context);
     log_info("Next schedule done");
 
     if(running_proc->pid == ppid) {
