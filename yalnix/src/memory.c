@@ -80,11 +80,14 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
             swap_pte->valid = _VALID;
             swap_pte->prot = PROT_ALL;
             swap_pte->pfn = frame_get_pfn(frame);
+            
+            // Copying
             if(src_table == kernel_page_table) {
                 src_data_addr = KERNEL_PAGE_TO_ADDR(i);
             } else {
                 src_data_addr = USER_PAGE_TO_ADDR(i);
             } 
+            WriteRegister(REG_TLB_FLUSH, swap_addr);
             if(src_table[i].valid == _VALID) {
                 memcpy((void*)swap_addr, (void*)src_data_addr, PAGESIZE);
             }
@@ -231,11 +234,12 @@ void set_user_page_table(pte_t* page_table) {
 void print_page_table(pte_t *pt, int s, int e) {
     int i = 0;
     if(pt == kernel_page_table) {
-        log_info("<<<<<<<<<<<<<<PRINT KERNEL PAGE TABLE>>>>>>>>>>>>");
+        log_info("PRINT KERNEL PAGE TABLE>>>>>>>>>>>>");
     } else {
-        log_info("<<<<<<<<<<<<<<PRINT USER PAGE TABLE>>>>>>>>>>>>");
+        log_info("PRINT USER PAGE TABLE>>>>>>>>>>>>");
     }
     for(i = s; i < e; i ++ ) {
         log_info("pte[%d]: valid=>%d\tprot=>%d\tpfn=>%d", i, pt[i].valid, pt[i].prot, pt[i].pfn);
     }
+    log_info("<<<<<<<<<<<<<<<PRINT TABLE DONE");
 }

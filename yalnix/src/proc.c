@@ -309,6 +309,7 @@ void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
 
 void init_process_kernel(pcb_t *proc) {
     int rc = 0;
+    
     rc = KernelContextSwitch(&init_newbie_kernel, proc, proc);
     if(rc) {
         log_err("Failed to execute magic function!");
@@ -317,19 +318,21 @@ void init_process_kernel(pcb_t *proc) {
 }
 
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb){
-    pcb_t *proc = (pcb_t *) _prev_pcb;
-    log_info("First time to init PID(%d)!", proc->pid);
+    pcb_t *next_proc = (pcb_t *) _next_pcb;
+    log_info("First time to init PID(%d) kernel!", next_proc->pid);
     
-    proc->kernel_context = *kernel_context;
-    int rc = alloc_frame_and_copy(proc->kernel_stack_pages, 
+    next_proc->kernel_context = *kernel_context;
+    int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
                                 kernel_page_table, 
                                 GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
                                 GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
                                 kernel_memory.swap_addr);
     if(rc) {
-        log_err("PID(%d) kernel stack cannot init", proc->pid);
+        log_err("PID(%d) kernel stack cannot init", next_proc->pid);
         return NULL;
     }
+    
+    next_proc->init_done = 1;
 
     return kernel_context;
 }
@@ -358,17 +361,30 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     }
 
     // If just initialized (like just forked), init the context and kernel stack
-    //if(next_proc->init_done == 0) {
-    //    next_proc->init_done = 1;
-    //}
-
-    // Load kernel stack from next processs and flush corresponding TLB
-    int addr;
-    memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
-            next_proc->kernel_stack_pages, 
-            sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
-    for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
-        WriteRegister(REG_TLB_FLUSH, addr);
+    if(next_proc->init_done == 0) {
+        log_info("First time to context swtich to PID(%d)!", next_proc->pid);
+        next_proc->init_done = 1;
+        next_proc->kernel_context = *kernel_context;
+        int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
+                                    kernel_page_table, 
+                                    GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
+                                    GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
+                                    kernel_memory.swap_addr);
+        if(rc) {
+            log_err("PID(%d) kernel stack cannot init", next_proc->pid);
+            return NULL;
+        }
+    } else {
+        // Load kernel stack from next processs and flush corresponding TLB
+        int addr;
+        memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
+                next_proc->kernel_stack_pages, 
+                sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
+        //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
+        for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
+            log_info("Kernel Context Switch flushing addr: %p", addr);
+            WriteRegister(REG_TLB_FLUSH, addr);
+        }
     }
 
     log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);

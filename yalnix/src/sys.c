@@ -4,8 +4,12 @@
 
 //These are process syscalls
 int Y_Fork(UserContext *user_context){
+    int ppid = running_proc->pid;
+    int cpid;
+
     log_info("FOOOOOOOOOOOOOOOOOOOOOOOORK");
     pcb_t *next_proc = init_user_proc();
+    cpid = next_proc->pid;
     log_info("Init porc done");
     //print_page_table(running_proc->page_table, 0, 11);
     int rc = copy_user_runtime(next_proc, running_proc, user_context);
@@ -14,12 +18,21 @@ int Y_Fork(UserContext *user_context){
         return -1;
     }
     log_info("Init user context done");
-    init_process_kernel(next_proc);
-    log_info("Init kernel context done");
+    
     en_ready_queue(next_proc);
     log_info("Init ready queue done");
+    
+    //init_process_kernel(next_proc);
+    //log_info("Init kernel context done");
+    
     next_schedule(user_context);
     log_info("Next schedule done");
+
+    if(running_proc->pid == ppid) {
+        return cpid;
+    } else {
+        return 0;
+    }
 
 	//SAVE the current user-context
 	//COPY Parent's user-context

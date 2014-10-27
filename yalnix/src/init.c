@@ -17,9 +17,16 @@ void main(void) {
     
     int pid = Fork();
 
-    while(1) {
-        TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t running PID(%d)\n", GetPid());
-        Pause();
+    if(pid == 0) {
+        while(1) {
+            TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t I am child with PID(%d)\n", GetPid());
+            Pause();
+        }
+    } else {
+        while(1) {
+            TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t I am parent with PID(%d)\n", GetPid());
+            Pause();
+        }
     }
     return;
 }
