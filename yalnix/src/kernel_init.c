@@ -12,12 +12,12 @@ trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
 
 void SetKernelData _PARAMS((void *_Kernel_Data_Start, void *_Kernel_Data_End)) {
     // Set kernel vm boundaries, noted that most of the *_high is implicitly represented by other's *_low 
-    TracePrintf(0, "Start=%p, End=%p\n", _Kernel_Data_Start, _Kernel_Data_End);
     kernel_memory.text_low     = (unsigned int)VMEM_BASE;
     kernel_memory.data_low     = (unsigned int)_Kernel_Data_Start;
     kernel_memory.brk_low      = (unsigned int)_Kernel_Data_End;
     kernel_memory.brk_high     = (unsigned int)_Kernel_Data_End;
     kernel_memory.stack_low    = (unsigned int)KERNEL_STACK_BASE;
+    kernel_memory.swap_addr    = (unsigned int)DOWN_TO_PAGE(KERNEL_STACK_BASE) - PAGESIZE;
 }
 
 /* 
@@ -56,26 +56,27 @@ void init_kernel_page_table() {
     kernel_page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // For text segment mapping
-    TracePrintf(0, "Text Start=%p, End=%p\n", kernel_memory.text_low, kernel_memory.data_low);
+    log_info("Text Start=%p, End=%p", kernel_memory.text_low, kernel_memory.data_low);
     write_page_table(kernel_page_table, 
                     GET_PAGE_FLOOR_NUMBER(kernel_memory.text_low), 
                     GET_PAGE_CEILING_NUMBER(kernel_memory.data_low), 
                     _VALID, PROT_READ | PROT_EXEC);
     
     // For data and heap segment mapping
-    _debug("heap low %p and high %p\n", kernel_memory.brk_low, kernel_memory.brk_high);
-    TracePrintf(0, "Data Start=%p, End=%p\n", kernel_memory.data_low, kernel_memory.brk_high);
+    log_info("heap low %p and high %p", kernel_memory.brk_low, kernel_memory.brk_high);
+    log_info("Data Start=%p, End=%p", kernel_memory.data_low, kernel_memory.brk_high);
     write_page_table(kernel_page_table,
                     GET_PAGE_FLOOR_NUMBER(kernel_memory.data_low), 
                     GET_PAGE_CEILING_NUMBER(kernel_memory.brk_low), 
                     _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
-    TracePrintf(0, "Stack Start=%p, End=%p\n", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
+    log_info("Stack Start=%p, End=%p", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
     write_page_table(kernel_page_table,
                     GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
                     GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
                     _VALID, PROT_READ | PROT_WRITE);
+    
     int i = 0;
     for(i = GET_PAGE_NUMBER(KERNEL_STACK_BASE); i < GET_PAGE_NUMBER(KERNEL_STACK_LIMIT); i++ ) {
         log_info("HAHAHAHAHAHAHA page %d(%p): valid => %d, prot => %d", i, KERNEL_PAGE_TO_ADDR(i), kernel_page_table[i].valid, kernel_page_table[i].prot);
@@ -103,7 +104,7 @@ void *init_user_page_table() {
     write_page_table(user_page_table,
                     0, GET_PAGE_NUMBER(VMEM_REGION_SIZE),
                     _INVALID, 0);
-    _debug("Init user page done\n");
+    log_info("Init user page done");
 }
 
 void DoIdle(void) {
@@ -145,45 +146,53 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     init_user_page_table();   
     init_kernel_page_table();           
     if(!kernel_page_table || !user_page_table) {
-        _debug("Cannot allocate memory for page tables.\n");
+        log_err("Cannot allocate memory for page tables.\n");
         return;
     }
 
     // Build page tables using REG_PTBR0/1 REG_PTLR0/1 
     WriteRegister(REG_PTBR0, (uint32)kernel_page_table);
     WriteRegister(REG_PTLR0, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    //WriteRegister(REG_PTBR1, (uint32)user_page_table);
+    //WriteRegister(REG_PTBR1, (uint32)user_page_table); 
     //WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
 
     // Enable virtual memroy 
-    _debug("Init VM\n");
+    log_info("Init VM");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     
-    // Create one kernel proc and idle user proc
+    // Create the very first proc
     init_processes();
     idle_proc = init_user_proc();
     char* tmp[] = {NULL};
-    LoadProgram("src/idle", tmp, idle_proc);
+    if(cmd_args[0] == NULL) {
+        LoadProgram("src/init", tmp, idle_proc);
+    } else {
+        LoadProgram(cmd_args[0], cmd_args, idle_proc);
+    }
     *uctxt = idle_proc->user_context;
+    log_info("Get the first context");
     save_user_runtime(idle_proc, uctxt);
-    _debug("uctxt->pc: %p\n", uctxt->pc);
-    _debug("uctxt->sp: %p\n", uctxt->sp);
-    log_info("Load program done\n");
+    log_info("Saved the first runtime");
+    init_process_kernel(idle_proc);
+    running_proc = idle_proc;
+    log_info("Set the first runnign process");
+    log_info("Load program done pc(%p) sp(%p)", uctxt->pc, uctxt->sp);
+    log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
     //*uctxt = idle_proc->user_context;
     //save_and_en_ready_queue(idle_proc, uctxt); 
 
     // Load init process (in checkpoint 3)
-    pcb_t *user_proc = init_user_proc();
-    if(cmd_args[0] == NULL) {
-        LoadProgram("src/init", tmp, user_proc);
-    } else {
-        LoadProgram(cmd_args[0], cmd_args, user_proc);
-    }
-    *uctxt = user_proc->user_context;
-    save_and_en_ready_queue(user_proc, uctxt); 
-    _debug("uctxt->pc: %p\n", uctxt->pc);
-    _debug("uctxt->sp: %p\n", uctxt->sp);
-    log_info("Load program done\n");
+    //pcb_t *user_proc = init_user_proc();
+    //if(cmd_args[0] == NULL) {
+    //    LoadProgram("src/init", tmp, user_proc);
+    //} else {
+    //    LoadProgram(cmd_args[0], cmd_args, user_proc);
+    //}
+    //*uctxt = user_proc->user_context;
+    //save_and_en_ready_queue(user_proc, uctxt); 
+    //_debug("uctxt->pc: %p\n", uctxt->pc);
+    //_debug("uctxt->sp: %p\n", uctxt->sp);
+    //log_info("Load program done\n");
 
     // Load init process (in checkpoint 3)
     //user_proc = init_user_proc();
@@ -196,7 +205,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     //log_info("Program %s saved to ready queue", cmd_args[1]);
 
     // Run the first proc in ready queue
-    de_ready_queue_and_run(uctxt);
+    //de_ready_queue_and_run(uctxt);
     //Cooking(user_page_table, uctxt);
    // int i;
    // for(i = 0; i < GET_PAGE_NUMBER(VMEM_1_SIZE); i++) {
@@ -205,7 +214,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     
 
    // KernelContextSwitch(MYKCSFun, (void*)user_proc, (void*)kernel_proc);
-    log_info("Leaving the kernel");
+    log_info("Leaving the kernel start");
     return;
 }
 
@@ -219,8 +228,8 @@ int SetKernelBrk _PARAMS((void *addr)) {
     uint32 current_page_bound = GET_PAGE_NUMBER(kernel_memory.brk_high);
     log_info("SetKernelBrk current brk %p and new arrd", kernel_memory.brk_high, new_addr);
     
-    // Boudaries check
-    if(new_addr > kernel_memory.stack_low) {
+    // Boudaries check 
+    if(new_addr > kernel_memory.swap_addr - PAGESIZE) {
         log_err("Kernel Break: Trying to Access Stack Addr = %p\n", new_addr);
         return _FAILURE;
     } // Check if trying to access below brk base line
@@ -258,10 +267,5 @@ int SetKernelBrk _PARAMS((void *addr)) {
     log_info("SetKernelBrk current brk to %p Done", kernel_memory.brk_high);
     return _SUCCESS;
 }
-
-// int KernelContextSwitch(KCSFunc_t *, void *, void *) {
-//     return _SUCCESS;
-// }
-
 
 

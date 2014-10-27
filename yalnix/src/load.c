@@ -44,7 +44,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     long segment_size;
     char *argbuf;
 
-    _debug("Load program: name => %s\n", name);
+    log_info("Load program: name => %s", name);
   
   /*
    * Open the executable file 
@@ -66,7 +66,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         return _FAILURE;
     }
 
-    _debug("Open file DONE.\n");
+    log_info("Open file DONE.");
   /*
    * Figure out in what region 1 page the different program sections
    * start and end
@@ -79,17 +79,16 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
    *  the new stack that we are building.  Also count the number of
    *  arguments, to become the argc that the new "main" gets called with.
    */
-    _debug("LoadProgram: Set boundaries done, about to calculate the args\n");
+    log_info("LoadProgram: Set boundaries done, about to calculate the args");
     size = 0;
     for (i = 0; args[i] != NULL; i++) {
-        _debug("counting arg %d = '%s'\n", i, args[i]);
-        TracePrintf(3, "counting arg %d = '%s'\n", i, args[i]);
+        log_info("counting arg %d = '%s'", i, args[i]);
+        log_info("counting arg %d = '%s'\n", i, args[i]);
         size += strlen(args[i]) + 1;
     }
     argcount = i;
 
-    TracePrintf(2, "LoadProgram: argsize %d, argcount %d\n", size, argcount);
-    _debug("LoadProgram: argsize %d, argcount %d\n", size, argcount);
+    log_info("LoadProgram: argsize %d, argcount %d", size, argcount);
   
   /*
    *  The arguments will get copied starting at "cp", and the argv
@@ -115,7 +114,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
 
 
-    TracePrintf(1, "prog_size %d, text %d data %d bss %d pages\n",
+    log_info("prog_size %d, text %d data %d bss %d pages",
       li.t_npg + data_npg, li.t_npg, li.id_npg, li.ud_npg);
 
 
@@ -123,9 +122,9 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
    * Compute how many pages we need for the stack */
     stack_npg = (VMEM_1_LIMIT - DOWN_TO_PAGE(cp2)) >> PAGESHIFT;
 
-    TracePrintf(1, "LoadProgram: heap_size %d, stack_size %d\n",
+    log_info("LoadProgram: heap_size %d, stack_size %d",
 	            li.t_npg + data_npg, stack_npg);
-    _debug("LoadProgram: heap_size %d, stack_size %d\n",
+    log_info("LoadProgram: heap_size %d, stack_size %d",
                      li.t_npg + data_npg, stack_npg);
 
 
@@ -148,7 +147,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> Here you replace your data structure proc
 // ==>> proc->context.sp = cp2;
     proc->user_context.sp = cp2; // @TODO: user context or kernel context?
-    _debug("proc->user_context: %p\n", proc->user_context.sp);
+    ("proc->user_context sp: %p", proc->user_context.sp);
 
     /*
      * Now save the arguments in a separate buffer in region 0, since
@@ -157,11 +156,11 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     cp2 = argbuf = (char *)malloc(size);
 // ==>> You should perhaps check that malloc returned valid space
     if(cp2 == NULL) {
-        _debug("Malloc for cp2/argbuf error!\n");
+        log_info("Malloc for cp2/argbuf error!");
     }
 
     for (i = 0; args[i] != NULL; i++) {
-        TracePrintf(3, "saving arg %d = '%s'\n", i, args[i]);
+        log_info("saving arg %d = '%s'", i, args[i]);
         strcpy(cp2, args[i]);
         cp2 += strlen(cp2) + 1;
     }
@@ -187,6 +186,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     int rc;
     // Clean slate
     set_user_page_table(proc->page_table);
+    log_info("Set page table done.");
 
     /* Set user memory boundaries*/
     user_memory.text_low     = (unsigned int)VMEM_1_BASE;
@@ -208,10 +208,10 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> (PROT_READ | PROT_WRITE).
     rc = map_page_to_frame(user_page_table, text_pg1, text_pg1 + li.t_npg, PROT_WRITE | PROT_READ);
     if(rc) {
-        _debug("LoadProgram: map text seg error\n");
+        log_info("LoadProgram: map text seg error");
         return _FAILURE;
     }
-    _debug("LoadProgram: Map user text DONE\n");
+    ("LoadProgram: Map user text DONE");
     
 // ==>> Allocate "data_npg" physical pages and map them starting at
 // ==>> the    "data_pg1" in region 1 address space.    
@@ -219,10 +219,10 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> (PROT_READ | PROT_WRITE).
     rc = map_page_to_frame(user_page_table, data_pg1, data_pg1 + data_npg, PROT_WRITE | PROT_READ);
     if(rc) {
-        _debug("LoadProgram: map data seg error\n");
+        ("LoadProgram: map data seg error");
         return _FAILURE;
     }
-    _debug("LoadProgram: Map user data DONE\n");
+    ("LoadProgram: Map user data DONE");
 
     /*
      * Allocate memory for the user stack too.
@@ -236,10 +236,10 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
                             GET_PAGE_NUMBER(VMEM_1_SIZE), 
                             PROT_READ | PROT_WRITE);
     if(rc) {
-        _debug("LoadProgram: map stack seg error\n");
+        log_info("LoadProgram: map stack seg error");
         return _FAILURE;
     }
-    _debug("LoadProgram: Map user stack with #%d pages DONE\n", stack_npg);
+    log_info("LoadProgram: Map user stack with #%d pages DONE", stack_npg);
 
     /*
      * All pages for the new address space are now in the page table.    
@@ -268,7 +268,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         return KILL;
     }
 
-    _debug("LoadProgram: Read file DONE\n");
+    log_info("LoadProgram: Read file DONE");
 
     /*
      * Now set the page table entries for the program text to be readable
@@ -282,12 +282,12 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
     close(fd);			/* we've read it all now */
     set_ptes(user_page_table, text_pg1, text_pg1 + li.t_npg, PROT_READ | PROT_EXEC); 
-    _debug("LoadProgram: Set ptes DONE\n");
+    log_info("LoadProgram: Set ptes DONE");
 
   /*
    * Zero out the uninitialized data area
    */
-    _debug("LoadProgram: About to bzero from %p to %p\n", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
+    log_info("LoadProgram: About to bzero from %p to %p", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
     bzero((void*)li.id_end, li.ud_end - li.id_end);
     log_info("LoadProgram: Bzero DONE");
     

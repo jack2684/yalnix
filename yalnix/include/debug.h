@@ -11,13 +11,13 @@
 #ifdef NDEBUG
     #define _debug(M, ...)
 #else
-    #define _debug(M, ...) TracePrintf(4, "DEBUG %s:%d: " M "", __FILE__, __LINE__, ##__VA_ARGS__)
+    #define _debug(M, ...) TracePrintf(4, "DEBUG %s:%d: " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 #endif
 
 //#define clean_errno() (errno == 0 ? "None" : strerror(errno))
 #define clean_errno() (0 == 0 ? "None" : strerror(errno))
 
-#define log_err(M, ...) TracePrintf(0, "[ERROR] (%s:%d: errno: %s) " M "\n", __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
+#define log_err(M, ...) TracePrintf(0, "[ERROR] (%s:%d: func: %s) " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
 #define log_warn(M, ...) fprintf(stderr, "[WARN] (%s:%d: errno: %s) " M "\n", __FILE__, __LINE__, clean_errno(), ##__VA_ARGS__)
 

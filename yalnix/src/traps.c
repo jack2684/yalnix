@@ -1,30 +1,60 @@
 //These are the traps used in Yalnix
 //These introduction for each TRAP is from the Yalnix 2014.pdf
 #include "traps.h"
+
 int no_traps;
 void TrapsInit(){
     
 }
+
+char *get_sys_call_name(u_long code) {
+    switch(code) {
+        case YALNIX_EXIT:
+            return "YALNIX_EXIT";
+        case YALNIX_GETPID:
+            return "YALNIX_GETPID:";
+        case YALNIX_BRK:
+            return "YALNIX_BRK";
+        case YALNIX_DELAY:
+            return "YALNIX_DELAY";
+        case YALNIX_FORK:
+            return "YALNIX_FORK";
+        default:
+            break;
+    } 
+}
+
 /*This trap results from a “kernel call” trap instruction executed by the current user processes. 
 Such a trap is used by user processes to request some type of service from the operating system kernel, 
 such as creating a new process, allocating memory, or performing I/O. 
 All different kernel call requests enter the kernel through this single type of trap*/
 void trap_kernel_handler(UserContext *user_context){
-    switch(user_context->code) {
+    u_long rc = 0;
+    u_long code = user_context->code;
+    switch(code) {
         case YALNIX_EXIT:
-            user_context->regs[0] = Y_Exit(user_context);
+            rc = Y_Exit(user_context);
             break;
         case YALNIX_GETPID:
-            user_context->regs[0] = Y_GetPid();
+            rc = Y_GetPid();
             break;
         case YALNIX_BRK:
-            user_context->regs[0] = Y_Brk((void*)user_context->regs[0]);
+            rc = Y_Brk((void*)user_context->regs[0]);
             break;
         case YALNIX_DELAY:
-            Y_Delay(user_context);
+            rc = Y_Delay(user_context);
+            break;
+        case YALNIX_FORK:
+            rc = Y_Fork(user_context);
         default:
             break;
     }
+
+    if(rc) {
+        log_err("Kernel call for %s fail!", get_sys_call_name(code));
+    }
+    
+    user_context->regs[0] = rc;
 }
 
 

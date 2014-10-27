@@ -3,7 +3,20 @@
 #include "proc.h"
 
 //These are process syscalls
-int Y_Fork(void){
+int Y_Fork(UserContext *user_context){
+    log_info("FOOOOOOOOOOOOOOOOOOOOOOOORK");
+    pcb_t *next_proc = init_user_proc();
+    log_info("Init porc done");
+    //print_page_table(running_proc->page_table, 0, 11);
+    int rc = copy_user_runtime(next_proc, running_proc, user_context);
+    if(rc) {
+        log_err("PID(%d) cannot copy PID(%d) runtime", next_proc, running_proc);
+        return -1;
+    }
+    log_info("copy_user_runtime done");
+    init_process_kernel(next_proc);
+    log_info("switch_to_process done");
+
 	//SAVE the current user-context
 	//COPY Parent's user-context
 	//COPY address space
@@ -94,7 +107,7 @@ int Y_Brk(void * addr){
 
     // Boudaries check
     if(new_addr > user_memory.stack_low - PAGESIZE) {
-        log_err("New addr trepass the stack area!");
+        log_err("New addr trepass the red zone below stack!");
         return _FAILURE;
     } // Check if trying to access below brk base line
     else if(new_addr < user_memory.brk_low) {
@@ -113,7 +126,7 @@ int Y_Brk(void * addr){
                 log_err("User Break Warning: Not enough phycial memory\n");
                 return _FAILURE;
         }   
-        TracePrintf(0, "Y_Brk ADD DONE = %p, End = %p, New Addr = %p\n", user_memory.brk_low, user_memory.brk_high, addr);
+        log_info("Y_Brk ADD DONE = %p, End = %p, New Addr = %p", user_memory.brk_low, user_memory.brk_high, addr);
     } else if (new_page_bound < user_memory.brk_high) {
         page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
         rc = unmap_page_to_frame(user_page_table,

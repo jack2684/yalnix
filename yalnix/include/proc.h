@@ -28,6 +28,7 @@ typedef struct y_PCB {
     pte_t*          page_table;
     pte_t*          kernel_stack_pages;// [KERNEL_STACK_MAXSIZE / PAGESIZE];
     int             ticks;
+    int             init_done;
     
     // Identity
     int             pid;
@@ -61,9 +62,13 @@ void next_schedule(UserContext *user_context);
 void save_user_runtime(pcb_t *proc, UserContext *user_context);
 void restore_user_runtime(pcb_t *proc, UserContext *user_context);
 int user_stack_resize(pcb_t *proc, uint32 addr);
+int is_proc_active(pcb_t *proc);
+int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
 
-KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
+void init_process_kernel(pcb_t *proc);
+KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 void switch_to_process(pcb_t * next_proc, UserContext * user_context);
+KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 
 #endif
 

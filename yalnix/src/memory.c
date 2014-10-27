@@ -44,17 +44,67 @@ int add_tail_available_frame(uint32 pfn) {
     return 0;
 }
 
+/* Allocate (end_idx - start_idx) frames, and copy data from current page table.
+ * This part is tricky, because the next page table is not in Virtual Memory yet,
+ * we borrow the Swap page in VMEM 0 to swap all those data from current page table frames.
+ *
+ * @dest_table: the next page table to copy to
+ * @src_table: the current page table of VMEM 0 or VMEM 1
+ * @start_idx: start idx
+ * @end_idx: end idx, exclusive
+ * @swap_addr: the special addr in VMEM 0
+ * @return: whether it is successful or not
+ */
+int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx, uint32 swap_addr) {
+    int swap_idx = KERNEL_PAGE_NUMBER(swap_addr);
+    pte_t *swap_pte = (kernel_page_table + swap_idx);
+    uint32 src_data_addr;
+    int i, rc = 0;
+
+    if(src_table == kernel_page_table) {
+        log_info("Going to copy from %d(%p) to %d(%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
+    } else {
+        log_info("Going to copy from %d(%p) to %d(%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
+    } 
+   
+    for(i = start_idx; i < end_idx; i++) {
+        frame_t *frame = rm_head_available_frame();
+        if(!frame) {
+            log_err("Page %d cannot find available frame", i);
+            unmap_page_to_frame(dest_table, start_idx, i);
+            rc = NO_AVAILABLE_ERR;
+        } else {
+            // swap_pte exit in valid virtual memory, 
+            // so after copying original data from src_data_addr,
+            // swap_pte give this frame to the newly created pte
+            swap_pte->valid = _VALID;
+            swap_pte->prot = PROT_ALL;
+            swap_pte->pfn = frame_get_pfn(frame);
+            if(src_table == kernel_page_table) {
+                src_data_addr = KERNEL_PAGE_TO_ADDR(i);
+            } else {
+                src_data_addr = USER_PAGE_TO_ADDR(i);
+            } 
+            if(src_table[i].valid == _VALID) {
+                memcpy((void*)swap_addr, (void*)src_data_addr, PAGESIZE);
+            }
+            dest_table[i - start_idx] = *swap_pte;
+        }
+    }
+    return rc;
+}
+
 /* Remove the first available frame in the frame list
  */
 frame_t *rm_head_available_frame() {
     if(list_is_empty(available_frames) == 1) {
-        _debug("Frame list is empty, double check size: %d!\n", available_frames->size);
+        log_err("Frame list is empty, double check size: %d!\n", available_frames->size);
         return NULL;
     }
 
     frame_t *frame = (frame_t*)list_rm_head(available_frames);
     if(!frame) {
-        _debug("list_rm_head error code: %d\n", available_frames->rc);
+        log_err("list_rm_head error code: %d\n", available_frames->rc);
     }
     return frame;
 }
@@ -78,23 +128,24 @@ void flush_region_TLB(pte_t* table) {
  * @param prot: page protection
  * @return: whether the mapping is successful
  */
-int map_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx, int prot) {
+int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
     int rc = 0, i;
 
     // Try mapping
     if(page_table == kernel_page_table) {
-        log_info("Map from page %d (%p) to page %d (%p)", start_page_idx, KERNEL_PAGE_TO_ADDR(start_page_idx), end_page_idx, KERNEL_PAGE_TO_ADDR(end_page_idx));
+        log_info("Map from page %d (%p) to page %d (%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
     } else {
-        log_info("Map from page %d (%p) to page %d (%p)", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
+        log_info("Map from page %d (%p) to page %d (%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
     }
-    for(i = start_page_idx; i < end_page_idx && !rc; i++) {
+    for(i = start_idx; i < end_idx && !rc; i++) {
         if(page_table[i].valid == _VALID) {
-            _debug("Page %d is valid already with prot %d\n", i, page_table[i].prot);
+            log_err("Page %d is valid already with prot %d", i, page_table[i].prot);
             continue;
         }
         frame_t *frame = rm_head_available_frame();
         if(!frame) {
-            _debug("Page %d cannot find available frame\n", i);
+            log_err("Page %d cannot find available frame", i);
+            unmap_page_to_frame(page_table, start_idx, i);
             rc = NO_AVAILABLE_ERR;
         } else {
             page_table[i].valid = _VALID;
@@ -116,11 +167,11 @@ int map_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx, i
  * @param prot: page protection
  * @return: whether the setting is successful
  */
-int set_ptes(pte_t* page_table, int start_page_idx, int end_page_idx, int prot) {
+int set_ptes(pte_t* page_table, int start_idx, int end_idx, int prot) {
     int rc = 0, i;
 
-    _debug("Set from page %d (%p) to page %d (%p)\n", start_page_idx, USER_PAGE_TO_ADDR(start_page_idx), end_page_idx, USER_PAGE_TO_ADDR(end_page_idx));
-    for(i = start_page_idx; i < end_page_idx; i++ ) {
+    log_info("Set from page %d (%p) to page %d (%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
+    for(i = start_idx; i < end_idx; i++ ) {
         page_table[i].prot = prot;
         if(page_table == kernel_page_table) {
             WriteRegister(REG_TLB_FLUSH, KERNEL_PAGE_TO_ADDR(i));
@@ -139,12 +190,16 @@ int set_ptes(pte_t* page_table, int start_page_idx, int end_page_idx, int prot) 
  * @param end_idx: end index in the page table (exclusive)
  * @return: whether the unmapping is successful
  */
-int unmap_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx) {
+int unmap_page_to_frame(pte_t* page_table, int start_idx, int end_idx) {
     int rc = 0, i;
+
+    if(start_idx >= end_idx) {
+        return 0;
+    }
    
     // Try unmapping
-    log_info("About to unmap from %d to %d", start_page_idx, end_page_idx);
-    for(i = start_page_idx; i < end_page_idx && !rc; i++) {
+    log_info("About to unmap from %d to %d", start_idx, end_idx);
+    for(i = start_idx; i < end_idx && !rc; i++) {
         //_debug("unmapping idx %d to %p with pte at %p\n", i, frame_get_pfn(frame), page_table + i);
         if(page_table[i].valid == _INVALID) {
             continue;
@@ -152,7 +207,7 @@ int unmap_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx)
         page_table[i].valid = _INVALID;
         rc = add_tail_available_frame(page_table[i].pfn);
         if(rc) {
-            _debug("Cannot add new frame when trying to unmap\n");
+            log_err("Cannot add new frame when trying to unmap");
             rc = MALLOC_ERR;
         }
     }
@@ -171,4 +226,16 @@ void set_user_page_table(pte_t* page_table) {
     WriteRegister(REG_PTBR1, (uint32)user_page_table);
     WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));
     WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_1);
+}
+
+void print_page_table(pte_t *pt, int s, int e) {
+    int i = 0;
+    if(pt == kernel_page_table) {
+        log_info("<<<<<<<<<<<<<<PRINT KERNEL PAGE TABLE>>>>>>>>>>>>");
+    } else {
+        log_info("<<<<<<<<<<<<<<PRINT USER PAGE TABLE>>>>>>>>>>>>");
+    }
+    for(i = s; i < e; i ++ ) {
+        log_info("pte[%d]: valid=>%d\tprot=>%d\tpfn=>%d", i, pt[i].valid, pt[i].prot, pt[i].pfn);
+    }
 }

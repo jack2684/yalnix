@@ -13,11 +13,12 @@ void main(void) {
     //int delays3[1024 * 2];
     //int delays4[1024 * 4];
     //int delays5[1024 * 8];
-    TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Hahahah Inside init proc, PID %d \n");
+    TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t running PID(%d)\n", GetPid());
+    
+    int pid = Fork();
+
     while(1) {
-        TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Inside init proc, PID %d, going to sleep %d seconds, cnt %d\n", GetPid(), delay, cnt++);
-        Delay(delay);
-        TracePrintf(1, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Init back from sleep\n");
+        TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t running PID(%d)\n", GetPid());
         Pause();
     }
     return;
