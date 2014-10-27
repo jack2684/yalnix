@@ -13,9 +13,13 @@ int Y_Fork(UserContext *user_context){
         log_err("PID(%d) cannot copy PID(%d) runtime", next_proc, running_proc);
         return -1;
     }
-    log_info("copy_user_runtime done");
+    log_info("Init user context done");
     init_process_kernel(next_proc);
-    log_info("switch_to_process done");
+    log_info("Init kernel context done");
+    en_ready_queue(next_proc);
+    log_info("Init ready queue done");
+    next_schedule(user_context);
+    log_info("Next schedule done");
 
 	//SAVE the current user-context
 	//COPY Parent's user-context

@@ -50,7 +50,7 @@ void trap_kernel_handler(UserContext *user_context){
             break;
     }
 
-    if(rc) {
+    if(0 && rc) {
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
     

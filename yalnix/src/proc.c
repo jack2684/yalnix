@@ -102,6 +102,7 @@ int en_ready_queue(pcb_t *proc) {
         _debug("Cannot enqueue the pcb\n");
         return 1;
     }
+    log_info("En ready_queue with PID(%d)", proc->pid);
     proc->list_node = n; 
     proc->state = READY;
     return 0;
@@ -206,15 +207,11 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
  *  @param user_context: current user context
  */
 void round_robin_schedule(UserContext *user_context) {
-    // Don't round robin if there is no one in ready queue
-    if(!ready_queue->size) {
-        return;
-    }
- 
     // Don't push running_proc into ready quueue if it is a idle proc
     if(!ready_queue->size) {
         return;
     }   
+    log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
     if(running_proc != idle_proc) {
         save_and_en_ready_queue(running_proc, user_context);
     } //else {
@@ -238,9 +235,10 @@ void next_schedule(UserContext *user_context) {
     } else {
         next_proc = de_ready_queue();
     }
+    log_info("Next schedule PID(%d)", next_proc->pid);
     
-    restore_user_runtime(next_proc, user_context);
     switch_to_process(next_proc, user_context);
+    restore_user_runtime(next_proc, user_context);
     running_proc = next_proc;
 }
 /* Grow or shrink usre stack by doign page management
@@ -307,8 +305,6 @@ void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
         log_err("Failed to execute magic function!");
         Halt();
     }
-    running_proc = next_proc;
-    *user_context = running_proc->user_context;
 }
 
 void init_process_kernel(pcb_t *proc) {
@@ -335,13 +331,12 @@ KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb
         return NULL;
     }
 
-    return &proc->kernel_context;
+    return kernel_context;
 }
 
 /* Caller kernel context switch magic function,
  * 1. Back up the current kernel context
- * 2. Init kernel stack if not  
- * 3. Restore kernel stack and do the corresponding TLB flush
+ * 2. Restore kernel stack and do the corresponding TLB flush
  *
  * @param kernel_context: the mysterious kernel context
  * @param _prev_proc: the process to be switched out
@@ -359,7 +354,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         prev_proc->kernel_context = *kernel_context;
         memcpy(prev_proc->kernel_stack_pages, 
                 &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
-                sizeof(next_proc->kernel_stack_pages) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+                sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     }
 
     // If just initialized (like just forked), init the context and kernel stack
@@ -371,7 +366,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     int addr;
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
-            sizeof(next_proc->kernel_stack_pages) * KERNEL_STACK_MAXSIZE / PAGESIZE );
+            sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
     for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
         WriteRegister(REG_TLB_FLUSH, addr);
     }

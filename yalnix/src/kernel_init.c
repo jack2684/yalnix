@@ -162,20 +162,21 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     
     // Create the very first proc
     init_processes();
-    idle_proc = init_user_proc();
+    pcb_t *init_proc;
+    init_proc = init_user_proc();
     char* tmp[] = {NULL};
     if(cmd_args[0] == NULL) {
-        LoadProgram("src/init", tmp, idle_proc);
+        LoadProgram("src/init", tmp, init_proc);
     } else {
-        LoadProgram(cmd_args[0], cmd_args, idle_proc);
+        LoadProgram(cmd_args[0], cmd_args, init_proc);
     }
-    *uctxt = idle_proc->user_context;
+    *uctxt = init_proc->user_context;
     log_info("Get the first context");
-    save_user_runtime(idle_proc, uctxt);
+    save_user_runtime(init_proc, uctxt);
     log_info("Saved the first runtime");
-    init_process_kernel(idle_proc);
-    running_proc = idle_proc;
-    log_info("Set the first runnign process");
+    init_process_kernel(init_proc);
+    running_proc = init_proc;
+    log_info("Set the first runnign process as PID(%d)", running_proc->pid);
     log_info("Load program done pc(%p) sp(%p)", uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
     //*uctxt = idle_proc->user_context;

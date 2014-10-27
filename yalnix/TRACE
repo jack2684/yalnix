@@ -1,19 +1,19 @@
 ** Yalnix level 5 tracing enabled **
 ** User Prog level 5 tracing enabled **
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:229) SetKernelBrk current brk 0x34000 and new arrd
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:242) SetKernelBrk current brk directly to 0x34000 Done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:230) SetKernelBrk current brk 0x34000 and new arrd
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:243) SetKernelBrk current brk directly to 0x34000 Done
 Yalnix     Start the kernel
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:107) Init user page done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:59) Text Start=(nil), End=0x29660
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:59) Text Start=(nil), End=0x29760
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:66) heap low 0x34000 and high 0x34000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:67) Data Start=0x29660, End=0x34000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:67) Data Start=0x29760, End=0x34000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:74) Stack Start=0xfc000, End=0x100000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:82) HAHAHAHAHAHAHA page 126(0xfc000): valid => 1, prot => 3
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:82) HAHAHAHAHAHAHA page 127(0xfe000): valid => 1, prot => 3
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:160) Init VM
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:229) SetKernelBrk current brk 0x34000 and new arrd
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:230) SetKernelBrk current brk 0x34000 and new arrd
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:136) Map from page 26 (0x34000) to page 27 (0x36000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:267) SetKernelBrk current brk to 0x36000 Done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:268) SetKernelBrk current brk to 0x36000 Done
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:47) Load program: name => src/init
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:69) Open file DONE.
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:82) LoadProgram: Set boundaries done, about to calculate the args
@@ -34,60 +34,45 @@ Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:173) Set from page 0
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:285) LoadProgram: Set ptes DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:290) LoadProgram: About to bzero from 0x1056c0 to 0x1066f0
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:292) LoadProgram: Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:173) Get the first context
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:175) Saved the first runtime
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:325) First time to init PID(1)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:174) Get the first context
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:176) Saved the first runtime
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:321) First time to init PID(1)!
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65) Going to copy from 126(0xfc000) to 128(0x100000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:178) Set the first runnign process
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:179) Load program done pc(0x100120) sp(0x1fff70)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:180) +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:217) Leaving the kernel start
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:179) Set the first runnign process as PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:180) Load program done pc(0x100120) sp(0x1fff70)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:181) +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:218) Leaving the kernel start
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:88) User addr 0x1f06f0 map err
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:138) Map from page 120 (0x1f0000) to page 127 (0x1fe000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:287) Resize PID(1) stack low from 0x1fff70 to 0x1f06f0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:285) Resize PID(1) stack low from 0x1fff70 to 0x1f06f0
 User Prog  HEAP my_malloc(0x190)
 User Prog  warning: unitialized heap!
 User Prog  initializing heap
 User Prog  brk_unlocked(10e6f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:102) PID 1 call user brk with current brk 0x100004
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:106) PID 1 call user brk with current brk 0x100004
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:138) Map from page 1056768 (0x4100000) to page 7 (0x10e000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:129) Y_Brk ADD DONE = 0x100004, End = 0x100004, New Addr = 0x110000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:141) PID 1 user brk done, new addr at 0x110000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:133) Y_Brk ADD DONE = 0x100004, End = 0x100004, New Addr = 0x110000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:145) PID 1 user brk done, new addr at 0x110000
 User Prog  HEAP found a block
 User Prog  HEAP my_malloc(0x190)
 User Prog  HEAP found a block
 User Prog  HEAP my_malloc(0x190)
 User Prog  HEAP found a block
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:7) FOOOOOOOOOOOOOOOOOOOOOOOORK
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:9) Init porc done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129) About to copy user runtime
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:131) save_user_runtime done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:133) user_context done, going to copy from 0 to 128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:130) About to copy user runtime
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:132) save_user_runtime done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:134) user_context done, going to copy from 0 to 128
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67) Going to copy from 0(0x100000) to 128(0x200000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:142) alloc_frame_and_copy done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:16) copy_user_runtime done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:325) First time to init PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:143) alloc_frame_and_copy done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:16) Init user context done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:321) First time to init PID(2)!
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65) Going to copy from 126(0xfc000) to 128(0x100000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:18) switch_to_process done
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54: func: trap_kernel_handler) Kernel call for YALNIX_GETPID: fail!
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:18) Init kernel context done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105) En ready_queue with PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:20) Init ready queue done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238) Next schedule PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:353) Backing up kernel context and stack for PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:374) Magic kernel switch done from PID(1) to PID(2)
+KernelContextSwitch: Kernel function returned bogus context.
