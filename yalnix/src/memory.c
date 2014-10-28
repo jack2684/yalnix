@@ -68,6 +68,9 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
     } 
    
     for(i = start_idx; i < end_idx; i++) {
+        if(src_table[i].valid != _VALID) {
+            continue;
+        }
         frame_t *frame = rm_head_available_frame();
         if(!frame) {
             log_err("Page %d cannot find available frame", i);
@@ -88,10 +91,8 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
                 src_data_addr = USER_PAGE_TO_ADDR(i);
             } 
             WriteRegister(REG_TLB_FLUSH, swap_addr);
-            if(src_table[i].valid == _VALID) {
-                log_info("Copy data to phy frame %d", swap_pte->pfn);
-                memcpy((void*)swap_addr, (void*)src_data_addr, PAGESIZE);
-            }
+            //log_info("Copy data to phy frame %d", swap_pte->pfn);
+            memcpy((void*)swap_addr, (void*)src_data_addr, PAGESIZE);
             dest_table[i - start_idx] = *swap_pte;
             dest_table[i - start_idx].prot = src_table[i].prot;     //Restore the prot
         }

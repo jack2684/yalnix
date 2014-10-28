@@ -36,10 +36,10 @@ void trap_kernel_handler(UserContext *user_context){
             rc = Y_Exit(user_context);
             break;
         case YALNIX_GETPID:
-            rc = Y_GetPid();
+            rc = Y_GetPid(user_context);
             break;
         case YALNIX_BRK:
-            rc = Y_Brk((void*)user_context->regs[0]);
+            rc = Y_Brk(user_context);
             break;
         case YALNIX_DELAY:
             rc = Y_Delay(user_context);
@@ -50,11 +50,10 @@ void trap_kernel_handler(UserContext *user_context){
             break;
     }
 
-    if(0 && rc) {
+    if(rc) {
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
     
-    user_context->regs[0] = rc;
 }
 
 

@@ -4,36 +4,29 @@
 
 //These are process syscalls
 int Y_Fork(UserContext *user_context){
-    int ppid = running_proc->pid;
-    int cpid;
-
     log_info("FOOOOOOOOOOOOOOOOOOOOOOOORK");
-    pcb_t *next_proc = init_user_proc();
-    cpid = next_proc->pid;
-    log_info("Init porc done");
-    //print_page_table(running_proc->page_table, 0, 11);
-    int rc = copy_user_runtime(next_proc, running_proc, user_context);
+    pcb_t *child = init_user_proc();
+    running_proc->user_context.regs[0] = child->pid;
+    child->user_context.regs[0] = 0;
+    
+    int rc = copy_user_runtime(child, running_proc, user_context);
     if(rc) {
-        log_err("PID(%d) cannot copy PID(%d) runtime", next_proc, running_proc);
+        log_err("PID(%d) cannot copy PID(%d) runtime", child, running_proc);
         return -1;
     }
-    log_info("Init user context done");
+    log_info("Copy parent PID(%d) runtime done", running_proc->pid);
     
-    en_ready_queue(next_proc);
-    log_info("Init ready queue done");
+    en_ready_queue(child);
+    log_info("En ready queue done");
     
-    //init_process_kernel(next_proc);
+    //init_process_kernel(child);
     //log_info("Init kernel context done");
     
-    round_robin_schedule(user_context);
-    log_info("Next schedule done");
+    //save_and_en_ready_queue(running_proc, user_context);
+    //round_robin_schedule(user_context);
+    //log_info("Next schedule done, this proc is PID(%d)", running_proc->pid);
 
-    if(running_proc->pid == ppid) {
-        return cpid;
-    } else {
-        return 0;
-    }
-
+    return 0;
 	//SAVE the current user-context
 	//COPY Parent's user-context
 	//COPY address space
@@ -111,8 +104,9 @@ int Y_WaitPid(int pid, int* status_ptr, int options){
 	//SET the options argument to the default number 0
 }
 
-int Y_GetPid(void){
-    return running_proc -> pid;
+int Y_GetPid(UserContext *user_context){
+    user_context->regs[0] = running_proc->pid;
+    return 0;
 }
 
 int Y_Brk(void * addr){

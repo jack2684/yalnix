@@ -127,11 +127,8 @@ void save_user_runtime(pcb_t *proc, UserContext *user_context) {
  * @param user_context: user context
  */
 int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context) {
-    log_info("About to copy user runtime");
     save_user_runtime(src_proc, user_context); 
-    log_info("save_user_runtime done");
     dest_proc->user_context = src_proc->user_context;
-    log_info("user_context done, going to copy from %d to %d", 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
     int rc = alloc_frame_and_copy(dest_proc->page_table, 
                                 src_proc->page_table, 
                                 0, GET_PAGE_NUMBER(VMEM_1_SIZE), 
@@ -140,7 +137,6 @@ int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_conte
         log_err("PID(%d) cannot alloc or copy data from PID(%d) page table", dest_proc->pid, src_proc->pid);
         return 1;
     }
-    log_info("alloc_frame_and_copy done");
     dest_proc->mm = src_proc->mm;
     return 0;
 }
@@ -348,20 +344,11 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     if(is_proc_avtive(prev_proc)) {
         log_info("Backing up kernel context and stack for PID(%d)", prev_proc->pid);
         prev_proc->kernel_context = *kernel_context;
-        //print_page_table(kernel_page_table, 126 ,128);
-        //print_page_table(prev_proc->kernel_stack_pages, 0 ,2);
-        //memcpy(prev_proc->kernel_stack_pages, 
-        //        &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
-        //        sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-        //print_page_table(kernel_page_table, 126 ,128);
-        //print_page_table(prev_proc->kernel_stack_pages, 0 ,2);
     }
 
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
         log_info("Init next proc PID(%d)!", next_proc->pid);
-        print_page_table(kernel_page_table, 126 ,128);
-        print_page_table(next_proc->kernel_stack_pages, 0 ,2);
         next_proc->init_done = 1;
         next_proc->kernel_context = *kernel_context;
         int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
@@ -369,30 +356,23 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
                                     GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
                                     GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
                                     kernel_memory.swap_addr);
-        print_page_table(kernel_page_table, 126 ,128);
-        print_page_table(next_proc->kernel_stack_pages, 0 ,2);
         if(rc) {
             log_err("PID(%d) kernel stack cannot init", next_proc->pid);
             return NULL;
         }
     } 
 
-        // Load kernel stack from next processs and flush corresponding TLB
-        log_info("Restore next proc PID(%d)!", next_proc->pid);
-        print_page_table(kernel_page_table, 126 ,128);
-        print_page_table(next_proc->kernel_stack_pages, 0 ,2);
-        int addr;
-        memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
-                next_proc->kernel_stack_pages, 
-                sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
-        //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
-        for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
-            //log_info("Kernel Context Switch flushing addr: %p", addr);
-            WriteRegister(REG_TLB_FLUSH, addr);
-        }
-        print_page_table(kernel_page_table, 126 ,128);
-        print_page_table(next_proc->kernel_stack_pages, 0 ,2);
- 
+    // Load kernel stack from next processs and flush corresponding TLB
+    log_info("Restore next proc PID(%d)!", next_proc->pid);
+    int addr;
+    memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
+            next_proc->kernel_stack_pages, 
+            sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
+    //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
+    for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
+        //log_info("Kernel Context Switch flushing addr: %p", addr);
+        WriteRegister(REG_TLB_FLUSH, addr);
+    }
 
     log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
     *kernel_context  = next_proc->kernel_context;

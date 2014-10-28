@@ -17,6 +17,8 @@ void main(void) {
     
     int pid = Fork();
 
+    
+    TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t After fork come with pid %d\n", pid);
     if(pid == 0) {
         while(1) {
             TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t I am child with PID(%d)\n", GetPid());

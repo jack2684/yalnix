@@ -4,15 +4,15 @@ Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:224)[SetKernelB
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:237)[SetKernelBrk]	SetKernelBrk current brk directly to 0x34000 Done
 Yalnix     Start the kernel
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:107)[init_user_page_table]	Init user page done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:59)[init_kernel_page_table]	Text Start=(nil), End=0x29bb8
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:59)[init_kernel_page_table]	Text Start=(nil), End=0x298fc
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:66)[init_kernel_page_table]	heap low 0x34000 and high 0x34000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:67)[init_kernel_page_table]	Data Start=0x29bb8, End=0x34000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:67)[init_kernel_page_table]	Data Start=0x298fc, End=0x34000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:74)[init_kernel_page_table]	Stack Start=0xfc000, End=0x100000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:82)[init_kernel_page_table]	HAHAHAHAHAHAHA page 126(0xfc000): valid => 1, prot => 3
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:82)[init_kernel_page_table]	HAHAHAHAHAHAHA page 127(0xfe000): valid => 1, prot => 3
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:154)[KernelStart]	Init VM
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:224)[SetKernelBrk]	SetKernelBrk current brk 0x34000 and new arrd
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:141)[map_page_to_frame]	Map from page 26 (0x34000) to page 27 (0x36000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:142)[map_page_to_frame]	Map from page 26 (0x34000) to page 27 (0x36000)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:262)[SetKernelBrk]	SetKernelBrk current brk to 0x36000 Done
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:47) Load program: name => src/init
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:69) Open file DONE.
@@ -25,264 +25,105 @@ Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:189) Set page table do
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:201) text_pg1 => (nil), text_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:202) data_pg1 => 0x2, data_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:203) stack_pg1 => 0x1fff70, stack_npg => 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:143)[map_page_to_frame]	Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:143)[map_page_to_frame]	Map from page 2 (0x104000) to page 4 (0x108000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:143)[map_page_to_frame]	Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 127 (0x1fe000) to page 128 (0x200000)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:242) LoadProgram: Map user stack with #1 pages DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:271) LoadProgram: Read file DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:178)[set_ptes]	Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:179)[set_ptes]	Set from page 0 (0x100000) to page 2 (0x104000)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:285) LoadProgram: Set ptes DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:290) LoadProgram: About to bzero from 0x105760 to 0x106790
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:290) LoadProgram: About to bzero from 0x1057bc to 0x1067f0
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:292) LoadProgram: Bzero DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:168)[KernelStart]	Get the first context
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:170)[KernelStart]	Saved the first runtime
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:322)[init_newbie_kernel]	First time to init PID(1) kernel!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:318)[init_newbie_kernel]	First time to init PID(1) kernel!
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:173)[KernelStart]	Set the first runnign process as PID(1)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:174)[KernelStart]	Load program done pc(0x100120) sp(0x1fff70)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:175)[KernelStart]	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:212)[KernelStart]	Leaving the kernel start
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:88) User addr 0x1f06f0 map err
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:143)[map_page_to_frame]	Map from page 120 (0x1f0000) to page 127 (0x1fe000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:285)[user_stack_resize]	Resize PID(1) stack low from 0x1fff70 to 0x1f06f0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:87)[trap_memory_handler]	User addr 0x1f06f0 map err
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 120 (0x1f0000) to page 127 (0x1fe000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:281)[user_stack_resize]	Resize PID(1) stack low from 0x1fff70 to 0x1f06f0
 User Prog  HEAP my_malloc(0x190)
 User Prog  warning: unitialized heap!
 User Prog  initializing heap
-User Prog  brk_unlocked(10e790)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:119) PID 1 call user brk with current brk 0x100004
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:143)[map_page_to_frame]	Map from page 1056768 (0x4100000) to page 7 (0x10e000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:146) Y_Brk ADD DONE = 0x100004, End = 0x100004, New Addr = 0x110000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:158) PID 1 user brk done, new addr at 0x110000
+User Prog  brk_unlocked(10e7f0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:113)[Y_Brk]	PID 1 call user brk with current brk 0x100004
+Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/sys.c:125)[Y_Brk]	New addr trepass the data area!
+Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:54)[trap_kernel_handler]	Kernel call for YALNIX_BRK fail!
+User Prog  brk call failed; user heap will function oddly
+User Prog  brk did not give enough memory; user heap will function oddly
+User Prog  HEAP Warning: heap block at 0x1067f0 lies outside heap [0x1067f0 -> 0x1067f0]
 User Prog  HEAP found a block
+User Prog  HEAP Warning: heap block at 0x1067f0 lies outside heap [0x1067f0 -> 0x1067f0]
 User Prog  HEAP my_malloc(0x190)
+User Prog  HEAP Warning: heap block at 0x1067f0 lies outside heap [0x1067f0 -> 0x1067f0]
+User Prog  HEAP Warning: heap block at 0x106998 lies outside heap [0x1067f0 -> 0x1067f0]
 User Prog  HEAP found a block
+User Prog  HEAP Warning: heap block at 0x106998 lies outside heap [0x1067f0 -> 0x1067f0]
 User Prog  HEAP my_malloc(0x190)
+User Prog  HEAP Warning: heap block at 0x1067f0 lies outside heap [0x1067f0 -> 0x1067f0]
+User Prog  HEAP Warning: heap block at 0x106998 lies outside heap [0x1067f0 -> 0x1067f0]
+User Prog  HEAP Warning: heap block at 0x106b40 lies outside heap [0x1067f0 -> 0x1067f0]
 User Prog  HEAP found a block
+User Prog  HEAP Warning: heap block at 0x106b40 lies outside heap [0x1067f0 -> 0x1067f0]
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:10) FOOOOOOOOOOOOOOOOOOOOOOOORK
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:13) Init porc done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:130)[copy_user_runtime]	About to copy user runtime
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:132)[copy_user_runtime]	save_user_runtime done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:134)[copy_user_runtime]	user_context done, going to copy from 0 to 128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:7)[Y_Fork]	FOOOOOOOOOOOOOOOOOOOOOOOORK
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67)[alloc_frame_and_copy]	Going to copy from 0(0x100000) to 128(0x200000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 39
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 40
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 41
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 42
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 161
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 162
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 163
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 164
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 165
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 166
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 167
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 168
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:143)[copy_user_runtime]	alloc_frame_and_copy done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:20) Init user context done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:17)[Y_Fork]	Copy parent PID(1) runtime done
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:23) Init ready queue done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:20)[Y_Fork]	En ready queue done
+User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 After fork come with pid 0
+User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:362)[kernel_context_switch]	Init next proc PID(2)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>0	prot=>0	pfn=>0
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>0	prot=>0	pfn=>0
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:351)[kernel_context_switch]	Init next proc PID(2)!
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65)[alloc_frame_and_copy]	Going to copy from 126(0xfc000) to 128(0x100000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:92)[alloc_frame_and_copy]	Copy data to phy frame 170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(2)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:29) Next schedule done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
+User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 After fork come with pid 0
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(1)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:29) Next schedule done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(1)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(2)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(2)
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(2)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(1)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(1)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(2)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(2)
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:207)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(2)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:211)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:105)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:238)[next_schedule]	Next schedule PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:349)[kernel_context_switch]	Backing up kernel context and stack for PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Restore next proc PID(1)!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>169
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>170
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:239)[print_page_table]	PRINT KERNEL PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[126]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[127]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:241)[print_page_table]	PRINT USER PAGE TABLE>>>>>>>>>>>>
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[0]: valid=>1	prot=>3	pfn=>126
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:244)[print_page_table]	pte[1]: valid=>1	prot=>3	pfn=>127
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:246)[print_page_table]	<<<<<<<<<<<<<<<PRINT TABLE DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:397)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[next_schedule]	Next schedule PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:345)[kernel_context_switch]	Backing up kernel context and stack for PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:366)[kernel_context_switch]	Restore next proc PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
 User Prog  @@@@@@@@@@@@@@@@@@@@@@@@@@@	 I am child with PID(2)
