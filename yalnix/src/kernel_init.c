@@ -170,7 +170,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Saved the first runtime");
     init_process_kernel(init_proc);
     running_proc = init_proc;
-    log_info("Set the first runnign process as PID(%d)", running_proc->pid);
+    log_info("Set the first running process as PID(%d)", running_proc->pid);
     log_info("Load program done pc(%p) sp(%p)", uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
     //*uctxt = idle_proc->user_context;

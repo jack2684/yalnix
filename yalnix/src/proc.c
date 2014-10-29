@@ -191,7 +191,7 @@ pcb_t* de_ready_queue_and_run(UserContext *user_context) {
     restore_user_runtime(next_proc, user_context);
     memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     running_proc = next_proc;
-    switch_to_process(next_proc, user_context);
+    context_switch_to(next_proc, user_context);
     return next_proc;
 }
 
@@ -215,6 +215,7 @@ void round_robin_schedule(UserContext *user_context) {
     //}
     
     next_schedule(user_context);
+    log_info("Round robin done with queue size %d, now running PID(%d)", ready_queue->size, running_proc->pid);
 }
 
 /* Pick any process in the ready queue to run
@@ -233,9 +234,10 @@ void next_schedule(UserContext *user_context) {
     }
     log_info("Next schedule PID(%d)", next_proc->pid);
     
-    switch_to_process(next_proc, user_context);
     restore_user_runtime(next_proc, user_context);
-    running_proc = next_proc;
+    log_info("Next proc PID(%d), running_proc PID(%d)", next_proc->pid, running_proc->pid);
+    context_switch_to(next_proc, user_context);
+    log_info("After CS, next proc PID(%d), running_proc PID(%d)", next_proc->pid, running_proc->pid);
 }
 /* Grow or shrink usre stack by doign page management
  *
@@ -294,13 +296,14 @@ int is_proc_avtive(pcb_t *proc) {
  * @param next_proc: the process to be switched in
  * @param user_context: current user context
  */
-void switch_to_process(pcb_t *next_proc, UserContext *user_context) {
+void context_switch_to(pcb_t *next_proc, UserContext *user_context) {
     int rc = 0;
     rc = KernelContextSwitch(&kernel_context_switch, running_proc, next_proc);
     if(rc) {
         log_err("Failed to execute magic function!");
         Halt();
     }
+    log_info("MF checking running pid %d", running_proc->pid);
 }
 
 void init_process_kernel(pcb_t *proc) {
@@ -345,7 +348,8 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         log_info("Backing up kernel context and stack for PID(%d)", prev_proc->pid);
         prev_proc->kernel_context = *kernel_context;
     }
-
+    running_proc = next_proc;
+    
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
         log_info("Init next proc PID(%d)!", next_proc->pid);
@@ -363,7 +367,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     } 
 
     // Load kernel stack from next processs and flush corresponding TLB
-    log_info("Restore next proc PID(%d)!", next_proc->pid);
+    log_info("Restore kernel next proc PID(%d)!", next_proc->pid);
     int addr;
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
