@@ -12,7 +12,7 @@ char *get_sys_call_name(u_long code) {
         case YALNIX_EXIT:
             return "YALNIX_EXIT";
         case YALNIX_GETPID:
-            return "YALNIX_GETPID:";
+            return "YALNIX_GETPID";
         case YALNIX_BRK:
             return "YALNIX_BRK";
         case YALNIX_DELAY:

@@ -163,9 +163,9 @@ int Y_Delay(UserContext *user_context){
 	running_proc -> ticks = clock_ticks;
     log_info("PID %d delay for %d sec", running_proc->pid, clock_ticks);
 
+    save_user_runtime(running_proc, user_context);
     en_delay_queue(running_proc);
     next_schedule(user_context);
-    pcb_t* tmp = delay_queue->head->data;
 
 	return _SUCCESS;
 }

@@ -160,8 +160,8 @@ void restore_user_runtime(pcb_t *proc, UserContext *user_context) {
  * @param user_context: current user context
  */
 void save_and_en_ready_queue(pcb_t *proc, UserContext *user_context) {
-    en_ready_queue(proc);
     save_user_runtime(proc, user_context);
+    en_ready_queue(proc);
 }
 
 /* Remove a specified proc from the queue 
@@ -212,9 +212,9 @@ void round_robin_schedule(UserContext *user_context) {
     }   
     if(running_proc != idle_proc) {
         save_and_en_ready_queue(running_proc, user_context);
-    } //else {
-    //    save_user_runtime(running_proc, user_context);   
-    //}
+    } else {
+        save_user_runtime(running_proc, user_context);   
+    }
     
     next_schedule(user_context);
     log_info("Round robin done with queue size %d, now running PID(%d)", ready_queue->size, running_proc->pid);
@@ -230,9 +230,9 @@ void next_schedule(UserContext *user_context) {
     pcb_t *proc = running_proc;
     if(!ready_queue->size) {
         next_proc = idle_proc;
-        save_user_runtime(running_proc, user_context);
     } else {
         next_proc = de_ready_queue();
+        log_info("De ready_queue get PID(%d)", next_proc->pid);
     }
     
     restore_user_runtime(next_proc, user_context);
@@ -252,7 +252,7 @@ int user_stack_resize(pcb_t *proc, uint32 new_addr) {
         proc->mm = user_memory;
     }
     if(proc->mm.brk_high + PAGESIZE >= new_addr) {
-        log_err("Stack to low. Red zone err!!!");
+        log_err("Stack to low. new addr %p, while user brk high %p. Red zone err!!!", new_addr, proc->mm.brk_high);
         return 1;
     }
     if(VMEM_1_LIMIT < new_addr) {

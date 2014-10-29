@@ -22,7 +22,7 @@ void main(void) {
     if(pid == 0) {
         while(1) {
             TracePrintf(1, "@@@@@@@@@@@@@@@@@@@@@@@@@@@\t I am child with PID(%d)\n", GetPid());
-            Delay(5);
+            Pause();
         }
     } else {
         while(1) {

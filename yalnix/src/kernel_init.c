@@ -162,8 +162,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Saved the idle runtime");
     init_process_kernel(idle_proc);
     log_info("Idle process init done");
-    log_info("Set the idle process as PID(%d)", idle_proc->pid);
-    log_info("Load program done pc(%p) sp(%p)", uctxt->pc, uctxt->sp);
+    log_info("Load program PID(%d) done pc(%p) sp(%p)", idle_proc->pid, uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
    
     // Create the very first process
@@ -181,8 +180,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Saved the first runtime");
     init_process_kernel(init_proc);
     running_proc = init_proc;
-    log_info("Set the first running process as PID(%d)", running_proc->pid);
-    log_info("Load program done pc(%p) sp(%p)", uctxt->pc, uctxt->sp);
+    log_info("Load program PID(%d) done pc(%p) sp(%p)", init_proc->pid, uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
     //*uctxt = idle_proc->user_context;
     //save_and_en_ready_queue(idle_proc, uctxt); 
