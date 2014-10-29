@@ -31,6 +31,7 @@ All different kernel call requests enter the kernel through this single type of 
 void trap_kernel_handler(UserContext *user_context){
     u_long rc = 0;
     u_long code = user_context->code;
+    log_info("Sys call: %s ", get_sys_call_name(code));
     switch(code) {
         case YALNIX_EXIT:
             rc = Y_Exit(user_context);
@@ -45,7 +46,7 @@ void trap_kernel_handler(UserContext *user_context){
             rc = Y_Delay(user_context);
             break;
         case YALNIX_FORK:
-            rc = Y_Fork(user_context);
+            user_context->regs[0] = Y_Fork(user_context);
         default:
             break;
     }
@@ -53,7 +54,7 @@ void trap_kernel_handler(UserContext *user_context){
     if(rc) {
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
-    
+    return; 
 }
 
 

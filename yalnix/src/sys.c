@@ -4,7 +4,6 @@
 
 //These are process syscalls
 int Y_Fork(UserContext *user_context){
-    log_info("FOOOOOOOOOOOOOOOOOOOOOOOORK");
     pcb_t *child = init_user_proc();
     running_proc->user_context.regs[0] = child->pid;
     child->user_context.regs[0] = 0;
@@ -18,6 +17,8 @@ int Y_Fork(UserContext *user_context){
     
     en_ready_queue(child);
     log_info("En ready queue done");
+
+    running_proc->exit_code = running_proc->pid;
     
     //init_process_kernel(child);
     //log_info("Init kernel context done");
@@ -26,17 +27,11 @@ int Y_Fork(UserContext *user_context){
     //round_robin_schedule(user_context);
     //log_info("Next schedule done, this proc is PID(%d)", running_proc->pid);
 
-    return 0;
-	//SAVE the current user-context
-	//COPY Parent's user-context
-	//COPY address space
-	//GET child's pid
-
-	//IF child's pid equals current pid
-		//RETURN 0
-	//ELSE
-		//RETURN 1
-	//END IF
+    if(running_proc == child) {
+        return 0;
+    } else {
+        return child->pid;    
+    }
 }
 
 int Y_Exec(char * filename, char* argvec[]){

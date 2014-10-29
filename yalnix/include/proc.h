@@ -67,7 +67,7 @@ int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_conte
 
 void init_process_kernel(pcb_t *proc);
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
-void switch_to_process(pcb_t * next_proc, UserContext * user_context);
+void context_switch_to(pcb_t * next_proc, UserContext * user_context);
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 
 #endif
