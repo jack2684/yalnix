@@ -77,12 +77,8 @@ void init_kernel_page_table() {
                     GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
                     _VALID, PROT_READ | PROT_WRITE);
     
-    int i = 0;
-    for(i = GET_PAGE_NUMBER(KERNEL_STACK_BASE); i < GET_PAGE_NUMBER(KERNEL_STACK_LIMIT); i++ ) {
-        log_info("HAHAHAHAHAHAHA page %d(%p): valid => %d, prot => %d", i, KERNEL_PAGE_TO_ADDR(i), kernel_page_table[i].valid, kernel_page_table[i].prot);
-    }
-    
     // Add free pages between heap and stack
+    int i;
     int start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
     int end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(KERNEL_STACK_BASE));
     for(i = start_pfn; i < end_pfn; i++) {
@@ -154,11 +150,26 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Init VM");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     
-    // Create the very first proc
+    // Init pcb and idle process
+    char* tmp[] = {NULL};
+    log_info("Init pcb basic");
     init_processes();
+    idle_proc = init_user_proc();
+    LoadProgram("src/idle", tmp, idle_proc);
+    *uctxt = idle_proc->user_context;
+    log_info("Get the idle context");
+    save_user_runtime(idle_proc, uctxt);
+    log_info("Saved the idle runtime");
+    init_process_kernel(idle_proc);
+    log_info("Idle process init done");
+    log_info("Set the idle process as PID(%d)", idle_proc->pid);
+    log_info("Load program done pc(%p) sp(%p)", uctxt->pc, uctxt->sp);
+    log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+   
+    // Create the very first process
+    log_info("Init init"); 
     pcb_t *init_proc;
     init_proc = init_user_proc();
-    char* tmp[] = {NULL};
     if(cmd_args[0] == NULL) {
         LoadProgram("src/init", tmp, init_proc);
     } else {
@@ -221,7 +232,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = GET_PAGE_NUMBER(new_addr);
     uint32 current_page_bound = GET_PAGE_NUMBER(kernel_memory.brk_high);
-    log_info("SetKernelBrk current brk %p and new arrd", kernel_memory.brk_high, new_addr);
+    log_info("SetKernelBrk current brk %p and new addr %p", kernel_memory.brk_high, new_addr);
     
     // Boudaries check 
     if(new_addr > kernel_memory.swap_addr - PAGESIZE) {

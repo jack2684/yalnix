@@ -48,9 +48,7 @@ extern pcb_t   *running_proc;      // Current running proc
 extern dlist_t  *ready_queue;   
 extern dlist_t  *wait_queue;
 
-void init_processes(void);
-void DoDoIdle(void);
-void init_kernel_proc(void);
+void init_processes();
 pcb_t* init_user_proc(void);
 int en_ready_queue(pcb_t *proc);
 void save_and_en_ready_queue(pcb_t *proc, UserContext *user_context);

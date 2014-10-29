@@ -14,11 +14,8 @@ int next_pid;
 
 /* Init basic process management, timer and a dummy kernel proc
  */
-void init_processes(void) {
-    init_kernel_proc();
+void init_processes() {
     timer_init();
-    next_pid = 1;
-
     ready_queue = dlist_init();
     if(!ready_queue) {
         log_err("Cannot init ready queue!");
@@ -29,28 +26,32 @@ void init_processes(void) {
  */
 void DoDoIdle(void) {
     while (1) {
-        _debug("Doing DoIdle in kernel proc\n");
+        _debug("Idling...\n");
         Pause();
     }   
     return;
 }
 
-/* Init a dummy kernel proc
+/* Init a dummy idle proc
  */
-void init_kernel_proc(void) {
-    kernel_proc = (pcb_t*) malloc(sizeof(pcb_t));
-    if(!kernel_proc) {
-        log_err("Cannot malloc kernel proc!");
-        return;
-    }
-    bzero(kernel_proc, sizeof(pcb_t));
-    kernel_proc->pid = 0;
-    kernel_proc->init_done = 0;
-    kernel_proc->user_context.pc = DoDoIdle;
-    kernel_proc->user_context.sp = (void*)(VMEM_0_LIMIT - WORD_LEN / 8);
-    kernel_proc->kernel_stack_pages = NULL;
-    return;
-}
+//void init_idle_proc(UserContext* user_context) {
+//    idle_proc = (pcb_t*) malloc(sizeof(pcb_t));
+//    if(!idle_proc) {
+//        log_err("Cannot malloc idle proc!");
+//        return;
+//    }
+//    bzero(idle_proc, sizeof(pcb_t));
+//    idle_proc->user_context.pc = DoDoIdle;
+//    idle_proc->user_context.sp = (void*)(VMEM_0_LIMIT - WORD_LEN / 8);
+//    idle_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+//    idle_proc->pid = 0;
+//    idle_proc->init_done = 0;
+//    next_pid = 1;
+//
+//    save_user_runtime(idle_proc, user_context);
+//    init_process_kernel(idle_proc); 
+//    return;
+//}
 
 /* A general function to initialize user proc
  *
@@ -60,7 +61,7 @@ void init_kernel_proc(void) {
 pcb_t *init_user_proc(void) {
     // Create pcb
     pcb_t *user_proc = (pcb_t*) malloc(sizeof(pcb_t));
-    if(!kernel_proc) {
+    if(!user_proc) {
         log_err("Cannot malloc user proc!");
         return NULL;
     }
@@ -72,6 +73,7 @@ pcb_t *init_user_proc(void) {
         log_err("user_proc->page_table cannot be malloc!");
         return NULL;
     }
+    bzero(user_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     
     // Create kernel stack page table
     user_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
@@ -232,12 +234,9 @@ void next_schedule(UserContext *user_context) {
     } else {
         next_proc = de_ready_queue();
     }
-    log_info("Next schedule PID(%d)", next_proc->pid);
     
     restore_user_runtime(next_proc, user_context);
-    log_info("Next proc PID(%d), running_proc PID(%d)", next_proc->pid, running_proc->pid);
     context_switch_to(next_proc, user_context);
-    log_info("After CS, next proc PID(%d), running_proc PID(%d)", next_proc->pid, running_proc->pid);
 }
 /* Grow or shrink usre stack by doign page management
  *
@@ -303,7 +302,6 @@ void context_switch_to(pcb_t *next_proc, UserContext *user_context) {
         log_err("Failed to execute magic function!");
         Halt();
     }
-    log_info("MF checking running pid %d", running_proc->pid);
 }
 
 void init_process_kernel(pcb_t *proc) {
@@ -314,18 +312,24 @@ void init_process_kernel(pcb_t *proc) {
         log_err("Failed to execute magic function!");
         Halt();
     }
+    log_info("Init PID(%d) kernel stack done", proc->pid);
 }
 
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb){
     pcb_t *next_proc = (pcb_t *) _next_pcb;
-    log_info("First time to init PID(%d) kernel!", next_proc->pid);
-    
+    log_info("First time to init PID(%d) kernel stack!", next_proc->pid);
+   
+    if(next_proc->kernel_stack_pages == NULL) {
+        log_err("Init kernel stack fail, pcb->kernel_stack_pages not malloc yet");
+        Halt();
+    }
+
     memcpy(next_proc->kernel_stack_pages, 
             &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-    
     next_proc->init_done = 1;
 
+    log_info("First time to init PID(%d) kernel stack done", next_proc->pid);
     return kernel_context;
 }
 
@@ -343,11 +347,8 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     pcb_t *prev_proc = (pcb_t *) _prev_pcb;
     pcb_t *next_proc = (pcb_t *) _next_pcb;
 
-    // Backup current kernel context
-    if(is_proc_avtive(prev_proc)) {
-        log_info("Backing up kernel context and stack for PID(%d)", prev_proc->pid);
-        prev_proc->kernel_context = *kernel_context;
-    }
+    // Backup current kernel context, and set next running process
+    prev_proc->kernel_context = *kernel_context;
     running_proc = next_proc;
     
     if(next_proc->init_done == 0) {
@@ -364,10 +365,9 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
             log_err("PID(%d) kernel stack cannot init", next_proc->pid);
             return NULL;
         }
-    } 
+    }
 
     // Load kernel stack from next processs and flush corresponding TLB
-    log_info("Restore kernel next proc PID(%d)!", next_proc->pid);
     int addr;
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 

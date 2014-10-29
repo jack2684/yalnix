@@ -145,7 +145,7 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
     }
     for(i = start_idx; i < end_idx && !rc; i++) {
         if(page_table[i].valid == _VALID) {
-            log_err("Page %d is valid already with prot %d", i, page_table[i].prot);
+            log_err("Page %d is valid already with prot %d and pfn %d", i, page_table[i].prot, page_table[i].pfn);
             continue;
         }
         frame_t *frame = rm_head_available_frame();
@@ -157,6 +157,7 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             page_table[i].valid = _VALID;
             page_table[i].prot = prot;
             page_table[i].pfn = frame_get_pfn(frame);
+            log_info("Map pte %d=>%d", i, page_table[i].pfn);
         }
     }
 
