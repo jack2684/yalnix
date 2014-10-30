@@ -23,6 +23,8 @@
 
 #define log_info(M, ...) TracePrintf(5, "[INFO] (%s:%d)[%s]\t" M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
+#define user_log(M, ...) TracePrintf(5, "[USER] (%s:%d)[%s]\n                  " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+
 #define check(A, M, ...) if(!(A)) { log_err(M, ##__VA_ARGS__); errno=0; goto error; }
 
 #define sentinel(M, ...)  { log_err(M, ##__VA_ARGS__); errno=0; goto error; }

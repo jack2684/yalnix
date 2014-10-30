@@ -55,6 +55,7 @@ void trap_kernel_handler(UserContext *user_context){
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
     return; 
+    log_info("Ticking with delay queue size %d", delay_queue->size);
 }
 
 
@@ -89,7 +90,8 @@ void trap_memory_handler(UserContext *user_context){
             rc = user_stack_resize(running_proc, offending_addr);
             if(rc) {
                 log_err("Cannot resize proc user stack");
-                // @TODO: exit process
+                // @TODO: exit process, tmp using halt
+                Halt();
             }
             break;
         case YALNIX_ACCERR:

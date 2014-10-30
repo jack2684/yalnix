@@ -37,6 +37,14 @@ int en_delay_queue(pcb_t *proc) {
     return _SUCCESS;
 }
 
+/* Put a pcb into the delay queue
+ * @param proc: the process to be put
+ */
+int de_delay_queue(pcb_t *proc) {
+    dlist_rm_this(delay_queue, proc->list_node);
+    return _SUCCESS;
+}
+
 /* Ticking down the delay time of each process
  * if a process reach 0, it should be remove from 
  * delay queue and push into ready queue

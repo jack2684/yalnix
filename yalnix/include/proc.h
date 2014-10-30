@@ -52,7 +52,6 @@ void init_processes();
 pcb_t* init_user_proc(void);
 int en_ready_queue(pcb_t *proc);
 void save_and_en_ready_queue(pcb_t *proc, UserContext *user_context);
-pcb_t* de_ready_queue_and_run(UserContext *user_context);
 pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);

@@ -117,9 +117,16 @@ int en_ready_queue(pcb_t *proc) {
  */
 void save_user_runtime(pcb_t *proc, UserContext *user_context) {
     proc->user_context = *user_context;
+    if(user_page_table != proc->page_table) {
+        log_err("Who touch my page table from %p to %p!!!", proc->page_table, user_page_table);
+    }
     //memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     proc->mm = user_memory;
-    //print_page_table(proc->page_table, 0, 11);
+    log_info(" PID(%d) saves runtime pc(%p) sp(%p)", 
+                proc->pid, 
+                proc->user_context.pc,
+                proc->user_context.sp
+                );
 }
 
 /* Copy runtime info
@@ -184,19 +191,6 @@ pcb_t* de_ready_queue() {
     return about_to_run;
 }
 
-/* Dueue and run the first process
- * noted that seems this is only for the first process, 
- * I am not using context switch
- */
-pcb_t* de_ready_queue_and_run(UserContext *user_context) {
-    pcb_t *next_proc = de_ready_queue();
-    restore_user_runtime(next_proc, user_context);
-    memcpy(next_proc->kernel_stack_pages, &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-    running_proc = next_proc;
-    context_switch_to(next_proc, user_context);
-    return next_proc;
-}
-
 /* Round robin schedule 
  *  1. Enqueue the running proc, if idle is running, don't enqueue
  *  2. Dequeue the next proc in ready queue
@@ -211,13 +205,12 @@ void round_robin_schedule(UserContext *user_context) {
         return;
     }   
     if(running_proc != idle_proc) {
-        save_and_en_ready_queue(running_proc, user_context);
-    } else {
-        save_user_runtime(running_proc, user_context);   
+        en_ready_queue(running_proc);
+    //} else {
+    //    save_user_runtime(running_proc, user_context);   
     }
     
     next_schedule(user_context);
-    log_info("Round robin done with queue size %d, now running PID(%d)", ready_queue->size, running_proc->pid);
 }
 
 /* Pick any process in the ready queue to run
@@ -234,9 +227,16 @@ void next_schedule(UserContext *user_context) {
         next_proc = de_ready_queue();
         log_info("De ready_queue get PID(%d)", next_proc->pid);
     }
-    
+   
+    save_user_runtime(running_proc, user_context);
     restore_user_runtime(next_proc, user_context);
     context_switch_to(next_proc, user_context);
+    log_info("next_schedule done with queue size %d, now running PID(%d) pc(%p) sp(%p)", 
+                ready_queue->size, 
+                running_proc->pid, 
+                running_proc->user_context.pc,
+                running_proc->user_context.sp
+                );
 }
 /* Grow or shrink usre stack by doign page management
  *
@@ -302,6 +302,7 @@ void context_switch_to(pcb_t *next_proc, UserContext *user_context) {
         log_err("Failed to execute magic function!");
         Halt();
     }
+    log_info("Context swtiched to PID(%d)", running_proc->pid);
 }
 
 void init_process_kernel(pcb_t *proc) {
@@ -349,7 +350,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
 
     // Backup current kernel context, and set next running process
     prev_proc->kernel_context = *kernel_context;
-    running_proc = next_proc;
     
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
@@ -379,7 +379,8 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     }
 
     log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
-    *kernel_context  = next_proc->kernel_context;
+    *kernel_context = next_proc->kernel_context;
+    running_proc = next_proc;
     return kernel_context;
 }
 

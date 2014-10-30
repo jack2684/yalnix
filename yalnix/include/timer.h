@@ -19,6 +19,7 @@ void timer_init();
 int round_robin_timeout();
 void ticking_down();
 int en_delay_queue(pcb_t *proc);
+int de_delay_queue(pcb_t *proc);
 
 #endif
 

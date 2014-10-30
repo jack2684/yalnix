@@ -99,7 +99,7 @@ CPPFLAGS= -m32 -fno-builtin -I. -I$(INCDIR) -I$(MY_INC) -g -DLINUX
 all: $(ALL)	
 
 clean:
-	rm -f *.o *~ TTYLOG* TRACE $(YALNIX_OUTPUT) $(USER_APPS)  core.*
+	rm -f src/*.o *~ TTYLOG* TRACE $(YALNIX_OUTPUT) $(USER_APPS)  core.*
 
 count:
 	wc $(KERNEL_SRCS) $(USER_SRCS)
