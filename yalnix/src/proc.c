@@ -144,6 +144,7 @@ int en_wait_queue(pcb_t *proc) {
     }
     proc->list_node = n;
     proc->state = WAIT;
+    proc->wait_zombie = 1;
     log_info("PID(%d) en wait_queue", proc->pid);
     return 0;
 }
@@ -159,12 +160,14 @@ pcb_t* de_zombie_queue(pcb_t* proc){
 /* If any child is running
  */
 int any_child_runs(pcb_t *proc){
+    log_info("PID(%d) checking %d children's state", proc->pid, proc->children->size);
     dnode_t *node = proc->children->head;
     while(node) {
         pcb_t *child = node->data;
-        if(child->state == RUN && child->state == READY) {
+        if(is_proc_active(child)) {
             return 1;
         }
+        node = node->next;
     }
     return 0;
 }
@@ -209,6 +212,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
         dlist_add_tail(parent->children, proc);
     }
     proc->state = READY;
+    proc->wait_zombie = 0;
     return proc;
 }
 
@@ -220,6 +224,7 @@ void init_init_proc(void) {
     init_proc->kernel_stack_pages[1].valid = _VALID;
     init_proc->kernel_stack_pages[1].prot = PROT_READ|PROT_WRITE;
     init_proc->kernel_stack_pages[1].pfn = 127;
+    init_proc->init_done = 1;
 }
 
 /* Enqueue a pcb into ready queue,
@@ -251,11 +256,6 @@ void save_user_runtime(pcb_t *proc, UserContext *user_context) {
     //proc->user_context = *user_context;
     memcpy(&proc->user_context, user_context, sizeof(UserContext));
     proc->mm = user_memory;
-    log_info(" PID(%d) saves runtime pc(%p) sp(%p)", 
-                proc->pid, 
-                proc->user_context.pc,
-                proc->user_context.sp
-                );
 }
 
 /* Copy runtime info
@@ -330,8 +330,8 @@ pcb_t* de_ready_queue() {
  */
 void round_robin_schedule(UserContext *user_context) {
     // Don't push running_proc into ready quueue if it is a idle proc
-    log_info("Inside round robin");
-    log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
+    //log_info("Inside round robin");
+    //log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
     if(!ready_queue->size) {
         return;
     }   
@@ -339,9 +339,9 @@ void round_robin_schedule(UserContext *user_context) {
         en_ready_queue(running_proc);
     }
    
-    log_info("Before next schedule");
+    //log_info("Before next schedule");
     next_schedule(user_context);
-    log_info("Round robin DONE with queue size %d, now running PID(%d)", ready_queue->size, running_proc->pid);
+    //log_info("Round robin DONE with queue size %d, now running PID(%d)", ready_queue->size, running_proc->pid);
 
 }
 

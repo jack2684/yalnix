@@ -30,6 +30,7 @@ typedef struct y_PCB {
     pte_t*          kernel_stack_pages;// [KERNEL_STACK_MAXSIZE / PAGESIZE];
     int             ticks;
     int             init_done;
+    int             wait_zombie;
     
     // Identity
     int             pid;
@@ -74,6 +75,7 @@ pcb_t* rm_wait_queue(pcb_t* proc);
 int en_zombie_queue(pcb_t* proc, pcb_t* child);
 pcb_t* de_zombie_queue(pcb_t* proc);
 int any_child_runs(pcb_t *proc);
+pcb_t* en_children_queue(pcb_t *proc);
 
 void init_process_kernel(pcb_t *proc);
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);

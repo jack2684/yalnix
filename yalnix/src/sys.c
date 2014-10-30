@@ -43,6 +43,7 @@ int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
 }
 
 int Y_Exit(int exit_code, UserContext *user_context){
+    log_info("Just get in %s", __func__);
 	pcb_t *parent = (pcb_t*)running_proc->parent;
 
     //Set states
@@ -84,8 +85,9 @@ int Y_Exit(int exit_code, UserContext *user_context){
 
 int Y_Wait(int * status_ptr, UserContext *user_context){
     // Check if it is worth to wait
+    log_info("Inside %s", __func__);
     if(!any_child_runs(running_proc) && !running_proc->zombie->size) {
-        log_info("Not woth to wait!! Return error");
+        log_info("Not woth to wait!! #zombie %d", running_proc->zombie->size);
         running_proc->exit_code = 1;
         return 1;       // No body treat pid 1 and child process, so I make it as exit_code
     }
@@ -96,13 +98,20 @@ int Y_Wait(int * status_ptr, UserContext *user_context){
     next_schedule(user_context);
 
     // Back to life!
-    log_info("PID(%d) wake up and going to run again!", running_proc->pid);
-    pcb_t* zombie = de_zombie_queue(running_proc);
-    *status_ptr = zombie->exit_code;
-    running_proc->exit_code = zombie->pid; 
-    free_proc(zombie);
+    if(running_proc->wait_zombie) {
+        log_info("PID(%d) wake up and going to run again!", running_proc->pid);
+        pcb_t* zombie = de_zombie_queue(running_proc);
+        *status_ptr = zombie->exit_code;
+        running_proc->exit_code = zombie->pid; 
+        log_info("Get my zombie(%d) exit code %d", zombie->pid, zombie->exit_code);
+        free_proc(zombie);
+        running_proc->wait_zombie = 0;
+        return running_proc->exit_code;
+    } else {
+        log_info("I am not waiting");
+        return 0; 
+    }
 
-    return running_proc->exit_code;
 
 	//IF there are zombie children
 		//REMOVE their PCB from PCB list

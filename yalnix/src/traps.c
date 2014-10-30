@@ -21,6 +21,8 @@ char *get_sys_call_name(u_long code) {
             return "YALNIX_FORK";
         case YALNIX_EXEC:
             return "YALNIX_EXEC";
+        case YALNIX_WAIT:
+            return "YALNIX_WAIT";
         default:
             break;
     } 

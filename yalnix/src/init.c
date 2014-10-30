@@ -22,20 +22,15 @@ void main(void) {
         int cpid = Wait(&exit_status);
         user_log("Wait my child(%d) done, return meaning of life %d", cpid, exit_status);
         while(1) {
-            //Delay(3);
-            //user_log("PID(%d) back from delay", GetPid());
+            user_log("I have no children, so lonley");
             Delay(3);
-            Pause();
         }
     } else {
         while(1) {
             user_log("I am child with PID(%d), about to exe", GetPid());
             Exec("src/goexec", tmp);
             user_log("PID(%d) try exec fail", GetPid());
-            //Delay(5);
-            //user_log("PID(%d) back from delay", GetPid());
-            Delay(1);
-            Pause();
+            Exit(1);
         }
     }
     return;
