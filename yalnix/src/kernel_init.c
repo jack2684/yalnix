@@ -156,9 +156,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     init_processes();
     
     // Create the very first process
-    log_info("Init init"); 
-    pcb_t *init_proc;
-    init_proc = init_user_proc(NULL);
+    log_info("Init init");
+    init_init_proc();
     LoadProgram("src/init", tmp, init_proc);
     *uctxt = init_proc->user_context;
     log_info("Get the first context");

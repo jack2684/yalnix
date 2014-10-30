@@ -44,7 +44,7 @@ typedef struct y_PCB {
     struct y_PBC    *parent;
 } pcb_t;
 
-extern pcb_t   *kernel_proc;          // A kernel proc
+extern pcb_t   *init_proc;          // A kernel proc
 extern pcb_t   *idle_proc;          // A user proc
 extern pcb_t   *running_proc;      // Current running proc
 extern dlist_t  *ready_queue;   
@@ -64,6 +64,7 @@ void restore_user_runtime(pcb_t *proc, UserContext *user_context);
 int user_stack_resize(pcb_t *proc, uint32 addr);
 int is_proc_active(pcb_t *proc);
 int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
+void init_init_proc(void);
 
 void init_process_kernel(pcb_t *proc);
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);

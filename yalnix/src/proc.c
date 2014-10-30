@@ -1,6 +1,6 @@
 #include "proc.h"
 
-pcb_t   *kernel_proc;          // A kernel proc
+pcb_t   *init_proc;          // A kernel proc
 pcb_t   *idle_proc;          // A idle user proc
 pcb_t   *running_proc;      // Current running proc
 dlist_t  *ready_queue;   
@@ -120,6 +120,16 @@ pcb_t *init_user_proc(pcb_t* parent) {
     }
     user_proc->state = READY;
     return user_proc;
+}
+
+void init_init_proc(void) {
+    init_proc = init_user_proc(NULL);
+    init_proc->kernel_stack_pages[0].valid = _VALID;
+    init_proc->kernel_stack_pages[0].prot = PROT_READ|PROT_WRITE;
+    init_proc->kernel_stack_pages[0].pfn = 126;
+    init_proc->kernel_stack_pages[1].valid = _VALID;
+    init_proc->kernel_stack_pages[1].prot = PROT_READ|PROT_WRITE;
+    init_proc->kernel_stack_pages[1].pfn = 127;
 }
 
 /* Enqueue a pcb into ready queue,
@@ -433,11 +443,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     //}
     //print_page_table(next_proc->page_table, 120, GET_PAGE_NUMBER(VMEM_0_LIMIT));
 
-    log_info("Magic kernel switch done from PID(%d) to PID(%d), with new pc(%p) sp(%p)", 
-            prev_proc->pid, 
-            next_proc->pid,
-            next_proc->user_context.pc,
-            next_proc->user_context.sp);
+    log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
     *kernel_context = next_proc->kernel_context;
     return kernel_context;
 }

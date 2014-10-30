@@ -159,7 +159,7 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             page_table[i].valid = _VALID;
             page_table[i].prot = prot;
             page_table[i].pfn = frame_get_pfn(frame);
-            log_info("Map pte %d=>%d", i, page_table[i].pfn);
+            //log_info("Map pte %d=>%d", i, page_table[i].pfn);
         }
     }
 

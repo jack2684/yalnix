@@ -23,7 +23,7 @@ void main(void) {
             //user_log("PID(%d) try exec fail", GetPid());
             //Delay(3);
             //user_log("PID(%d) back from delay", GetPid());
-            //Delay(3);
+            Delay(3);
             Pause();
         }
     } else {
@@ -31,7 +31,7 @@ void main(void) {
             user_log("I am child with PID(%d)", GetPid());
             //Delay(5);
             //user_log("PID(%d) back from delay", GetPid());
-            //Delay(3);
+            Delay(1);
             Pause();
         }
     }
