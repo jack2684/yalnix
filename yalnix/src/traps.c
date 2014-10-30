@@ -40,13 +40,20 @@ void trap_kernel_handler(UserContext *user_context){
             rc = Y_GetPid(user_context);
             break;
         case YALNIX_BRK:
-            rc = Y_Brk(user_context);
+            rc = Y_Brk(user_context->regs[0]);
             break;
         case YALNIX_DELAY:
             rc = Y_Delay(user_context);
+            //log_info("Begin round robin in delay");
+            //round_robin_schedule(user_context);
+            //log_info("Done round robin in delay");
             break;
         case YALNIX_FORK:
             user_context->regs[0] = Y_Fork(user_context);
+            break;
+        case YALNIX_EXEC:
+            Y_Exec((char *)user_context->regs[0], (char **)user_context->regs[1], user_context);
+            break;
         default:
             break;
     }
@@ -54,8 +61,8 @@ void trap_kernel_handler(UserContext *user_context){
     if(rc) {
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
+    log_info(" exit trap_kernel_handler");
     return; 
-    log_info("Ticking with delay queue size %d", delay_queue->size);
 }
 
 
@@ -104,9 +111,13 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
+    print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
+    return;
     ticking_down();
     if(round_robin_timeout()) {
+        log_info("Start round robin");
         round_robin_schedule(user_context);
+        log_info("Leave round robin");
     }
 }
 

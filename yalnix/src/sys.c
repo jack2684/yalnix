@@ -4,7 +4,7 @@
 
 //These are process syscalls
 int Y_Fork(UserContext *user_context){
-    pcb_t *child = init_user_proc();
+    pcb_t *child = init_user_proc(running_proc);
     running_proc->user_context.regs[0] = child->pid;
     child->user_context.regs[0] = 0;
     
@@ -34,7 +34,10 @@ int Y_Fork(UserContext *user_context){
     }
 }
 
-int Y_Exec(char * filename, char* argvec[]){
+int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
+    log_info("PID(%d) is going to exec %s", running_proc->pid, filename);
+    LoadProgram(filename, argvec, running_proc);
+    *user_context = running_proc->user_context;
 	//CHECK if filename is valid
 	//COPY filename into the heap
 	//CHECK if arguments are valid
@@ -104,8 +107,7 @@ int Y_GetPid(UserContext *user_context){
     return 0;
 }
 
-int Y_Brk(void * addr){
-    log_info("PID %d call user brk with current brk %p", running_proc->pid, user_memory.brk_high);
+int Y_Brk(uint32 addr){
     int page_cnt, rc; 
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = UP_TO_PAGE(new_addr);
@@ -161,14 +163,12 @@ int Y_Delay(UserContext *user_context){
 	}
 
 	running_proc -> ticks = clock_ticks;
-    log_info("PID %d delay for %d sec", running_proc->pid, clock_ticks);
+    log_info("PID(%d) delay for %d sec", running_proc->pid, clock_ticks);
 
-    //en_delay_queue(running_proc);
-    //en_ready_queue(running_proc);
-    //save_user_runtime(running_proc, user_context);
-    //next_schedule(user_context);
+    en_delay_queue(running_proc);
+    next_schedule(user_context);
 
-    round_robin_schedule(user_context);
+    log_info("After delay, now is running PID(%d)", running_proc->pid);
 	return _SUCCESS;
 }
 
