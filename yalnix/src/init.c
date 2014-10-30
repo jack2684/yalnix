@@ -19,8 +19,6 @@ void main(void) {
     if(pid != 0) {
         while(1) {
             user_log("I am parent with PID(%d)", GetPid());
-            Exec("src/idle", tmp);
-            user_log("PID(%d) try exec fail", GetPid());
             //Delay(3);
             //user_log("PID(%d) back from delay", GetPid());
             Delay(3);
@@ -28,7 +26,9 @@ void main(void) {
         }
     } else {
         while(1) {
-            user_log("I am child with PID(%d)", GetPid());
+            user_log("I am child with PID(%d), about to exe", GetPid());
+            Exec("src/goexec", tmp);
+            user_log("PID(%d) try exec fail", GetPid());
             //Delay(5);
             //user_log("PID(%d) back from delay", GetPid());
             Delay(1);

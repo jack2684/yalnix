@@ -19,6 +19,8 @@ char *get_sys_call_name(u_long code) {
             return "YALNIX_DELAY";
         case YALNIX_FORK:
             return "YALNIX_FORK";
+        case YALNIX_EXEC:
+            return "YALNIX_EXEC";
         default:
             break;
     } 
@@ -31,28 +33,28 @@ All different kernel call requests enter the kernel through this single type of 
 void trap_kernel_handler(UserContext *user_context){
     u_long rc = 0;
     u_long code = user_context->code;
-    log_info("Sys call: %s, with pc %p", get_sys_call_name(code), user_context->pc);
+    log_info("Sys call: %s, with PID %d at pc %p", get_sys_call_name(code), running_proc->pid, user_context->pc);
     switch(code) {
         case YALNIX_EXIT:
-            rc = Y_Exit(user_context);
+            Y_Exit(user_context->regs[0], user_context);
             break;
         case YALNIX_GETPID:
-            rc = Y_GetPid(user_context);
+            user_context->regs[0] = Y_GetPid(user_context);
             break;
         case YALNIX_BRK:
             rc = Y_Brk(user_context->regs[0]);
             break;
         case YALNIX_DELAY:
             rc = Y_Delay(user_context);
-            //log_info("Begin round robin in delay");
-            //round_robin_schedule(user_context);
-            //log_info("Done round robin in delay");
             break;
         case YALNIX_FORK:
             user_context->regs[0] = Y_Fork(user_context);
             break;
         case YALNIX_EXEC:
             Y_Exec((char *)user_context->regs[0], (char **)user_context->regs[1], user_context);
+            break;
+        case YALNIX_WAIT:
+            user_context->regs[0] = Y_Wait((int *)user_context->regs[0], user_context);
             break;
         default:
             break;
@@ -61,7 +63,7 @@ void trap_kernel_handler(UserContext *user_context){
     if(rc) {
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
-    log_info(" exit trap_kernel_handler");
+    log_info(" exit trap_kernel_handler with user_context->regs[0] %d", user_context->regs[0]);
     return; 
 }
 

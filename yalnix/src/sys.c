@@ -42,8 +42,26 @@ int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
 	//FREE the content in heap
 }
 
-int Y_Exit(UserContext *user_context){
-	//WHILE lock list is not empty
+int Y_Exit(int exit_code, UserContext *user_context){
+	pcb_t *parent = (pcb_t*)running_proc->parent;
+
+    //Set states
+    running_proc->exit_code = exit_code;
+    running_proc->state = ZOMBIE;
+    log_info("Set states done");
+
+    // Tell other people
+    tell_children(running_proc);
+    log_info("Tell children done");
+    tell_parent(running_proc);
+    log_info("Tell parent done");
+
+
+    // Scheulde next process to run
+    next_schedule(user_context);
+    log_info("Next schedule done (this will never reached actually)");
+    
+    //WHILE lock list is not empty
 		//RELEASE all the locks
 	//END WHILE
 
@@ -64,7 +82,28 @@ int Y_Exit(UserContext *user_context){
 	//END IF
 }
 
-int Y_Wait(int * status_ptr){
+int Y_Wait(int * status_ptr, UserContext *user_context){
+    // Check if it is worth to wait
+    if(!any_child_runs(running_proc) && !running_proc->zombie->size) {
+        log_info("Not woth to wait!! Return error");
+        running_proc->exit_code = 1;
+        return 1;       // No body treat pid 1 and child process, so I make it as exit_code
+    }
+
+    // Wait operations
+    log_info("PID(%d) about to sleep until one of my child wake me up", running_proc->pid);
+    en_wait_queue(running_proc);
+    next_schedule(user_context);
+
+    // Back to life!
+    log_info("PID(%d) wake up and going to run again!", running_proc->pid);
+    pcb_t* zombie = de_zombie_queue(running_proc);
+    *status_ptr = zombie->exit_code;
+    running_proc->exit_code = zombie->pid; 
+    free_proc(zombie);
+
+    return running_proc->exit_code;
+
 	//IF there are zombie children
 		//REMOVE their PCB from PCB list
 		//FREE PCB
@@ -99,7 +138,7 @@ int Y_WaitPid(int pid, int* status_ptr, int options){
 
 int Y_GetPid(UserContext *user_context){
     user_context->regs[0] = running_proc->pid;
-    return 0;
+    return user_context->regs[0];
 }
 
 int Y_Brk(uint32 addr){

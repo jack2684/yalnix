@@ -40,7 +40,7 @@ typedef struct y_PCB {
     // Connected
     dnode_t         *list_node;          // For high performance list operation
     dlist_t         *children;          
-    dlist_t         *exits;             // FIFO list of child exit codes
+    dlist_t         *zombie;             // FIFO list of zombie children
     struct y_PBC    *parent;
 } pcb_t;
 
@@ -65,6 +65,15 @@ int user_stack_resize(pcb_t *proc, uint32 addr);
 int is_proc_active(pcb_t *proc);
 int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
 void init_init_proc(void);
+
+void free_proc(pcb_t *proc);
+void tell_children(pcb_t *proc);
+void tell_parent(pcb_t *proc);
+int en_wait_queue(pcb_t* proc);
+pcb_t* rm_wait_queue(pcb_t* proc);
+int en_zombie_queue(pcb_t* proc, pcb_t* child);
+pcb_t* de_zombie_queue(pcb_t* proc);
+int any_child_runs(pcb_t *proc);
 
 void init_process_kernel(pcb_t *proc);
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);

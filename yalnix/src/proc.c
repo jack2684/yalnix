@@ -44,6 +44,73 @@ int get_next_pid(){
    return next_pid++;
 }
 
+/* Tell children that I am dead...
+ */
+void tell_children(pcb_t *proc) {
+    dnode_t *node = proc->children->head;
+    while(node) {
+        pcb_t *child = node->data;
+        child->parent = NULL;
+        if(child->state == ZOMBIE) {
+             free_proc(proc);
+        }
+    }
+}
+
+pcb_t* rm_wait_queue(pcb_t* proc) {
+    return dlist_rm_this(wait_queue, proc->list_node);
+}
+
+/* Tell my parent I am dead, in case my parent is waiting
+ */
+void tell_parent(pcb_t *proc) {
+    pcb_t *parent = (pcb_t*)proc->parent;
+    if(!parent) {
+        log_info("Orphan child do not have parent");
+        return;
+    }
+
+    if(parent->state == WAIT) {
+        log_info("About to free my parent from waiting");
+        rm_wait_queue(parent);
+        en_zombie_queue(parent, proc);
+        en_ready_queue(parent);
+    }
+}
+
+/* Enqueue the exit_queue of parent, with the exit_code
+ */
+int en_zombie_queue(pcb_t* parent, pcb_t* child) {
+    dnode_t *n = dlist_add_tail(parent->zombie, child);
+    if(!n) {
+        log_err("Cannot add exit code to parent PID(%d)", parent->pid);
+        return 1;
+    }
+    child->list_node = n;
+    child->state = ZOMBIE;
+    return 0;
+}
+
+/* Completely free the PCB block
+ */
+void free_proc(pcb_t *proc) {
+    int rc, pid = proc->pid;
+    rc = unmap_page_to_frame(proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
+    if(rc) {
+        log_err("Unable to free frames of PID(%d) page table", proc->pid);
+    }
+    free(proc->page_table);
+    
+    unmap_page_to_frame(proc->kernel_stack_pages, 0, GET_PAGE_NUMBER(KERNEL_STACK_MAXSIZE));
+    if(rc) {
+        log_err("Unable to free frames of PID(%d) kernel stack page table", proc->pid);
+    }
+    free(proc->kernel_stack_pages);
+
+    free(proc); 
+    log_info("PID(%d) is freed", pid);
+}
+
 /* Init a dummy idle proc
  */
 void init_idle_proc() {
@@ -69,6 +136,28 @@ void init_idle_proc() {
     return;
 }
 
+int en_wait_queue(pcb_t *proc) {
+    dnode_t *n = dlist_add_tail(wait_queue, proc);
+    if(!n) {
+        log_err("Cannot add to wait queue");
+        return 1;
+    }
+    proc->list_node = n;
+    proc->state = WAIT;
+    log_info("PID(%d) en wait_queue", proc->pid);
+    return 0;
+}
+
+pcb_t* de_zombie_queue(pcb_t* proc){
+    if(proc->zombie->size == 0) {
+        log_err("No one in the zombie list!!!");
+        return NULL;
+    }
+    dlist_rm_head(proc->zombie);
+}
+
+/* If any child is running
+ */
 int any_child_runs(pcb_t *proc){
     dnode_t *node = proc->children->head;
     while(node) {
@@ -87,39 +176,40 @@ int any_child_runs(pcb_t *proc){
  */
 pcb_t *init_user_proc(pcb_t* parent) {
     // Create pcb
-    pcb_t *user_proc = (pcb_t*) malloc(sizeof(pcb_t));
-    if(!user_proc) {
+    pcb_t *proc = (pcb_t*) malloc(sizeof(pcb_t));
+    if(!proc) {
         log_err("Cannot malloc user proc!");
         return NULL;
     }
-    bzero(user_proc, sizeof(pcb_t));
+    bzero(proc, sizeof(pcb_t));
     
     // Create page table
-    user_proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
-    if(!user_proc->page_table) {
-        log_err("user_proc->page_table cannot be malloc!");
+    proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    if(!proc->page_table) {
+        log_err("proc->page_table cannot be malloc!");
         return NULL;
     }
-    bzero(user_proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    bzero(proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     
     // Create kernel stack page table
-    user_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-    if(!user_proc->kernel_stack_pages) {
-        log_err("user_proc->kernel_stack_pages cannot be malloc!");
+    proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    if(!proc->kernel_stack_pages) {
+        log_err("proc->kernel_stack_pages cannot be malloc!");
         return NULL;
     }
-    bzero(user_proc->kernel_stack_pages, sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    bzero(proc->kernel_stack_pages, sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
    
     // Init vitals
-    user_proc->init_done = 0;
-    user_proc->parent = parent;
-    user_proc->children = dlist_init();
-    user_proc->pid = get_next_pid();
+    proc->init_done = 0;
+    proc->parent = (struct y_PBC*)parent;
+    proc->children = dlist_init();
+    proc->zombie = dlist_init();
+    proc->pid = get_next_pid();
     if(parent) {
-        dlist_add_tail(parent->children, user_proc);
+        dlist_add_tail(parent->children, proc);
     }
-    user_proc->state = READY;
-    return user_proc;
+    proc->state = READY;
+    return proc;
 }
 
 void init_init_proc(void) {
