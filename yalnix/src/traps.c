@@ -88,6 +88,9 @@ because the address is not mapped in the current page tables,
 or because the access violates the page protection specified in the corresponding page table entry.
 */
 void trap_memory_handler(UserContext *user_context){
+    if(running_proc == idle_proc) {
+        return;
+    }
     uint32 offending_addr = (uint32)user_context->addr;
     int rc = 0;
 
