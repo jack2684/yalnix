@@ -15,8 +15,11 @@ int next_pid;
 /* Init basic process management, timer and a dummy kernel proc
  */
 void init_processes() {
+    next_pid = 0;
     timer_init();
     ready_queue = dlist_init();
+    wait_queue = dlist_init();
+    init_idle_proc();
     if(!ready_queue) {
         log_err("Cannot init ready queue!");
     }
@@ -26,39 +29,63 @@ void init_processes() {
  */
 void DoDoIdle(void) {
     while (1) {
-        _debug("Idling...\n");
+        user_log("Idling...");
         Pause();
+        user_log("Idling after pause");
     }   
     return;
 }
 
+int get_next_pid(){
+   if(next_pid >= MAX_PROC) {
+        log_err("Exceed %d processes", MAX_PROC);
+        next_pid = 11;
+   }
+   return next_pid++;
+}
+
 /* Init a dummy idle proc
  */
-//void init_idle_proc(UserContext* user_context) {
-//    idle_proc = (pcb_t*) malloc(sizeof(pcb_t));
-//    if(!idle_proc) {
-//        log_err("Cannot malloc idle proc!");
-//        return;
-//    }
-//    bzero(idle_proc, sizeof(pcb_t));
-//    idle_proc->user_context.pc = DoDoIdle;
-//    idle_proc->user_context.sp = (void*)(VMEM_0_LIMIT - WORD_LEN / 8);
-//    idle_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-//    idle_proc->pid = 0;
-//    idle_proc->init_done = 0;
-//    next_pid = 1;
-//
-//    save_user_runtime(idle_proc, user_context);
-//    init_process_kernel(idle_proc); 
-//    return;
-//}
+void init_idle_proc() {
+    idle_proc = (pcb_t*) malloc(sizeof(pcb_t));
+    if(!idle_proc) {
+        log_err("Cannot malloc idle proc!");
+        return;
+    }
+    bzero(idle_proc, sizeof(pcb_t));
+    idle_proc->user_context.pc = DoDoIdle;
+    idle_proc->user_context.sp = (void *)kernel_memory.stack_low;
+    //idle_proc->user_context.ebp = (void *)kernel_memory.stack_low;
+    //idle_proc->user_context.code = YALNIX_NOP;
+    //idle_proc->user_context.vector = TRAP_KERNEL;
+    idle_proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    idle_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    map_page_to_frame(idle_proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE), PROT_READ);
+    idle_proc->pid = get_next_pid();
+    idle_proc->state = READY;
+    idle_proc->init_done = 0;
+
+    //init_process_kernel(idle_proc); 
+    return;
+}
+
+int any_child_runs(pcb_t *proc){
+    dnode_t *node = proc->children->head;
+    while(node) {
+        pcb_t *child = node->data;
+        if(child->state == RUN && child->state == READY) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 /* A general function to initialize user proc
  *
  * @return: A pointer to the newly created pcb;
  *          NULL if creation fails
  */
-pcb_t *init_user_proc(void) {
+pcb_t *init_user_proc(pcb_t* parent) {
     // Create pcb
     pcb_t *user_proc = (pcb_t*) malloc(sizeof(pcb_t));
     if(!user_proc) {
@@ -85,8 +112,13 @@ pcb_t *init_user_proc(void) {
    
     // Init vitals
     user_proc->init_done = 0;
-    user_proc->pid = next_pid;
-    next_pid = (next_pid + 1);
+    user_proc->parent = parent;
+    user_proc->children = dlist_init();
+    user_proc->pid = get_next_pid();
+    if(parent) {
+        dlist_add_tail(parent->children, user_proc);
+    }
+    user_proc->state = READY;
     return user_proc;
 }
 
@@ -116,11 +148,8 @@ int en_ready_queue(pcb_t *proc) {
  * @param user_context: current user context
  */
 void save_user_runtime(pcb_t *proc, UserContext *user_context) {
-    proc->user_context = *user_context;
-    if(user_page_table != proc->page_table) {
-        log_err("Who touch my page table from %p to %p!!!", proc->page_table, user_page_table);
-    }
-    //memcpy(proc->page_table, user_page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    //proc->user_context = *user_context;
+    memcpy(&proc->user_context, user_context, sizeof(UserContext));
     proc->mm = user_memory;
     log_info(" PID(%d) saves runtime pc(%p) sp(%p)", 
                 proc->pid, 
@@ -156,7 +185,8 @@ int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_conte
  * @param user_context: current user context
  */
 void restore_user_runtime(pcb_t *proc, UserContext *user_context) {
-    *user_context = proc->user_context;
+    memcpy(user_context, &proc->user_context, sizeof(UserContext));
+    //*user_context = proc->user_context;
     set_user_page_table(proc->page_table);
     user_memory = proc->mm;
 }
@@ -200,17 +230,19 @@ pcb_t* de_ready_queue() {
  */
 void round_robin_schedule(UserContext *user_context) {
     // Don't push running_proc into ready quueue if it is a idle proc
+    log_info("Inside round robin");
     log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
     if(!ready_queue->size) {
         return;
     }   
     if(running_proc != idle_proc) {
         en_ready_queue(running_proc);
-    //} else {
-    //    save_user_runtime(running_proc, user_context);   
     }
-    
+   
+    log_info("Before next schedule");
     next_schedule(user_context);
+    log_info("Round robin DONE with queue size %d, now running PID(%d)", ready_queue->size, running_proc->pid);
+
 }
 
 /* Pick any process in the ready queue to run
@@ -219,7 +251,8 @@ void round_robin_schedule(UserContext *user_context) {
  * @param user_context: current user context
  */
 void next_schedule(UserContext *user_context) {
-    pcb_t *next_proc;    
+    pcb_t *next_proc;   
+    int pid = running_proc->pid;
     pcb_t *proc = running_proc;
     if(!ready_queue->size) {
         next_proc = idle_proc;
@@ -227,10 +260,12 @@ void next_schedule(UserContext *user_context) {
         next_proc = de_ready_queue();
         log_info("De ready_queue get PID(%d)", next_proc->pid);
     }
-   
+  
+    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
     save_user_runtime(running_proc, user_context);
-    restore_user_runtime(next_proc, user_context);
     context_switch_to(next_proc, user_context);
+    restore_user_runtime(running_proc, user_context);
+    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
     log_info("next_schedule done with queue size %d, now running PID(%d) pc(%p) sp(%p)", 
                 ready_queue->size, 
                 running_proc->pid, 
@@ -252,7 +287,7 @@ int user_stack_resize(pcb_t *proc, uint32 new_addr) {
         proc->mm = user_memory;
     }
     if(proc->mm.brk_high + PAGESIZE >= new_addr) {
-        log_err("Stack to low. new addr %p, while user brk high %p. Red zone err!!!", new_addr, proc->mm.brk_high);
+        log_err("Stack too low. new addr %p, while user brk high %p. Red zone err!!!", new_addr, proc->mm.brk_high);
         return 1;
     }
     if(VMEM_1_LIMIT < new_addr) {
@@ -325,13 +360,26 @@ KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb
         Halt();
     }
 
-    memcpy(next_proc->kernel_stack_pages, 
-            &kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
-            sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    next_proc->kernel_context = *kernel_context;
+    int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
+                                kernel_page_table, 
+                                GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
+                                GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
+                                kernel_memory.swap_addr);
+    if(rc) {
+        log_err("PID(%d) kernel stack cannot init", next_proc->pid);
+        return NULL;
+    }
     next_proc->init_done = 1;
+    //print_page_table(kernel_page_table, 120, GET_PAGE_NUMBER(VMEM_0_LIMIT));
+    //print_page_table(next_proc->kernel_stack_pages, 0, 2);
 
     log_info("First time to init PID(%d) kernel stack done", next_proc->pid);
     return kernel_context;
+}
+
+int is_proc_active(pcb_t *p) {
+    return p && p->state != ZOMBIE && p->state != EXIT;
 }
 
 /* Caller kernel context switch magic function,
@@ -349,12 +397,17 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     pcb_t *next_proc = (pcb_t *) _next_pcb;
 
     // Backup current kernel context, and set next running process
-    prev_proc->kernel_context = *kernel_context;
+    if(is_proc_active(prev_proc)) {
+        log_info("PID(%d) current kernel context saved");
+        //prev_proc->kernel_context = *kernel_context;
+        memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
+    }
+    running_proc = next_proc;
+    running_proc->state = RUN;
     
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
-        log_info("Init next proc PID(%d)!", next_proc->pid);
-        next_proc->init_done = 1;
+        log_info("Init next proc kernel context and stack PID(%d)!", next_proc->pid);
         next_proc->kernel_context = *kernel_context;
         int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
                                     kernel_page_table, 
@@ -365,6 +418,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
             log_err("PID(%d) kernel stack cannot init", next_proc->pid);
             return NULL;
         }
+        next_proc->init_done = 1;
     }
 
     // Load kernel stack from next processs and flush corresponding TLB
@@ -372,15 +426,19 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
             sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
-    //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
-    for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
-        //log_info("Kernel Context Switch flushing addr: %p", addr);
-        WriteRegister(REG_TLB_FLUSH, addr);
-    }
+    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
+    //for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
+    //    log_info("Flushing addr %p", addr);
+    //    WriteRegister(REG_TLB_FLUSH, addr);
+    //}
+    //print_page_table(next_proc->page_table, 120, GET_PAGE_NUMBER(VMEM_0_LIMIT));
 
-    log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
+    log_info("Magic kernel switch done from PID(%d) to PID(%d), with new pc(%p) sp(%p)", 
+            prev_proc->pid, 
+            next_proc->pid,
+            next_proc->user_context.pc,
+            next_proc->user_context.sp);
     *kernel_context = next_proc->kernel_context;
-    running_proc = next_proc;
     return kernel_context;
 }
 

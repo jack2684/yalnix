@@ -154,72 +154,30 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     char* tmp[] = {NULL};
     log_info("Init pcb basic");
     init_processes();
-    idle_proc = init_user_proc();
-    LoadProgram("src/idle", tmp, idle_proc);
-    *uctxt = idle_proc->user_context;
-    log_info("Get the idle context");
-    save_user_runtime(idle_proc, uctxt);
-    log_info("Saved the idle runtime");
-    init_process_kernel(idle_proc);
-    log_info("Idle process init done");
-    log_info("Load program PID(%d) done pc(%p) sp(%p)", idle_proc->pid, uctxt->pc, uctxt->sp);
-    log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-   
+    
     // Create the very first process
     log_info("Init init"); 
     pcb_t *init_proc;
-    init_proc = init_user_proc();
-    if(cmd_args[0] == NULL) {
-        LoadProgram("src/init", tmp, init_proc);
-    } else {
-        LoadProgram(cmd_args[0], cmd_args, init_proc);
-    }
+    init_proc = init_user_proc(NULL);
+    LoadProgram("src/init", tmp, init_proc);
     *uctxt = init_proc->user_context;
     log_info("Get the first context");
     save_user_runtime(init_proc, uctxt);
     log_info("Saved the first runtime");
-    init_process_kernel(init_proc);
+    //init_process_kernel(init_proc);
     running_proc = init_proc;
     log_info("Load program PID(%d) done pc(%p) sp(%p)", init_proc->pid, uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-    //*uctxt = idle_proc->user_context;
-    //save_and_en_ready_queue(idle_proc, uctxt); 
 
-    // Load init process (in checkpoint 3)
-    //pcb_t *user_proc = init_user_proc();
-    //if(cmd_args[0] == NULL) {
-    //    LoadProgram("src/init", tmp, user_proc);
-    //} else {
-    //    LoadProgram(cmd_args[0], cmd_args, user_proc);
-    //}
-    //*uctxt = user_proc->user_context;
-    //save_and_en_ready_queue(user_proc, uctxt); 
-    //_debug("uctxt->pc: %p\n", uctxt->pc);
-    //_debug("uctxt->sp: %p\n", uctxt->sp);
-    //log_info("Load program done\n");
-
-    // Load init process (in checkpoint 3)
-    //user_proc = init_user_proc();
-    //LoadProgram(cmd_args[1], cmd_args, user_proc);
-    //log_info("Load program done\n");
-    //*uctxt = user_proc->user_context;
-    //_debug("uctxt->pc: %p\n", uctxt->pc);
-    //_debug("uctxt->sp: %p\n", uctxt->sp);
-    //save_and_en_ready_queue(user_proc, uctxt); 
-    //log_info("Program %s saved to ready queue", cmd_args[1]);
-
-    // Run the first proc in ready queue
-    //de_ready_queue_and_run(uctxt);
-    //Cooking(user_page_table, uctxt);
-   // int i;
-   // for(i = 0; i < GET_PAGE_NUMBER(VMEM_1_SIZE); i++) {
-   //     _debug("user_page_table[%d]: at: %p, valid: %d, frame: %d\n", i, USER_PAGE_TO_ADDR(i), user_page_table[i].valid, user_page_table[i].pfn);
-   // }
-    
-
-   // KernelContextSwitch(MYKCSFun, (void*)user_proc, (void*)kernel_proc);
-    log_info("Leaving the kernel start");
+    init_process_kernel(idle_proc);
+    restore_user_runtime(running_proc, uctxt);
+    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
+    //print_page_table(kernel_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
+    //print_page_table(kernel_page_table, 0, 10);
+    //print_page_table(user_page_table, 0, 10);
+    log_info("Leave kernel start with pc %p sp %p", uctxt->pc, uctxt->sp);
     return;
+
 }
 
 /*

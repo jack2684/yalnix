@@ -56,11 +56,11 @@ void ticking_down(){
     dnode_t* node = delay_queue->head;
     while(node) {
         pcb_t* proc = (pcb_t*)node->data;
-        log_info("Ticking down PID(%d)", proc->pid);
+        log_info("Ticking down PID(%d), ticks: %d, pc: %p", proc->pid, proc->ticks, proc->user_context.pc);
         node = node->next;
         if(!proc->ticks) {
             log_info("PID(%d) back to life!");
-            dlist_rm_this(delay_queue, proc->list_node);
+            de_delay_queue(proc);
             en_ready_queue(proc); 
         } else {
             proc->ticks = proc->ticks == 0 ? 0 : proc->ticks -1; 

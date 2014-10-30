@@ -2,10 +2,11 @@
 #define _PROC_H
 
 #include "hardware.h"
+#include "yalnix.h"
 #include "memory.h"
 #include "dlist.h"
 
-#define MAX_PROC 256
+#define MAX_PROC 1024
 
 enum proc_stat {
     RUN,
@@ -38,8 +39,9 @@ typedef struct y_PCB {
 
     // Connected
     dnode_t         *list_node;          // For high performance list operation
-    struct y_PBC    *children;
-    struct y_PBC    *wait;
+    dlist_t         *children;          
+    dlist_t         *exits;             // FIFO list of child exit codes
+    struct y_PBC    *parent;
 } pcb_t;
 
 extern pcb_t   *kernel_proc;          // A kernel proc
@@ -49,7 +51,8 @@ extern dlist_t  *ready_queue;
 extern dlist_t  *wait_queue;
 
 void init_processes();
-pcb_t* init_user_proc(void);
+pcb_t* init_user_proc(pcb_t *parent);
+void init_idle_proc(void);
 int en_ready_queue(pcb_t *proc);
 void save_and_en_ready_queue(pcb_t *proc, UserContext *user_context);
 pcb_t* de_ready_queue();

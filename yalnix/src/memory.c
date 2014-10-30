@@ -67,8 +67,9 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
         log_info("Going to copy from %d(%p) to %d(%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
     } 
    
-    for(i = start_idx; i < end_idx; i++) {
+    for(i = start_idx; i < end_idx && !rc; i++) {
         if(src_table[i].valid != _VALID) {
+            dest_table[i - start_idx].valid = _INVALID;
             continue;
         }
         frame_t *frame = rm_head_available_frame();
@@ -97,6 +98,7 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
             dest_table[i - start_idx].prot = src_table[i].prot;     //Restore the prot
         }
     }
+    swap_pte->valid = _INVALID;
     return rc;
 }
 
@@ -229,6 +231,9 @@ int unmap_page_to_frame(pte_t* page_table, int start_idx, int end_idx) {
  * @param page_table: the new page table to be set
  */
 void set_user_page_table(pte_t* page_table) {
+    if(!page_table) {
+        log_err("The pcb user page table is NULL");
+    }
     user_page_table = page_table;
     WriteRegister(REG_PTBR1, (uint32)user_page_table);
     WriteRegister(REG_PTLR1, GET_PAGE_NUMBER(VMEM_1_SIZE));

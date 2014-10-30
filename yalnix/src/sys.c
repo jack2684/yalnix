@@ -14,19 +14,14 @@ int Y_Fork(UserContext *user_context){
         return -1;
     }
     log_info("Copy parent PID(%d) runtime done", running_proc->pid);
+   
+    log_info(" PID(%d) have runtime pc(%p) sp(%p)", running_proc->pid, running_proc->user_context.pc, running_proc->user_context.sp);
     
     en_ready_queue(child);
     log_info("En ready queue done");
 
     running_proc->exit_code = running_proc->pid;
     
-    //init_process_kernel(child);
-    //log_info("Init kernel context done");
-    
-    //save_and_en_ready_queue(running_proc, user_context);
-    //round_robin_schedule(user_context);
-    //log_info("Next schedule done, this proc is PID(%d)", running_proc->pid);
-
     if(running_proc == child) {
         return 0;
     } else {

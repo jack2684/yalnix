@@ -31,7 +31,7 @@ All different kernel call requests enter the kernel through this single type of 
 void trap_kernel_handler(UserContext *user_context){
     u_long rc = 0;
     u_long code = user_context->code;
-    log_info("Sys call: %s ", get_sys_call_name(code));
+    log_info("Sys call: %s, with pc %p", get_sys_call_name(code), user_context->pc);
     switch(code) {
         case YALNIX_EXIT:
             rc = Y_Exit(user_context);
@@ -111,8 +111,11 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
-    print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    return;
+    log_info("trap clock when pc %p sp %p with running PID %d", user_context->pc, user_context->sp, running_proc->pid);
+    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
+    //print_page_table(kernel_page_table, 0, 10);
+    //print_page_table(kernel_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
+    ////print_page_table(user_page_table, 0, 10);
     ticking_down();
     if(round_robin_timeout()) {
         log_info("Start round robin");

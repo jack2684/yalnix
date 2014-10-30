@@ -1,58 +1,149 @@
 ** Yalnix level 5 tracing enabled **
 ** User Prog level 5 tracing enabled **
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:233)[SetKernelBrk]	SetKernelBrk current brk 0x34000 and new addr 0x34000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:246)[SetKernelBrk]	SetKernelBrk current brk directly to 0x34000 Done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:191)[SetKernelBrk]	SetKernelBrk current brk 0x34000 and new addr 0x34000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:204)[SetKernelBrk]	SetKernelBrk current brk directly to 0x34000 Done
 Yalnix     Start the kernel
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:103)[init_user_page_table]	Init user page done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:59)[init_kernel_page_table]	Text Start=(nil), End=0x2a038
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:59)[init_kernel_page_table]	Text Start=(nil), End=0x2a728
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:66)[init_kernel_page_table]	heap low 0x34000 and high 0x34000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:67)[init_kernel_page_table]	Data Start=0x2a038, End=0x34000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:67)[init_kernel_page_table]	Data Start=0x2a728, End=0x34000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:74)[init_kernel_page_table]	Stack Start=0xfc000, End=0x100000
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:150)[KernelStart]	Init VM
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:155)[KernelStart]	Init pcb basic
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:233)[SetKernelBrk]	SetKernelBrk current brk 0x34000 and new addr 0x36000
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:142)[map_page_to_frame]	Map from page 26 (0x34000) to page 27 (0x36000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 26=>26
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:271)[SetKernelBrk]	SetKernelBrk current brk to 0x36000 Done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:47)[LoadProgram]	Load program: name => src/idle
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:69)[LoadProgram]	Open file DONE.
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:82)[LoadProgram]	Set boundaries done, about to calculate the args
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:91)[LoadProgram]	argsize 0, argcount 0
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:118)[LoadProgram]	prog_size 4, text 2 data 1 bss 1 pages
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:126)[LoadProgram]	heap_size 4, stack_size 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:128)[LoadProgram]	heap_size 4, stack_size 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:208)[unmap_page_to_frame]	About to unmap from 0 to 128
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:193)[LoadProgram]	Clean page table DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:195)[LoadProgram]	Set page table done.
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:207)[LoadProgram]	text_pg1 => 0x100000, text_npg => 2
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208)[LoadProgram]	data_pg1 => 0x100002, data_npg => 2
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209)[LoadProgram]	stack_pg1 => 0x1fff70, stack_npg => 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 0=>27
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 1=>28
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:220)[LoadProgram]	Map user text DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 2 (0x104000) to page 4 (0x108000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 2=>29
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 3=>30
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:231)[LoadProgram]	Map user data DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 127 (0x1fe000) to page 128 (0x200000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 127=>31
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:248)[LoadProgram]	Map user stack with #1 pages DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:277)[LoadProgram]	Read file DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:180)[set_ptes]	Set from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:291)[LoadProgram]	Set ptes DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:296)[LoadProgram]	About to bzero from 0x105610 to 0x106650
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:298)[LoadProgram]	Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:160)[KernelStart]	Get the idle context
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(0) saves runtime pc(0x100120) sp(0x1fff70)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:162)[KernelStart]	Saved the idle runtime
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:321)[init_newbie_kernel]	First time to init PID(0) kernel stack!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:333)[init_newbie_kernel]	First time to init PID(0) kernel stack done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:316)[init_process_kernel]	Init PID(0) kernel stack done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:164)[KernelStart]	Idle process init done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:165)[KernelStart]	Load program PID(0) done pc(0x100120) sp(0x1fff70)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:166)[KernelStart]	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:169)[KernelStart]	Init init
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:191)[SetKernelBrk]	SetKernelBrk current brk 0x34000 and new addr 0x36000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 26 (0x34000) to page 27 (0x36000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 26=>26
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:229)[SetKernelBrk]	SetKernelBrk current brk to 0x36000 Done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146)[map_page_to_frame]	Map from page 0 (0x100000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 0=>27
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 1=>28
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 2=>29
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 3=>30
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 4=>31
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 5=>32
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 6=>33
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 7=>34
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 8=>35
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 9=>36
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 10=>37
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 11=>38
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 12=>39
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 13=>40
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 14=>41
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 15=>42
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 16=>43
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 17=>44
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 18=>45
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 19=>46
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 20=>47
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 21=>48
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 22=>49
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 23=>50
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 24=>51
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 25=>52
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 26=>53
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 27=>54
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 28=>55
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 29=>56
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 30=>57
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 31=>58
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 32=>59
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 33=>60
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 34=>61
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 35=>62
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 36=>63
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 37=>64
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 38=>65
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 39=>66
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 40=>67
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 41=>68
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 42=>69
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 43=>70
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 44=>71
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 45=>72
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 46=>73
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 47=>74
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 48=>75
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 49=>76
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 50=>77
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 51=>78
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 52=>79
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 53=>80
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 54=>81
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 55=>82
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 56=>83
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 57=>84
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 58=>85
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 59=>86
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 60=>87
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 61=>88
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 62=>89
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 63=>90
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 64=>91
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 65=>92
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 66=>93
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 67=>94
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 68=>95
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 69=>96
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 70=>97
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 71=>98
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 72=>99
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 73=>100
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 74=>101
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 75=>102
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 76=>103
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 77=>104
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 78=>105
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 79=>106
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 80=>107
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 81=>108
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 82=>109
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 83=>110
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 84=>111
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 85=>112
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 86=>113
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 87=>114
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 88=>115
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 89=>116
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 90=>117
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 91=>118
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 92=>119
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 93=>120
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 94=>121
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 95=>122
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 96=>123
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 97=>124
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 98=>125
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 99=>128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 100=>129
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 101=>130
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 102=>131
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 103=>132
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 104=>133
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 105=>134
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 106=>135
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 107=>136
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 108=>137
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 109=>138
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 110=>139
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 111=>140
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 112=>141
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 113=>142
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 114=>143
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 115=>144
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 116=>145
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 117=>146
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 118=>147
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 119=>148
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 120=>149
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 121=>150
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 122=>151
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 123=>152
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 124=>153
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 125=>154
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 126=>155
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 127=>156
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:159)[KernelStart]	Init init
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:47)[LoadProgram]	Load program: name => src/init
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:69)[LoadProgram]	Open file DONE.
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:82)[LoadProgram]	Set boundaries done, about to calculate the args
@@ -60,196 +151,217 @@ Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:91)[LoadProgram]	argsi
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:118)[LoadProgram]	prog_size 4, text 2 data 1 bss 1 pages
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:126)[LoadProgram]	heap_size 4, stack_size 1
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:128)[LoadProgram]	heap_size 4, stack_size 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:208)[unmap_page_to_frame]	About to unmap from 0 to 128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:210)[unmap_page_to_frame]	About to unmap from 0 to 128
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:193)[LoadProgram]	Clean page table DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:195)[LoadProgram]	Set page table done.
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:207)[LoadProgram]	text_pg1 => 0x100000, text_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208)[LoadProgram]	data_pg1 => 0x100002, data_npg => 2
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209)[LoadProgram]	stack_pg1 => 0x1fff70, stack_npg => 1
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 0 (0x100000) to page 2 (0x104000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 0=>32
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 1=>33
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146)[map_page_to_frame]	Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 0=>157
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 1=>158
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:220)[LoadProgram]	Map user text DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 2 (0x104000) to page 4 (0x108000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 2=>34
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 3=>35
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146)[map_page_to_frame]	Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 2=>159
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 3=>160
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:231)[LoadProgram]	Map user data DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 127 (0x1fe000) to page 128 (0x200000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 127=>36
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146)[map_page_to_frame]	Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:162)[map_page_to_frame]	Map pte 127=>161
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:248)[LoadProgram]	Map user stack with #1 pages DONE
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:277)[LoadProgram]	Read file DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:180)[set_ptes]	Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:182)[set_ptes]	Set from page 0 (0x100000) to page 2 (0x104000)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:291)[LoadProgram]	Set ptes DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:296)[LoadProgram]	About to bzero from 0x105868 to 0x1068b0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:296)[LoadProgram]	About to bzero from 0x105848 to 0x106890
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:298)[LoadProgram]	Bzero DONE
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:178)[KernelStart]	Get the first context
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0x100120) sp(0x1fff70)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:180)[KernelStart]	Saved the first runtime
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:321)[init_newbie_kernel]	First time to init PID(1) kernel stack!
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:333)[init_newbie_kernel]	First time to init PID(1) kernel stack done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:316)[init_process_kernel]	Init PID(1) kernel stack done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:183)[KernelStart]	Load program PID(1) done pc(0x100120) sp(0x1fff70)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:184)[KernelStart]	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[KernelStart]	Leaving the kernel start
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:89)[trap_memory_handler]	User addr 0x1f06e0 map err
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:144)[map_page_to_frame]	Map from page 120 (0x1f0000) to page 127 (0x1fe000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 120=>37
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 121=>38
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 122=>39
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 123=>40
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 124=>41
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 125=>42
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:160)[map_page_to_frame]	Map pte 126=>43
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:282)[user_stack_resize]	Resize PID(1) stack low from 0x1fff70 to 0x1f06e0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:164)[KernelStart]	Get the first context
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(1) saves runtime pc(0x100120) sp(0x1fff70)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:166)[KernelStart]	Saved the first runtime
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:169)[KernelStart]	Load program PID(1) done pc(0x100120) sp(0x1fff70)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:170)[KernelStart]	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:356)[init_newbie_kernel]	First time to init PID(0) kernel stack!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65)[alloc_frame_and_copy]	Going to copy from 126(0xfc000) to 128(0x100000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:377)[init_newbie_kernel]	First time to init PID(0) kernel stack done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:351)[init_process_kernel]	Init PID(0) kernel stack done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:178)[KernelStart]	Leave kernel start with pc 0x100120 sp 0x1fff70
 User Prog  HEAP my_malloc(0x190)
 User Prog  warning: unitialized heap!
 User Prog  initializing heap
-User Prog  brk_unlocked(10e8b0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_BRK 
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:108)[Y_Brk]	PID 1 call user brk with current brk 0x100004
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/sys.c:120)[Y_Brk]	New addr trepass the data area!
-Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/traps.c:55)[trap_kernel_handler]	Kernel call for YALNIX_BRK fail!
+User Prog  brk_unlocked(10e890)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_BRK, with pc 0x100455
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:146)[map_page_to_frame]	Map from page 1056768 (0x4100000) to page 7 (0x10e000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:132)[Y_Brk]	Y_Brk ADD DONE = 0x100004, End = 0x100004, New Addr = 0x110000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:144)[Y_Brk]	PID 1 user brk done, new addr at 0x110000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
 User Prog  brk call failed; user heap will function oddly
 User Prog  brk did not give enough memory; user heap will function oddly
-User Prog  HEAP Warning: heap block at 0x1068b0 lies outside heap [0x1068b0 -> 0x1068b0]
+User Prog  HEAP Warning: heap block at 0x106890 lies outside heap [0x106890 -> 0x106890]
 User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x1068b0 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1068b0 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP Warning: heap block at 0x106a58 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106a58 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP my_malloc(0x190)
-User Prog  HEAP Warning: heap block at 0x1068b0 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP Warning: heap block at 0x106a58 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP Warning: heap block at 0x106c00 lies outside heap [0x1068b0 -> 0x1068b0]
-User Prog  HEAP found a block
-User Prog  HEAP Warning: heap block at 0x106c00 lies outside heap [0x1068b0 -> 0x1068b0]
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:18)[main]
+User Prog  HEAP Warning: heap block at 0x106890 lies outside heap [0x106890 -> 0x106890]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:13)[main]
                   running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_FORK 
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0x1003fa) sp(0x1f06d4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_FORK, with pc 0x1003da
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(1) saves runtime pc(0x1003da) sp(0x1fe6c4)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:67)[alloc_frame_and_copy]	Going to copy from 0(0x100000) to 128(0x200000)
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:16)[Y_Fork]	Copy parent PID(1) runtime done
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:19)[Y_Fork]	En ready queue done
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:23)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:18)[Y_Fork]	 PID(1) have runtime pc(0x1003da) sp(0x1fe6c4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:21)[Y_Fork]	En ready queue done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:18)[main]
                   After fork come with pid 2
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:32)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:21)[main]
                   I am parent with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:356)[kernel_context_switch]	Init next proc PID(2)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(1) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:410)[kernel_context_switch]	Init next proc kernel context and stack PID(2)!
 Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65)[alloc_frame_and_copy]	Going to copy from 126(0xfc000) to 128(0x100000)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0x1003fa) sp(0x1f06d4)
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:23)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2), with new pc(0x1003da) sp(0x1fe6c4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0x1003da) sp(0x1fe6c4)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:18)[main]
                   After fork come with pid 0
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:26)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:31)[main]
                   I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(2) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:32)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(2) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:410)[kernel_context_switch]	Init next proc kernel context and stack PID(1)!
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:65)[alloc_frame_and_copy]	Going to copy from 126(0xfc000) to 128(0x100000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:21)[main]
                   I am parent with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:26)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(1) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:31)[main]
                   I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(2) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:32)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(2) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:21)[main]
                   I am parent with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:26)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(1) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:31)[main]
                   I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(2) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:32)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(2) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:21)[main]
                   I am parent with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:26)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(1) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:31)[main]
                   I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(2) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:32)[main]
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:114)[trap_clock_handler]	trap clock when pc 0xf77c2d70 sp 0x1fe5e0 with running PID 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:121)[trap_clock_handler]	Start round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:233)[round_robin_schedule]	Inside round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:234)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:139)[en_ready_queue]	En ready_queue with PID(2)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:242)[round_robin_schedule]	Before next schedule
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:261)[next_schedule]	De ready_queue get PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:158)[save_user_runtime]	 PID(2) saves runtime pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:401)[kernel_context_switch]	PID(1) current kernel context saved
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:440)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1), with new pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:340)[context_switch_to]	Context swtiched to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:274)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77c2d70) sp(0x1fe5e0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:244)[round_robin_schedule]	Round robin DONE with queue size 1, now running PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:123)[trap_clock_handler]	Leave round robin
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID, with pc 0x10043c
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:64)[trap_kernel_handler]	 exit trap_kernel_handler
+User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:21)[main]
                   I am parent with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:26)[main]
-                  I am child with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(2) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(2) to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(1) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:32)[main]
-                  I am parent with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:203)[round_robin_schedule]	Round robin with queue size 1, when running PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:107)[en_ready_queue]	En ready_queue with PID(1)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:228)[next_schedule]	De ready_queue get PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:129)[save_user_runtime]	 PID(1) saves runtime pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:381)[kernel_context_switch]	Magic kernel switch done from PID(1) to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:305)[context_switch_to]	Context swtiched to PID(2)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:239)[next_schedule]	next_schedule done with queue size 1, now running PID(2) pc(0xf77a8d70) sp(0x1f05f0)
-Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:34)[trap_kernel_handler]	Sys call: YALNIX_GETPID 
-User Prog  [USER] (/net/grad/gjj/yalnix/yalnix/src/init.c:26)[main]
-                  I am child with PID(2)
