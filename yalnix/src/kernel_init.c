@@ -112,10 +112,6 @@ void DoIdle(void) {
 
 void Cooking(pte_t *user_page_table, UserContext* uctxt) {
     map_page_to_frame(user_page_table, 0, 1, PROT_READ | PROT_WRITE);
-    //int i = GET_PAGE_NUMBER(VMEM_1_LIMIT);
-    //user_page_table[0].valid = _VALID;
-    //user_page_table[0].prot = PROT_READ | PROT_WRITE;
-    //user_page_table[0].pfn = frame_get_pfn(list_rm_idx(available_frames, 0));
 
     uctxt->pc = &DoIdle;
     uctxt->sp = (void*)(VMEM_1_BASE + PAGESIZE - 4); 
@@ -151,14 +147,17 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     WriteRegister(REG_VM_ENABLE, _ENABLE);
     
     // Init pcb and idle process
-    char* tmp[] = {NULL};
+    //char* tmp[] = {NULL};
     log_info("Init pcb basic");
     init_processes();
     
     // Create the very first process
+    // Noted that, we run init program, and load 
+    // user specified program latter in init program 
+    // using Exec()
     log_info("Init init");
     init_init_proc();
-    LoadProgram("src/init", tmp, init_proc);
+    LoadProgram("src/init", cmd_args, init_proc);
     *uctxt = init_proc->user_context;
     log_info("Get the first context");
     save_user_runtime(init_proc, uctxt);
@@ -170,13 +169,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
 
     init_process_kernel(idle_proc);
     restore_user_runtime(running_proc, uctxt);
-    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    //print_page_table(kernel_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    //print_page_table(kernel_page_table, 0, 10);
-    //print_page_table(user_page_table, 0, 10);
     log_info("Leave kernel start with pc %p sp %p", uctxt->pc, uctxt->sp);
     return;
-
 }
 
 /*
