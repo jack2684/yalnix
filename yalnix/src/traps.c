@@ -65,7 +65,6 @@ void trap_kernel_handler(UserContext *user_context){
     if(rc) {
         log_err("Kernel call for %s fail!", get_sys_call_name(code));
     }
-    log_info(" exit trap_kernel_handler with user_context->regs[0] %d", user_context->regs[0]);
     return; 
 }
 
@@ -118,16 +117,9 @@ void trap_memory_handler(UserContext *user_context){
 
 //This interrupt results from the machine’s hardware clock, which generates periodic clock interrupts
 void trap_clock_handler(UserContext *user_context){
-    log_info("trap clock when pc %p sp %p with running PID %d", user_context->pc, user_context->sp, running_proc->pid);
-    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    //print_page_table(kernel_page_table, 0, 10);
-    //print_page_table(kernel_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
-    ////print_page_table(user_page_table, 0, 10);
     ticking_down();
     if(round_robin_timeout()) {
-        log_info("Start round robin");
         round_robin_schedule(user_context);
-        log_info("Leave round robin");
     }
 }
 

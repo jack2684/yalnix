@@ -1,7 +1,7 @@
 #include "proc.h"
 
-pcb_t   *init_proc;          // A kernel proc
-pcb_t   *idle_proc;          // A idle user proc
+pcb_t   *init_proc;          
+pcb_t   *idle_proc;
 pcb_t   *running_proc;      // Current running proc
 dlist_t  *ready_queue;   
 dlist_t  *wait_queue;
@@ -31,11 +31,12 @@ void DoDoIdle(void) {
     while (1) {
         user_log("Idling...");
         Pause();
-        user_log("Idling after pause");
     }   
     return;
 }
 
+/* Incrementally get the next PID number
+ */
 int get_next_pid(){
    if(next_pid >= MAX_PROC) {
         log_err("Exceed %d processes", MAX_PROC);
@@ -57,6 +58,8 @@ void tell_children(pcb_t *proc) {
     }
 }
 
+/* Remove a process from wait queue
+ */
 pcb_t* rm_wait_queue(pcb_t* proc) {
     return dlist_rm_this(wait_queue, proc->list_node);
 }
@@ -136,6 +139,8 @@ void init_idle_proc() {
     return;
 }
 
+/* Put a process into wait queue, invoked by Wait() syscall
+ */
 int en_wait_queue(pcb_t *proc) {
     dnode_t *n = dlist_add_tail(wait_queue, proc);
     if(!n) {
@@ -149,6 +154,8 @@ int en_wait_queue(pcb_t *proc) {
     return 0;
 }
 
+/* Get one zombie child from zombie queue
+ */
 pcb_t* de_zombie_queue(pcb_t* proc){
     if(proc->zombie->size == 0) {
         log_err("No one in the zombie list!!!");
@@ -159,7 +166,7 @@ pcb_t* de_zombie_queue(pcb_t* proc){
 
 /* If any child is running
  */
-int any_child_runs(pcb_t *proc){
+int any_child_active(pcb_t *proc){
     log_info("PID(%d) checking %d children's state", proc->pid, proc->children->size);
     dnode_t *node = proc->children->head;
     while(node) {
@@ -331,7 +338,7 @@ pcb_t* de_ready_queue() {
 void round_robin_schedule(UserContext *user_context) {
     // Don't push running_proc into ready quueue if it is a idle proc
     //log_info("Inside round robin");
-    //log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
+    log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
     if(!ready_queue->size) {
         return;
     }   
@@ -361,11 +368,9 @@ void next_schedule(UserContext *user_context) {
         log_info("De ready_queue get PID(%d)", next_proc->pid);
     }
   
-    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
     save_user_runtime(running_proc, user_context);
     context_switch_to(next_proc, user_context);
     restore_user_runtime(running_proc, user_context);
-    //print_page_table(user_page_table, 120, GET_PAGE_NUMBER(VMEM_0_SIZE));
     log_info("next_schedule done with queue size %d, now running PID(%d) pc(%p) sp(%p)", 
                 ready_queue->size, 
                 running_proc->pid, 
@@ -437,9 +442,11 @@ void context_switch_to(pcb_t *next_proc, UserContext *user_context) {
         log_err("Failed to execute magic function!");
         Halt();
     }
-    log_info("Context swtiched to PID(%d)", running_proc->pid);
 }
 
+/* Used for special processes that is not forked to init kernel context,
+ * meaning this process is manually created by Yalnix
+ */
 void init_process_kernel(pcb_t *proc) {
     int rc = 0;
     
@@ -451,6 +458,8 @@ void init_process_kernel(pcb_t *proc) {
     log_info("Init PID(%d) kernel stack done", proc->pid);
 }
 
+/* A kernel magic function that is only used for getting kernel context for newbie
+ */
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb){
     pcb_t *next_proc = (pcb_t *) _next_pcb;
     log_info("First time to init PID(%d) kernel stack!", next_proc->pid);
@@ -478,6 +487,8 @@ KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb
     return kernel_context;
 }
 
+/* Determine whether a process is active
+ */
 int is_proc_active(pcb_t *p) {
     return p && p->state != ZOMBIE && p->state != EXIT;
 }
@@ -498,8 +509,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
 
     // Backup current kernel context, and set next running process
     if(is_proc_active(prev_proc)) {
-        log_info("PID(%d) current kernel context saved");
-        //prev_proc->kernel_context = *kernel_context;
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
     }
     running_proc = next_proc;
@@ -507,7 +516,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
-        log_info("Init next proc kernel context and stack PID(%d)!", next_proc->pid);
         next_proc->kernel_context = *kernel_context;
         int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
                                     kernel_page_table, 
@@ -526,12 +534,10 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
             sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
-    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
-    //for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
-    //    log_info("Flushing addr %p", addr);
-    //    WriteRegister(REG_TLB_FLUSH, addr);
-    //}
-    //print_page_table(next_proc->page_table, 120, GET_PAGE_NUMBER(VMEM_0_LIMIT));
+    //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
+    for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
+        WriteRegister(REG_TLB_FLUSH, addr);
+    }
 
     log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
     *kernel_context = next_proc->kernel_context;

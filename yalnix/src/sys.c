@@ -13,13 +13,8 @@ int Y_Fork(UserContext *user_context){
         log_err("PID(%d) cannot copy PID(%d) runtime", child, running_proc);
         return -1;
     }
-    log_info("Copy parent PID(%d) runtime done", running_proc->pid);
-   
-    log_info(" PID(%d) have runtime pc(%p) sp(%p)", running_proc->pid, running_proc->user_context.pc, running_proc->user_context.sp);
     
     en_ready_queue(child);
-    log_info("En ready queue done");
-
     running_proc->exit_code = running_proc->pid;
     
     if(running_proc == child) {
@@ -33,61 +28,28 @@ int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
     log_info("PID(%d) is going to exec %s", running_proc->pid, filename);
     LoadProgram(filename, argvec, running_proc);
     *user_context = running_proc->user_context;
-	//CHECK if filename is valid
-	//COPY filename into the heap
-	//CHECK if arguments are valid
-	//COPY arguments into the heap
-	//INIT all the text, data, stack segments
-	//RENEW the user context
-	//FREE the content in heap
 }
 
 int Y_Exit(int exit_code, UserContext *user_context){
-    log_info("Just get in %s", __func__);
 	pcb_t *parent = (pcb_t*)running_proc->parent;
 
     //Set states
     running_proc->exit_code = exit_code;
     running_proc->state = ZOMBIE;
-    log_info("Set states done");
 
     // Tell other people
     tell_children(running_proc);
-    log_info("Tell children done");
     tell_parent(running_proc);
-    log_info("Tell parent done");
-
 
     // Scheulde next process to run
     next_schedule(user_context);
     log_info("Next schedule done (this will never reached actually)");
-    
-    //WHILE lock list is not empty
-		//RELEASE all the locks
-	//END WHILE
-
-	//WHILE child process PCB list is not empty
-		//SET the id  of parent process of the children to 1 (INIT)
-		//IF a child process is zombie
-			//CLEAN this child process
-		//END IF
-	//END WHILE	
-
-	//RELEASE all the buffers
-	//RELEASE all the frames
-
-	//IF there is still a parent
-		//MOVE process to its zombie children list
-	//ELSE
-		//RELEASE PCBs
-	//END IF
 }
 
 int Y_Wait(int * status_ptr, UserContext *user_context){
     // Check if it is worth to wait
-    log_info("Inside %s", __func__);
-    if(!any_child_runs(running_proc) && !running_proc->zombie->size) {
-        log_info("Not woth to wait!! #zombie %d", running_proc->zombie->size);
+    if(!any_child_active(running_proc) && !running_proc->zombie->size) {
+        log_info("Not woth to wait!! #zombie %d, and no children is active", running_proc->zombie->size);
         running_proc->exit_code = 1;
         return 1;       // No body treat pid 1 and child process, so I make it as exit_code
     }

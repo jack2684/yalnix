@@ -45,12 +45,14 @@ typedef struct y_PCB {
     struct y_PBC    *parent;
 } pcb_t;
 
-extern pcb_t   *init_proc;          // A kernel proc
-extern pcb_t   *idle_proc;          // A user proc
+extern pcb_t   *init_proc;          
+extern pcb_t   *idle_proc;          
 extern pcb_t   *running_proc;      // Current running proc
 extern dlist_t  *ready_queue;   
 extern dlist_t  *wait_queue;
 
+/* Basic prcess functions
+ */
 void init_processes();
 pcb_t* init_user_proc(pcb_t *parent);
 void init_idle_proc(void);
@@ -67,6 +69,8 @@ int is_proc_active(pcb_t *proc);
 int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
 void init_init_proc(void);
 
+/* Parent and children functions
+ */
 void free_proc(pcb_t *proc);
 void tell_children(pcb_t *proc);
 void tell_parent(pcb_t *proc);
@@ -74,9 +78,11 @@ int en_wait_queue(pcb_t* proc);
 pcb_t* rm_wait_queue(pcb_t* proc);
 int en_zombie_queue(pcb_t* proc, pcb_t* child);
 pcb_t* de_zombie_queue(pcb_t* proc);
-int any_child_runs(pcb_t *proc);
+int any_child_active(pcb_t *proc);
 pcb_t* en_children_queue(pcb_t *proc);
 
+/* Kernel context switch functions
+ */
 void init_process_kernel(pcb_t *proc);
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 void context_switch_to(pcb_t * next_proc, UserContext * user_context);
