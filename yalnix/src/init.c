@@ -16,9 +16,9 @@ void main(void) {
     int pid = Fork();
     char* tmp[] = {NULL};
     
-    user_log("After fork come with pid %d", pid);
+    user_log("My pid is %d, fork return pid %d", GetPid(), pid);
     if(pid != 0) {
-        user_log("I am parent with PID(%d)", GetPid());
+        user_log("I am parent with PID(%d), user Wait() for my children...", GetPid());
         int cpid = Wait(&exit_status);
         user_log("Wait my child(%d) done, return meaning of life %d", cpid, exit_status);
         while(1) {
