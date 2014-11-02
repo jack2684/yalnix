@@ -6,6 +6,8 @@ pcb_t   *idle_proc;
 pcb_t   *running_proc;      // Current running proc
 dlist_t  *ready_queue;   
 dlist_t  *wait_queue;
+dlist_t  *write_queue;
+dlist_t  *read_queue;
 
 int next_pid;
 

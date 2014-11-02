@@ -32,6 +32,7 @@ typedef struct y_PCB {
     int             ticks;
     int             init_done;
     int             wait_zombie;
+
     
     // Identity
     int             pid;
@@ -44,6 +45,9 @@ typedef struct y_PCB {
     dlist_t         *children;          
     dlist_t         *zombie;             // FIFO list of zombie children
     struct y_PBC    *parent;
+
+    // Utilities
+    char            *tty_buf;
 } pcb_t;
 
 extern pcb_t   *init_proc;          
@@ -51,6 +55,8 @@ extern pcb_t   *idle_proc;
 extern pcb_t   *running_proc;      // Current running proc
 extern dlist_t  *ready_queue;   
 extern dlist_t  *wait_queue;
+extern dlist_t  *write_queue;
+extern dlist_t  *read_queue;
 
 /* Basic prcess functions
  */
