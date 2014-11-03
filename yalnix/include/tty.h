@@ -14,6 +14,8 @@ dlist_t  *tty_read_queues[NUM_TERMINALS];
 pcb_t   *tty_writing_procs[NUM_TERMINALS];          
 pcb_t   *tty_trans_procs[NUM_TERMINALS];
 
+void init_tty();
+
 void tty_read_enqueue(pcb_t *pcb, unsigned int tty_id);
 
 void tty_read_wake_up(unsigned int tty_id);
@@ -26,9 +28,9 @@ void tty_trans_wake_up(unsigned int tty_id);
 
 pcb_t *tty_trans_dequeue(unsigned int tty_id);
 
-void tty_read_wake_up(unsigned int tty_id);
+void tty_reading_wake_up(unsigned int tty_id);
 
-void tty_read_next_ready(tty_id);
+void tty_read_next_ready(unsigned int tty_id);
 
 void pcb_wake_up(pcb_t *pcb);
 

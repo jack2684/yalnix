@@ -1,5 +1,14 @@
 #include "tty.h"
 
+void init_tty()
+{
+    for(int i = 0; i < NUM_TERMINALS; i++)
+    {
+        tty_trans_queues[i] = dlist_init();
+        tty_read_queues[i] = dlist_init();
+    }
+}
+
 //These methods are for tty queues
 void tty_trans_enqueue(pcb_t *pcb, unsigned int tty_id)
 {       
@@ -51,7 +60,7 @@ pcb_t *tty_read_dequeue(unsigned int tty_id)
 
 
 //These methods for traps handlers
-void tty_read_wake_up(unsigned int tty_id)
+void tty_reading_wake_up(unsigned int tty_id)
 {
         pcb_t *pcb;
         int result;
@@ -64,7 +73,7 @@ void tty_read_wake_up(unsigned int tty_id)
         return;
 }
 
-void tty_read_next_ready(tty_id)
+void tty_read_next_ready(unsigned int tty_id)
 {
         pcb_t *pcb;
         ///int result;

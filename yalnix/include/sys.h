@@ -18,8 +18,8 @@ int Y_Fork(UserContext *user_context);
 int Y_Exec(char * filename, char* argvec[], UserContext *user_context);
 int Y_Wait(int * status_ptr, UserContext *user_context);
 int Y_WaitPid(int pid, int* status_ptr, int options);
-int Y_TtyWrite(int tty_id, void *buf, int len, User_Context *user_context);
-int Y_TtyRead(int tty_id, void *buf, int len, User_Context *user_context);
+int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context);
+int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context);
 
 #endif
 

@@ -179,7 +179,7 @@ int Y_Delay(UserContext *user_context){
 	return _SUCCESS;
 }
 
-int Y_TtyWrite(int tty_id, void *buf, int len, User_Context *user_context)
+int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 {
         int commit_len;
         char *commit_buf;
@@ -225,7 +225,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, User_Context *user_context)
         return result;
 }
 
-int Y_TtyRead(int tty_id, void *buf, int len, User_Context *user_context)
+int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 {
         log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
