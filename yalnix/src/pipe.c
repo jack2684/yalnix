@@ -1,15 +1,23 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
 #include "kernelLib.h"
 
+dlist *pipe_idp = NULL;
+
+pipe_t *pipe_init() {
+    if(pipe_idp = NULL) {
+        pipe_idp = dlist_
+    }
+}
+
 //These are Pipe syscalls
-int Y_PipeInit(int *pipe_idp){
+int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
 	//CREATE a new pipe
 	//ADD the new pipe
 	//SET pipe_id pointer point to the pipe
 	//RETURN success
 }
 
-int Y_PipeWrite(int pipe_id, void *buf, int len){
+int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
 	//CHECK len & buf are valid
 	//FIND the pipe using id
 	
