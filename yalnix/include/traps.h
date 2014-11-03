@@ -5,6 +5,7 @@
 #include "yalnix.h"
 #include "common.h"
 #include "sys.h"
+#include "tty.h"
 
 typedef void (*trap_handler)(UserContext*);
 

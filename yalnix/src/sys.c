@@ -2,6 +2,7 @@
 #include "sys.h"
 #include "common.h"
 #include "proc.h"
+#include "tty.h"
 
 //These are process syscalls
 int Y_Fork(UserContext *user_context){
@@ -178,6 +179,88 @@ int Y_Delay(UserContext *user_context){
 	return _SUCCESS;
 }
 
+int Y_TtyWrite(int tty_id, void *buf, int len, User_Context *user_context)
+{
+        int commit_len;
+        char *commit_buf;
+        int result = 0;
+
+        log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
+
+        // only one process could write with tty_id //
+        while (tty_writing_procs[tty_id]) {
+                //set current state to WAIT
+                running_proc -> state = WAIT;
+                tty_trans_enqueue(running_proc, tty_id);
+                next_schedule(user_context);
+        }
+
+        //check memory allocation
+        commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
+        if (commit_buf == NULL) {
+                log_err("allocate buffer for tty transferring failed!\n");
+                log_info("result = %d, pid = %d", result, running_proc->pid);
+                return _FAILURE;
+        }
+
+        //if buf exceeds the limit, then do tty-writing multiple times //
+        len = min(len, strlen(buf));
+        while (len) {
+                commit_len = min(len, TERMINAL_MAX_LINE);
+                memcpy(commit_buf, buf + result, commit_len);
+
+                //set current state to WAIT
+                running_proc -> state = WAIT;
+                tty_writing_procs[tty_id] = running_proc;
+                TtyTransmit(tty_id, commit_buf, commit_len);
+                next_schedule(user_context);
+
+                len -= commit_len;
+                result += commit_len;
+        }
+
+        free(commit_buf);
+
+        log_info("result = %d, pid = %d\n", result, running_proc->pid);
+        return result;
+}
+
+int Y_TtyRead(int tty_id, void *buf, int len, User_Context *user_context)
+{
+        log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
+
+        len = min(len, TERMINAL_MAX_LINE);
+
+        //there is only one process reading from tty_id //
+        while (tty_reading_procs[tty_id]) {
+                //set current state to WAIT
+                running_proc -> state = WAIT;
+                tty_read_enqueue(running_proc, tty_id);
+                next_schedule(user_context);
+        }
+
+        running_proc->tty_buf = (void *)calloc(1, len);
+        
+        //check memory allocation
+        if (running_proc->tty_buf == NULL) {
+                log_err("Allocate buffer for tty reading failed!\n");
+                log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
+                return _FAILURE;
+        }
+
+        tty_reading_procs[tty_id] = running_proc;
+        running_proc->exit_code = len;
+        running_proc -> state = WAIT;
+        //TtyReceive(int tty_id, void *buf, int len);
+        next_schedule(user_context);
+
+        memcpy(buf, running_proc->tty_buf, running_proc->exit_code);
+        free(running_proc->tty_buf);
+        running_proc->tty_buf = NULL;
+
+        log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
+        return running_proc->exit_code;
+}
 ////These are destroy syscalls
 //int Y_Reclaim(int id){
 //	//FIND the lock using id
