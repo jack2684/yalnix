@@ -14,6 +14,8 @@ extern dlist_t  *tty_read_queues[NUM_TERMINALS];
 extern pcb_t   *tty_writing_procs[NUM_TERMINALS];          
 extern pcb_t   *tty_reading_procs[NUM_TERMINALS];
 
+extern int trans_finish;
+
 void init_tty();
 
 void tty_read_enqueue(pcb_t *pcb, unsigned int tty_id);

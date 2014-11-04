@@ -181,15 +181,21 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
         int commit_len;
         char *commit_buf;
         int result = 0;
+        trans_finish = 0;
+        dnode_t *node = NULL;
 
         log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-        // only one process could write with tty_id //
-        while (tty_writing_procs[tty_id]) {
-                //set current state to WAIT
+        while (!dlist_is_empty(tty_trans_queues[tty_id])) {
                 running_proc -> state = WAIT;
                 tty_trans_enqueue(running_proc, tty_id);
-                next_schedule(user_context);
+                //while ends conditions: running_proc is the head
+                node = tty_trans_queues[tty_id] -> head;
+                if ((pcb_t *)(node -> data) == running_proc)
+                {
+                    break;
+                }
+                //next_schedule(user_context);
         }
 
         //check memory allocation
@@ -205,14 +211,16 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
         while (len) {
                 commit_len = min(len, TERMINAL_MAX_LINE);
                 memcpy(commit_buf, buf + result, commit_len);
-
-                //set current state to WAIT
-                running_proc -> state = WAIT;
-                tty_writing_procs[tty_id] = running_proc;
-                TtyTransmit(tty_id, commit_buf, commit_len);
-                next_schedule(user_context);
-
+                
+                //running_proc -> state = WAIT;
+                //tty_writing_procs[tty_id] = running_proc;
                 len -= commit_len;
+                if(len <= 0)
+                {
+                    trans_finish = 1;
+                }
+                TtyTransmit(tty_id, commit_buf, commit_len);
+                //next_schedule(user_context);
                 result += commit_len;
         }
 
@@ -228,12 +236,19 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 
         len = min(len, TERMINAL_MAX_LINE);
 
+        dnode_t *node = NULL;
+
         //there is only one process reading from tty_id //
-        while (tty_reading_procs[tty_id]) {
-                //set current state to WAIT
+        while (!dlist_is_empty(tty_read_queues[tty_id])) 
+        {
                 running_proc -> state = WAIT;
                 tty_read_enqueue(running_proc, tty_id);
-                next_schedule(user_context);
+                node = tty_read_queues[tty_id] -> head;
+                if ((pcb_t *)(node -> data) == running_proc)
+                {
+                    break;
+                }
+                //next_schedule(user_context);
         }
 
         running_proc->tty_buf = (void *)calloc(1, len);
@@ -245,11 +260,10 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
                 return _FAILURE;
         }
 
-        tty_reading_procs[tty_id] = running_proc;
+        //tty_reading_procs[tty_id] = running_proc;
         running_proc->exit_code = len;
         running_proc -> state = WAIT;
-        //TtyReceive(int tty_id, void *buf, int len);
-        next_schedule(user_context);
+        //next_schedule(user_context);
 
         memcpy(buf, running_proc->tty_buf, running_proc->exit_code);
         free(running_proc->tty_buf);
