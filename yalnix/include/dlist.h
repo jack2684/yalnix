@@ -31,6 +31,7 @@ void*    dlist_rm_head(dlist_t *list);
 void*    dlist_rm_tail(dlist_t *list);
 void*    dlist_rm_idx(dlist_t *list, int idx);
 void*    dlist_rm_this(dlist_t *list, dnode_t *node);
+int      dlist_is_empty(dlist_t *list);
 
 #endif
 

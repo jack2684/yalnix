@@ -4,7 +4,7 @@
 #include "hardware.h"
 #include "memory.h"
 #include "traps.h"
-#include "list.h"
+#include "dlist.h"
 #include "proc.h"
 #include "load.h"
 #include "common.h"
@@ -58,22 +58,22 @@ void init_kernel_page_table() {
     kernel_page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // For text segment mapping
-    log_info("Text Start=%p, End=%p", kernel_memory.text_low, kernel_memory.data_low);
+    log_info("Text Start=%d(%p), End=%d(%p)", GET_PAGE_NUMBER(kernel_memory.text_low), kernel_memory.text_low, GET_PAGE_NUMBER(kernel_memory.data_low), kernel_memory.data_low);
     write_page_table(kernel_page_table, 
-                    GET_PAGE_FLOOR_NUMBER(kernel_memory.text_low), 
-                    GET_PAGE_CEILING_NUMBER(kernel_memory.data_low), 
+                    GET_PAGE_NUMBER(kernel_memory.text_low), 
+                    GET_PAGE_NUMBER(kernel_memory.data_low), 
                     _VALID, PROT_READ | PROT_EXEC);
     
     // For data and heap segment mapping
     log_info("heap low %p and high %p", kernel_memory.brk_low, kernel_memory.brk_high);
-    log_info("Data Start=%p, End=%p", kernel_memory.data_low, kernel_memory.brk_high);
+    log_info("Data Start=%d(%p), End=%d(%p)", GET_PAGE_NUMBER(kernel_memory.data_low), kernel_memory.data_low, GET_PAGE_NUMBER(kernel_memory.brk_low), kernel_memory.brk_high);
     write_page_table(kernel_page_table,
-                    GET_PAGE_FLOOR_NUMBER(kernel_memory.data_low), 
-                    GET_PAGE_CEILING_NUMBER(kernel_memory.brk_low), 
+                    GET_PAGE_NUMBER(kernel_memory.data_low), 
+                    GET_PAGE_NUMBER(kernel_memory.brk_low), 
                     _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
-    log_info("Stack Start=%p, End=%p", KERNEL_STACK_BASE, KERNEL_STACK_LIMIT);
+    log_info("Stack Start=%d(%p), End=%d(%p)", GET_PAGE_NUMBER(KERNEL_STACK_BASE), KERNEL_STACK_BASE, GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), KERNEL_STACK_LIMIT);
     write_page_table(kernel_page_table,
                     GET_PAGE_NUMBER(KERNEL_STACK_BASE), 
                     GET_PAGE_NUMBER(KERNEL_STACK_LIMIT), 
@@ -102,7 +102,6 @@ void *init_user_page_table() {
     write_page_table(user_page_table,
                     0, GET_PAGE_NUMBER(VMEM_REGION_SIZE),
                     _INVALID, 0);
-    log_info("Init user page done");
 }
 
 void DoIdle(void) {
@@ -129,11 +128,14 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     WriteRegister(REG_VECTOR_BASE, (uint32)interrupt_vector);
     
     // Memory management, linked list of frames of free memory
-    available_frames = list_init();
+    available_frames = dlist_init();
+    log_info("Init frames done");
     total_page_number = GET_PAGE_NUMBER(pmem_size);
     init_user_page_table();   
+    log_info("Init user page table done");
     init_kernel_page_table();
-    init_tty();           
+    log_info("Init kernel page table done");
+    //init_tty();           
     if(!kernel_page_table || !user_page_table) {
         log_err("Cannot allocate memory for page tables.\n");
         return;
@@ -148,6 +150,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // Enable virtual memroy 
     log_info("Init VM");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
+    print_page_table(kernel_page_table, 0, GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // Init pcb and idle process
     //char* tmp[] = {NULL};
@@ -197,8 +200,8 @@ int SetKernelBrk _PARAMS((void *addr)) {
     }
     // Before the virual memory is enabled
     if(!ReadRegister(REG_VM_ENABLE)) {
-        log_info("SetKernelBrk current brk directly to %p Done", kernel_memory.brk_high);
         kernel_memory.brk_high = new_addr;
+        log_info("SetKernelBrk current brk directly to %p Done", kernel_memory.brk_high);
         return _SUCCESS;
     } 
 

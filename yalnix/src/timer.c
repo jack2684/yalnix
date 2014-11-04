@@ -9,7 +9,9 @@ dlist_t* delay_queue;
 void timer_init(void) {
     timer.round_robin_quantumn = DEFAULT_QUANTUMN;
     timer.tick = timer.round_robin_quantumn;
+    log_info("Init delay queue");
     delay_queue = dlist_init();
+    log_info("Done init delay queue");
 }
 
 /* Ticking down the round robin quantumn

@@ -2,7 +2,7 @@
 #ifndef _MEMORY_H
 #define _MEMORY_H
 #include "hardware.h"
-#include "list.h"
+#include "dlist.h"
 #include "common.h"
 
 #define GET_PAGE_NUMBER(addr) (((uint32)addr) >> PAGESHIFT)
@@ -23,7 +23,7 @@ typedef uint32      frame_t;
 extern pte_t        *kernel_page_table;                // Global for every one
 extern pte_t *user_page_table;
 extern uint32       total_page_number;
-extern list_t       *available_frames;
+extern dlist_t      *available_frames;
 
 // Memory management of virtual memory
 typedef struct y_vm {

@@ -5,7 +5,7 @@
 
 pte_t   *kernel_page_table = NULL;          // Page table for kernel
 pte_t   *user_page_table = NULL;            // Page table for kernel
-list_t  *available_frames = NULL;           // For physcial memories
+dlist_t *available_frames = NULL;           // For physcial memories
 vm_t    kernel_memory;                      // Kernel virtual memories
 vm_t    user_memory;                        // User virtual memories
 uint32  total_page_number;
@@ -36,7 +36,7 @@ int add_tail_available_frame(uint32 pfn) {
     int rc;
     frame_t *frame = init_frame(pfn);
     
-    node_t *n = list_add_tail(available_frames, (void*)frame);
+    dnode_t *n = dlist_add_tail(available_frames, (void*)frame);
     if(!n) {
         _debug("Cannot add more free frame\n");
         return MALLOC_ERR;
@@ -106,12 +106,12 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
 /* Remove the first available frame in the frame list
  */
 frame_t *rm_head_available_frame() {
-    if(list_is_empty(available_frames) == 1) {
+    if(dlist_is_empty(available_frames) == 1) {
         log_err("Frame list is empty, double check size: %d!\n", available_frames->size);
         return NULL;
     }
 
-    frame_t *frame = (frame_t*)list_rm_head(available_frames);
+    frame_t *frame = (frame_t*)dlist_rm_head(available_frames);
     if(!frame) {
         log_err("list_rm_head error code: %d\n", available_frames->rc);
     }
@@ -151,7 +151,9 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             log_err("Page %d is valid already with prot %d and pfn %d", i, page_table[i].prot, page_table[i].pfn);
             continue;
         }
+        log_info("Try to find available frame");
         frame_t *frame = rm_head_available_frame();
+        log_info("Available frame get");
         if(!frame) {
             log_err("Page %d cannot find available frame", i);
             unmap_page_to_frame(page_table, start_idx, i);
@@ -160,10 +162,12 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             page_table[i].valid = _VALID;
             page_table[i].prot = prot;
             page_table[i].pfn = frame_get_pfn(frame);
+            log_info("Page %d gets available frame %d", i, frame_get_pfn(frame));
             //log_info("Map pte %d=>%d", i, page_table[i].pfn);
         }
     }
 
+    log_info("Map done");
     // Flush the toilet!
     flush_region_TLB(page_table);
     return rc;
@@ -215,7 +219,9 @@ int unmap_page_to_frame(pte_t* page_table, int start_idx, int end_idx) {
             continue;
         }
         page_table[i].valid = _INVALID;
+        log_info("Set invalid done");
         rc = add_tail_available_frame(page_table[i].pfn);
+        log_info("Add frames tail done");
         if(rc) {
             log_err("Cannot add new frame when trying to unmap");
             rc = MALLOC_ERR;

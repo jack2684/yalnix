@@ -5,15 +5,19 @@
 /* Init doubly list
  */
 dlist_t *dlist_init() {
+    log_info("Inside %s", __func__);
     dlist_t *list = (dlist_t*)malloc(sizeof(dlist_t));
+    log_info("Right back from malloc");
     if(list) {
         list->size = 0; 
         list->rc = 0; 
         list->head = NULL;
         list->tail = NULL;
+        log_info("Init dlst done");
         return list;
     } else {
         list->rc = ERR_NULL_POINTER; 
+        log_err("Cannot malloc for dlist!!!!");
         return NULL;
     }
 }

@@ -19,13 +19,17 @@ int next_pid;
  */
 void init_processes() {
     next_pid = 0;
+    log_info("Inside %s", __func__);
     timer_init();
+    log_info("Init timer done");
     ready_queue = dlist_init();
     wait_queue = dlist_init();
-    init_idle_proc();
-    if(!ready_queue) {
+    if(!ready_queue || !ready_queue) {
         log_err("Cannot init ready queue!");
     }
+    log_info("Init queue done");
+    init_idle_proc();
+    log_info("Init idle done");
 }
 
 /* A dummy kernel idle proc

@@ -54,26 +54,34 @@ node_t *list_add_tail(list_t *list, void *data) {
 }
 
 node_t* list_find_idx(list_t *list, int idx) {
+    log_info("Inside %s with list size %d", __func__, list->size);
     if(!list) {
         list->rc = ERR_NULL_POINTER;
+        log_err("list pointer is NULL");
         return NULL;
     }
     if(idx >= list->size || idx < 0) {
         list->rc = ERR_OUT_OF_RANGE; 
+        log_err("idx %d out of list range[0, %d)", idx, list->size);
         return NULL;
     }
 
+    log_info("About to find idx %d", idx);
     int i = 0;
     node_t *node = list->head;
     while(i < idx) {
+        log_info("iter %d, the node pointer is %p", i, node);
         node = node->next;
         i++;
     }
+    log_info("idx %d found", idx);
     return node;
 }
 
 node_t *list_insert(list_t *list, void* data, int idx) {
+    log_info("Inside %s", __func__);
     node_t* node = node_init(data);
+    log_info("NOde init done");
     if(!list->size) {       // Handle empty list
         list->head = node;
         list->tail = node;
@@ -81,8 +89,11 @@ node_t *list_insert(list_t *list, void* data, int idx) {
         node->next = list->head;
         list->head = node;
     } else {                // Normal case
+        log_info("Finding prev node");
         node_t *prev = list_find_idx(list, idx - 1);
+        log_info("prev node Found");
         if(!prev) {
+            log_err("Prev node is NULL for some reason");
             return NULL;
         }
         node->next = prev->next;
@@ -93,35 +104,48 @@ node_t *list_insert(list_t *list, void* data, int idx) {
     return node;
 }
 
-void* list_rm_head(list_t *list) {
-    //if(!list) {
-    //    list->rc = ERR_NULL_POINTER;
-    //    return NULL;
-    //}
-    //if(list->size) {
-    //    void* data = list->head->data;
-    //    node_t *node = list->head;
-    //    list->head = list->head->next;
-    //    return data;
-    //} else {
-    //    return NULL;
-    //} 
-    return list_rm_idx(list, 0);
-}
-
-/* Noted that, list_rmIdx do not free the memory of the removed node!
+/* I use wrote this instead of using list_rm_idx
+ * because I don't want malloc inside a malloc call.
+ * 
+ * The node_t* prev = node_init(NULL) in list_rm_idx
+ * might triger a malloc call, and ends in infinite 
+ * malloc recursion
  */
-void* list_rm_idx(list_t *list, int idx) {
+void* list_rm_head(list_t *list) {
     if(!list) {
         list->rc = ERR_NULL_POINTER;
         return NULL;
     }
+    if(list->size) {
+        void* data = list->head->data;
+        node_t *node = list->head;
+        list->head = list->head->next;
+        free(node);
+        return data;
+    } else {
+        return NULL;
+    } 
+    //return list_rm_idx(list, 0);
+}
+
+/* Noted that, list_rmIdx do not free the memory of the removed node data!
+ */
+void* list_rm_idx(list_t *list, int idx) {
+    log_info("Inside %s", __func__);
+    if(!list) {
+        list->rc = ERR_NULL_POINTER;
+        log_err("List pointer is NULL");
+        return NULL;
+    }
     if(idx >= list->size || idx < 0) {
         list->rc = ERR_OUT_OF_RANGE; 
+        log_err("List input idx %d out of range", idx);
         return NULL;
     }
 
-    // Locate index
+    // Locate index, noted that we should not use malloc here
+    // because this function can be called by malloc, which results in 
+    // infinite recursion
     node_t* prev = node_init(NULL);
     prev->next = list->head;
     int i = 0;
@@ -145,6 +169,7 @@ void* list_rm_idx(list_t *list, int idx) {
     
     void *data = rmNode->data;
     free(rmNode);
+    log_info("List remove data %d", *((int*)data));
     return data;
 }
 
