@@ -8,6 +8,7 @@
 #include "proc.h"
 #include "load.h"
 #include "common.h"
+#include "tty.h"
 
 trap_handler interrupt_vector[TRAP_VECTOR_SIZE];
 
@@ -131,7 +132,8 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     available_frames = list_init();
     total_page_number = GET_PAGE_NUMBER(pmem_size);
     init_user_page_table();   
-    init_kernel_page_table();           
+    init_kernel_page_table();
+    init_tty();           
     if(!kernel_page_table || !user_page_table) {
         log_err("Cannot allocate memory for page tables.\n");
         return;

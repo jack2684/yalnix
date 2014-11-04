@@ -195,7 +195,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
                 {
                     break;
                 }
-                //next_schedule(user_context);
+                next_schedule(user_context);
         }
 
         //check memory allocation
@@ -220,7 +220,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
                     trans_finish = 1;
                 }
                 TtyTransmit(tty_id, commit_buf, commit_len);
-                //next_schedule(user_context);
+                next_schedule(user_context);
                 result += commit_len;
         }
 
@@ -248,7 +248,7 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
                 {
                     break;
                 }
-                //next_schedule(user_context);
+                next_schedule(user_context);
         }
 
         running_proc->tty_buf = (void *)calloc(1, len);
@@ -263,7 +263,7 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
         //tty_reading_procs[tty_id] = running_proc;
         running_proc->exit_code = len;
         running_proc -> state = WAIT;
-        //next_schedule(user_context);
+        next_schedule(user_context);
 
         memcpy(buf, running_proc->tty_buf, running_proc->exit_code);
         free(running_proc->tty_buf);
