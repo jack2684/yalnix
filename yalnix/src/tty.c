@@ -22,7 +22,7 @@ void init_tty()
 void tty_trans_enqueue(pcb_t *pcb, unsigned int tty_id)
 {       
         //enqueue one to tty-writing-procs queue
-        proc_enqueue(tty_trans_queues[tty_id], pcb);
+        tty_proc_enqueue(tty_trans_queues[tty_id], pcb);
 }
 
 void tty_trans_wake_up(unsigned int tty_id)
@@ -39,13 +39,13 @@ void tty_trans_wake_up(unsigned int tty_id)
 
 pcb_t *tty_trans_dequeue(unsigned int tty_id){
 	//dequeue from the tty_writing_procs queue
-    return proc_dequeue(tty_trans_queues[tty_id]);
+    return tty_proc_dequeue(tty_trans_queues[tty_id]);
 }
 
 void tty_read_enqueue(pcb_t *pcb, unsigned int tty_id)
 {
         //enqueue one to tty-reading-procs queue
-        proc_enqueue(tty_read_queues[tty_id], pcb);
+        tty_proc_enqueue(tty_read_queues[tty_id], pcb);
 }
 
 void tty_read_wake_up(unsigned int tty_id)
@@ -64,7 +64,7 @@ void tty_read_wake_up(unsigned int tty_id)
 pcb_t *tty_read_dequeue(unsigned int tty_id)
 {
         //dequeue from the tty_reading_procs queue
-        return proc_dequeue(tty_read_queues[tty_id]);
+        return tty_proc_dequeue(tty_read_queues[tty_id]);
 }
 
 
@@ -116,7 +116,7 @@ void tty_trans_next_ready(unsigned int tty_id)
 }
 
 
-int proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
+int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
 {
     //first check if proc is already in the queue
     if(!tty_queue){
@@ -136,7 +136,7 @@ int proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
     }
 
     //not in the queue, add to the tail
-    dnode_t *n = dlist_add_tail(queue, proc);
+    dnode_t *n = dlist_add_tail(tty_queue, proc);
     if(!n) 
     {
         _debug("Cannot enqueue the tty queue\n");
@@ -148,9 +148,9 @@ int proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
     return 0;
 }
 
-int proc_enqueue_head(dlist_t *tty_queue, pcb_t *proc)
+int tty_proc_enqueue_head(dlist_t *tty_queue, pcb_t *proc)
 {
-        dnode_t *n = dlist_add_head(queue, proc);
+        dnode_t *n = dlist_add_head(tty_queue, proc);
         if(!n) {
         _debug("Cannot enqueue insert the queue\n");
         return 1;
@@ -161,7 +161,7 @@ int proc_enqueue_head(dlist_t *tty_queue, pcb_t *proc)
     return 0;
 }
 
-pcb_t* proc_dequeue(dlist_t *tty_queue)
+pcb_t* tty_proc_dequeue(dlist_t *tty_queue)
 {
     pcb_t *one_to_go = dlist_rm_head(tty_queue);
     if(one_to_go == NULL) {
