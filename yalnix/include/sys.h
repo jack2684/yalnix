@@ -7,6 +7,8 @@
 #include "proc.h"
 #include "tty.h"
 
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
 // Basically if a syscall don't need return code, 
 // then we don't need to pass the user context into that call
 

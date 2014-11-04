@@ -14,6 +14,8 @@ extern dlist_t  *tty_read_queues[NUM_TERMINALS];
 extern pcb_t   *tty_writing_procs[NUM_TERMINALS];          
 extern pcb_t   *tty_reading_procs[NUM_TERMINALS];
 
+extern int trans_finish;
+
 void init_tty();
 
 void tty_read_enqueue(pcb_t *pcb, unsigned int tty_id);
@@ -36,11 +38,11 @@ void pcb_wake_up(pcb_t *pcb);
 
 void tty_trans_next_ready(unsigned int tty_id);
 
-int proc_enqueue(dlist_t *queue, pcb_t *proc);
+int tty_proc_enqueue(dlist_t *queue, pcb_t *proc);
 
-int proc_enqueue_head(dlist_t *queue, pcb_t *proc);
+int tty_proc_enqueue_head(dlist_t *queue, pcb_t *proc);
 
-pcb_t* proc_dequeue(dlist_t *queue);
+pcb_t* tty_proc_dequeue(dlist_t *queue);
 
 #endif
 

@@ -26,10 +26,10 @@ MY_INC = $(MY_ROOT_DIR)/include/
 MY_SRC = $(MY_ROOT_DIR)/src/
 
 #List all kernel source files here.  
-KERNEL_SRCS = $(MY_SRC)kernel_init.c $(MY_SRC)memory.c $(MY_SRC)list.c $(MY_SRC)dlist.c $(MY_SRC)traps.c $(MY_SRC)proc.c $(MY_SRC)load.c \
+KERNEL_SRCS = $(MY_SRC)kernel_init.c $(MY_SRC)memory.c $(MY_SRC)list.c $(MY_SRC)dlist.c $(MY_SRC)traps.c $(MY_SRC)proc.c $(MY_SRC)load.c $(MY_SRC)tty.c \
 				$(MY_SRC)sys.c $(MY_SRC)timer.c
 #List the objects to be formed form the kernel source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-KERNEL_OBJS = $(MY_SRC)kernel_init.o $(MY_SRC)memory.o $(MY_SRC)list.o $(MY_SRC)dlist.o $(MY_SRC)traps.o $(MY_SRC)proc.o $(MY_SRC)load.o \
+KERNEL_OBJS = $(MY_SRC)kernel_init.o $(MY_SRC)memory.o $(MY_SRC)list.o $(MY_SRC)dlist.o $(MY_SRC)traps.o $(MY_SRC)proc.o $(MY_SRC)load.o $(MY_SRC)tty.o \
 				$(MY_SRC)sys.o $(MY_SRC)timer.o
 #List all of the header files necessary for your kernel
 KERNEL_INCS = 

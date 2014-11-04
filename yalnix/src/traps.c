@@ -137,8 +137,8 @@ void trap_tty_receive_handler(UserContext *user_context)
         unsigned int tty_id = user_context->code;
         log_info("Starts tty receive: current pid = %u, tty num = %d", running_proc->pid, tty_id);
 
-        tty_reading_wake_up(tty_id);
-        tty_reading_procs[tty_id] = NULL;
+        //tty_reading_wake_up(tty_id);
+        //tty_reading_procs[tty_id] = NULL;
         //dequeue one process with tty_id from tty_read_queues and insert it into the ready_queue
         tty_read_next_ready(tty_id);
 
@@ -156,11 +156,15 @@ void trap_tty_transmit_handler(UserContext *user_context)
         
         log_info("Starts tty transmit: current pid = %u, tty num = %u", running_proc->pid, tty_id);
 
-        pcb_wake_up(tty_writing_procs[tty_id]);
-        tty_writing_procs[tty_id] = NULL;
-        //dequeue one process with tty_id from tty_trans_queues and insert it into the ready_queue
-        tty_trans_next_ready(tty_id);
 
+        //pcb_wake_up(tty_writing_procs[tty_id]);
+        //tty_writing_procs[tty_id] = NULL;
+        //dequeue one process with tty_id from tty_trans_queues and insert it into the ready_queue
+        if(trans_finish)
+        {
+            tty_trans_next_ready(tty_id);
+            log_info("Tty Transmit complete!\n");
+        }
         log_info("Ends tty transmit: current pid = %u", running_proc->pid);
         return;
 }
