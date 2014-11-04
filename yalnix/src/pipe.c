@@ -1,48 +1,160 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
-#include "kernelLib.h"
+#include "pipe.h"
 
-dlist *pipe_idp = NULL;
+hashmap_t *pipe_idp = NULL;
+dlist_t *pipe_id_list = NULL;
 
 pipe_t *pipe_init() {
     if(pipe_idp = NULL) {
-        pipe_idp = dlist_
+        pipe_idp = hashmap_init();
+        if(pipe_idp == NULL) {
+            log_err("Cannot init hash map pipe_idp");
+            return NULL;
+        }
     }
+    pipe_t *pipe = (pipe_t*)malloc(sizeof(pipe_t));
+    if(pipe == NULL) {
+        log_err("Cannot create new pipe using malloc");
+        return NULL;
+    }
+    bzero(pipe, sizeof(pipe_t));
+
+    pipe->id = get_next_pipe_id();
+    pipe->len = DEFAULT_LEN;
+    pipe->read_idx = 0;
+    pipe->write_idx = 0;
+    pipe->buff = (char*) malloc(sizeof(char) * DEFAULT_LEN);
+    if(pipe->buff == NULL) {
+        log_err("Cannot init buff in pipe");
+        return NULL;
+    }
+    pipe->read_queue = dlist_init();
+    pipe->write_queue = dlist_init();
+    if(pipe->read_queue == NULL || pipe->write_queue == NULL) {
+        log_err("Cannot init read/write queue in pipe");
+        return NULL;
+    }
+
+    log_info("Pipe %d is pushed into hashmap pipe_idp", pipe->id);
+    hashmap_put(pipe_idp, pipe->id, pipe); 
+    return pipe;
 }
 
-//These are Pipe syscalls
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
-	//CREATE a new pipe
-	//ADD the new pipe
-	//SET pipe_id pointer point to the pipe
-	//RETURN success
+    int rc = 0;
+    if(len <= 0) {
+        log_err("pipe_read non positive len %d", len);
+        return 1;
+    }
+    if(len > LEN(pipe)) {
+        log_err("pipe_read excceed buff len %d", len);
+        return 1;
+    }
+
+    pipe_t *pipe = hashmap_get(pipe_idp, pipe->id);
+    if(pipe = NULL) {
+        log_err("Cannot get pipe %d from hashmap", pipe->id);
+    }
+
+    // Block if I don't get what I want, MESA style
+    while(get_buff_size(pipe) < len) {
+        rc = pipe_enqueue(pipe->read_queue, running_proc);
+        if(rc) {
+            log_err("Cannot enqueue the pipe read queue");
+            return 1;
+        }
+        next_schedule(user_context);
+    }
+
+    if(len + RIDX(pipe) < LEN(pipe)) {
+        memcpy(buff, pipe->buff + RIDX(pipe), len);
+    } else {
+        int first_len = LEN(pipe) - RIDX(pipe);
+        int second_len = len - first_len;
+        memcpy(buff, pipe->buff + RIDX(pipe), first_len);
+        memcpy(buff + first_len, pipe->buff, second_len);
+    }
+
+    pipe->read_idx += len;
+    if(pipe->read_idx > LEN(pipe)) {
+        pipe->read_idx -= LEN(pipe);
+        pipe->write_idx -= LEN(pipe);
+    }
+    return 0;
 }
 
 int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
-	//CHECK len & buf are valid
-	//FIND the pipe using id
-	
-    // While(pipe->len <= 0) {}
-    
-    // Read data from pipe->buff
+    int rc = 0;
+    if(len <= 0) {
+        log_err("pipe_write non positive len %d", len);
+        return 1;
+    }
+    if(len > LEN(pipe)) {
+        log_err("pipe_write excceed buff len %d", len);
+        return 1;
+    }
 
-    // pipe->readIdx = (pipe->readIdx + len ) % pipe->max_len
+    while(get_buff_size(pipe) + len < LEN(pipe)) {
+        rc = pipe_enqueue(pipe->write_queue, running_proc);
+        if(rc) {
+            log_err("Cannot enqueue the pipe write queue");
+            return 1;
+        }
+        next_schedule(user_context);
+    }
 
-    //COPY data into pipe
-	//RETURN len
+    if(WIDX(pipe) + len < LEN(pipe)) {
+        memcpy(WIDX(pipe), buff, len);
+    } else {
+        int first_len = LEN(pipe) - WIDX(pipe);
+        int second_len = len - first_len;
+        memcpy(pipe->buff + WIDX(pipe), buff, first_len);
+        memcpy(pipe->buff, buff + first_len, second_len);
+    }
+
+    pipe->wirte_idx += len;
+    return 0;
 }
 
-int Y_PipeWrite(int pipe_id, void *buf, int len){
-	//CHECK len & buf are valid
-	//FIND the pipe using id
+int pipe_enqueue(dlist_t *queue, pcb_t *proc) {
+    if(queue == NULL || proc == NULL) {
+        log_err("queue(%p) or proc(%p) pointer is null", queue, proc);
+        return 1;
+    }
 
-    //WHILE ((pipe->len + len) >= pipe->max_len) {}
-
-    // Write data
-    
-    // pipe->len += len;
-    
-    // pipe->wirteIdx = (pipe->writeIdx + len ) % pipe->max_len
-
-
-	//RETURN the number of readed bytes
+    dnode_t *n = dlist_add_tail(queue, proc);
+    if(!n) {
+        log_err("Not able to add PID(%d) to queue", proc->pid);
+        return 1;
+    }
+    proc->list_node = n;
+    proc->state = WAIT;
+    return 0;
 }
+
+pcb_t *pipe_dequeue(dlist_t *queue) {
+    pcb_t *proc = (pcb_t*)dlist_rm_head(queue);
+    if(proc == NULL) {
+        log_err("Cannot get any proc from this pipe queue");
+    }
+    return proc;
+}
+
+int get_pipe_buff_size(pipe_t *pipe) {
+    int size = ((pipe->write_idx + pipe->len) - pipe->read_idx) % pipe->len;
+    if(size > pipe->len) {
+        log_err("Pipe buff size overflows for some reason, %d > %d", size, pipe->len);
+        return -1;
+    }
+    return size;
+}
+
+int get_next_pipe_id() {
+    int i;
+    if(pipe_id_list == NULL) {
+        pipe_id_list = id_generator_init();
+    }
+
+    return id_generator_pop();
+}
+
