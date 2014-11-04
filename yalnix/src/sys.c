@@ -1,8 +1,5 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
 #include "sys.h"
-#include "common.h"
-#include "proc.h"
-#include "tty.h"
 
 //These are process syscalls
 int Y_Fork(UserContext *user_context){

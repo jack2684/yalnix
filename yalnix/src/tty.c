@@ -1,8 +1,15 @@
 #include "tty.h"
 
+dlist_t  *tty_trans_queues[NUM_TERMINALS];
+dlist_t  *tty_read_queues[NUM_TERMINALS];
+
+pcb_t   *tty_writing_procs[NUM_TERMINALS];    
+pcb_t   *tty_reading_procs[NUM_TERMINALS];
+
 void init_tty()
 {
-    for(int i = 0; i < NUM_TERMINALS; i++)
+    int i;
+    for(i = 0; i < NUM_TERMINALS; i++)
     {
         tty_trans_queues[i] = dlist_init();
         tty_read_queues[i] = dlist_init();
@@ -13,7 +20,7 @@ void init_tty()
 void tty_trans_enqueue(pcb_t *pcb, unsigned int tty_id)
 {       
         //enqueue one to tty-writing-procs queue
-        return proc_enqueue(tty_trans_queues + tty_id, pcb);
+        proc_enqueue(tty_trans_queues[tty_id], pcb);
 }
 
 void tty_trans_wake_up(unsigned int tty_id)
@@ -28,15 +35,15 @@ void tty_trans_wake_up(unsigned int tty_id)
         return;
 }
 
-void tty_trans_dequeue(unsigned int tty_id){
+pcb_t *tty_trans_dequeue(unsigned int tty_id){
 	//dequeue from the tty_writing_procs queue
-        return proc_dequeue(tty_trans_queues + tty_id);
+    return proc_dequeue(tty_trans_queues[tty_id]);
 }
 
 void tty_read_enqueue(pcb_t *pcb, unsigned int tty_id)
 {
         //enqueue one to tty-reading-procs queue
-        return proc_enqueue(tty_read_queues + tty_id, pcb);
+        proc_enqueue(tty_read_queues[tty_id], pcb);
 }
 
 void tty_read_wake_up(unsigned int tty_id)
@@ -55,7 +62,7 @@ void tty_read_wake_up(unsigned int tty_id)
 pcb_t *tty_read_dequeue(unsigned int tty_id)
 {
         //dequeue from the tty_reading_procs queue
-        return proc_dequeue(tty_read_queues + tty_id);
+        return proc_dequeue(tty_read_queues[tty_id]);
 }
 
 
@@ -82,7 +89,7 @@ void tty_read_next_ready(unsigned int tty_id)
         if (pcb) {
                 //pcb -> state = READY;
                 //put at the head of ready queue so next schedule will swtich to it
-                proc_enqueue_head(ready_queue, proc);
+                proc_enqueue_head(ready_queue, pcb);
         }
 
         return;
@@ -101,7 +108,7 @@ void tty_trans_next_ready(unsigned int tty_id)
         if (pcb) {
                 //pcb -> state = READY;
                 //put at the head of ready queue so next schedule will swtich to it
-                proc_enqueue_head(ready_queue, proc);
+                proc_enqueue_head(ready_queue, pcb);
         }
 
         return;
@@ -137,8 +144,8 @@ int proc_enqueue_head(dlist_t *queue, pcb_t *proc)
 
 pcb_t* proc_dequeue(dlist_t *queue)
 {
-        pcb_t *one_to_go = dlist_rm_head(ready_queue);
-    if(about_to_run == NULL) {
+    pcb_t *one_to_go = dlist_rm_head(ready_queue);
+    if(one_to_go == NULL) {
         log_info("Ready queue is empty, suck it.");
         return NULL;
     }
