@@ -149,7 +149,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // Enable virtual memroy 
     log_info("Init VM");
     WriteRegister(REG_VM_ENABLE, _ENABLE);
-    print_page_table(kernel_page_table, 0, GET_PAGE_NUMBER(VMEM_0_SIZE));
+    //print_page_table(kernel_page_table, 0, GET_PAGE_NUMBER(VMEM_0_SIZE));
     
     // Init pcb and idle process
     //char* tmp[] = {NULL};

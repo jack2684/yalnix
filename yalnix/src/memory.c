@@ -151,9 +151,7 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             log_err("Page %d is valid already with prot %d and pfn %d", i, page_table[i].prot, page_table[i].pfn);
             continue;
         }
-        log_info("Try to find available frame");
         frame_t *frame = rm_head_available_frame();
-        log_info("Available frame get");
         if(!frame) {
             log_err("Page %d cannot find available frame", i);
             unmap_page_to_frame(page_table, start_idx, i);
@@ -162,7 +160,6 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             page_table[i].valid = _VALID;
             page_table[i].prot = prot;
             page_table[i].pfn = frame_get_pfn(frame);
-            log_info("Page %d gets available frame %d", i, frame_get_pfn(frame));
             //log_info("Map pte %d=>%d", i, page_table[i].pfn);
         }
     }
