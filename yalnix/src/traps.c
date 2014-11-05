@@ -172,7 +172,7 @@ void trap_tty_transmit_handler(UserContext *user_context)
         if(trans_finish)
         {
             tty_trans_next_ready(tty_id);
-            log_info("Tty Transmit complete!\n");
+            log_info("Tty Transmit complete!");
         }
         log_info("Ends tty transmit: current pid = %u", running_proc->pid);
         return;

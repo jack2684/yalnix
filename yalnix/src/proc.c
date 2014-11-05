@@ -523,6 +523,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
 
     // Backup current kernel context, and set next running process
     if(is_proc_active(prev_proc)) {
+        log_info("Backup kernel context for PID(%d)", prev_proc->pid);
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
     }
     running_proc = next_proc;
@@ -540,6 +541,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
             log_err("PID(%d) kernel stack cannot init", next_proc->pid);
             return NULL;
         }
+        log_info("Init kernel context for PID(%d) done", next_proc->pid);
         next_proc->init_done = 1;
     }
 
