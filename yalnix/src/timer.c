@@ -61,7 +61,7 @@ void ticking_down(){
         pcb_t* proc = (pcb_t*)node->data;
         node = node->next;
         if(!proc->ticks) {
-            log_info("PID(%d) back to life from delay!");
+            log_info("PID(%d) back to life from delay!", proc->pid);
             de_delay_queue(proc);
             en_ready_queue(proc); 
         } else {

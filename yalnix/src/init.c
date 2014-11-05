@@ -30,7 +30,7 @@ void main(int argc, char **argv) {
     } else {
         while(1) {
             user_log("I am child with PID(%d), about to exe", GetPid());
-            // TtyPrintf(1,"this is a test setence for the ttyprintf function!\n");
+            TtyPrintf(1,"this is a test setence for the ttyprintf function!\n");
             //Exec("src/goexec", tmp);
             //user_log("PID(%d) try exec fail", GetPid());
             Exit(1);

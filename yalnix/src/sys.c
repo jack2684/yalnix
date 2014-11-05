@@ -13,7 +13,8 @@ int Y_Fork(UserContext *user_context){
         return -1;
     }
     
-    en_ready_queue(child);
+    en_ready_queue(running_proc);
+    pick_schedule(user_context, child);
     running_proc->exit_code = running_proc->pid;
     
     if(running_proc == child) {

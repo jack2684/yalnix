@@ -376,8 +376,7 @@ void next_schedule(UserContext *user_context) {
     }
   
     save_user_runtime(running_proc, user_context);
-    context_switch_to(next_proc, user_context);
-    restore_user_runtime(running_proc, user_context);
+    pick_schedule(user_context, next_proc);
     log_info("next_schedule done with queue size %d, now running PID(%d) pc(%p) sp(%p)", 
                 ready_queue->size, 
                 running_proc->pid, 
@@ -385,6 +384,14 @@ void next_schedule(UserContext *user_context) {
                 running_proc->user_context.sp
                 );
 }
+
+/* schedule a specific process
+ */
+void pick_schedule(UserContext *user_context, pcb_t *next_proc) {
+    context_switch_to(next_proc, user_context);
+    restore_user_runtime(running_proc, user_context);
+}
+
 /* Grow or shrink usre stack by doign page management
  *
  * @param proc: the corresponding process

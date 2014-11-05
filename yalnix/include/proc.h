@@ -69,6 +69,7 @@ pcb_t* de_ready_queue();
 pcb_t* rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
 void next_schedule(UserContext *user_context);
+void pick_schedule(UserContext *user_context, pcb_t *next_proc);
 void save_user_runtime(pcb_t *proc, UserContext *user_context);
 void restore_user_runtime(pcb_t *proc, UserContext *user_context);
 int user_stack_resize(pcb_t *proc, uint32 addr);

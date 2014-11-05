@@ -135,7 +135,6 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Init user page table done");
     init_kernel_page_table();
     log_info("Init kernel page table done");
-    //init_tty();           
     if(!kernel_page_table || !user_page_table) {
         log_err("Cannot allocate memory for page tables.\n");
         return;
@@ -156,6 +155,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     //char* tmp[] = {NULL};
     log_info("Init pcb basic");
     init_processes();
+    init_tty();           
     
     // Create the very first process
     // Noted that, we run init program, and load 
