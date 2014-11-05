@@ -69,7 +69,7 @@ void init_kernel_page_table() {
     log_info("Data Start=%d(%p), End=%d(%p)", GET_PAGE_NUMBER(kernel_memory.data_low), kernel_memory.data_low, GET_PAGE_NUMBER(kernel_memory.brk_low), kernel_memory.brk_high);
     write_page_table(kernel_page_table,
                     GET_PAGE_NUMBER(kernel_memory.data_low), 
-                    GET_PAGE_NUMBER(kernel_memory.brk_low), 
+                    GET_PAGE_NUMBER(kernel_memory.brk_low) + 1, // The plus one is for available frame list alloc 
                     _VALID, PROT_READ | PROT_WRITE);
     
     // For stack segment mapping, noted that stack space is reserved even if it is not used
@@ -187,7 +187,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = GET_PAGE_NUMBER(new_addr);
     uint32 current_page_bound = GET_PAGE_NUMBER(kernel_memory.brk_high);
-    log_info("SetKernelBrk current brk %p and new addr %p", kernel_memory.brk_high, new_addr);
+    log_info("SetKernelBrk current brk %p(#%d) and new addr %p(#%d)", kernel_memory.brk_high, GET_PAGE_NUMBER(kernel_memory.brk_high), new_addr, GET_PAGE_NUMBER(new_addr));
     
     // Boudaries check 
     if(new_addr > kernel_memory.swap_addr - PAGESIZE) {
