@@ -24,13 +24,19 @@ void main(int argc, char **argv) {
         int cpid = Wait(&exit_status);
         user_log("Wait my child(%d) done, return meaning of life %d", cpid, exit_status);
         while(1) {
-            user_log("I have no children, so lonley, going to delay %d seconds", delay);
-            Delay(delay);
+            //while(1) {
+            //    TtyPrintf(1,"PARENT using tty to print somethign\n");
+            //}
+            //user_log("I have no children, so lonley, going to delay %d seconds", delay);
+            //Delay(delay);
         }
     } else {
         while(1) {
             user_log("I am child with PID(%d), about to exe", GetPid());
-            TtyPrintf(1,"this is a test setence for the ttyprintf function!\n");
+            while(1) {
+                TtyPrintf(1,"CHILD using tty to print somethign\n");
+                user_log("DONE WITH TTYWRITE");
+            }
             //Exec("src/goexec", tmp);
             //user_log("PID(%d) try exec fail", GetPid());
             Exit(1);

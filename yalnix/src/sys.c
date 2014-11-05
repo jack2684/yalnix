@@ -221,13 +221,13 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
                     trans_finish = 1;
                 }
                 TtyTransmit(tty_id, commit_buf, commit_len);
-                next_schedule(user_context);
+                //next_schedule(user_context);
                 result += commit_len;
         }
 
         free(commit_buf);
 
-        log_info("result = %d, pid = %d\n", result, running_proc->pid);
+        log_info("result of printed chars = %d, pid = %d\n", result, running_proc->pid);
         return result;
 }
 
