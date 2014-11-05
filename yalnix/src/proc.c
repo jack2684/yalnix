@@ -550,10 +550,10 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     memcpy(&kernel_page_table[GET_PAGE_NUMBER(KERNEL_STACK_BASE)], 
             next_proc->kernel_stack_pages, 
             sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE );
-    //WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
-    for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
-        WriteRegister(REG_TLB_FLUSH, addr);
-    }
+    WriteRegister(REG_TLB_FLUSH, TLB_FLUSH_0);
+    //for(addr = KERNEL_STACK_BASE; addr < KERNEL_STACK_LIMIT; addr += PAGESIZE) {
+    //    WriteRegister(REG_TLB_FLUSH, addr);
+    //}
 
     log_info("Magic kernel switch done from PID(%d) to PID(%d)", prev_proc->pid, next_proc->pid);
     *kernel_context = next_proc->kernel_context;

@@ -267,7 +267,7 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
         running_proc->tty_buf = NULL;
 
         log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
-        return running_proc->exit_code;
+	return running_proc->exit_code;
 }
 
 ////These are destroy syscalls
