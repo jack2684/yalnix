@@ -252,3 +252,8 @@ dnode_t *dnode_init(void* data) {
     }   
 }
 
+void *dlist_peek_head(dlist_t *list) {
+    dnode_t *n = list->head;
+    return n->data;
+}
+

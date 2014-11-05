@@ -171,4 +171,8 @@ pcb_t* tty_proc_dequeue(dlist_t *tty_queue)
     return one_to_go;
 }
 
+int is_tty_trans_head(pcb_t *proc, int tty_id) {
+    pcb_t *hproc = (pcb_t*) dlist_peek_head(tty_trans_queues[tty_id]);
+    return hproc == proc;
+}
 

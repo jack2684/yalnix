@@ -122,6 +122,7 @@ void trap_memory_handler(UserContext *user_context){
             break;
         case YALNIX_ACCERR:
             log_err("User addr %p acc err", offending_addr);
+            // @TODO: exit process, tmp using halt
             break;
         default:
             break;

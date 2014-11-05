@@ -187,18 +187,11 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 
         log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-        while (!dlist_is_empty(tty_trans_queues[tty_id])) {
-                running_proc -> state = WAIT;
-                tty_trans_enqueue(running_proc, tty_id);
-                //while ends conditions: running_proc is the head
-                node = tty_trans_queues[tty_id] -> head;
-                if ((pcb_t *)(node -> data) == running_proc)
-                {
-                    break;
-                }
+        tty_trans_enqueue(running_proc, tty_id);
+        while (!is_tty_trans_head(running_proc, tty_id)) {
                 next_schedule(user_context);
         }
-
+        log_info("Done enqueeu tty queue");
         //check memory allocation
         commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
         if (commit_buf == NULL) {
@@ -220,14 +213,17 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
                 {
                     trans_finish = 1;
                 }
+                log_info("Right before tty transmit");
                 TtyTransmit(tty_id, commit_buf, commit_len);
-                //next_schedule(user_context);
+                log_info("Right after tty transmit");
+                next_schedule(user_context);
+                log_info("Back from tty block");
                 result += commit_len;
         }
 
         free(commit_buf);
 
-        log_info("result of printed chars = %d, pid = %d\n", result, running_proc->pid);
+        log_info("result of printed chars = %d, pid = %d", result, running_proc->pid);
         return result;
 }
 

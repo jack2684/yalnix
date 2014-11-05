@@ -44,5 +44,7 @@ int tty_proc_enqueue_head(dlist_t *queue, pcb_t *proc);
 
 pcb_t* tty_proc_dequeue(dlist_t *queue);
 
+int is_tty_trans_head(pcb_t *proc, int tty_id);
+
 #endif
 

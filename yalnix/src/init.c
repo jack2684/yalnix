@@ -24,8 +24,9 @@ void main(int argc, char **argv) {
         int cpid = Wait(&exit_status);
         user_log("Wait my child(%d) done, return meaning of life %d", cpid, exit_status);
         while(1) {
+            Pause();
             //while(1) {
-            //    TtyPrintf(1,"PARENT using tty to print somethign\n");
+            //    TtyPrintf(2,"PARENT using tty to print somethign\n");
             //}
             //user_log("I have no children, so lonley, going to delay %d seconds", delay);
             //Delay(delay);
