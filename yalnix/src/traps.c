@@ -63,6 +63,14 @@ void trap_kernel_handler(UserContext *user_context){
         case YALNIX_WAIT:
             user_context->regs[0] = Y_Wait((int *)user_context->regs[0], user_context);
             break;
+        case YALNIX_TTY_READ:
+            break;
+        case YALNIX_TTY_WRITE:
+            user_context->regs[0] = Y_TtyWrite(user_context->regs[0], 
+                                                (char *)user_context->regs[1], 
+                                                user_context->regs[2], 
+                                                user_context);
+            break;
         default:
             break;
     }
