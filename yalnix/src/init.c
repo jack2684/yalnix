@@ -11,7 +11,6 @@ void main(int argc, char **argv) {
     char buf[TERMINAL_MAX_LINE + 2];
 
     a = (int*)malloc(sizeof(int) * 100);
-    int cnt = 0;
     user_log("Init program has PID(%d)", GetPid());
     
     int pid = Fork();
@@ -21,34 +20,33 @@ void main(int argc, char **argv) {
         delay = atoi(argv[0]);
     }
 
+    int cnt = 5;
     user_log("My pid is %d, fork return pid %d", GetPid(), pid);
     if(pid != 0) {
         user_log("I am parent with PID(%d), user Wait() for my children...", GetPid());
-	    //while(1) {
-		//TtyPrintf(2,"PARENT using tty to print something\n");
-		//test the tty read
-		//int test = TtyRead(2, buf, sizeof(buf));
-		//TtyPrintf(2,"You have just entered:%s\n",buf);
-	    //}
-        //int cpid = Wait(&exit_status);
-        //user_log("Wait my child(%d) done, return meaning of life %d", cpid, exit_status);
-        while(1) {
-            TtyPrintf(1,"1111111111111111111111111111110\n");
-            //user_log("I have no children, so lonley, going to delay %d seconds", delay);
-            //Delay(delay);
+        while(cnt--) {
+            TtyPrintf(1, "(%d+++++++++++++++)", cnt);
         }
+        TtyPrintf(1, "\n");
     } else {
-        while(1) {
-            user_log("I am child with PID(%d), about to exe", GetPid());
-            while(1) {
-                TtyPrintf(1,"2222222222222222222222222222223\n");
-            }
-            //Exec("src/goexec", tmp);
-            //user_log("PID(%d) try exec fail", GetPid());
-            Exit(1);
+        user_log("I am child with PID(%d), about to exe", GetPid());
+        while(cnt--) {
+            TtyPrintf(1, "<%d--------------->", cnt);
         }
+        TtyPrintf(1, "\n");
+        Delay(5);
     }
  
+    TtyPrintf(1, "Enter something so that PID(%d) can read from terminal:\n", GetPid());
+    TtyRead(1, buf, 2);
+    TtyPrintf(1, "PID(%d) get: %s", GetPid(), buf);
+    
+    if(pid != 0) {
+        do {
+           Pause();
+        } while(1);
+    }
+    Exit(0);
     // Never reached
     return;
 }
