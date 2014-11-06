@@ -72,11 +72,11 @@ pcb_t *tty_read_dequeue(unsigned int tty_id)
 void tty_reading_wake_up(unsigned int tty_id)
 {
         pcb_t *pcb;
-        int result;
+        int chars_get;
 
         pcb = tty_reading_procs[tty_id];
-        result = TtyReceive(tty_id, pcb -> tty_buf, pcb -> exit_code);
-        pcb -> exit_code = result;
+        chars_get = TtyReceive(tty_id, pcb -> tty_buf, pcb -> exit_code);
+        pcb -> exit_code = chars_get;
         //pcb_wake_up(pcb);
 
         return;
@@ -161,7 +161,20 @@ int is_tty_read_head(pcb_t *proc, int tty_id){
 
 pcb_t *peek_tty_write_queue(int tty_id) {
     dnode_t *node = tty_write_queues[tty_id]->head;
-    return (pcb_t*) node->data;
+    if(!node) {
+        return NULL;
+    } else {
+        return (pcb_t*) node->data;
+    }
+}
+
+pcb_t *peek_tty_read_queue(int tty_id) {
+    dnode_t *node = tty_read_queues[tty_id]->head;
+    if(!node) {
+        return NULL;
+    } else {
+        return (pcb_t*) node->data;
+    }
 }
 
 int is_write_busy(int tty_id) {
@@ -171,3 +184,8 @@ int is_write_busy(int tty_id) {
 void set_write_proc(pcb_t *proc, int tty_id) {
     tty_writing_procs[tty_id] = proc;
 }
+
+void set_read_proc(pcb_t *proc, int tty_id) {
+    tty_reading_procs[tty_id] = proc;
+}
+

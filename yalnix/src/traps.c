@@ -147,16 +147,26 @@ when a complete line of input is available from one of the terminals attached to
 */
 void trap_tty_receive_handler(UserContext *user_context)
 {
-        unsigned int tty_id = user_context->code;
-        log_info("Starts tty receive: current pid = %u, tty num = %d", running_proc->pid, tty_id);
+    unsigned int tty_id = user_context->code;
+    int chars_get;
 
-        tty_reading_wake_up(tty_id);
-        tty_reading_procs[tty_id] = NULL;
-        //dequeue one process with tty_id from tty_read_queues and insert it into the ready_queue
-        tty_read_next_ready(tty_id);
+    log_info("Get sth from terminal when read queue size: %d", tty_read_queues[tty_id]->size);
+    pcb_t *proc = peek_tty_read_queue(tty_id);
+    while(proc != NULL) {
+        chars_get = TtyReceive(tty_id, proc->tty_buf, proc->exit_code);
+        log_info("PID(%d) gets %d chars from term %d: %s", proc->pid, chars_get, tty_id, proc->tty_buf);
+        if(chars_get) {
+            proc->exit_code = chars_get; 
+            tty_read_dequeue(tty_id);
+            en_ready_queue(proc);
+        } else {
+            break;
+        }
+        proc = peek_tty_read_queue(tty_id);
+    }
 
-        log_info("Ends tty receive: current pid = %u", running_proc->pid);
-        return;
+    log_info("Ends tty receive: current pid = %u", running_proc->pid);
+    return;
 }
 
 /*

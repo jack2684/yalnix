@@ -8,3 +8,5 @@ TTYLOG*
 /yalnix/src/gjj
 /yalnix/src/goexec
 /yalnix/src/init
+.nfs*
+DISK

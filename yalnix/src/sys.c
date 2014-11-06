@@ -223,7 +223,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 
         free(commit_buf);
 
-        log_info("result of printed chars = %d, pid = %d", result, running_proc->pid);
+        log_info("Len of printed chars = %d, pid = %d", result, running_proc->pid);
         return result;
 }
 
@@ -231,45 +231,22 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 {
         log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-        dnode_t *node = NULL;
-
-        //there is only one process reading from tty_id //
-        /*while (!dlist_is_empty(tty_read_queues[tty_id])) 
-        {
-                running_proc -> state = WAIT;
-                tty_read_enqueue(running_proc, tty_id);
-                node = tty_read_queues[tty_id] -> head;
-                if ((pcb_t *)(node -> data) == running_proc)
-                {
-                    break;
-                }
-                next_schedule(user_context);
-        }*/
-	tty_read_enqueue(running_proc, tty_id);
-        while (!is_tty_read_head(running_proc, tty_id)) {
-                next_schedule(user_context);
-        }
-        log_info("Done enqueeu tty queue");
-
+        tty_read_enqueue(running_proc, tty_id);
         running_proc->tty_buf = (void *)calloc(1, len);
-        
         //check memory allocation
         if (running_proc->tty_buf == NULL) {
                 log_err("Allocate buffer for tty reading failed!\n");
                 log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
                 return _FAILURE;
         }
-
-        tty_reading_procs[tty_id] = running_proc;
         running_proc->exit_code = len;
-        running_proc -> state = WAIT;
         next_schedule(user_context);
 
         memcpy(buf, running_proc->tty_buf, running_proc->exit_code);
         free(running_proc->tty_buf);
         running_proc->tty_buf = NULL;
 
-        log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
+        log_info("Number of chars get is %d, pid = %d", running_proc->exit_code, running_proc->pid);
 	return running_proc->exit_code;
 }
 

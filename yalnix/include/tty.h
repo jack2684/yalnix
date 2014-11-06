@@ -50,6 +50,8 @@ int is_tty_read_head(pcb_t *proc, int tty_id);
 
 pcb_t *peek_tty_write_queue(int tty_id);
 
+pcb_t *peek_tty_read_queue(int tty_id);
+
 int is_write_busy(int tty_id);
 
 void set_write_proc(pcb_t *proc, int tty_id);
