@@ -6,8 +6,6 @@ dlist_t  *tty_read_queues[NUM_TERMINALS];
 pcb_t   *tty_writing_procs[NUM_TERMINALS];    
 pcb_t   *tty_reading_procs[NUM_TERMINALS];
 
-int trans_finish;
-
 void init_tty()
 {
     int i;
@@ -77,7 +75,7 @@ void tty_reading_wake_up(unsigned int tty_id)
         pcb = tty_reading_procs[tty_id];
         result = TtyReceive(tty_id, pcb -> tty_buf, pcb -> exit_code);
         pcb -> exit_code = result;
-        pcb_wake_up(pcb);
+        //pcb_wake_up(pcb);
 
         return;
 }
@@ -123,23 +121,11 @@ int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
         return 0;
     }
 
-    int i = 0;
-    dnode_t *node = tty_queue -> head;
-    while(i < tty_queue -> size) {
-        node = node -> next;
-        i++;
-        if(proc == (pcb_t *)(node -> data))
-        {
-            log_info("Already in queue!\n");
-            return 0;
-        }
-    }
-
     //not in the queue, add to the tail
     dnode_t *n = dlist_add_tail(tty_queue, proc);
     if(!n) 
     {
-        _debug("Cannot enqueue the tty queue\n");
+        log_err("Cannot enqueue the tty queue\n");
         return 1;
     }
     log_info("Tty Enqueue with PID(%d)", proc->pid);
@@ -150,9 +136,9 @@ int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
 
 int tty_proc_enqueue_head(dlist_t *tty_queue, pcb_t *proc)
 {
-        dnode_t *n = dlist_add_head(tty_queue, proc);
-        if(!n) {
-        _debug("Cannot enqueue insert the queue\n");
+	dnode_t *n = dlist_add_head(tty_queue, proc);
+	if(!n) {
+		_debug("Cannot enqueue insert the queue\n");
         return 1;
     }
     log_info("Enqueue insert with PID(%d)", proc->pid);
@@ -176,3 +162,7 @@ int is_tty_trans_head(pcb_t *proc, int tty_id) {
     return hproc == proc;
 }
 
+int is_tty_read_head(pcb_t *proc, int tty_id){
+    pcb_t *hproc = (pcb_t*) dlist_peek_head(tty_read_queues[tty_id]);
+    return hproc == proc;
+}

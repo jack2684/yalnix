@@ -182,16 +182,10 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
         int commit_len;
         char *commit_buf;
         int result = 0;
-        trans_finish = 0;
         dnode_t *node = NULL;
 
         log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-        tty_trans_enqueue(running_proc, tty_id);
-        while (!is_tty_trans_head(running_proc, tty_id)) {
-                next_schedule(user_context);
-        }
-        log_info("Done enqueeu tty queue");
         //check memory allocation
         commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
         if (commit_buf == NULL) {
@@ -199,21 +193,24 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
                 log_info("result = %d, pid = %d", result, running_proc->pid);
                 return _FAILURE;
         }
+	log_info("calloc commit_buf done");
 
         //if buf exceeds the limit, then do tty-writing multiple times //
         len = min(len, strlen(buf));
         while (len) {
                 commit_len = min(len, TERMINAL_MAX_LINE);
                 memcpy(commit_buf, buf + result, commit_len);
+		log_info("memcpy from buff done");
                 
                 //running_proc -> state = WAIT;
                 //tty_writing_procs[tty_id] = running_proc;
                 len -= commit_len;
-                if(len <= 0)
-                {
-                    trans_finish = 1;
-                }
-                log_info("Right before tty transmit");
+		tty_trans_enqueue(running_proc, tty_id);
+		log_info("TTY Enqueue PID(%d) DONE", running_proc->pid);
+		while (!is_tty_trans_head(running_proc, tty_id)) {
+			next_schedule(user_context);
+		}
+                log_info("PID(%d) Right before tty transmit", running_proc->pid);
                 TtyTransmit(tty_id, commit_buf, commit_len);
                 log_info("Right after tty transmit");
                 next_schedule(user_context);
@@ -231,12 +228,10 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 {
         log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-        len = min(len, TERMINAL_MAX_LINE);
-
         dnode_t *node = NULL;
 
         //there is only one process reading from tty_id //
-        while (!dlist_is_empty(tty_read_queues[tty_id])) 
+        /*while (!dlist_is_empty(tty_read_queues[tty_id])) 
         {
                 running_proc -> state = WAIT;
                 tty_read_enqueue(running_proc, tty_id);
@@ -246,7 +241,12 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
                     break;
                 }
                 next_schedule(user_context);
+        }*/
+	tty_read_enqueue(running_proc, tty_id);
+        while (!is_tty_read_head(running_proc, tty_id)) {
+                next_schedule(user_context);
         }
+        log_info("Done enqueeu tty queue");
 
         running_proc->tty_buf = (void *)calloc(1, len);
         
@@ -257,7 +257,7 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
                 return _FAILURE;
         }
 
-        //tty_reading_procs[tty_id] = running_proc;
+        tty_reading_procs[tty_id] = running_proc;
         running_proc->exit_code = len;
         running_proc -> state = WAIT;
         next_schedule(user_context);

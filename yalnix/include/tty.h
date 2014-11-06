@@ -46,5 +46,6 @@ pcb_t* tty_proc_dequeue(dlist_t *queue);
 
 int is_tty_trans_head(pcb_t *proc, int tty_id);
 
+int is_tty_read_head(pcb_t *proc, int tty_id);
 #endif
 

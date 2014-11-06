@@ -336,7 +336,7 @@ typedef ucontext_t KernelContext;
 
 #define	NUM_TERMINALS	4		/* # of terminals, including console */
 
-#define	TERMINAL_MAX_LINE	1024	/* maximum length of terminal line */
+#define	TERMINAL_MAX_LINE   10	/* maximum length of terminal line */
 
 /*
  * Some function definitions.
