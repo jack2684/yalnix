@@ -198,24 +198,27 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
         //if buf exceeds the limit, then do tty-writing multiple times //
         len = min(len, strlen(buf));
         while (len) {
-                commit_len = min(len, TERMINAL_MAX_LINE);
-                memcpy(commit_buf, buf + result, commit_len);
-		log_info("memcpy from buff done");
+            commit_len = min(len, TERMINAL_MAX_LINE);
+            memcpy(commit_buf, buf + result, commit_len);
+            log_info("memcpy from buff done");
                 
-                //running_proc -> state = WAIT;
-                //tty_writing_procs[tty_id] = running_proc;
-                len -= commit_len;
-		tty_trans_enqueue(running_proc, tty_id);
-		log_info("TTY Enqueue PID(%d) DONE", running_proc->pid);
-		while (!is_tty_trans_head(running_proc, tty_id)) {
-			next_schedule(user_context);
-		}
-                log_info("PID(%d) Right before tty transmit", running_proc->pid);
-                TtyTransmit(tty_id, commit_buf, commit_len);
-                log_info("Right after tty transmit");
+            //running_proc -> state = WAIT;
+            //tty_writing_procs[tty_id] = running_proc;
+            len -= commit_len;
+            log_info("TTY Enqueue PID(%d) DONE", running_proc->pid);
+            while (is_write_busy(tty_id)) {
+                tty_write_enqueue(running_proc, tty_id);
+                pcb_t *print_proc = peek_tty_write_queue(tty_id);
+                log_info("PID(%d) is waiting for printing PID(%d)", running_proc->pid, tty_writing_procs[tty_id]->pid);
                 next_schedule(user_context);
-                log_info("Back from tty block");
-                result += commit_len;
+            }
+            set_write_proc(running_proc, tty_id);
+            log_info("PID(%d) Right before tty transmit", running_proc->pid);
+            TtyTransmit(tty_id, commit_buf, commit_len);
+            log_info("Right after tty transmit");
+            next_schedule(user_context);
+            log_info("Back from tty block");
+            result += commit_len;
         }
 
         free(commit_buf);

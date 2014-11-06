@@ -1,6 +1,6 @@
 #include "tty.h"
 
-dlist_t  *tty_trans_queues[NUM_TERMINALS];
+dlist_t  *tty_write_queues[NUM_TERMINALS];
 dlist_t  *tty_read_queues[NUM_TERMINALS];
 
 pcb_t   *tty_writing_procs[NUM_TERMINALS];    
@@ -11,23 +11,25 @@ void init_tty()
     int i;
     for(i = 0; i < NUM_TERMINALS; i++)
     {
-        tty_trans_queues[i] = dlist_init();
+        tty_write_queues[i] = dlist_init();
         tty_read_queues[i] = dlist_init();
+        tty_writing_procs[i] = NULL;
+        tty_reading_procs[i] = NULL;
     }
 }
 
 //These methods are for tty queues
-void tty_trans_enqueue(pcb_t *pcb, unsigned int tty_id)
+void tty_write_enqueue(pcb_t *pcb, unsigned int tty_id)
 {       
         //enqueue one to tty-writing-procs queue
-        tty_proc_enqueue(tty_trans_queues[tty_id], pcb);
+        tty_proc_enqueue(tty_write_queues[tty_id], pcb);
 }
 
-void tty_trans_wake_up(unsigned int tty_id)
+void tty_write_wake_up(unsigned int tty_id)
 {       
         pcb_t *pcb;
         
-        pcb = tty_trans_dequeue(tty_id);
+        pcb = tty_write_dequeue(tty_id);
         if (pcb) {
                 //pcb->state = WAIT;
                 en_ready_queue(pcb);
@@ -35,9 +37,9 @@ void tty_trans_wake_up(unsigned int tty_id)
         return;
 }
 
-pcb_t *tty_trans_dequeue(unsigned int tty_id){
+pcb_t *tty_write_dequeue(unsigned int tty_id){
 	//dequeue from the tty_writing_procs queue
-    return tty_proc_dequeue(tty_trans_queues[tty_id]);
+    return tty_proc_dequeue(tty_write_queues[tty_id]);
 }
 
 void tty_read_enqueue(pcb_t *pcb, unsigned int tty_id)
@@ -100,13 +102,13 @@ void pcb_wake_up(pcb_t *pcb)
         en_ready_queue(pcb);
 } 
 
-void tty_trans_next_ready(unsigned int tty_id)
+void tty_write_next_ready(unsigned int tty_id)
 {
         pcb_t *pcb;
 
-        pcb = tty_trans_dequeue(tty_id);
+        pcb = tty_write_dequeue(tty_id);
         if (pcb) {
-                //transmit finish, dequeue head from tty_trans_queue and enqueue into ready queue
+                //writemit finish, dequeue head from tty_write_queue and enqueue into ready queue
                 en_ready_queue(pcb);
         }
 
@@ -117,6 +119,7 @@ void tty_trans_next_ready(unsigned int tty_id)
 int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
 {
     //first check if proc is already in the queue
+    log_info("Before tty enqueue with PID(%d), now queue size %d", proc->pid, tty_queue->size);
     if(!tty_queue){
         return 0;
     }
@@ -128,41 +131,43 @@ int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
         log_err("Cannot enqueue the tty queue\n");
         return 1;
     }
-    log_info("Tty Enqueue with PID(%d)", proc->pid);
+    log_info("Tty enqueue with PID(%d), now queue size %d", proc->pid, tty_queue->size);
     proc->list_node = n; 
     proc->state = WAIT;
     return 0;
 }
 
-int tty_proc_enqueue_head(dlist_t *tty_queue, pcb_t *proc)
-{
-	dnode_t *n = dlist_add_head(tty_queue, proc);
-	if(!n) {
-		_debug("Cannot enqueue insert the queue\n");
-        return 1;
-    }
-    log_info("Enqueue insert with PID(%d)", proc->pid);
-    proc->list_node = n; 
-    proc->state = READY;
-    return 0;
-}
-
 pcb_t* tty_proc_dequeue(dlist_t *tty_queue)
 {
+    log_info("Before tty dequeue, queue size %d", tty_queue->size);
     pcb_t *one_to_go = dlist_rm_head(tty_queue);
     if(one_to_go == NULL) {
-        log_info("Tty queue is empty, suck it.");
+        log_info("Nothing to dequeue");
         return NULL;
     }
+    log_info("Tty dequeue with PID(%d), size: %d", one_to_go->pid, tty_queue->size);
     return one_to_go;
 }
 
-int is_tty_trans_head(pcb_t *proc, int tty_id) {
-    pcb_t *hproc = (pcb_t*) dlist_peek_head(tty_trans_queues[tty_id]);
+int is_tty_write_head(pcb_t *proc, int tty_id) {
+    pcb_t *hproc = (pcb_t*) dlist_peek_head(tty_write_queues[tty_id]);
     return hproc == proc;
 }
 
 int is_tty_read_head(pcb_t *proc, int tty_id){
     pcb_t *hproc = (pcb_t*) dlist_peek_head(tty_read_queues[tty_id]);
     return hproc == proc;
+}
+
+pcb_t *peek_tty_write_queue(int tty_id) {
+    dnode_t *node = tty_write_queues[tty_id]->head;
+    return (pcb_t*) node->data;
+}
+
+int is_write_busy(int tty_id) {
+    return tty_writing_procs[tty_id] != NULL;
+}
+
+void set_write_proc(pcb_t *proc, int tty_id) {
+    tty_writing_procs[tty_id] = proc;
 }

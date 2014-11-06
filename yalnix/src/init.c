@@ -41,7 +41,7 @@ void main(int argc, char **argv) {
         while(1) {
             user_log("I am child with PID(%d), about to exe", GetPid());
             while(1) {
-		    TtyPrintf(1,"2222222222222222222222222222223\n");
+                TtyPrintf(1,"2222222222222222222222222222223\n");
             }
             //Exec("src/goexec", tmp);
             //user_log("PID(%d) try exec fail", GetPid());

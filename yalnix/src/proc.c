@@ -8,6 +8,7 @@ dlist_t  *ready_queue;
 dlist_t  *wait_queue;
 dlist_t  *write_queue;
 dlist_t  *read_queue;
+int cnt = 0;
 
 int next_pid;
 
@@ -36,7 +37,8 @@ void init_processes() {
  */
 void DoDoIdle(void) {
     while (1) {
-        user_log("Idling...");
+        user_log("Idling... (%d)", cnt++);
+        cnt %= 1024;
         Pause();
     }   
     return;
