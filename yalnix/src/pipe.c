@@ -51,10 +51,10 @@ int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         return 1;
     }
 
-    pipe_t *pipe = hashmap_get(pipe_idp, pipe->id);
-    if(pipe = NULL) {
-        log_err("Cannot get pipe %d from hashmap", pipe->id);
-    }
+    //pipe_t *pipe = hashmap_get(pipe_idp, pipe->id);
+    //if(pipe = NULL) {
+    //    log_err("Cannot get pipe %d from hashmap", pipe->id);
+    //}
 
     // Block if I don't get what I want, MESA style
     while(get_buff_size(pipe) < len) {
@@ -104,7 +104,7 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
     }
 
     if(WIDX(pipe) + len < LEN(pipe)) {
-        memcpy(WIDX(pipe), buff, len);
+        memcpy(pipe->buff + WIDX(pipe), buff, len);
     } else {
         int first_len = LEN(pipe) - WIDX(pipe);
         int second_len = len - first_len;
@@ -112,7 +112,7 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         memcpy(pipe->buff, buff + first_len, second_len);
     }
 
-    pipe->wirte_idx += len;
+    pipe->write_idx += len;
     return 0;
 }
 
@@ -140,7 +140,7 @@ pcb_t *pipe_dequeue(dlist_t *queue) {
     return proc;
 }
 
-int get_pipe_buff_size(pipe_t *pipe) {
+int get_buff_size(pipe_t *pipe) {
     int size = ((pipe->write_idx + pipe->len) - pipe->read_idx) % pipe->len;
     if(size > pipe->len) {
         log_err("Pipe buff size overflows for some reason, %d > %d", size, pipe->len);
@@ -152,9 +152,9 @@ int get_pipe_buff_size(pipe_t *pipe) {
 int get_next_pipe_id() {
     int i;
     if(pipe_id_list == NULL) {
-        pipe_id_list = id_generator_init();
+        pipe_id_list = id_generator_init(MAX_PIPES);
     }
 
-    return id_generator_pop();
+    return id_generator_pop(pipe_id_list);
 }
 

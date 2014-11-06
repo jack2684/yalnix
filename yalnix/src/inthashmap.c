@@ -72,7 +72,7 @@ int hashmap_rm(hashmap_t *hmap, uint32 key) {
     return 1;
 }
 
-int hashmap_clear(hashmap_t *hmap) {
+int hashmap_destroy(hashmap_t *hmap) {
     free(hmap);
     return 0;
 }
@@ -96,7 +96,7 @@ uint32 do_hash(uint32 key) {
     uint32 i = 0;
 
     for(i = 0; i < len; i++) {
-        hash += ((key >> i) & MASH32);
+        hash += ((key >> i) & MASK32);
         hash += (hash << 10);
         hash ^= (hash >> 6);
     } 

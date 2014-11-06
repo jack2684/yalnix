@@ -1,11 +1,13 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
-#ifndef _PROC_H
-#define _PROC_H
+#ifndef _PIPE_H
+#define _PIPE_H
 
 #include "hardware.h"
 #include "yalnix.h"
-#include "memory.h"
 #include "dlist.h"
+#include "inthashmap.h"
+#include "memory.h"
+#include "proc.h"
 #include "aux.h"
 
 #define MAX_PIPES       1024
@@ -20,10 +22,10 @@ typedef struct PIPE {
     char    *buff;
     int     len;
     int     read_idx;       // Read index
-    int     write_idx       // Write index, noted that buff is empty if read_idx == write_idx
+    int     write_idx;      // Write index, noted that buff is empty if read_idx == write_idx
 
-    dlist   *read_queue;    // Typically, pipe have two processes at each side respectively,
-    dlist   *write_queue;   // this queue is just used for whehter a process is waiting here,
+    dlist_t *read_queue;    // Typically, pipe have two processes at each side respectively,
+    dlist_t *write_queue;   // this queue is just used for whehter a process is waiting here,
                             // though it can be extended to pipe with more than two processes
 } pipe_t;
 

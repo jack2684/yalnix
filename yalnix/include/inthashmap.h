@@ -14,11 +14,11 @@
 #include "dlist.h"
 
 #define DEFAULT_SIZE    1024
-#define MASK32          4294967294 // 0xFFFFFFFE, or you may say 0b11111111111111111111111111111110
+#define MASK32          4294967294u // 0xFFFFFFFE, or you may say 0b11111111111111111111111111111110
 
 typedef struct IHMAP {
     void    *datas[DEFAULT_SIZE];
-    uint32  *keys[DEFAULT_SIZE];
+    uint32  keys[DEFAULT_SIZE];
     int     capacity;
     int     size;
     int     rc;
@@ -27,9 +27,9 @@ typedef struct IHMAP {
 hashmap_t *hashmap_init();
 int hashmap_clear(hashmap_t *hmap);
 int hashmap_destroy(hashmap_t *hmap);
-void *hashmap_get(uint32 key);
-int hashmap_put(uint32 key, void *data);
-int hashmap_rm(uint32 key, void *data);
+void *hashmap_get(hashmap_t *hmap, uint32 key);
+int hashmap_put(hashmap_t *hmap, uint32 key, void *data);
+int hashmap_rm(hashmap_t *hmap, uint32 key);
 
 // Internal helper funciton
 uint32 do_hash(uint32 key);
