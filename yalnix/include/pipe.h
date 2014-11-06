@@ -35,11 +35,11 @@ extern dlist_t *pipe_id_list;
 pipe_t *pipe_init();
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context);
-int get_next_pipe_id();
 int pipe_enqueue(dlist_t *queue, pcb_t *proc);
 pcb_t *pipe_dequeue(dlist_t *queue);
 
 // Internal helper funcitons
+int get_next_pipe_id();
 int get_buff_size(pipe_t *pipe);
 #endif
 

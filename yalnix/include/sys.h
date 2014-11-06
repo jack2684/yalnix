@@ -5,6 +5,7 @@
 #include "hardware.h"
 #include "timer.h"
 #include "proc.h"
+#include "pipe.h"
 #include "tty.h"
 
 #define min(a, b) ( a > b ? b : a)
@@ -22,6 +23,8 @@ int Y_Wait(int * status_ptr, UserContext *user_context);
 int Y_WaitPid(int pid, int* status_ptr, int options);
 int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context);
 int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context);
-
+int Y_PipeInit();
+int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context);
+int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context);
 #endif
 

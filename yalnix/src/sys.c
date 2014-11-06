@@ -250,6 +250,19 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 	return running_proc->exit_code;
 }
 
+int Y_PipeInit() {
+    pipe_t *pipe = pipe_init();
+    return pipe->id;
+}
+
+int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
+    
+}
+
+int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
+
+}
+
 ////These are destroy syscalls
 //int Y_Reclaim(int id){
 //	//FIND the lock using id
