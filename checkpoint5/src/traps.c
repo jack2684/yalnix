@@ -110,16 +110,15 @@ void trap_kernel_handler(UserContext *user_context){
 /*This exception results from any arithmetic error from an 
 instruction executed by the current user process, such as division by zero or an arithmetic overflow.*/
 void trap_math_handler(UserContext *user_context){
-	//INVOKE the TRAP_MATH_HANDLER
-	//KILL the process with the arithmetic error
+    log_err("trap_math_handler");
+    Y_Exit(1, user_context);
 }
 
 /*This exception results from the execution of an illegal instruction by the currently executing user process. 
 An illegal instruction can be an undefined machine lan- guage opcode, an illegal addressing mode, 
 or a privileged instruction when not in kernel mode.*/
 void trap_illegal_handler(UserContext *user_context){
-	//INVOKE the TRAP_ILLEGAL_HANDLER
-	//KILL the process executing the illegal instruction
+    Y_Exit(1, user_context);
 }
 
 /*
@@ -133,6 +132,7 @@ void trap_memory_handler(UserContext *user_context){
         return;
     }
     uint32 offending_addr = (uint32)user_context->addr;
+    pte_t *vio_pte = user_page_table + USER_PAGE_NUMBER(offending_addr);
     int rc = 0;
 
     switch(user_context->code) {
@@ -141,13 +141,15 @@ void trap_memory_handler(UserContext *user_context){
             rc = user_stack_resize(running_proc, offending_addr);
             if(rc) {
                 log_err("Cannot resize proc user stack");
-                // @TODO: exit process, tmp using halt
-                Halt();
+                Y_Exit(rc, user_context);
             }
             break;
         case YALNIX_ACCERR:
-            log_err("User addr %p acc err", offending_addr);
-            // @TODO: exit process, tmp using halt
+            if(vio_pte->prot == (PROT_READ | PROT_EXEC)) {
+                log_err("User addr %p acc err", offending_addr);
+                Y_TtyWrite(0, "Yalnix abort! Trying to access text error!\n", 128, user_context);
+                Y_Exit(1, user_context);
+            }
             break;
         default:
             break;
@@ -208,6 +210,6 @@ void trap_tty_transmit_handler(UserContext *user_context)
 
 
 void trap_disk_handler(UserContext *user_context){
-	//INVOKE the TRAP_DISK_HANDLER
+    return;
 }
 

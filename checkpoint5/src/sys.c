@@ -184,7 +184,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
     int result = 0;
     dnode_t *node = NULL;
 
-    log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
+    //log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
     commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
     if (commit_buf == NULL) {
@@ -192,28 +192,28 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
             log_info("result = %d, pid = %d", result, running_proc->pid);
             return _FAILURE;
     }
-    log_info("calloc commit_buf done");
+    //log_info("calloc commit_buf done");
 
     len = min(len, strlen(buf));
     while (len) {
         commit_len = min(len, TERMINAL_MAX_LINE);
         memcpy(commit_buf, buf + result, commit_len);
-        log_info("memcpy from buff done");
+        //log_info("memcpy from buff done");
             
         len -= commit_len;
-        log_info("TTY Enqueue PID(%d) DONE", running_proc->pid);
+        //log_info("TTY Enqueue PID(%d) DONE", running_proc->pid);
         while (is_write_busy(tty_id)) {
             tty_write_enqueue(running_proc, tty_id);
             pcb_t *print_proc = peek_tty_write_queue(tty_id);
-            log_info("PID(%d) is waiting for printing PID(%d)", running_proc->pid, tty_writing_procs[tty_id]->pid);
+            //log_info("PID(%d) is waiting for printing PID(%d)", running_proc->pid, tty_writing_procs[tty_id]->pid);
             next_schedule(user_context);
         }
         set_write_proc(running_proc, tty_id);
-        log_info("PID(%d) Right before tty transmit", running_proc->pid);
+        //log_info("PID(%d) Right before tty transmit", running_proc->pid);
         TtyTransmit(tty_id, commit_buf, commit_len);
-        log_info("Right after tty transmit");
+        //log_info("Right after tty transmit");
         next_schedule(user_context);
-        log_info("Back from tty block");
+        //log_info("Back from tty block");
         result += commit_len;
     }
 
@@ -226,7 +226,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 
 int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 {
-    log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
+    //log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
     tty_read_enqueue(running_proc, tty_id);
     
@@ -254,11 +254,26 @@ int Y_PipeInit() {
 }
 
 int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
-    
+    log_info("PID(%d) going to read from pipe %d", running_proc->pid, pipe_id);
+
+    pipe_t *pipe = hashmap_get(pipe_idp, pipe_id);
+    log_info("Got pipe pointer %p", pipe);
+    if(pipe == NULL) {
+        log_err("Cannot get pipe %d from hashmap", pipe->id);
+    }
+
+    return pipe_read(pipe, buf, len, user_context);
 }
 
 int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
-
+    log_info("PID(%d) going to write to pipe %d", running_proc->pid, pipe_id);
+    
+    pipe_t *pipe = hashmap_get(pipe_idp, pipe_id);
+    if(pipe == NULL) {
+        log_err("Cannot get pipe %d from hashmap", pipe->id);
+    }
+    
+    return pipe_write(pipe, buf, len, user_context);
 }
 
 //int Y_Reclaim(int id){

@@ -148,7 +148,7 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
     }
     for(i = start_idx; i < end_idx && !rc; i++) {
         if(page_table[i].valid == _VALID) {
-            log_err("Page %d is valid already with prot %d and pfn %d", i, page_table[i].prot, page_table[i].pfn);
+            log_info("Page %d is valid already with prot %d and pfn %d", i, page_table[i].prot, page_table[i].pfn);
             continue;
         }
         frame_t *frame = rm_head_available_frame();
@@ -216,9 +216,7 @@ int unmap_page_to_frame(pte_t* page_table, int start_idx, int end_idx) {
             continue;
         }
         page_table[i].valid = _INVALID;
-        log_info("Set invalid done");
         rc = add_tail_available_frame(page_table[i].pfn);
-        log_info("Add frames tail done");
         if(rc) {
             log_err("Cannot add new frame when trying to unmap");
             rc = MALLOC_ERR;

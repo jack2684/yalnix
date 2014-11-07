@@ -44,6 +44,6 @@ int get_and_flip_lowest_zero_in_word(uint32 *word);
 
 
 int get_bit_in_word(uint32 word, uint32 idx);
-
+ 
 #endif
 

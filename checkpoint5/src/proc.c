@@ -60,10 +60,12 @@ void tell_children(pcb_t *proc) {
     dnode_t *node = proc->children->head;
     while(node) {
         pcb_t *child = node->data;
+        log_info("exiting PID(%d) telling children PID(%d)", proc->pid, child->pid);
         child->parent = NULL;
         if(child->state == ZOMBIE) {
              free_proc(proc);
         }
+        node = node->next;
     }
 }
 

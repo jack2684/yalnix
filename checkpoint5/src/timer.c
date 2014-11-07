@@ -57,6 +57,7 @@ void ticking_down(){
         return;
     }   
     dnode_t* node = delay_queue->head;
+    log_info("Ticking down with queue size %d", delay_queue->size);
     while(node) {
         pcb_t* proc = (pcb_t*)node->data;
         node = node->next;

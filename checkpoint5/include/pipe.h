@@ -13,9 +13,6 @@
 #define MAX_PIPES       1024
 #define DEFAULT_LEN     1024
 
-#define RIDX(pipe) (pipe->read_idx % pipe->len)
-#define WIDX(pipe) (pipe->write_idx % pipe->len)
-#define LEN(pipe) (pipe->len)
 
 typedef struct PIPE {
     int     id;
@@ -41,5 +38,8 @@ pcb_t *pipe_dequeue(dlist_t *queue);
 // Internal helper funcitons
 int get_next_pipe_id();
 int get_buff_size(pipe_t *pipe);
+int RIDX(pipe_t *pipe);
+int WIDX(pipe_t *pipe);
+int LEN(pipe_t *pipe); 
 #endif
 

@@ -48,6 +48,7 @@ typedef struct y_PCB {
 
     // Utilities
     char            *tty_buf;
+    int             pipe_id;
 } pcb_t;
 
 extern pcb_t   *init_proc;          

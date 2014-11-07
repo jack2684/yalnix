@@ -5,7 +5,7 @@ hashmap_t *pipe_idp = NULL;
 dlist_t *pipe_id_list = NULL;
 
 pipe_t *pipe_init() {
-    if(pipe_idp = NULL) {
+    if(pipe_idp == NULL) {
         pipe_idp = hashmap_init();
         if(pipe_idp == NULL) {
             log_err("Cannot init hash map pipe_idp");
@@ -35,29 +35,29 @@ pipe_t *pipe_init() {
         return NULL;
     }
 
-    log_info("Pipe %d is pushed into hashmap pipe_idp", pipe->id);
+    log_info("Pipe %d is going to pushed into hashmap pipe_idp %p", pipe->id, pipe_idp);
     hashmap_put(pipe_idp, pipe->id, pipe); 
     return pipe;
 }
 
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
     int rc = 0;
+    log_info("inside %s, with pipe %p", __func__, pipe);
     if(len <= 0) {
         log_err("pipe_read non positive len %d", len);
         return 1;
     }
+    log_info("Validate input done");
     if(len > LEN(pipe)) {
         log_err("pipe_read excceed buff len %d", len);
         return 1;
     }
 
-    //pipe_t *pipe = hashmap_get(pipe_idp, pipe->id);
-    //if(pipe = NULL) {
-    //    log_err("Cannot get pipe %d from hashmap", pipe->id);
-    //}
+    log_info("Reading from pipe %d", pipe->id);
 
     // Block if I don't get what I want, MESA style
     while(get_buff_size(pipe) < len) {
+        log_info("Not enough to read, going to wait for a while");
         rc = pipe_enqueue(pipe->read_queue, running_proc);
         if(rc) {
             log_err("Cannot enqueue the pipe read queue");
@@ -66,6 +66,9 @@ int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         next_schedule(user_context);
     }
 
+    log_info("Got enough stuff to read");
+
+    // Read from buff
     if(len + RIDX(pipe) < LEN(pipe)) {
         memcpy(buff, pipe->buff + RIDX(pipe), len);
     } else {
@@ -74,17 +77,30 @@ int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         memcpy(buff, pipe->buff + RIDX(pipe), first_len);
         memcpy(buff + first_len, pipe->buff, second_len);
     }
+    
+    log_info("Read done");
 
+    // Update pipe state
     pipe->read_idx += len;
     if(pipe->read_idx > LEN(pipe)) {
         pipe->read_idx -= LEN(pipe);
         pipe->write_idx -= LEN(pipe);
     }
+    
+    log_info("Set pointers done");
+
+    // Try wake up writer, if any
+    if(pipe->write_queue->size) {
+        pcb_t *write_proc = pipe_dequeue(pipe->write_queue);
+        en_ready_queue(write_proc);
+    }
+    log_info("Wake up done");
     return 0;
 }
 
 int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
     int rc = 0;
+    log_info("inside %s, with pipe %p", __func__, pipe);
     if(len <= 0) {
         log_err("pipe_write non positive len %d", len);
         return 1;
@@ -94,7 +110,10 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         return 1;
     }
 
-    while(get_buff_size(pipe) + len < LEN(pipe)) {
+    log_info("PID(%d) about to write: %s", running_proc->pid, buff);
+    // Block if no more space for writing, MESA style
+    while(get_buff_size(pipe) + len > LEN(pipe)) {
+        log_info("Not enough to write, going to wait for a while, buf size %d, wlen %d, blen %d", get_buff_size(pipe), len, LEN(pipe));
         rc = pipe_enqueue(pipe->write_queue, running_proc);
         if(rc) {
             log_err("Cannot enqueue the pipe write queue");
@@ -102,7 +121,8 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         }
         next_schedule(user_context);
     }
-
+    
+    // Write to buff
     if(WIDX(pipe) + len < LEN(pipe)) {
         memcpy(pipe->buff + WIDX(pipe), buff, len);
     } else {
@@ -112,7 +132,15 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
         memcpy(pipe->buff, buff + first_len, second_len);
     }
 
+    // Update pipe states
     pipe->write_idx += len;
+
+    // Try wake up reader, if any
+    if(pipe->read_queue->size) {
+        pcb_t *read_proc = pipe_dequeue(pipe->read_queue);
+        en_ready_queue(read_proc);
+    }
+
     return 0;
 }
 
@@ -157,4 +185,17 @@ int get_next_pipe_id() {
 
     return id_generator_pop(pipe_id_list);
 }
+
+int RIDX(pipe_t *pipe) {
+    return pipe->read_idx % pipe->len;
+}
+
+int WIDX(pipe_t *pipe) {
+    return pipe->write_idx % pipe->len;
+}
+
+int LEN(pipe_t *pipe) {
+    return pipe->len;
+}
+
 

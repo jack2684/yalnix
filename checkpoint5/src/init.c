@@ -3,51 +3,38 @@
 #include "hardware.h"
 
 void main(int argc, char **argv) {
+    /* These several lines are just some basic test of 
+     *  growing stack and growing heap in user land
+     */
     int delay = 1;
     int delays[512];
     int delays2[1024];
     int exit_status;
     int* a;
-    char buf[TERMINAL_MAX_LINE + 2];
-
     a = (int*)malloc(sizeof(int) * 100);
     user_log("Init program has PID(%d)", GetPid());
-    
-    int pid = Fork();
-    char* tmp[] = {NULL};
-   
-    if(argc >= 1) {
-        delay = atoi(argv[0]);
+
+    /* Begin test programs
+     */
+    int test_cnt = 2, pid, i;
+    char* empty_argc[] = {NULL};
+    char **tests = (char**)malloc(sizeof(char*) * test_cnt);
+    tests[0] = "src/test.tty";
+    tests[1] = "src/test.pipe";
+    for(i = 0; i < test_cnt; i++) {
+        pid= Fork();
+        if(pid == 0) {
+            user_log("I am child with PID(%d), about to exec program: %s", GetPid(), tests[i]);
+            Exec(tests[i], empty_argc);   
+            user_log("ERROR: child PID(%d) cannot exec program: %s", GetPid(), tests[i]);
+            Exit(1);
+        }
     }
 
-    int cnt = 5;
-    user_log("My pid is %d, fork return pid %d", GetPid(), pid);
-    if(pid != 0) {
-        user_log("I am parent with PID(%d), user Wait() for my children...", GetPid());
-        while(cnt--) {
-            TtyPrintf(1, "(%d+++++++++++++++)", cnt);
-        }
-        TtyPrintf(1, "\n");
-    } else {
-        user_log("I am child with PID(%d), about to exe", GetPid());
-        while(cnt--) {
-            TtyPrintf(1, "<%d--------------->", cnt);
-        }
-        TtyPrintf(1, "\n");
-        Delay(5);
+    while(1) {
+        Pause();
     }
- 
-    TtyPrintf(1, "Enter something so that PID(%d) can read from terminal:\n", GetPid());
-    TtyRead(1, buf, 2);
-    TtyPrintf(1, "PID(%d) get: %s", GetPid(), buf);
-    
-    if(pid != 0) {
-        do {
-           Pause();
-        } while(1);
-    }
-    Exit(0);
-    // Never reached
+    // Never reached, init program should not exit
     return;
 }
 
