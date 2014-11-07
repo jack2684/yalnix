@@ -36,11 +36,11 @@ KERNEL_INCS =
 
 
 #List all user programs here.
-USER_APPS = $(MY_SRC)init $(MY_SRC)goexec $(MY_SRC)gjj $(MY_SRC)test.tty
+USER_APPS = $(MY_SRC)init $(MY_SRC)goexec $(MY_SRC)gjj $(MY_SRC)test.tty $(MY_SRC)test.pipe
 #List all user program source files here.  SHould be the same as the previous list, with ".c" added to each file
-USER_SRCS = $(MY_SRC)init.c $(MY_SRC)goexec.c $(MY_SRC)gjj.c $(MY_SRC)test.tty.c
+USER_SRCS = $(MY_SRC)init.c $(MY_SRC)goexec.c $(MY_SRC)gjj.c $(MY_SRC)test.tty.c $(MY_SRC)test.pipe.c
 #List the objects to be formed form the user  source files here.  Should be the same as the prvious list, replacing ".c" with ".o"
-USER_OBJS = $(MY_SRC)init.o $(MY_SRC)goexec.o $(MY_SRC)gjj.o $(MY_SRC)test.tty.o
+USER_OBJS = $(MY_SRC)init.o $(MY_SRC)goexec.o $(MY_SRC)gjj.o $(MY_SRC)test.tty.o $(MY_SRC)test.pipe.o
 #List all of the header files necessary for your user programs
 USER_INCS = $(MY_SRC)../include/hardware.h 
 

@@ -179,103 +179,104 @@ int Y_Delay(UserContext *user_context){
 
 int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 {
-    int commit_len;
-    char *commit_buf;
-    int result = 0;
-    dnode_t *node = NULL;
+        int commit_len;
+        char *commit_buf;
+        int result = 0;
+        trans_finish = 0;
+        dnode_t *node = NULL;
 
-    //log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
+        log_info("tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-    commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
-    if (commit_buf == NULL) {
-            log_err("allocate buffer for tty transferring failed!\n");
-            log_info("result = %d, pid = %d", result, running_proc->pid);
-            return _FAILURE;
-    }
-    //log_info("calloc commit_buf done");
-
-    len = min(len, strlen(buf));
-    while (len) {
-        commit_len = min(len, TERMINAL_MAX_LINE);
-        memcpy(commit_buf, buf + result, commit_len);
-        //log_info("memcpy from buff done");
-            
-        len -= commit_len;
-        //log_info("TTY Enqueue PID(%d) DONE", running_proc->pid);
-        while (is_write_busy(tty_id)) {
-            tty_write_enqueue(running_proc, tty_id);
-            pcb_t *print_proc = peek_tty_write_queue(tty_id);
-            //log_info("PID(%d) is waiting for printing PID(%d)", running_proc->pid, tty_writing_procs[tty_id]->pid);
-            next_schedule(user_context);
+        while (!dlist_is_empty(tty_trans_queues[tty_id])) {
+                running_proc -> state = WAIT;
+                tty_trans_enqueue(running_proc, tty_id);
+                //while ends conditions: running_proc is the head
+                node = tty_trans_queues[tty_id] -> head;
+                if ((pcb_t *)(node -> data) == running_proc)
+                {
+                    break;
+                }
+                next_schedule(user_context);
         }
-        set_write_proc(running_proc, tty_id);
-        //log_info("PID(%d) Right before tty transmit", running_proc->pid);
-        TtyTransmit(tty_id, commit_buf, commit_len);
-        //log_info("Right after tty transmit");
-        next_schedule(user_context);
-        //log_info("Back from tty block");
-        result += commit_len;
-    }
+        log_info("Done enqueeu tty queue");
+        //check memory allocation
+        commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
+        if (commit_buf == NULL) {
+                log_err("allocate buffer for tty transferring failed!\n");
+                log_info("result = %d, pid = %d", result, running_proc->pid);
+                return _FAILURE;
+        }
 
-    free(commit_buf);
+        //if buf exceeds the limit, then do tty-writing multiple times //
+        len = min(len, strlen(buf));
+        while (len) {
+                commit_len = min(len, TERMINAL_MAX_LINE);
+                memcpy(commit_buf, buf + result, commit_len);
+                
+                //running_proc -> state = WAIT;
+                //tty_writing_procs[tty_id] = running_proc;
+                len -= commit_len;
+                if(len <= 0)
+                {
+                    trans_finish = 1;
+                }
+                log_info("Right before tty transmit");
+                TtyTransmit(tty_id, commit_buf, commit_len);
+                next_schedule(user_context);
+                log_info("Right after tty transmit");
+                result += commit_len;
+        }
 
-    log_info("Len of printed chars = %d, pid = %d", result, running_proc->pid);
+        free(commit_buf);
 
-    return result;
+        log_info("result of printed chars = %d, pid = %d", result, running_proc->pid);
+        return result;
 }
 
 int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 {
-    //log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
+        log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
 
-    tty_read_enqueue(running_proc, tty_id);
-    
-    running_proc->tty_buf = (void *)calloc(1, len);
-    if (running_proc->tty_buf == NULL) {
-            log_err("Allocate buffer for tty reading failed!\n");
-            log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
-            return _FAILURE;
-    }
-    running_proc->exit_code = len;
-    next_schedule(user_context);
+        len = min(len, TERMINAL_MAX_LINE);
 
-    memcpy(buf, running_proc->tty_buf, running_proc->exit_code);
-    free(running_proc->tty_buf);
-    running_proc->tty_buf = NULL;
+        dnode_t *node = NULL;
 
-    log_info("Number of chars get is %d, pid = %d", running_proc->exit_code, running_proc->pid);
+        //there is only one process reading from tty_id //
+        while (!dlist_is_empty(tty_read_queues[tty_id])) 
+        {
+                running_proc -> state = WAIT;
+                tty_read_enqueue(running_proc, tty_id);
+                node = tty_read_queues[tty_id] -> head;
+                if ((pcb_t *)(node -> data) == running_proc)
+                {
+                    break;
+                }
+                next_schedule(user_context);
+        }
 
-    return running_proc->exit_code;
+        running_proc->tty_buf = (void *)calloc(1, len);
+        
+        //check memory allocation
+        if (running_proc->tty_buf == NULL) {
+                log_err("Allocate buffer for tty reading failed!\n");
+                log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
+                return _FAILURE;
+        }
+
+        //tty_reading_procs[tty_id] = running_proc;
+        running_proc->exit_code = len;
+        running_proc -> state = WAIT;
+        next_schedule(user_context);
+
+        memcpy(buf, running_proc->tty_buf, running_proc->exit_code);
+        free(running_proc->tty_buf);
+        running_proc->tty_buf = NULL;
+
+        log_info("Ends: result = %d, pid = %d", running_proc->exit_code, running_proc->pid);
+        return running_proc->exit_code;
 }
 
-int Y_PipeInit() {
-    pipe_t *pipe = pipe_init();
-    return pipe->id;
-}
-
-int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
-    log_info("PID(%d) going to read from pipe %d", running_proc->pid, pipe_id);
-
-    pipe_t *pipe = hashmap_get(pipe_idp, pipe_id);
-    log_info("Got pipe pointer %p", pipe);
-    if(pipe == NULL) {
-        log_err("Cannot get pipe %d from hashmap", pipe->id);
-    }
-
-    return pipe_read(pipe, buf, len, user_context);
-}
-
-int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
-    log_info("PID(%d) going to write to pipe %d", running_proc->pid, pipe_id);
-    
-    pipe_t *pipe = hashmap_get(pipe_idp, pipe_id);
-    if(pipe == NULL) {
-        log_err("Cannot get pipe %d from hashmap", pipe->id);
-    }
-    
-    return pipe_write(pipe, buf, len, user_context);
-}
-
+////These are destroy syscalls
 //int Y_Reclaim(int id){
 //	//FIND the lock using id
 //	//DESTROY the lock

@@ -131,7 +131,7 @@ void tty_write_next_ready(unsigned int tty_id)
 int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
 {
     //first check if proc is already in the queue
-    log_info("Before tty enqueue with PID(%d), now queue size %d", proc->pid, tty_queue->size);
+    //log_info("Before tty enqueue with PID(%d), now queue size %d", proc->pid, tty_queue->size);
     if(!tty_queue){
         return 0;
     }
@@ -143,7 +143,7 @@ int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
         log_err("Cannot enqueue the tty queue\n");
         return 1;
     }
-    log_info("Tty enqueue with PID(%d), now queue size %d", proc->pid, tty_queue->size);
+    //log_info("Tty enqueue with PID(%d), now queue size %d", proc->pid, tty_queue->size);
     proc->list_node = n; 
     proc->state = WAIT;
     return 0;
@@ -153,13 +153,13 @@ int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
  */
 pcb_t* tty_proc_dequeue(dlist_t *tty_queue)
 {
-    log_info("Before tty dequeue, queue size %d", tty_queue->size);
+    //log_info("Before tty dequeue, queue size %d", tty_queue->size);
     pcb_t *one_to_go = dlist_rm_head(tty_queue);
     if(one_to_go == NULL) {
         log_info("Nothing to dequeue");
         return NULL;
     }
-    log_info("Tty dequeue with PID(%d), size: %d", one_to_go->pid, tty_queue->size);
+    //log_info("Tty dequeue with PID(%d), size: %d", one_to_go->pid, tty_queue->size);
     return one_to_go;
 }
 

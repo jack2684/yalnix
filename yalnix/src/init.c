@@ -21,7 +21,7 @@ void main(int argc, char **argv) {
     char **tests = (char**)malloc(sizeof(char*) * test_cnt);
     tests[0] = "src/test.tty";
     tests[1] = "src/test.pipe";
-    for(i = 0; i < test_cnt - 1; i++) {
+    for(i = 0; i < test_cnt; i++) {
         pid= Fork();
         if(pid == 0) {
             user_log("I am child with PID(%d), about to exec program: %s", GetPid(), tests[i]);

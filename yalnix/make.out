@@ -1,0 +1,11 @@
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/kernel_init.o /net/grad/gjj/yalnix/yalnix/src/kernel_init.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/memory.o /net/grad/gjj/yalnix/yalnix/src/memory.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/list.o /net/grad/gjj/yalnix/yalnix/src/list.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/dlist.o /net/grad/gjj/yalnix/yalnix/src/dlist.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/traps.o /net/grad/gjj/yalnix/yalnix/src/traps.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/proc.o /net/grad/gjj/yalnix/yalnix/src/proc.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/load.o /net/grad/gjj/yalnix/yalnix/src/load.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/tty.o /net/grad/gjj/yalnix/yalnix/src/tty.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/sys.o /net/grad/gjj/yalnix/yalnix/src/sys.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/timer.o /net/grad/gjj/yalnix/yalnix/src/timer.c
+gcc  -m32 -fno-builtin -I. -I/net/class/cs58/yalnix/include -I/net/grad/gjj/yalnix/yalnix/include/ -g -DLINUX   -c -o /net/grad/gjj/yalnix/yalnix/src/pipe.o /net/grad/gjj/yalnix/yalnix/src/pipe.c
