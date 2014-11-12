@@ -11,13 +11,14 @@
 #include "aux.h"
 
 #define MAX_PIPES       1024
-#define DEFAULT_LEN     1024
+#define DEFAULT_LEN     5
 
 
 typedef struct PIPE {
     int     id;
     char    *buff;
-    int     len;
+    int     len;            // The capacity
+    int     size;           // The current valid data size
     int     read_idx;       // Read index
     int     write_idx;      // Write index, noted that buff is empty if read_idx == write_idx
 
@@ -32,14 +33,21 @@ extern dlist_t *pipe_id_list;
 pipe_t *pipe_init();
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context);
-int pipe_enqueue(dlist_t *queue, pcb_t *proc);
-pcb_t *pipe_dequeue(dlist_t *queue);
+int free_pipe(pipe_t *pipe);
 
 // Internal helper funcitons
+pcb_t *pipe_dequeue(dlist_t *queue);
+int pipe_enqueue(dlist_t *queue, pcb_t *proc);
 int get_next_pipe_id();
 int get_buff_size(pipe_t *pipe);
+int block_reader(pipe_t *pipe, UserContext *user_context);
+int block_writer(pipe_t *pipe, UserContext *user_context);
+void write_this_much(pipe_t *pipe, char *buff, int len);
+void read_this_much(pipe_t *pipe, char *buff, int len);
 int RIDX(pipe_t *pipe);
 int WIDX(pipe_t *pipe);
 int LEN(pipe_t *pipe); 
+void try_wake_up_writer(pipe_t *pipe);
+void try_wake_up_reader(pipe_t *pipe);
 #endif
 
