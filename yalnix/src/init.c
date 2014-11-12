@@ -2,6 +2,12 @@
 #include "common.h"
 #include "hardware.h"
 
+int skip_test(int i ) {
+    return 0 
+        || i == 0
+        ;
+}
+
 void main(int argc, char **argv) {
     /* These several lines are just some basic test of 
      *  growing stack and growing heap in user land
@@ -22,6 +28,9 @@ void main(int argc, char **argv) {
     tests[0] = "src/test.tty";
     tests[1] = "src/test.pipe";
     for(i = 0; i < test_cnt; i++) {
+        if(skip_test(i)) {
+            continue;
+        }
         pid= Fork();
         if(pid == 0) {
             user_log("I am child with PID(%d), about to exec program: %s", GetPid(), tests[i]);
@@ -37,6 +46,4 @@ void main(int argc, char **argv) {
     // Never reached, init program should not exit
     return;
 }
-
-
 

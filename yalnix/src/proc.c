@@ -8,6 +8,7 @@ dlist_t  *ready_queue;
 dlist_t  *wait_queue;
 dlist_t  *write_queue;
 dlist_t  *read_queue;
+dlist_t  *pid_list = NULL;
 int cnt = 0;
 
 int next_pid;
@@ -47,11 +48,10 @@ void DoDoIdle(void) {
 /* Incrementally get the next PID number
  */
 int get_next_pid(){
-   if(next_pid >= MAX_PROC) {
-        log_err("Exceed %d processes", MAX_PROC);
-        next_pid = 11;
-   }
-   return next_pid++;
+    if(pid_list == NULL) { 
+        pid_list = id_generator_init(MAX_PROCS);
+    }
+    return id_generator_pop(pid_list);
 }
 
 /* Tell children that I am dead...
@@ -63,7 +63,10 @@ void tell_children(pcb_t *proc) {
         log_info("exiting PID(%d) telling children PID(%d)", proc->pid, child->pid);
         child->parent = NULL;
         if(child->state == ZOMBIE) {
-             free_proc(proc);
+             int rc = free_proc(child);
+             if(rc) {
+                log_err("Cannot free child PID(%d)", child);
+             }
         }
         node = node->next;
     }
@@ -107,22 +110,27 @@ int en_zombie_queue(pcb_t* parent, pcb_t* child) {
 
 /* Completely free the PCB block
  */
-void free_proc(pcb_t *proc) {
+int free_proc(pcb_t *proc) {
     int rc, pid = proc->pid;
     rc = unmap_page_to_frame(proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
     if(rc) {
         log_err("Unable to free frames of PID(%d) page table", proc->pid);
+        return 1;
     }
     free(proc->page_table);
     
     unmap_page_to_frame(proc->kernel_stack_pages, 0, GET_PAGE_NUMBER(KERNEL_STACK_MAXSIZE));
     if(rc) {
         log_err("Unable to free frames of PID(%d) kernel stack page table", proc->pid);
+        return 1;
     }
     free(proc->kernel_stack_pages);
 
     free(proc); 
+    proc = NULL;
+    id_generator_push(pid_list, pid);
     log_info("PID(%d) is freed", pid);
+    return 0;
 }
 
 /* Init a dummy idle proc
@@ -259,7 +267,7 @@ int en_ready_queue(pcb_t *proc) {
         _debug("Cannot enqueue the pcb\n");
         return 1;
     }
-    log_info("En ready_queue with PID(%d)", proc->pid);
+    //log_info("En ready_queue with PID(%d)", proc->pid);
     proc->list_node = n; 
     proc->state = READY;
     return 0;
@@ -333,7 +341,7 @@ pcb_t* rm_ready_queue(pcb_t *proc) {
 pcb_t* de_ready_queue() {
     pcb_t *about_to_run = dlist_rm_head(ready_queue);
     if(about_to_run == NULL) {
-        log_info("Ready queue is empty, suck it.");
+        //log_info("Ready queue is empty, suck it.");
         return NULL;
     }
     return about_to_run;
@@ -376,17 +384,17 @@ void next_schedule(UserContext *user_context) {
         next_proc = idle_proc;
     } else {
         next_proc = de_ready_queue();
-        log_info("De ready_queue get PID(%d)", next_proc->pid);
+        //log_info("De ready_queue get PID(%d)", next_proc->pid);
     }
   
     save_user_runtime(running_proc, user_context);
     pick_schedule(user_context, next_proc);
-    log_info("next_schedule done with queue size %d, now running PID(%d) pc(%p) sp(%p)", 
-                ready_queue->size, 
-                running_proc->pid, 
-                running_proc->user_context.pc,
-                running_proc->user_context.sp
-                );
+    //log_info("next_schedule done with queue size %d, now running PID(%d) pc(%p) sp(%p)", 
+    //            ready_queue->size, 
+    //            running_proc->pid, 
+    //            running_proc->user_context.pc,
+    //            running_proc->user_context.sp
+    //            );
 }
 
 /* schedule a specific process
@@ -473,14 +481,14 @@ void init_process_kernel(pcb_t *proc) {
         log_err("Failed to execute magic function!");
         Halt();
     }
-    log_info("Init PID(%d) kernel stack done", proc->pid);
+    //log_info("Init PID(%d) kernel stack done", proc->pid);
 }
 
 /* A kernel magic function that is only used for getting kernel context for newbie
  */
 KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb){
     pcb_t *next_proc = (pcb_t *) _next_pcb;
-    log_info("First time to init PID(%d) kernel stack!", next_proc->pid);
+    //log_info("First time to init PID(%d) kernel stack!", next_proc->pid);
    
     if(next_proc->kernel_stack_pages == NULL) {
         log_err("Init kernel stack fail, pcb->kernel_stack_pages not malloc yet");
@@ -501,7 +509,7 @@ KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb
     //print_page_table(kernel_page_table, 120, GET_PAGE_NUMBER(VMEM_0_LIMIT));
     //print_page_table(next_proc->kernel_stack_pages, 0, 2);
 
-    log_info("First time to init PID(%d) kernel stack done", next_proc->pid);
+    //log_info("First time to init PID(%d) kernel stack done", next_proc->pid);
     return kernel_context;
 }
 
@@ -527,7 +535,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
 
     // Backup current kernel context, and set next running process
     if(is_proc_active(prev_proc)) {
-        log_info("Backup kernel context for PID(%d)", prev_proc->pid);
+        //log_info("Backup kernel context for PID(%d)", prev_proc->pid);
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
     }
     running_proc = next_proc;
@@ -545,7 +553,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
             log_err("PID(%d) kernel stack cannot init", next_proc->pid);
             return NULL;
         }
-        log_info("Init kernel context for PID(%d) done", next_proc->pid);
+        //log_info("Init kernel context for PID(%d) done", next_proc->pid);
         next_proc->init_done = 1;
     }
 

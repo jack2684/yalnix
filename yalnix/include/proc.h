@@ -7,7 +7,7 @@
 #include "memory.h"
 #include "dlist.h"
 
-#define MAX_PROC 1024
+#define MAX_PROCS 1024
 
 enum proc_stat {
     RUN,
@@ -60,6 +60,7 @@ extern dlist_t  *ready_queue;
 extern dlist_t  *wait_queue;
 extern dlist_t  *write_queue;
 extern dlist_t  *read_queue;
+extern dlist_t  *pid_list;
 
 /* Basic prcess functions
  */
@@ -82,7 +83,7 @@ void init_init_proc(void);
 
 /* Parent and children functions
  */
-void free_proc(pcb_t *proc);
+int free_proc(pcb_t *proc);
 void tell_children(pcb_t *proc);
 void tell_parent(pcb_t *proc);
 int en_wait_queue(pcb_t* proc);
@@ -99,5 +100,8 @@ KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb
 void context_switch_to(pcb_t * next_proc, UserContext * user_context);
 KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_pcb, void *_next_pcb);
 
+/* Internal helper funcitons
+ */
+int get_next_pid();
 #endif
 

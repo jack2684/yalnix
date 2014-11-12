@@ -2,7 +2,7 @@
 
 dlist_t *id_generator_init(int size) {
     if(size <= 0) {
-        log_err("Size is negative!!");
+        log_err("Size is not positive!!");
         return NULL;
     } 
 
@@ -24,7 +24,7 @@ dlist_t *id_generator_init(int size) {
 int id_generator_pop(dlist_t *id_list) {
     if(id_list->size <= 0) {
         log_err("Nothing to pop from id_list when size is %d!", id_list->size);
-        return 1;
+        return -1;
     }
 
     void *d = dlist_rm_head(id_list);

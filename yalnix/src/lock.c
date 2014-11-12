@@ -1,85 +1,79 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
-#include "kernelLib.h"
+#include "lock.h"
 
-//These are lock syscalls
-int Y_LockInit(int *lock_idp){
-	//CREATE a new lock
-	//Save the lock id into the poiner
+hashmap_t *lock_idp = NULL;
+dlist_t *lock_id_list = NULL;
+
+lock_t *lock_init() {
+    if(lock_idp == NULL) {
+        lock_idp = hashmap_init();
+        if(lock_idp == NULL) {
+            log_err("Cannot init hash map lock_idp");
+            return NULL;
+        }
+    }
+    lock_t *lock = (lock_t*)malloc(sizeof(lock_t));
+
+    lock->id = get_next_lock_id();
+    lock->waits = dlist_init();
+    lock->owner = NULL;
+    hashmap_put(lock_idp, lock->id, lock);
+    return lock;
 }
 
-int Y_Acquire(int lock_id){
-	//FIND the lock using id
+int locK_acquire(lock_t *lock, UserContext *user_context) {
+    if(lock == NULL) {
+        log_err("The lock pointer is NULL");
+        return 1;
+    }
 
-	//IF already have the lock
-		//RETURN
-	//END IF
+    // Try acquire. If not acquired, wait
+    if(lock->owner == NULL) {
+        lock->owner = running_proc;
+    } else {
+        int rc = dlist_add_tail(lock->waits, running_proc);
+        if(rc) {
+            log_err("Cannot add process PID(%d) to wait queue", running_proc->pid);
+            return 1;
+        }
+        next_schedule(user_context);
+    }
 
-	//IF the lock is available
-		//OBTAIN the lock
-		//RETURN
-	//ELSE add to the waiting queue
-	//END IF
+    if(lock->owner != running_proc) {
+        log_err("Logic problem, PID(%d) is not the owner PID(%d) of lock %d", running_proc->pid, lock->owner->pid, lock->id);
+    }
+
+    log_info("PID(%d) acquire lock %d done!", running_proc->pid, lock->id);
+    return 0;
 }
 
-int Y_Release(int lock_id){
-	//FIND the lock using id
+int locK_release(lock_t *lock, UserContext *user_context) {
+    if(lock == NULL) {
+        log_err("The lock pointer is NULL");
+        return 1;
+    }
+   
+    if(lock->owner != running_proc) {
+        log_err("This lock doesn't belong to PID(%d)", running_proc->pid);
+        return 1;
+    }
 
-	//IF already have the lock
-		//SET the lock availbale
-		//RETURN
-	//END IF
+    if(lock->waits->size) {
+        lock->owner = dlist_rm_head(lock->waits);
+        en_ready_queue(lock->owner);
+    } else {
+        lock->owner = NULL;
+    }
 
-	//POP a process from the waiting queue
-	//GIVE this process the lock
-	//SET the process ready
+    log_info("PID(%d) release lock %d done, now the lock has owner PID(%d)!", running_proc->pid, lock->id, lock->owner->pid);
+    return 0;
 }
 
-//These are condition variables syscalls
-int Y_CvarInit(int *cvar_idp){
-	//CREATE a new cvar
-	//COPY the cvar's id into the pointer
-	//RETURN
+int get_next_lock_id() {
+    if(lock_id_list == NULL) {
+        lock_id_list = id_generator_init(MAX_LOCKS);
+    }
+
+    return id_generator_pop(lock_id_list);
 }
 
-int Y_CvarSignal(int cvar_id){
-	//FIND the cvar with id
-
-	//IF no process waiting on the cvar
-		//RETURN
-	//END IF
-
-	//REMOVE a process from the waiting queue 
-	//SET the process ready
-}
-
-int Y_CvarWait(int cvar_id, int lock_id){
-	//FIND the cvar with id
-
-	//RELEASE the lock
-
-	//ADD the current process to the cvar's waiting list
-
-	//REACQUIRE the lock
-}
-
-int Y_CvarBroadcast(int cvar_id){
-	//FIND the cvar with id
-
-	//FOR all process in the cvar's waiting queue
-		//REMOVE from the queue
-		//SET to ready
-	//END FOR  
-}
-
-//These are semaphore syscalls
-int Y_SemInit(int *, int){
-
-}
-
-int Y_SemUp (int){
-
-}
-
-int Y_SemDown (int){
-
-}

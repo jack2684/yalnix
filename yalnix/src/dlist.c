@@ -36,12 +36,12 @@ int dlist_clear(dlist_t *list) {
     return 0;
 }
 
-int dlist_destroy(void *list) {
+int dlist_destroy(dlist_t *list) {
     int rc = dlist_clear((dlist_t*)list);
     if(rc) {
         return rc;
     } else {
-        free((dlist_t*)(list));
+        free(list);
         list = NULL;
         return 0;
     }
