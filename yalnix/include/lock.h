@@ -13,10 +13,12 @@ typedef struct y_Lock {
 } lock_t;
 
 // pcb_t*      ready;      // Ready queue, global variable, in *.c file
-typedef struct y_CVar {
-    lock_t          *lock;
-    pcb_t*          waits;
-} cvar_t;
+typedef lock_t cvar_t;
+//typedef struct y_CVar {
+//    int id;
+//    pcb_t*          waits;
+//    pcb_t           *owner;
+//} cvar_t;
 
 typedef struct y_Sem {
     int       count;
@@ -27,11 +29,22 @@ typedef struct y_Sem {
 
 extern hashmap_t *lock_idp;
 extern dlist_t *lock_id_list;
+extern hashmap_t *cvar_idp;
+extern dlist_t *cvar_id_list;
 
+
+// Mutex lock
 lock_t *lock_init();
 int locK_acquire(lock_t *lock, UserContext *user_context);
-int locK_release(lock_t *lock, UserContext *user_context);
-int free_lock();
+int locK_release(lock_t *lock);
+int free_lock(lock_t *lock);
+
+// Condition variable lock
+cvar_t *cvar_init();
+int cvar_wait(cvar_t* cvar, lock_t *lock, UserContext *user_context);
+int cvar_signal(cvar_t* cvar);
+int cvar_broadcast(cvar_t* cvar);
+int free_cvar(cvar_t *cvar);
 
 // Helper functions
 int get_next_lock_id();
