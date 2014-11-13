@@ -208,7 +208,7 @@ pcb_t* de_zombie_queue(pcb_t* proc){
         log_err("No one in the zombie list!!!");
         return NULL;
     }
-    dlist_rm_head(proc->zombie);
+    return proc_dequeue(proc->zombie);
 }
 
 /* If any child is running

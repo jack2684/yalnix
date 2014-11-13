@@ -63,6 +63,7 @@ int Y_Wait(int * status_ptr, UserContext *user_context){
     if(running_proc->wait_zombie) {
         log_info("PID(%d) wake up and going to run again!", running_proc->pid);
         pcb_t* zombie = de_zombie_queue(running_proc);
+        log_info("PID(%d) get zombie %p!", running_proc->pid, zombie);
         *status_ptr = zombie->exit_code;
         running_proc->exit_code = zombie->pid; 
         log_info("Get my zombie pid(%d) exit code %d", zombie->pid, zombie->exit_code);

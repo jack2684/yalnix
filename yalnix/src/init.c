@@ -7,8 +7,8 @@
 int do_test(int i ) {
     return 0 
         //|| i == 0
-        //|| i == 1
-        || i == 2
+        || i == 1
+        //|| i == 2
         ;
 }
 
