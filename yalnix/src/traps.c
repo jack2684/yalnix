@@ -42,6 +42,16 @@ char *get_sys_call_name(u_long code) {
             return "YALNIX_LOCK_RELEASE";
         case YALNIX_RECLAIM:
             return "YALNIX_RECLAIM";
+        case YALNIX_CVAR_INIT:
+            return "YALNIX_CVAR_INIT:";
+        case YALNIX_CVAR_SIGNAL:
+            return "YALNIX_CVAR_SIGNAL";
+        case YALNIX_CVAR_BROADCAST:
+            return "YALNIX_CVAR_BROADCAST";
+        case YALNIX_CVAR_WAIT:
+            return "YALNIX_CVAR_WAIT";
+        case YALNIX_CUSTOM_0:
+            return "YALNIX_CUSTOM_0";
         default:
             break;
     } 
@@ -116,6 +126,20 @@ void trap_kernel_handler(UserContext *user_context){
         case YALNIX_RECLAIM:
             user_context->regs[0] = Y_Reclaim(user_context->regs[0]);
             break;
+        case YALNIX_CVAR_INIT:
+            user_context->regs[0] = Y_CvarInit();
+            break;
+        case YALNIX_CVAR_SIGNAL:
+            user_context->regs[0] = Y_CvarSignal(user_context->regs[0]);
+            break;
+        case YALNIX_CVAR_BROADCAST:
+            user_context->regs[0] = Y_CvarBroadcast(user_context->regs[0]);
+            break;
+        case YALNIX_CVAR_WAIT:
+            user_context->regs[0] = Y_CvarWait(user_context->regs[0], user_context->regs[1], user_context);
+            break;
+        case YALNIX_CUSTOM_0:
+            user_context->regs[0] = Y_GetPipeSize(user_context->regs[0]);
         default:
             break;
     }

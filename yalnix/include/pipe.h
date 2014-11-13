@@ -11,7 +11,7 @@
 #include "aux.h"
 
 #define MAX_PIPES       1024
-#define DEFAULT_LEN     5
+#define DEFAULT_LEN     128
 
 
 typedef struct PIPE {
@@ -34,9 +34,9 @@ pipe_t *pipe_init();
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int free_pipe(pipe_t *pipe);
+int get_buff_size(pipe_t *pipe);
 
 // Internal helper funcitons
-int get_buff_size(pipe_t *pipe);
 int block_reader(pipe_t *pipe, UserContext *user_context);
 int block_writer(pipe_t *pipe, UserContext *user_context);
 void write_this_much(pipe_t *pipe, char *buff, int len);

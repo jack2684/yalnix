@@ -31,5 +31,9 @@ int Y_LockInit();
 int Y_Acquire(int id, UserContext *user_context);
 int Y_Release(int id);
 int Y_Reclaim(int id);
+int Y_CvarInit();
+int Y_CvarSignal(int id);
+int Y_CvarBroadcast(int id);
+int Y_CvarWait(int cid, int lid, UserContext *user_context);
 #endif
 

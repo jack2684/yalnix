@@ -2,13 +2,14 @@
 #include "common.h"
 #include "hardware.h"
 
-#define TEST_CNT 3
+#define TEST_CNT 4
 
 int do_test(int i ) {
     return 0 
         //|| i == 0
-        || i == 1
-        || i == 2
+        //|| i == 1
+        //|| i == 2
+        || i == 3
         ;
 }
 
@@ -32,6 +33,7 @@ void main(int argc, char **argv) {
     tests[0] = "src/test.tty";
     tests[1] = "src/test.pipe";
     tests[2] = "src/test.lock";
+    tests[3] = "src/test.cvar";
     for(i = 0; i < TEST_CNT; i++) {
         if(!do_test(i)) {
             continue;

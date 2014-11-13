@@ -296,7 +296,6 @@ int Y_Release(int id) {
         log_err("Error getting lock id %d", id);
         return -1;
     }
-    log_info("Going to release");
     return lock_release(lock);
 }
 
@@ -328,19 +327,58 @@ int Y_Reclaim(int id) {
         return ERROR;
     }
     return 0;
-//	//FIND the lock using id
-//	//DESTROY the lock
-//
-//	//FIND the cvar using id
-//	//DESTROY the cvar
-//
-//	//FIND the pipe using id
-//	//DESTROY the pipe
 }
-//
-////Here are some extra syscalls below that could help implement some extra functions
-////We will complete them if possible
-//
+
+int Y_CvarInit() {
+    return cvar_init()->id;
+}
+
+int Y_CvarSignal(int id) {
+    cvar_t *cvar = (cvar_t*)util_get(id);
+    if(cvar == NULL) {
+        log_err("Error getting cvar id %d", id);
+        return -1;
+    }
+    return cvar_signal(cvar);
+}
+
+int Y_CvarBroadcast(int id) {
+    cvar_t *cvar = (cvar_t*)util_get(id);
+    if(cvar == NULL) {
+        log_err("Error getting cvar id %d", id);
+        return -1;
+    }
+    return cvar_broadcast(cvar);
+}
+
+int Y_CvarWait(int cid, int lid, UserContext *user_context) {
+    cvar_t *cvar = (cvar_t*)util_get(cid);
+    if(cvar == NULL) {
+        log_err("Error getting cvar id %d", cid);
+        return -1;
+    }
+    
+    lock_t *lock = (lock_t*)util_get(lid);
+    log_info("Get lock at %p", lock);
+    if(lock == NULL) {
+        log_err("Error getting lock id %d", lid);
+        return -1;
+    }
+ 
+    return cvar_wait(cvar, lock, user_context);
+}
+
+int Y_GetPipeSize(int pipe_id) {
+    log_info("PID(%d) going to write to pipe %d", running_proc->pid, pipe_id);
+    
+    pipe_t *pipe = (pipe_t*)util_get(pipe_id);
+    if(pipe == NULL) {
+        log_err("Cannot get pipe %d from hashmap", pipe->id);
+    }
+
+    return get_buff_size(pipe);
+}
+
 ////These are 3 custom syscalls
 //int Y_Custom0(){
 //	
