@@ -38,7 +38,7 @@ pipe_t *pipe_init() {
     }
 
     log_info("Pipe %d is going to pushed into hashmap idp %p", pipe->id, idp);
-    util_put(pipe->id, pipe); 
+    util_add(pipe->id, pipe, PIPE); 
     return pipe;
 }
 

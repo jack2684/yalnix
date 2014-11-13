@@ -40,6 +40,8 @@ char *get_sys_call_name(u_long code) {
             return "YALNIX_LOCK_ACQUIRE";
         case YALNIX_LOCK_RELEASE:
             return "YALNIX_LOCK_RELEASE";
+        case YALNIX_RECLAIM:
+            return "YALNIX_RECLAIM";
         default:
             break;
     } 
@@ -112,6 +114,9 @@ void trap_kernel_handler(UserContext *user_context){
             break;
         case YALNIX_LOCK_RELEASE:
             user_context->regs[0] = Y_Release(user_context->regs[0]);
+            break;
+        case YALNIX_RECLAIM:
+            user_context->regs[0] = Y_Reclaim(user_context->regs[0]);
             break;
         default:
             break;

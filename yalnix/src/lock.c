@@ -16,7 +16,7 @@ lock_t *lock_init() {
     lock->id = util_new_id();
     lock->waits = dlist_init();
     lock->owner = NULL;
-    util_put(lock->id, lock);
+    util_add(lock->id, lock, LOCK);
     return lock;
 }
 
@@ -101,7 +101,7 @@ cvar_t *cvar_init() {
     cvar->id = util_new_id();
     cvar->waits = dlist_init();
     cvar->owner = running_proc;
-    util_put(cvar->id, cvar);
+    util_add(cvar->id, cvar, CVAR);
     return cvar;
 }
 

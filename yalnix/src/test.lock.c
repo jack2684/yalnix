@@ -25,7 +25,7 @@ void main(int argc, char **argv)
 
     while (--i) 
     {
-		TtyPrintf(TTY_ID, "%d: Attempting lock %d\n", GetPid(), lock_id);
+		TtyPrintf(TTY_ID, "%d: Attempting lock %d.\n", GetPid(), lock_id);
 		rc = Acquire(lock_id);
 		if (rc == _FAILURE) 
 		{
@@ -55,7 +55,10 @@ void main(int argc, char **argv)
      	Exit(0);
     }
 
-    Delay(6);
+    TtyPrintf(TTY_ID, "%d: Waiting children\n", GetPid());
+    Wait(); // Wait for children to be done
+    Wait(); // Wait for children to be done
+    TtyPrintf(TTY_ID, "%d: Waiting done\n", GetPid());
 
 
 	//TtyPrintf(TTY_ID, "%d: Attempting to reclaim lock.\n", GetPid());

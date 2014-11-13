@@ -300,6 +300,33 @@ int Y_Release(int id) {
 }
 
 int Y_Reclaim(int id) {
+    util_t *util = util_rm(id);
+    if(util == NULL) {
+        log_err("Unable to remove util, id %d", id);
+        return ERROR;
+    }
+
+    int rc = 0;
+    void * data = util->data;
+    switch(util->type) {
+        case LOCK:
+            rc = free_lock((lock_t*)data);
+            break;
+        case CVAR:
+            rc = free_cvar((cvar_t*)data);
+            break;
+        case PIPE:
+            rc = free_pipe((pipe_t*)data);
+            break;
+        default:
+            break;
+    }
+
+    if(rc) {
+        log_err("Fail to release util %d", id);
+        return ERROR;
+    }
+    return 0;
 //	//FIND the lock using id
 //	//DESTROY the lock
 //
