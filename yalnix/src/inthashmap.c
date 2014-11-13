@@ -25,9 +25,9 @@ void *hashmap_get(hashmap_t *hmap, uint32 key) {
 }
 
 int hashmap_put(hashmap_t *hmap, uint32 key, void *data) {
-    log_info("Before do hash");
+    //log_info("Before do hash");
     uint32 hash = do_hash(key);
-    log_info("After do hash");
+    //log_info("After do hash");
     int i, idx;
 
     if(hmap == NULL) {
@@ -39,17 +39,17 @@ int hashmap_put(hashmap_t *hmap, uint32 key, void *data) {
         return 1;
     }
 
-    log_info("Adding key %d to hash map, with hash %u", key, hash);
+    //log_info("Adding key %d to hash map, with hash %u", key, hash);
     for(i = 0; i < hmap->capacity; i++) {
         idx = (hash % hmap->capacity + i) % hmap->capacity;
         if(hmap->datas[idx] == NULL) {
-            log_info("Hashmap add data at key %u/%d, data %p", key, key, data);
+            //log_info("Hashmap add data at key %u/%d, data %p", key, key, data);
             hmap->datas[idx] = data;
             hmap->keys[idx] = key;
             hmap->size++;
             return 0;
         } else if (hmap->keys[idx] == key) {
-            log_info("Hashmap override data at key %u/%d", key, key);
+            //log_info("Hashmap override data at key %u/%d", key, key);
             hmap->datas[idx] = data;
             return 0;
         }

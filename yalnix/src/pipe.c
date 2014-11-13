@@ -18,6 +18,7 @@ pipe_t *pipe_init() {
         free(pipe);
         return NULL;
     }
+    log_info("Get pipe id %d", pipe->id);
     pipe->len = DEFAULT_LEN;
     pipe->read_idx = 0;
     pipe->write_idx = 0;

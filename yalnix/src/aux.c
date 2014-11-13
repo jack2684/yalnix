@@ -31,27 +31,37 @@ int id_generator_pop(dlist_t *id_list) {
     }
 
     void *d = dlist_rm_head(id_list);
+    log_info("Get pop id %d, now id_list size: %d", *((int*)d), id_list->size);
     return *((int*)d);
 }
 
 int id_generator_push(dlist_t *id_list, int id) {
     int *d = (int*) malloc(sizeof(int));
     *d = id;
-    dlist_add_tail(id_list, (void*)d); 
+    dnode_t *n = dlist_add_tail(id_list, (void*)d); 
+    if(n == NULL) {
+        log_err("Something wrong when pushing id to list");
+        return 1;
+    }
+    return 0;
 }
 
-int aux_get_next_id(dlist_t *id_list) {
+int init_util() {
+    log_info("Init id list");
+    id_list = id_generator_init(MAX_RESROUCE);
     if(id_list == NULL) {
-        id_list = id_generator_init(MAX_RESROUCE);
+        log_err("Cannot init id list!!!");
+        return ERROR;
     }
+      
+    log_info("Init id pool");
+    idp = hashmap_init();
     if(idp == NULL) {
-        idp = hashmap_init();
-        if(idp == NULL) {
-            log_err("Cannot init hash map id pool");
-            return -1;
-        }   
-    }
-    return id_generator_pop(id_list);
+        log_err("Cannot init hash map id pool");
+        return ERROR;
+    }   
+    log_info("Util init done");
+    return 0;
 }
 
 int util_add(int id, void *data, enum util_type type) {
@@ -63,6 +73,7 @@ int util_add(int id, void *data, enum util_type type) {
     }
     util->type = type;
     util->data = data;
+    log_info("Util add id=>data %d=>%p", id, data);
     rc = hashmap_put(idp, id, util);
     if(rc) {
         log_err("Hash map put err, key %d", id);
@@ -95,7 +106,7 @@ void *util_get(int id) {
         log_err("Cannot get data from hashmap, key %d", id);
         return NULL;
     }
-    log_info("Going to return util data %p", util->data);
+    log_info("Going to return util id=>data %d=>%p", id, util->data);
     return util->data;
 }
 
@@ -111,7 +122,7 @@ void *util_rm(int id) {
 }
 
 int util_new_id() {
-    return aux_get_next_id(id_list);
+    return id_generator_pop(id_list);
 }
 
 int util_reclaim_id(int id) {

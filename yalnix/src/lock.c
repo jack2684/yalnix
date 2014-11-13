@@ -14,6 +14,11 @@ lock_t *lock_init() {
     }
 
     lock->id = util_new_id();
+    if(lock->id < 0) {
+        log_err("Cannot get lock id!");
+        return NULL;
+    }
+    log_info("Get lock id %d", lock->id);
     lock->waits = dlist_init();
     lock->owner = NULL;
     util_add(lock->id, lock, LOCK);

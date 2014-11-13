@@ -67,7 +67,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         return _FAILURE;
     }
 
-    log_info("Open file DONE.");
+    //log_info("Open file DONE.");
   /*
    * Figure out in what region 1 page the different program sections
    * start and end
@@ -80,16 +80,16 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
    *  the new stack that we are building.  Also count the number of
    *  arguments, to become the argc that the new "main" gets called with.
    */
-    log_info("Set boundaries done, about to calculate the args");
+    //log_info("Set boundaries done, about to calculate the args");
     size = 0;
     for (i = 0; args[i] != NULL; i++) {
-        log_info("counting arg %d = '%s'", i, args[i]);
-        log_info("counting arg %d = '%s'\n", i, args[i]);
+        //log_info("counting arg %d = '%s'", i, args[i]);
+        //log_info("counting arg %d = '%s'\n", i, args[i]);
         size += strlen(args[i]) + 1;
     }
     argcount = i;
 
-    log_info("argsize %d, argcount %d", size, argcount);
+    //log_info("argsize %d, argcount %d", size, argcount);
   
   /*
    *  The arguments will get copied starting at "cp", and the argv
@@ -115,18 +115,18 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
 
 
-    log_info("prog_size %d, text %d data %d bss %d pages",
-      li.t_npg + data_npg, li.t_npg, li.id_npg, li.ud_npg);
+    //log_info("prog_size %d, text %d data %d bss %d pages",
+      //li.t_npg + data_npg, li.t_npg, li.id_npg, li.ud_npg);
 
 
   /* 
    * Compute how many pages we need for the stack */
     stack_npg = (VMEM_1_LIMIT - DOWN_TO_PAGE(cp2)) >> PAGESHIFT;
 
-    log_info("heap_size %d, stack_size %d",
-	            li.t_npg + data_npg, stack_npg);
-    log_info("heap_size %d, stack_size %d",
-                     li.t_npg + data_npg, stack_npg);
+    //log_info("heap_size %d, stack_size %d",
+	            //li.t_npg + data_npg, stack_npg);
+    //log_info("heap_size %d, stack_size %d",
+                  //   li.t_npg + data_npg, stack_npg);
 
 
     /* leave at least one page between heap and stack */
@@ -148,7 +148,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 // ==>> Here you replace your data structure proc
 // ==>> proc->context.sp = cp2;
     proc->user_context.sp = cp2; // @TODO: user context or kernel context?
-    ("proc->user_context sp: %p", proc->user_context.sp);
+    //log_info("proc->user_context sp: %p", proc->user_context.sp);
 
     /*
      * Now save the arguments in a separate buffer in region 0, since
@@ -157,7 +157,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     cp2 = argbuf = (char *)malloc(size);
 // ==>> You should perhaps check that malloc returned valid space
     if(cp2 == NULL) {
-        log_info("Malloc for cp2/argbuf error!");
+        log_err("Malloc for cp2/argbuf error!");
     }
 
     for (i = 0; args[i] != NULL; i++) {
@@ -188,12 +188,12 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
     // Clean slate
     rc = unmap_page_to_frame(user_page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
     if(rc) {
-        log_info("Clean slate err");
+        log_err("Clean slate err");
         return _FAILURE;
     }
-    log_info("Clean page table DONE");
+    //log_info("Clean page table DONE");
     set_user_page_table(proc->page_table);
-    log_info("Set page table done.");
+    //log_info("Set page table done.");
 
     /* Set user memory boundaries*/
     user_memory.text_low     = (unsigned int)VMEM_1_BASE;
@@ -218,7 +218,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         log_err("Map text seg error");
         return _FAILURE;
     }
-    log_info("Map user text DONE");
+    //log_info("Map user text DONE");
     
 // ==>> Allocate "data_npg" physical pages and map them starting at
 // ==>> the    "data_pg1" in region 1 address space.    
@@ -229,7 +229,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         log_err("map data seg error");
         return _FAILURE;
     }
-    log_info("Map user data DONE");
+    //log_info("Map user data DONE");
 
     /*
      * Allocate memory for the user stack too.
@@ -246,7 +246,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         log_err("Map stack seg error");
         return _FAILURE;
     }
-    log_info("Map user stack with #%d pages DONE", stack_npg);
+    //log_info("Map user stack with #%d pages DONE", stack_npg);
 
     /*
      * All pages for the new address space are now in the page table.    
@@ -275,7 +275,7 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
         return KILL;
     }
 
-    log_info("Read file DONE");
+    //log_info("Read file DONE");
 
     /*
      * Now set the page table entries for the program text to be readable
@@ -289,14 +289,14 @@ int LoadProgram(char *name, char *args[], pcb_t *proc)
 
     close(fd);			/* we've read it all now */
     set_ptes(user_page_table, text_pg1, text_pg1 + li.t_npg, PROT_READ | PROT_EXEC); 
-    log_info("Set ptes DONE");
+    //log_info("Set ptes DONE");
 
   /*
    * Zero out the uninitialized data area
    */
-    log_info("About to bzero from %p to %p", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
+    //log_info("About to bzero from %p to %p", (void*)li.id_end, (void*)(li.id_end + li.ud_end - li.id_end ));
     bzero((void*)li.id_end, li.ud_end - li.id_end);
-    log_info("Bzero DONE");
+    //log_info("Bzero DONE");
 
   /*
    * Set the entry point in the exception frame.

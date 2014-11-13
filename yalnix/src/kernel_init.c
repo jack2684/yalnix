@@ -155,6 +155,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     //char* tmp[] = {NULL};
     log_info("Init pcb basic");
     init_processes();
+    init_util();
     init_tty();           
     
     // Create the very first process
@@ -191,7 +192,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = GET_PAGE_NUMBER(new_addr);
     uint32 current_page_bound = GET_PAGE_NUMBER(kernel_memory.brk_high);
-    log_info("SetKernelBrk current brk %p(#%d) and new addr %p(#%d)", kernel_memory.brk_high, GET_PAGE_NUMBER(kernel_memory.brk_high), new_addr, GET_PAGE_NUMBER(new_addr));
+    //log_info("SetKernelBrk current brk %p(#%d) and new addr %p(#%d)", kernel_memory.brk_high, GET_PAGE_NUMBER(kernel_memory.brk_high), new_addr, GET_PAGE_NUMBER(new_addr));
     
     // Boudaries check 
     if(new_addr > kernel_memory.swap_addr - PAGESIZE) {
@@ -229,7 +230,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
         }
     }
     kernel_memory.brk_high = new_addr;
-    log_info("SetKernelBrk current brk to %p Done", kernel_memory.brk_high);
+    //log_info("SetKernelBrk current brk to %p Done", kernel_memory.brk_high);
     return _SUCCESS;
 }
 

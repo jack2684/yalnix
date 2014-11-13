@@ -34,6 +34,7 @@ int aux_get_next_id(dlist_t *id_list);
 
 /* Utilities management
  */
+int init_util();
 int util_new_id();
 int util_reclaim_id(int id);
 int util_add(int id, void *data, enum util_type type);
