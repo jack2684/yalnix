@@ -88,7 +88,6 @@ void tell_parent(pcb_t *proc) {
     }
 
     if(parent->wait_zombie) {
-        log_info("About to free my parent from waiting");
         rm_wait_queue(parent);
         en_zombie_queue(parent, proc);
         en_ready_queue(parent);
@@ -103,6 +102,7 @@ int en_zombie_queue(pcb_t* parent, pcb_t* child) {
         log_err("Cannot add exit code to parent PID(%d)", parent->pid);
         return 1;
     }
+    log_info("PID(%d) added to zombie queue, q size is %d", child->pid, parent->zombie->size);
     child->list_node = n;
     child->state = ZOMBIE;
     return 0;
@@ -111,6 +111,7 @@ int en_zombie_queue(pcb_t* parent, pcb_t* child) {
 /* Completely free the PCB block
  */
 int free_proc(pcb_t *proc) {
+    log_info("Going to destryo process PID(%d)", proc->pid);
     int rc, pid = proc->pid;
     rc = unmap_page_to_frame(proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
     if(rc) {

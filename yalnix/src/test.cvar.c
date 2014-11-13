@@ -38,14 +38,14 @@ void share_set() {
     }
 }
 
-void share_consume() {
+void consume() {
     //TtyPrintf(TTY_ID, "\tPID(%d) inside %s\n", GetPid(), __func__);
     share_get();
     resource--;
     share_set();
 }
 
-void share_produce() {
+void produce() {
     //TtyPrintf(TTY_ID, "\tPID(%d) inside %s\n", GetPid(), __func__);
     share_get();
     resource++;
@@ -62,7 +62,7 @@ void main(int argc, char **argv)
     int lockid = LockInit();	
 	int cvarid = CvarInit();
 	int pid = Fork();
-    int cnt = 11;
+    int cnt = 3;
     
 	if(pid == 0){
         pid = GetPid();
@@ -109,6 +109,10 @@ void main(int argc, char **argv)
             //TtyPrintf(TTY_ID, "PID(%d): release lock %d\n", pid, lockid);
         }
 	}
+
+    int status;
+    TtyPrintf(TTY_ID, "PID(%d): Wait for my children\n", pid);
+    Wait(&status);
     TtyPrintf(TTY_ID, "Cvar test done\n");
 	Exit(0);
 	return;

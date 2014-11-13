@@ -55,9 +55,10 @@ void main(int argc, char **argv)
      	Exit(0);
     }
 
+    int status;
     TtyPrintf(TTY_ID, "%d: Waiting children\n", GetPid());
-    Wait(); // Wait for children to be done
-    Wait(); // Wait for children to be done
+    Wait(&status); // Wait for children to be done
+    Wait(&status); // Wait for children to be done
     TtyPrintf(TTY_ID, "%d: Waiting done\n", GetPid());
 
 
