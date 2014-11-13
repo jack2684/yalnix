@@ -4,8 +4,9 @@
 
 #include "hardware.h"
 #include "yalnix.h"
-#include "memory.h"
 #include "dlist.h"
+#include "aux.h"
+#include "memory.h"
 
 #define MAX_PROCS 1024
 
@@ -48,9 +49,7 @@ typedef struct y_PCB {
 
     // Utilities
     char            *tty_buf;
-    dlist_t         *pipe_id_list;
-    dlist_t         *lock_id_list;
-    dlist_t         *cvar_id_list;
+    dlist_t         *util_list;         // List of utils, includes lock, pipe and cvar
 } pcb_t;
 
 extern pcb_t   *init_proc;          
@@ -68,9 +67,11 @@ void init_processes();
 pcb_t* init_user_proc(pcb_t *parent);
 void init_idle_proc(void);
 int en_ready_queue(pcb_t *proc);
+int proc_enqueue(dlist_t *queue, pcb_t *proc);
+pcb_t *proc_dequeue(dlist_t *queue);
 void save_and_en_ready_queue(pcb_t *proc, UserContext *user_context);
-pcb_t* de_ready_queue();
-pcb_t* rm_ready_queue(pcb_t *proc);
+pcb_t *de_ready_queue();
+pcb_t *rm_ready_queue(pcb_t *proc);
 void round_robin_schedule(UserContext *user_context);
 void next_schedule(UserContext *user_context);
 void pick_schedule(UserContext *user_context, pcb_t *next_proc);

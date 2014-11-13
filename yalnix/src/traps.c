@@ -52,6 +52,7 @@ void trap_kernel_handler(UserContext *user_context){
             Y_Exit(user_context->regs[0], user_context);
             break;
         case YALNIX_GETPID:
+            log_info("GETPID param come out of no where %d", user_context->regs[0]);
             user_context->regs[0] = Y_GetPid(user_context);
             break;
         case YALNIX_BRK:
@@ -76,6 +77,7 @@ void trap_kernel_handler(UserContext *user_context){
                                                 user_context);
             break;
         case YALNIX_TTY_WRITE:
+            log_info("YALNIX_TTY_WRITE param come out of no where %d", user_context->regs[0]);
             user_context->regs[0] = Y_TtyWrite(user_context->regs[0], 
                                                 (char *)user_context->regs[1], 
                                                 user_context->regs[2], 

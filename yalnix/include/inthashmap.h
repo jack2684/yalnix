@@ -27,9 +27,9 @@ typedef struct IHMAP {
 hashmap_t *hashmap_init();
 int hashmap_clear(hashmap_t *hmap);
 int hashmap_destroy(hashmap_t *hmap);
-void *hashmap_get(hashmap_t *hmap, uint32 key);
 int hashmap_put(hashmap_t *hmap, uint32 key, void *data);
-int hashmap_rm(hashmap_t *hmap, uint32 key);
+void *hashmap_get(hashmap_t *hmap, uint32 key);
+void *hashmap_rm(hashmap_t *hmap, uint32 key);
 
 // Internal helper funciton
 uint32 do_hash(uint32 key);

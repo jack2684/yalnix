@@ -173,6 +173,34 @@ int en_wait_queue(pcb_t *proc) {
     return 0;
 }
 
+int proc_enqueue(dlist_t *queue, pcb_t *proc) {
+    if(queue == NULL || proc == NULL) {
+        log_info("queue or proc is empty");
+        return 1;
+    }
+    dnode_t *n = dlist_add_tail(queue, proc);
+    if(!n) {
+        log_err("PID(%d) cannot add to queue");
+        return 1;
+    }
+    proc->list_node = n;
+    proc->state = WAIT;
+    return 0;
+}
+
+pcb_t* proc_dequeue(dlist_t *queue) {
+    if(queue == NULL) {
+        log_err("queue is NULL");
+        return NULL;
+    }
+    pcb_t *proc = (pcb_t*)dlist_rm_head(queue);
+    if(proc == NULL) {
+        log_err("Cannot get any proc from this queue");
+        return NULL;
+    }
+    return proc;
+}
+
 /* Get one zombie child from zombie queue
  */
 pcb_t* de_zombie_queue(pcb_t* proc){

@@ -83,7 +83,7 @@ int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){
 void try_wake_up_writer(pipe_t *pipe) {
     // Try wake up writer, if any
     if(pipe->write_queue->size) {
-        pcb_t *write_proc = pipe_dequeue(pipe->write_queue);
+        pcb_t *write_proc = proc_dequeue(pipe->write_queue);
         en_ready_queue(write_proc);
     }
 }
@@ -143,8 +143,8 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context){
 
 void try_wake_up_reader(pipe_t *pipe) {
     // Try wake up reader, if any
-    if(pipe->read_queue->size) {
-        pcb_t *read_proc = pipe_dequeue(pipe->read_queue);
+   if(pipe->read_queue->size) {
+        pcb_t *read_proc = proc_dequeue(pipe->read_queue);
         en_ready_queue(read_proc);
     }
 }
@@ -167,7 +167,7 @@ void write_this_much(pipe_t *pipe, char *buff, int len) {
 
 int block_reader(pipe_t *pipe, UserContext *user_context) {
     log_info("Not enough to read, going to wait for a while");
-    int rc = pipe_enqueue(pipe->read_queue, running_proc);
+    int rc = proc_enqueue(pipe->read_queue, running_proc);
     if(rc) {
         log_err("Cannot enqueue the pipe read queue");
         return 1;
@@ -178,37 +178,13 @@ int block_reader(pipe_t *pipe, UserContext *user_context) {
 
 int block_writer(pipe_t *pipe, UserContext *user_context) {
     log_info("Not enough to write, going to wait for a while");
-    int rc = pipe_enqueue(pipe->write_queue, running_proc);
+    int rc = proc_enqueue(pipe->write_queue, running_proc);
     if(rc) {
         log_err("Cannot enqueue the pipe write queue");
         return 1;
     }
     next_schedule(user_context);
     return 0;
-}
-
-int pipe_enqueue(dlist_t *queue, pcb_t *proc) {
-    if(queue == NULL || proc == NULL) {
-        log_err("queue(%p) or proc(%p) pointer is null", queue, proc);
-        return 1;
-    }
-
-    dnode_t *n = dlist_add_tail(queue, proc);
-    if(!n) {
-        log_err("Not able to add PID(%d) to queue", proc->pid);
-        return 1;
-    }
-    proc->list_node = n;
-    proc->state = WAIT;
-    return 0;
-}
-
-pcb_t *pipe_dequeue(dlist_t *queue) {
-    pcb_t *proc = (pcb_t*)dlist_rm_head(queue);
-    if(proc == NULL) {
-        log_err("Cannot get any proc from this pipe queue");
-    }
-    return proc;
 }
 
 int free_pipe(pipe_t *pipe) { 

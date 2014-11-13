@@ -36,9 +36,6 @@ int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int free_pipe(pipe_t *pipe);
 
 // Internal helper funcitons
-pcb_t *pipe_dequeue(dlist_t *queue);
-int pipe_enqueue(dlist_t *queue, pcb_t *proc);
-int get_next_pipe_id();
 int get_buff_size(pipe_t *pipe);
 int block_reader(pipe_t *pipe, UserContext *user_context);
 int block_writer(pipe_t *pipe, UserContext *user_context);

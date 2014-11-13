@@ -59,26 +59,28 @@ int hashmap_put(hashmap_t *hmap, uint32 key, void *data) {
     return 1;
 }
 
-int hashmap_rm(hashmap_t *hmap, uint32 key) {
+void *hashmap_rm(hashmap_t *hmap, uint32 key) {
     uint32 hash = do_hash(key);
     int i, idx;
+    void *data = NULL;
 
     if(hmap->size == hmap->capacity) {
         log_err("Hashmap is already full!!!", key, key);
-        return 1;
+        return NULL;
     }
 
     for(i = 0; i < hmap->capacity; i++) {
         idx = (hash % hmap->capacity + i) % hmap->capacity;
         if(hmap->keys[idx] == key) {
+            data = hmap->datas[idx];
             hmap->datas[idx] = NULL;
             hmap->size--;
-            return 0;
+            return data;
         }
     }
 
     log_err("Cannot put the data for key %u/%d", key, key);
-    return 1;
+    return NULL;
 }
 
 int hashmap_destroy(hashmap_t *hmap) {

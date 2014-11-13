@@ -2,9 +2,10 @@
 #include "common.h"
 #include "hardware.h"
 
-int skip_test(int i ) {
+int do_test(int i ) {
     return 0 
-        || i == 0
+        //|| i == 0
+        || i == 1
         ;
 }
 
@@ -18,7 +19,7 @@ void main(int argc, char **argv) {
     int exit_status;
     int* a;
     a = (int*)malloc(sizeof(int) * 100);
-    user_log("Init program has PID(%d)", GetPid());
+    user_log("Init program has PID(%d)", GetPid(123, NULL, 123));
 
     /* Begin test programs
      */
@@ -28,7 +29,7 @@ void main(int argc, char **argv) {
     tests[0] = "src/test.tty";
     tests[1] = "src/test.pipe";
     for(i = 0; i < test_cnt; i++) {
-        if(skip_test(i)) {
+        if(!do_test(i)) {
             continue;
         }
         pid= Fork();
