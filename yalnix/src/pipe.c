@@ -1,17 +1,10 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
 #include "pipe.h"
 
-hashmap_t *pipe_idp = NULL;
-dlist_t *pipe_id_list = NULL;
+//hashmap_t *pipe_idp;
+//dlist_t *pipe_id_list;
 
 pipe_t *pipe_init() {
-    if(pipe_idp == NULL) {
-        pipe_idp = hashmap_init();
-        if(pipe_idp == NULL) {
-            log_err("Cannot init hash map pipe_idp");
-            return NULL;
-        }
-    }
     pipe_t *pipe = (pipe_t*)malloc(sizeof(pipe_t));
     if(pipe == NULL) {
         log_err("Cannot create new pipe using malloc");
@@ -19,7 +12,7 @@ pipe_t *pipe_init() {
     }
     bzero(pipe, sizeof(pipe_t));
 
-    pipe->id = get_next_pipe_id();
+    pipe->id = util_new_id();
     if(pipe->id == -1) {
         log_err("Cannot get new pipe id");
         free(pipe);
@@ -44,8 +37,8 @@ pipe_t *pipe_init() {
         return NULL;
     }
 
-    log_info("Pipe %d is going to pushed into hashmap pipe_idp %p", pipe->id, pipe_idp);
-    hashmap_put(pipe_idp, pipe->id, pipe); 
+    log_info("Pipe %d is going to pushed into hashmap idp %p", pipe->id, idp);
+    util_put(pipe->id, pipe); 
     return pipe;
 }
 
@@ -202,7 +195,7 @@ int free_pipe(pipe_t *pipe) {
     free(pipe->buff);
     free(pipe);
     pipe = NULL;
-    id_generator_push(pipe_id_list, id);
+    util_reclaim_id(id);
     log_info("pipe %d is freed", id);
     return 0;
 }
@@ -216,14 +209,6 @@ int get_buff_size(pipe_t *pipe) {
     }
     log_info("Current buff size is %d", size);
     return size;
-}
-
-int get_next_pipe_id() {
-    if(pipe_id_list == NULL) {
-        pipe_id_list = id_generator_init(MAX_PIPES);
-    }
-
-    return id_generator_pop(pipe_id_list);
 }
 
 int RIDX(pipe_t *pipe) {

@@ -27,8 +27,8 @@ typedef struct PIPE {
                             // though it can be extended to pipe with more than two processes
 } pipe_t;
 
-extern hashmap_t *pipe_idp;
-extern dlist_t *pipe_id_list;
+//extern hashmap_t *pipe_idp;
+//extern dlist_t *pipe_id_list;
 
 pipe_t *pipe_init();
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context);

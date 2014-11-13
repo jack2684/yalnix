@@ -256,7 +256,7 @@ int Y_PipeInit() {
 int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
     log_info("PID(%d) going to read from pipe %d", running_proc->pid, pipe_id);
 
-    pipe_t *pipe = hashmap_get(pipe_idp, pipe_id);
+    pipe_t *pipe = (pipe_t*)util_get(pipe_id);
     log_info("Got pipe pointer %p", pipe);
     if(pipe == NULL) {
         log_err("Cannot get pipe %d from hashmap", pipe->id);
@@ -268,7 +268,7 @@ int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
 int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
     log_info("PID(%d) going to write to pipe %d", running_proc->pid, pipe_id);
     
-    pipe_t *pipe = hashmap_get(pipe_idp, pipe_id);
+    pipe_t *pipe = (pipe_t*)util_get(pipe_id);
     if(pipe == NULL) {
         log_err("Cannot get pipe %d from hashmap", pipe->id);
     }

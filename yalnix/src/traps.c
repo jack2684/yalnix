@@ -175,11 +175,11 @@ void trap_tty_receive_handler(UserContext *user_context)
     unsigned int tty_id = user_context->code;
     int chars_get;
 
-    log_info("Get sth from terminal when read queue size: %d", tty_read_queues[tty_id]->size);
+    //log_info("Get sth from terminal when read queue size: %d", tty_read_queues[tty_id]->size);
     pcb_t *proc = peek_tty_read_queue(tty_id);
     while(proc != NULL) {
         chars_get = TtyReceive(tty_id, proc->tty_buf, proc->exit_code);
-        log_info("PID(%d) gets %d chars from term %d: %s", proc->pid, chars_get, tty_id, proc->tty_buf);
+        //log_info("PID(%d) gets %d chars from term %d: %s", proc->pid, chars_get, tty_id, proc->tty_buf);
         if(chars_get) {
             proc->exit_code = chars_get; 
             tty_read_dequeue(tty_id);
@@ -190,7 +190,7 @@ void trap_tty_receive_handler(UserContext *user_context)
         proc = peek_tty_read_queue(tty_id);
     }
 
-    log_info("Ends tty receive: current pid = %u", running_proc->pid);
+    //log_info("Ends tty receive: current pid = %u", running_proc->pid);
     return;
 }
 
@@ -202,11 +202,11 @@ void trap_tty_transmit_handler(UserContext *user_context)
 {
     unsigned int tty_id = user_context->code;
     
-    log_info("Starts tty transmit: current pid = %u, tty num = %u", tty_writing_procs[tty_id]->pid, tty_id);
+    //log_info("Starts tty transmit: current pid = %u, tty num = %u", tty_writing_procs[tty_id]->pid, tty_id);
     tty_write_next_ready(tty_id);
     en_ready_queue(tty_writing_procs[tty_id]);
     set_write_proc(NULL, tty_id);
-    log_info("Ends tty transmit: current pid = %u", running_proc->pid);
+    //log_info("Ends tty transmit: current pid = %u", running_proc->pid);
     return;
 }
 

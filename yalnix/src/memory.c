@@ -164,7 +164,6 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
         }
     }
 
-    log_info("Map done");
     // Flush the toilet!
     flush_region_TLB(page_table);
     return rc;
