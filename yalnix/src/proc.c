@@ -87,7 +87,7 @@ void tell_parent(pcb_t *proc) {
         return;
     }
 
-    if(parent->state == WAIT) {
+    if(parent->wait_zombie) {
         log_info("About to free my parent from waiting");
         rm_wait_queue(parent);
         en_zombie_queue(parent, proc);
@@ -385,7 +385,7 @@ pcb_t* de_ready_queue() {
 void round_robin_schedule(UserContext *user_context) {
     // Don't push running_proc into ready quueue if it is a idle proc
     //log_info("Inside round robin");
-    log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
+    //log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
     if(!ready_queue->size) {
         return;
     }   

@@ -163,7 +163,11 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     // using Exec()
     log_info("Init init");
     init_init_proc();
-    LoadProgram("src/init", cmd_args, init_proc);
+    if(cmd_args[0] == NULL) {
+        LoadProgram("src/init", cmd_args, init_proc);
+    } else {
+        LoadProgram(cmd_args[0], cmd_args, init_proc);
+    }
     *uctxt = init_proc->user_context;
     log_info("Get the first context");
     save_user_runtime(init_proc, uctxt);

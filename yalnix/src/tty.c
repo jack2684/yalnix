@@ -153,10 +153,13 @@ int tty_proc_enqueue(dlist_t *tty_queue, pcb_t *proc)
  */
 pcb_t* tty_proc_dequeue(dlist_t *tty_queue)
 {
+    if(tty_queue->size == 0) {
+        return NULL;
+    }
     //log_info("Before tty dequeue, queue size %d", tty_queue->size);
     pcb_t *one_to_go = dlist_rm_head(tty_queue);
     if(one_to_go == NULL) {
-        log_info("Nothing to dequeue");
+        log_err("Nothing to dequeue");
         return NULL;
     }
     //log_info("Tty dequeue with PID(%d), size: %d", one_to_go->pid, tty_queue->size);

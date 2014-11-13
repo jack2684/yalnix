@@ -2,7 +2,7 @@
 #include "common.h"
 #include "../include/hardware.h"
 
-#define TTY_ID 2
+#define TTY_ID 3
 //test int LockInit(int *lock_idp)
 //test int Acquire(int lock id)
 //test int Release(int lock id)
@@ -13,7 +13,7 @@ void main(int argc, char **argv)
 	int pid, lock_id, i, rc;
     
     user_log("test.lock program has PID(%d)", GetPid());
-    int rc = LockInit(&lock_id);
+    lock_id = LockInit();
 
     TtyPrintf(TTY_ID, "%d: Successfully created lock with lock id %d\n", GetPid(), lock_id);
     i = 3;
@@ -25,7 +25,7 @@ void main(int argc, char **argv)
 
     while (--i) 
     {
-		//TtyPrintf(TTY_ID, "%d: Attempting to acquire lock id %d\n", GetPid(), lock_id);
+		TtyPrintf(TTY_ID, "%d: Attempting lock %d\n", GetPid(), lock_id);
 		rc = Acquire(lock_id);
 		if (rc == _FAILURE) 
 		{
@@ -33,7 +33,7 @@ void main(int argc, char **argv)
 			Exit(1);
     	}
 
-		TtyPrintf(TTY_ID, "%d: Acquired. Delay for 2 ticks and release the lock.\n", GetPid());
+		TtyPrintf(TTY_ID, "%d: Acquired lock %d.\n", GetPid(), lock_id);
 		Delay(2);
 		//TtyPrintf(TTY_ID, "%d: Back from delay.\n", GetPid());
 		
@@ -43,12 +43,13 @@ void main(int argc, char **argv)
 			TtyPrintf(TTY_ID, "Release lock failed\n");
 			Exit(1);
 	    }
+	    TtyPrintf(TTY_ID, "%d: Released lock %d\n", GetPid(), lock_id);
 
 	    //TtyPrintf(TTY_ID, "%d: Return value for previous attempt was %d\n", GetPid(), rc);
-	    TtyPrintf(TTY_ID, "%d: Lock successfully released and delay for 2 ticks\n", GetPid());
 	    Delay(2);
 	} 
   
+    TtyPrintf(TTY_ID, "%d: while done\n", GetPid());
     if (!pid)
     {
      	Exit(0);

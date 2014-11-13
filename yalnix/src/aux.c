@@ -90,10 +90,12 @@ int util_put(int id, void *data) {
 
 void *util_get(int id) {
     util_t *util = hashmap_get(idp, id);
+    log_info("UTIL Hashmap get done %p", util);
     if(util == NULL) {
         log_err("Cannot get data from hashmap, key %d", id);
         return NULL;
     }
+    log_info("Going to return util data %p", util->data);
     return util->data;
 }
 

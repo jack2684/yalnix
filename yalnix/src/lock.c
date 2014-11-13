@@ -36,6 +36,7 @@ int lock_acquire(lock_t *lock, UserContext *user_context) {
             return 1;
         }
         next_schedule(user_context);
+
     }
 
     if(lock->owner != running_proc) {
@@ -56,15 +57,18 @@ int lock_release(lock_t *lock) {
         log_err("This lock doesn't belong to PID(%d)", running_proc->pid);
         return 1;
     }
-
+    
+    log_info("Releasing lock %p", lock);
+    log_info("Lock waits addr %p", lock->waits);
     if(lock->waits->size) {
-        lock->owner = dlist_rm_head(lock->waits);
+        lock->owner = proc_dequeue(lock->waits);
         en_ready_queue(lock->owner);
+        log_info("PID(%d) release lock %d done, now the lock has owner PID(%d)!", running_proc->pid, lock->id, lock->owner->pid);
     } else {
         lock->owner = NULL;
+        log_info("PID(%d) release lock %d done, now the lock is empty!", running_proc->pid, lock->id);
     }
 
-    log_info("PID(%d) release lock %d done, now the lock has owner PID(%d)!", running_proc->pid, lock->id, lock->owner->pid);
     return 0;
 }
 
@@ -131,7 +135,7 @@ int cvar_signal(cvar_t* cvar) {
     }
 
     if(cvar->waits->size) {
-        pcb_t *next_proc = dlist_rm_head(cvar->waits);
+        pcb_t *next_proc = proc_dequeue(cvar->waits);
         en_ready_queue(next_proc);
     }
     return 0; 
@@ -144,7 +148,7 @@ int cvar_broadcast(cvar_t* cvar) {
     }
 
     while(cvar->waits->size) {
-        pcb_t *next_proc = dlist_rm_head(cvar->waits);
+        pcb_t *next_proc = proc_dequeue(cvar->waits);
         en_ready_queue(next_proc);
     }
     return 0; 

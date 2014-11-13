@@ -190,7 +190,7 @@ void *dlist_rm_this(dlist_t *list, dnode_t *node) {
     } else if (list->head == node) {
         list->head = node->next;
     } else {
-        _debug("Node is not the head of this list\n");
+        log_err("Node is not the head of this list");
         return NULL;
     }
     if(node->next) {
@@ -198,7 +198,7 @@ void *dlist_rm_this(dlist_t *list, dnode_t *node) {
     } else if (list->tail == node) {
         list->tail = node->prev;
     } else {
-        _debug("Node is not the tail of this list\n");
+        log_err("Node is not the tail of this list");
         return NULL;
     }
     free(node);

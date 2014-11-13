@@ -290,10 +290,12 @@ int Y_Acquire(int id, UserContext *user_context) {
 
 int Y_Release(int id) {
     lock_t *lock = (lock_t*)util_get(id);
+    log_info("Get lock at %p", lock);
     if(lock == NULL) {
         log_err("Error getting lock id %d", id);
         return -1;
     }
+    log_info("Going to release");
     return lock_release(lock);
 }
 
