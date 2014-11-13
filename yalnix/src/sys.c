@@ -155,7 +155,6 @@ int Y_Brk(uint32 addr){
     return _SUCCESS;
 }
 
-
 int Y_Delay(UserContext *user_context){
     int clock_ticks = user_context->regs[0];
 
@@ -276,7 +275,29 @@ int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
     return pipe_write(pipe, buf, len, user_context);
 }
 
-//int Y_Reclaim(int id){
+int Y_LockInit() {
+    return lock_init()->id;
+}
+
+int Y_Acquire(int id, UserContext *user_context) {
+    lock_t *lock = (lock_t*)util_get(id);
+    if(lock == NULL) {
+        log_err("Error getting lock id %d", id);
+        return -1;
+    }
+    return lock_acquire(lock, user_context);
+}
+
+int Y_Release(int id) {
+    lock_t *lock = (lock_t*)util_get(id);
+    if(lock == NULL) {
+        log_err("Error getting lock id %d", id);
+        return -1;
+    }
+    return lock_release(lock);
+}
+
+int Y_Reclaim(int id) {
 //	//FIND the lock using id
 //	//DESTROY the lock
 //
@@ -285,7 +306,7 @@ int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
 //
 //	//FIND the pipe using id
 //	//DESTROY the pipe
-//}
+}
 //
 ////Here are some extra syscalls below that could help implement some extra functions
 ////We will complete them if possible

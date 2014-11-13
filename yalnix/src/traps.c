@@ -29,11 +29,17 @@ char *get_sys_call_name(u_long code) {
         case YALNIX_TTY_WRITE:
             return "YALNIX_TTY_WRITE";
         case YALNIX_PIPE_INIT:
-            return "YALNIX_TTY_WRITE";
+            return "YALNIX_PIPE_INIT";
         case YALNIX_PIPE_READ:
-            return "YALNIX_TTY_WRITE";
+            return "YALNIX_PIPE_READ";
         case YALNIX_PIPE_WRITE:
-            return "YALNIX_TTY_WRITE";
+            return "YALNIX_PIPE_WRITE";
+        case YALNIX_LOCK_INIT:
+            return "YALNIX_LOCK_INIT";
+        case YALNIX_LOCK_ACQUIRE:
+            return "YALNIX_LOCK_ACQUIRE";
+        case YALNIX_LOCK_RELEASE:
+            return "YALNIX_LOCK_RELEASE";
         default:
             break;
     } 
@@ -97,6 +103,15 @@ void trap_kernel_handler(UserContext *user_context){
                                                 (char *)user_context->regs[1], 
                                                 user_context->regs[2], 
                                                 user_context);
+            break;
+        case YALNIX_LOCK_INIT:
+            user_context->regs[0] = Y_LockInit();
+            break;
+        case YALNIX_LOCK_ACQUIRE:
+            user_context->regs[0] = Y_Acquire(user_context->regs[0], user_context);
+            break;
+        case YALNIX_LOCK_RELEASE:
+            user_context->regs[0] = Y_Release(user_context->regs[0]);
             break;
         default:
             break;

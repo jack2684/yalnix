@@ -1,29 +1,26 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
 #include "lock.h"
 
-hashmap_t *lock_idp = NULL;
-dlist_t *lock_id_list = NULL;
-hashmap_t *cvar_idp = NULL;
-dlist_t *cvar_id_list = NULL;
+//hashmap_t *lock_idp = NULL;
+//dlist_t *lock_id_list = NULL;
+//hashmap_t *cvar_idp = NULL;
+//dlist_t *cvar_id_list = NULL;
 
 lock_t *lock_init() {
-    if(lock_idp == NULL) {
-        lock_idp = hashmap_init();
-        if(lock_idp == NULL) {
-            log_err("Cannot init hash map lock_idp");
-            return NULL;
-        }
-    }
     lock_t *lock = (lock_t*)malloc(sizeof(lock_t));
+    if(lock == NULL) {
+        log_err("Cannot init lock!!");
+        return NULL;
+    }
 
-    lock->id = get_next_lock_id();
+    lock->id = util_new_id();
     lock->waits = dlist_init();
     lock->owner = NULL;
-    hashmap_put(lock_idp, lock->id, lock);
+    util_put(lock->id, lock);
     return lock;
 }
 
-int locK_acquire(lock_t *lock, UserContext *user_context) {
+int lock_acquire(lock_t *lock, UserContext *user_context) {
     if(lock == NULL) {
         log_err("The lock pointer is NULL");
         return 1;
@@ -49,7 +46,7 @@ int locK_acquire(lock_t *lock, UserContext *user_context) {
     return 0;
 }
 
-int locK_release(lock_t *lock) {
+int lock_release(lock_t *lock) {
     if(lock == NULL) {
         log_err("The lock pointer is NULL");
         return 1;
@@ -73,7 +70,7 @@ int locK_release(lock_t *lock) {
 
 int free_lock(lock_t *lock) {
     int id = lock->id;
-    if(lock->owner != lock->id) {
+    if(lock->owner != running_proc) {
         log_err("You cannot free some one else's lock");
         return 1;
     }
@@ -87,24 +84,20 @@ int free_lock(lock_t *lock) {
     }
     free(lock);
     lock = NULL;
-    id_generator_push(lock_id_list, id);
+    util_reclaim_id(id);
     return 0;
 }
 
 cvar_t *cvar_init() {
-    if(cvar_idp == NULL) {
-        cvar_idp = hashmap_init();
-        if(cvar_idp == NULL) {
-            log_err("Cannot init hash map lock_idp");
-            return NULL;
-        }
-    }
     cvar_t *cvar = (cvar_t*)malloc(sizeof(cvar_t));
+    if(cvar == NULL) {
+        log_err("Cannot init cvar");
+    }
 
-    cvar->id = get_next_cvar_id();
+    cvar->id = util_new_id();
     cvar->waits = dlist_init();
     cvar->owner = running_proc;
-    hashmap_put(cvar_idp, cvar->id, cvar);
+    util_put(cvar->id, cvar);
     return cvar;
 }
 
@@ -120,13 +113,13 @@ int cvar_wait(cvar_t* cvar, lock_t *lock, UserContext *user_context) {
 
     int rc = 0;
     log_info("PID(%d) about to release lock", running_proc->pid);
-    locK_release(lock);
+    lock_release(lock);
     log_info("PID(%d) release lock done", running_proc->pid);
     proc_enqueue(cvar->waits, running_proc);
     log_info("PID(%d) en waiting queue done", running_proc->pid);
     next_schedule(user_context);
     log_info("PID(%d) wake up from wait", running_proc->pid);
-    lock_acquire(lock);
+    lock_acquire(lock, user_context);
     log_info("PID(%d) lock acquire done", running_proc->pid);
     return 0;
 }
@@ -159,7 +152,7 @@ int cvar_broadcast(cvar_t* cvar) {
 
 int free_cvar(cvar_t *cvar) {
     int id = cvar->id;
-    if(cvar->owner != cvar->id) {
+    if(cvar->owner != running_proc) {
         log_err("You cannot free some one else's cvar");
         return 1;
     }
@@ -173,22 +166,7 @@ int free_cvar(cvar_t *cvar) {
     }
     free(cvar);
     cvar = NULL;
-    id_generator_push(cvar_id_list, id);
+    util_reclaim_id(id);
     return 0;
-}
-
-int get_next_lock_id() {
-    if(lock_id_list == NULL) {
-        lock_id_list = id_generator_init(MAX_LOCKS);
-    }
-    return id_generator_pop(lock_id_list);
-}
-
-int get_next_cvar_id() {
-    if(cvar_id_list == NULL) {
-        cvar_id_list = id_generator_init(MAX_LOCKS);
-    }
-
-    return id_generator_pop(cvar_id_list);
 }
 

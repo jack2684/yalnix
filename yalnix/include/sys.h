@@ -7,6 +7,7 @@
 #include "proc.h"
 #include "pipe.h"
 #include "tty.h"
+#include "lock.h"
 
 #define min(a, b) ( a > b ? b : a)
 
@@ -26,5 +27,9 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context);
 int Y_PipeInit();
 int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context);
 int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context);
+int Y_LockInit();
+int Y_Acquire(int id, UserContext *user_context);
+int Y_Release(int id);
+int Y_Reclaim(int id);
 #endif
 

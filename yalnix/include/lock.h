@@ -3,6 +3,7 @@
 #define _LOCK_H
 #include "inthashmap.h"
 #include "dlist.h"
+#include "proc.h"
 
 #define MAX_LOCKS 104
 
@@ -27,16 +28,15 @@ typedef struct y_Sem {
     lock_t    *lock;
 } sem_t;
 
-extern hashmap_t *lock_idp;
-extern dlist_t *lock_id_list;
-extern hashmap_t *cvar_idp;
-extern dlist_t *cvar_id_list;
-
+//extern hashmap_t *lock_idp;
+//extern dlist_t *lock_id_list;
+//extern hashmap_t *cvar_idp;
+//extern dlist_t *cvar_id_list;
 
 // Mutex lock
 lock_t *lock_init();
-int locK_acquire(lock_t *lock, UserContext *user_context);
-int locK_release(lock_t *lock);
+int lock_acquire(lock_t *lock, UserContext *user_context);
+int lock_release(lock_t *lock);
 int free_lock(lock_t *lock);
 
 // Condition variable lock
@@ -47,7 +47,6 @@ int cvar_broadcast(cvar_t* cvar);
 int free_cvar(cvar_t *cvar);
 
 // Helper functions
-int get_next_lock_id();
 
 #endif
 
