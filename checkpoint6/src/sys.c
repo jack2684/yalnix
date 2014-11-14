@@ -380,6 +380,47 @@ int Y_GetPipeSize(int pipe_id) {
     return get_buff_size(pipe);
 }
 
+int ValidatePtr(void *ptr, int length, int prot){
+    //pointer should not be NULL and length should at least 0
+    if(ptr == NULL || length < 0){
+	log_info("Error: NULL PTR or Negative Length\n");
+	return -1;
+    }
+    //Make sure the pointer is in user space
+    if((int)ptr < VMEM_1_BASE){
+	log_info("Error: PTR in Kernel Space\n");
+	return -1;
+    }else if((int)ptr >= VMEM_1_LIMIT){
+	log_info("Error: PTR over User Space\n");
+	return -1;
+    }
+    //Check the start page and end page of the buffer
+    int startPage = (int)(ptr - VMEM_1_BASE) >> PAGESHIFT;
+    int endPage = (int)(ptr - VMEM_1_BASE + length - 1) >> PAGESHIFT;
+    log_info("Validating Ptr %p with Length %d\n", ptr, length);
+    return 0;
+}
+
+int ValidateCStyle(void *ptr, int type){
+    //Validate each element
+    while(1){
+	//the buffer is at right place of memory
+	int result = ValidatePtr(ptr, type, PROT_READ);
+	if(result == -1)
+	    return -1;
+    	//if the element inside is char then the original will be a char[] and will end with '\0'
+	if(type == sizeof(char)){
+	    if(*((char *)ptr) == '\0')
+	        return 0;
+            ptr = ((char *)ptr) + 1;
+	//if the element inside is char pointer Then the origianl one will be a pointer to an array og pointer(char**) End with NULL
+	}else if(type == sizeof(char *)){
+	    if(*((char **)ptr) == NULL)
+		return 0;
+	    ptr = ((char **)ptr) + 1;
+	}
+    }
+}
 ////These are 3 custom syscalls
 //int Y_Custom0(){
 //	
