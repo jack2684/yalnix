@@ -26,8 +26,14 @@ int Y_Fork(UserContext *user_context){
 
 int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
     log_info("PID(%d) is going to exec %s", running_proc->pid, filename);
+    if(ValidatePtr(filename, strlen(filename)) == 0) {
+        log_err("filename pointer invalid!!");
+        return ERROR;
+    }
+    
     LoadProgram(filename, argvec, running_proc);
     *user_context = running_proc->user_context;
+    return 0;
 }
 
 int Y_Exit(int exit_code, UserContext *user_context){
@@ -44,9 +50,14 @@ int Y_Exit(int exit_code, UserContext *user_context){
     // Scheulde next process to run
     next_schedule(user_context);
     log_info("Next schedule done (this will never reached actually)");
+    return 0;
 }
 
 int Y_Wait(int * status_ptr, UserContext *user_context){
+    if(ValidatePtr(status_ptr, 4) == 0) {
+        log_err("Buff pointer invalid!!");
+        return ERROR;
+    }
     // Check if it is worth to wait
     if(!any_child_active(running_proc) && !running_proc->zombie->size) {
         log_info("Not woth to wait!! #zombie %d, and no children is active", running_proc->zombie->size);
@@ -76,37 +87,6 @@ int Y_Wait(int * status_ptr, UserContext *user_context){
         return 0; 
     }
 
-
-	//IF there are zombie children
-		//REMOVE their PCB from PCB list
-		//FREE PCB
-	//END IF
-
-	//IF there are no live children
-		//REPORT ERROR
-	//END IF
-
-	//BLOCK current process
-}
-
-int Y_WaitPid(int pid, int* status_ptr, int options){
-	//IF pid < -1
-		//WAIT for any child process in a process group whose pid is -pid
-	//END IF	
-	
-	//IF pid == -1
-		//CALL Wait()
-	//END IF
-	
-	//IF pid == 0
-		//WAIT for any child process in the same process group as the parent process
-	//END IF
-
-	//IF pid > 0
-		//WAIT for the child process whose pid equals the given pid argument
-	//END IF
-	
-	//SET the options argument to the default number 0
 }
 
 int Y_GetPid(UserContext *user_context){
@@ -180,6 +160,15 @@ int Y_Delay(UserContext *user_context){
 
 int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 {
+    if(tty_id < 0 || tty_id > 3) {
+        log_err("Invalid tty id: %d", tty_id);
+        return ERROR;
+    }
+    if(ValidatePtr(buf, len) == 0) {
+        log_err("Buff pointer invalid!!");
+        return ERROR;
+    }
+    
     int commit_len;
     char *commit_buf;
     int result = 0;
@@ -228,7 +217,15 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 {
     //log_info("Starts: tty_id = %d, buf = %p, len = %d, pid = %d", tty_id, buf, len, running_proc->pid);
-
+    if(tty_id < 0 || tty_id > 3) {
+        log_err("Invalid tty id: %d", tty_id);
+        return ERROR;
+    }
+    if(ValidatePtr(buf, len) == 0) {
+        log_err("Buff pointer invalid!!");
+        return ERROR;
+    }
+    
     tty_read_enqueue(running_proc, tty_id);
     
     running_proc->tty_buf = (void *)calloc(1, len);
@@ -255,6 +252,10 @@ int Y_PipeInit() {
 }
 
 int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
+    if(ValidatePtr(buf, len) == 0) {
+        log_err("Buff pointer invalid!!");
+        return ERROR;
+    }
     log_info("PID(%d) going to read from pipe %d", running_proc->pid, pipe_id);
 
     pipe_t *pipe = (pipe_t*)util_get(pipe_id);
@@ -267,6 +268,10 @@ int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
 }
 
 int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
+    if(ValidatePtr(buf, len) == 0) {
+        log_err("Buff pointer invalid!!");
+        return ERROR;
+    }
     log_info("PID(%d) going to write to pipe %d", running_proc->pid, pipe_id);
     
     pipe_t *pipe = (pipe_t*)util_get(pipe_id);
@@ -292,7 +297,6 @@ int Y_Acquire(int id, UserContext *user_context) {
 
 int Y_Release(int id) {
     lock_t *lock = (lock_t*)util_get(id);
-    log_info("Get lock at %p", lock);
     if(lock == NULL) {
         log_err("Error getting lock id %d", id);
         return -1;
@@ -380,34 +384,34 @@ int Y_GetPipeSize(int pipe_id) {
     return get_buff_size(pipe);
 }
 
-int ValidatePtr(void *ptr, int length, int prot){
+int ValidatePtr(void *ptr, int length){
     //pointer should not be NULL and length should at least 0
     if(ptr == NULL || length < 0){
-	log_info("Error: NULL PTR or Negative Length\n");
-	return -1;
+        log_err("Error: NULL PTR or Negative Length\n");
+        return 0;
     }
     //Make sure the pointer is in user space
     if((int)ptr < VMEM_1_BASE){
-	log_info("Error: PTR in Kernel Space\n");
-	return -1;
+        log_err("Error: PTR in Kernel Space\n");
+        return 0;
     }else if((int)ptr >= VMEM_1_LIMIT){
-	log_info("Error: PTR over User Space\n");
-	return -1;
+        log_err("Error: PTR over User Space\n");
+        return 0;
     }
     //Check the start page and end page of the buffer
-    int startPage = (int)(ptr - VMEM_1_BASE) >> PAGESHIFT;
-    int endPage = (int)(ptr - VMEM_1_BASE + length - 1) >> PAGESHIFT;
-    log_info("Validating Ptr %p with Length %d\n", ptr, length);
-    return 0;
+    //int startPage = (int)(ptr - VMEM_1_BASE) >> PAGESHIFT;
+    //int endPage = (int)(ptr - VMEM_1_BASE + length - 1) >> PAGESHIFT;
+    //log_info("Validating Ptr %p with Length %d\n", ptr, length);
+    return 1;
 }
 
 int ValidateCStyle(void *ptr, int type){
     //Validate each element
     while(1){
 	//the buffer is at right place of memory
-	int result = ValidatePtr(ptr, type, PROT_READ);
-	if(result == -1)
-	    return -1;
+	int result = ValidatePtr(ptr, type);
+	if(result == 0)
+	    return ERROR;
     	//if the element inside is char then the original will be a char[] and will end with '\0'
 	if(type == sizeof(char)){
 	    if(*((char *)ptr) == '\0')

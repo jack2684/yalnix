@@ -36,7 +36,7 @@ int Y_CvarSignal(int id);
 int Y_CvarBroadcast(int id);
 int Y_CvarWait(int cid, int lid, UserContext *user_context);
 
-int ValidatePtr(void *ptr, int length, int prot);
+int ValidatePtr(void *ptr, int length);
 int ValidateCStyle(void *ptr, int type);
 #endif
 
