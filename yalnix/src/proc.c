@@ -245,6 +245,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
     proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     if(!proc->page_table) {
         log_err("proc->page_table cannot be malloc!");
+        free(proc);
         return NULL;
     }
     bzero(proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
@@ -253,6 +254,8 @@ pcb_t *init_user_proc(pcb_t* parent) {
     proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
     if(!proc->kernel_stack_pages) {
         log_err("proc->kernel_stack_pages cannot be malloc!");
+        free(proc->page_table);
+        free(proc);
         return NULL;
     }
     bzero(proc->kernel_stack_pages, sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
@@ -580,7 +583,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
                                     kernel_memory.swap_addr);
         if(rc) {
             log_err("PID(%d) kernel stack cannot init", next_proc->pid);
-            return NULL;
+            return kernel_context;
         }
         //log_info("Init kernel context for PID(%d) done", next_proc->pid);
         next_proc->init_done = 1;

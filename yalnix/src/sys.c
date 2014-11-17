@@ -4,11 +4,16 @@
 //These are process syscalls
 int Y_Fork(UserContext *user_context){
     pcb_t *child = init_user_proc(running_proc);
+    if(child == NULL) {
+        log_err("Init child process fail");
+        return ERROR;
+    }
     running_proc->user_context.regs[0] = child->pid;
     child->user_context.regs[0] = 0;
     
     int rc = copy_user_runtime(child, running_proc, user_context);
     if(rc) {
+        free_proc(child);
         log_err("PID(%d) cannot copy PID(%d) runtime", child, running_proc);
         return -1;
     }
@@ -178,7 +183,7 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 
     commit_buf = (void *)calloc(1, TERMINAL_MAX_LINE);
     if (commit_buf == NULL) {
-            log_err("allocate buffer for tty transferring failed!\n");
+            log_err("allocate buffer for tty transferring failed!");
             log_info("result = %d, pid = %d", result, running_proc->pid);
             return _FAILURE;
     }

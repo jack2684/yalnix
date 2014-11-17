@@ -217,7 +217,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
                             new_page_bound, 
                             PROT_READ | PROT_WRITE);
         if(rc) {
-            log_err("Kernel Break: Not enough phycial memory\n");
+            log_err("Kernel Break: Not enough phycial memory");
             return _FAILURE;
         }
     } else if (new_addr < kernel_memory.brk_high) {

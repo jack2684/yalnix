@@ -107,7 +107,7 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
  */
 frame_t *rm_head_available_frame() {
     if(dlist_is_empty(available_frames) == 1) {
-        log_err("Frame list is empty, double check size: %d!\n", available_frames->size);
+        log_err("Frame list is empty, double check size: %d!", available_frames->size);
         return NULL;
     }
 

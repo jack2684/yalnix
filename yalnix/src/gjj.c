@@ -7,9 +7,11 @@ void main(void) {
     //int delays4[1024 * 4];
     //int delays5[1024 * 8];
     while(1) {
-        TracePrintf(1, "GJJ is coding like a boss.\n");
+        TtyPrintf(3, "PID(%d) about to fork very quickly\n", GetPid());
+        Fork();
+        //(1, "GJJ is coding like a boss.\n");
 //       Delay(delay);
-        Pause();
+//        Pause();
     }
     TracePrintf(1, "GJJ leaving the init proc\n");
     return;
