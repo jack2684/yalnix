@@ -15,7 +15,7 @@ int Y_Fork(UserContext *user_context){
     if(rc) {
         free_proc(child);
         log_err("PID(%d) cannot copy PID(%d) runtime", child, running_proc);
-        return -1;
+        return ERROR;
     }
     
     en_ready_queue(running_proc);
@@ -30,11 +30,12 @@ int Y_Fork(UserContext *user_context){
 }
 
 int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
-    log_info("PID(%d) is going to exec %s", running_proc->pid, filename);
-    if(ValidatePtr(filename, strlen(filename)) == 0) {
+    log_info("PID(%d) is going to exec %s.", running_proc->pid, filename);
+    if(!ValidatePtr(filename, 1)) {
         log_err("filename pointer invalid!!");
         return ERROR;
     }
+    log_info("Pass ValidatePtr!!");
     
     LoadProgram(filename, argvec, running_proc);
     *user_context = running_proc->user_context;
@@ -391,8 +392,10 @@ int Y_GetPipeSize(int pipe_id) {
 
 int ValidatePtr(void *ptr, int length){
     //pointer should not be NULL and length should at least 0
-    if(ptr == NULL || length < 0){
-        log_err("Error: NULL PTR or Negative Length\n");
+    log_info("Inside %s", __func__);
+    log_info("PTR is %p, length is %d", ptr, length);
+    if(ptr == NULL || length <= 0){
+        log_err("Error: NULL PTR or non positive Length");
         return 0;
     }
     //Make sure the pointer is in user space
