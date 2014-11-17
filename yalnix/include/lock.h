@@ -34,13 +34,13 @@ typedef struct y_Sem {
 //extern dlist_t *cvar_id_list;
 
 // Mutex lock
-lock_t *lock_init();
+int lock_init(int *id);
 int lock_acquire(lock_t *lock, UserContext *user_context);
 int lock_release(lock_t *lock);
 int free_lock(lock_t *lock);
 
 // Condition variable lock
-cvar_t *cvar_init();
+int cvar_init(int *id);
 int cvar_wait(cvar_t* cvar, lock_t *lock, UserContext *user_context);
 int cvar_signal(cvar_t* cvar);
 int cvar_broadcast(cvar_t* cvar);

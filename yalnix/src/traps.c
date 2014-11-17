@@ -100,7 +100,7 @@ void trap_kernel_handler(UserContext *user_context){
                                                 user_context);
             break;
         case YALNIX_PIPE_INIT:
-            user_context->regs[0] = Y_PipeInit();
+            user_context->regs[0] = Y_PipeInit((int*)user_context->regs[0]);
             break;
         case YALNIX_PIPE_READ:
             user_context->regs[0] = Y_PipeRead(user_context->regs[0], 
@@ -115,7 +115,7 @@ void trap_kernel_handler(UserContext *user_context){
                                                 user_context);
             break;
         case YALNIX_LOCK_INIT:
-            user_context->regs[0] = Y_LockInit();
+            user_context->regs[0] = Y_LockInit((int*)user_context->regs[0]);
             break;
         case YALNIX_LOCK_ACQUIRE:
             user_context->regs[0] = Y_Acquire(user_context->regs[0], user_context);
@@ -127,7 +127,7 @@ void trap_kernel_handler(UserContext *user_context){
             user_context->regs[0] = Y_Reclaim(user_context->regs[0]);
             break;
         case YALNIX_CVAR_INIT:
-            user_context->regs[0] = Y_CvarInit();
+            user_context->regs[0] = Y_CvarInit((int*)user_context->regs[0]);
             break;
         case YALNIX_CVAR_SIGNAL:
             user_context->regs[0] = Y_CvarSignal(user_context->regs[0]);

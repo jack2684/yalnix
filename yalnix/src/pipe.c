@@ -4,11 +4,11 @@
 //hashmap_t *pipe_idp;
 //dlist_t *pipe_id_list;
 
-pipe_t *pipe_init() {
+int pipe_init(int *id) {
     pipe_t *pipe = (pipe_t*)malloc(sizeof(pipe_t));
     if(pipe == NULL) {
         log_err("Cannot create new pipe using malloc");
-        return NULL;
+        return -1;
     }
     bzero(pipe, sizeof(pipe_t));
 
@@ -16,9 +16,9 @@ pipe_t *pipe_init() {
     if(pipe->id == -1) {
         log_err("Cannot get new pipe id");
         free(pipe);
-        return NULL;
+        return -1;
     }
-    log_info("Get pipe id %d", pipe->id);
+    *id = pipe->id;
     pipe->len = DEFAULT_LEN;
     pipe->read_idx = 0;
     pipe->write_idx = 0;
@@ -27,7 +27,7 @@ pipe_t *pipe_init() {
         log_err("Cannot init buff in pipe");
         free(pipe->buff);
         free(pipe);
-        return NULL;
+        return -1;
     }
     pipe->read_queue = dlist_init();
     pipe->write_queue = dlist_init();
@@ -35,12 +35,12 @@ pipe_t *pipe_init() {
         log_err("Cannot init read/write queue in pipe");
         free(pipe->buff);
         free(pipe);
-        return NULL;
+        return -1;
     }
 
     log_info("Pipe %d is going to pushed into hashmap idp %p", pipe->id, idp);
     util_add(pipe->id, pipe, PIPE); 
-    return pipe;
+    return 0;
 }
 
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context){

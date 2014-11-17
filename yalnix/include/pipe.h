@@ -30,7 +30,7 @@ typedef struct PIPE {
 //extern hashmap_t *pipe_idp;
 //extern dlist_t *pipe_id_list;
 
-pipe_t *pipe_init();
+int pipe_init(int *id);
 int pipe_read(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int pipe_write(pipe_t *pipe, char *buff, int len, UserContext *user_context);
 int free_pipe(pipe_t *pipe);

@@ -29,6 +29,7 @@ void Bouncer(int cvar, int mutex)
 // Keeps breaking in
 void ThatAnnoyingGuy(void)
 {
+    return;
     while (1)
     {
 	TtyPrintf(1, "Hey!  Hey!  You remember that time when...\n");
@@ -66,6 +67,9 @@ void MallocMan(void)
 	npg = rand() % 21;
 	TtyPrintf(2, "MallocMan: malloc'ing %d pages\n", npg);
 	ptr = malloc(PAGESIZE*npg);
+    if(ptr == NULL) {
+        TtyPrintf(2, "MallocMan: malloc %d pages fail!!!!!!!!!!\n", npg);
+    }
 	Delay(3);	
 	TtyPrintf(2, "MallocMan: freeing the stuff I just malloc'ed\n");
 	free(ptr);

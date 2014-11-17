@@ -215,8 +215,6 @@ int Y_TtyWrite(int tty_id, void *buf, int len, UserContext *user_context)
 
     free(commit_buf);
 
-    log_info("Len of printed chars = %d, pid = %d", result, running_proc->pid);
-
     return result;
 }
 
@@ -252,9 +250,11 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
     return running_proc->exit_code;
 }
 
-int Y_PipeInit() {
-    pipe_t *pipe = pipe_init();
-    return pipe->id;
+int Y_PipeInit(int *pipe_idp) {
+    if(pipe_init(pipe_idp)) {
+        return ERROR;
+    }
+    return 0;
 }
 
 int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
@@ -288,8 +288,11 @@ int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
     return pipe_write(pipe, buf, len, user_context);
 }
 
-int Y_LockInit() {
-    return lock_init()->id;
+int Y_LockInit(int *lock_idp) {
+    if(lock_init(lock_idp)) {
+        return ERROR;
+    }
+    return 0;
 }
 
 int Y_Acquire(int id, UserContext *user_context) {
@@ -340,8 +343,11 @@ int Y_Reclaim(int id) {
     return 0;
 }
 
-int Y_CvarInit() {
-    return cvar_init()->id;
+int Y_CvarInit(int *cvar_idp) {
+    if(cvar_init(cvar_idp)){
+        return ERROR;
+    }
+    return 0;
 }
 
 int Y_CvarSignal(int id) {

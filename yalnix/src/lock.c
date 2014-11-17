@@ -6,23 +6,24 @@
 //hashmap_t *cvar_idp = NULL;
 //dlist_t *cvar_id_list = NULL;
 
-lock_t *lock_init() {
+int lock_init(int *id) {
     lock_t *lock = (lock_t*)malloc(sizeof(lock_t));
     if(lock == NULL) {
         log_err("Cannot init lock!!");
-        return NULL;
+        return -1;
     }
 
     lock->id = util_new_id();
     if(lock->id < 0) {
         log_err("Cannot get lock id!");
-        return NULL;
+        return -1;
     }
     log_info("Get lock id %d", lock->id);
+    *id = lock->id;
     lock->waits = dlist_init();
     lock->owner = NULL;
     util_add(lock->id, lock, LOCK);
-    return lock;
+    return 0;
 }
 
 int lock_acquire(lock_t *lock, UserContext *user_context) {
@@ -97,20 +98,22 @@ int free_lock(lock_t *lock) {
     return 0;
 }
 
-cvar_t *cvar_init() {
+int cvar_init(int *id) {
     cvar_t *cvar = (cvar_t*)malloc(sizeof(cvar_t));
     if(cvar == NULL) {
         log_err("Cannot init cvar");
+        return -1;
     }
-
     cvar->id = util_new_id();
+    *id = cvar->id;
     cvar->waits = dlist_init();
     cvar->owner = running_proc;
     util_add(cvar->id, cvar, CVAR);
-    return cvar;
+    return 0;
 }
 
 int cvar_wait(cvar_t* cvar, lock_t *lock, UserContext *user_context) {
+    log_info("Inside func: %s", __func__);
     if(cvar == NULL) {
         log_err("cvar pointer is NULL");
         return 1;
@@ -134,6 +137,7 @@ int cvar_wait(cvar_t* cvar, lock_t *lock, UserContext *user_context) {
 }
 
 int cvar_signal(cvar_t* cvar) {
+    log_info("Inside func: %s", __func__);
     if(cvar == NULL) {
         log_err("cvar pointer is NULL");
         return 1;

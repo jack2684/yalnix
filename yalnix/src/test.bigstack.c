@@ -14,5 +14,6 @@ main()
 	  TracePrintf(0,"&big_buffer[%d] = %x; big_buffer[%d] = %c\n",
 		      i, &big_buffer[i], i, big_buffer[i]);
 
+    TracePrintf(0, "Big stack test done\n");
 	Exit(0);
 }
