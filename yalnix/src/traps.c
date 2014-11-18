@@ -62,7 +62,6 @@ Such a trap is used by user processes to request some type of service from the o
 such as creating a new process, allocating memory, or performing I/O. 
 All different kernel call requests enter the kernel through this single type of trap*/
 void trap_kernel_handler(UserContext *user_context){
-    u_long rc = 0;
     u_long code = user_context->code;
     log_info("Sys call: %s, with PID %d at pc %p", get_sys_call_name(code), running_proc->pid, user_context->pc);
     switch(code) {
@@ -73,10 +72,10 @@ void trap_kernel_handler(UserContext *user_context){
             user_context->regs[0] = Y_GetPid(user_context);
             break;
         case YALNIX_BRK:
-            rc = Y_Brk(user_context->regs[0]);
+            user_context->regs[0] = Y_Brk(user_context->regs[0]);
             break;
         case YALNIX_DELAY:
-            rc = Y_Delay(user_context);
+            user_context->regs[0] = Y_Delay(user_context);
             break;
         case YALNIX_FORK:
             user_context->regs[0] = Y_Fork(user_context);
@@ -144,9 +143,6 @@ void trap_kernel_handler(UserContext *user_context){
             break;
     }
 
-    if(rc) {
-        log_err("Kernel call for %s fail!", get_sys_call_name(code));
-    }
     return; 
 }
 

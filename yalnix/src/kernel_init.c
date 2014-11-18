@@ -178,6 +178,12 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Load program PID(%d) done pc(%p) sp(%p)", init_proc->pid, uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
 
+    void *p;
+    p = (void*)malloc(30 * PAGESIZE);
+    realloc(p, 0);
+    p = (void*)malloc(50 * PAGESIZE);
+    realloc(p, 0);
+
     init_process_kernel(idle_proc);
     restore_user_runtime(running_proc, uctxt);
     log_info("Leave kernel start with pc %p sp %p", uctxt->pc, uctxt->sp);
@@ -192,7 +198,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
     uint32 new_addr = (uint32)addr;
     uint32 new_page_bound = GET_PAGE_NUMBER(new_addr);
     uint32 current_page_bound = GET_PAGE_NUMBER(kernel_memory.brk_high);
-    //log_info("SetKernelBrk current brk %p(#%d) and new addr %p(#%d)", kernel_memory.brk_high, GET_PAGE_NUMBER(kernel_memory.brk_high), new_addr, GET_PAGE_NUMBER(new_addr));
+    log_info("SetKernelBrk current brk %p(#%d) and new addr %p(#%d)", kernel_memory.brk_high, GET_PAGE_NUMBER(kernel_memory.brk_high), new_addr, GET_PAGE_NUMBER(new_addr));
     
     // Boudaries check 
     if(new_addr > kernel_memory.swap_addr - PAGESIZE) {
@@ -212,6 +218,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
 
     // Modify the brk 
     if(new_addr > kernel_memory.brk_high) { 
+        log_info("Kernal malloc");
         rc = map_page_to_frame(kernel_page_table, 
                             current_page_bound, 
                             new_page_bound, 
@@ -221,6 +228,7 @@ int SetKernelBrk _PARAMS((void *addr)) {
             return _FAILURE;
         }
     } else if (new_addr < kernel_memory.brk_high) {
+        log_info("Kernal free");
         rc = unmap_page_to_frame(kernel_page_table,
                                 new_page_bound, 
                                 current_page_bound);

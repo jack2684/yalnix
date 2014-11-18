@@ -18,11 +18,11 @@
 //#define clean_errno() (errno == 0 ? "None" : strerror(errno))
 #define clean_errno() (0 == 0 ? "None" : strerror(errno))
 
-#define log_err(M, ...) TracePrintf(0, "[ERROR] (%s:%d)[%s]\t" M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+#define log_err(M, ...) TracePrintf(0, "[ERROR] (%s:%d)[%s] " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
-#define log_warn(M, ...) TracePrintf(5, "[WARN] (%s:%d)[%s]\t" M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+#define log_warn(M, ...) TracePrintf(5, "[WARN] (%s:%d)[%s] " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
-#define log_info(M, ...) TracePrintf(5, "[INFO] (%s:%d)[%s]\t" M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
+#define log_info(M, ...) TracePrintf(5, "[INFO] (%s:%d)[%s] " M "\n", __FILE__, __LINE__, __func__, ##__VA_ARGS__)
 
 #define user_log(M, ...) TracePrintf(5, "[USER] >> " M "\n", ##__VA_ARGS__)
 

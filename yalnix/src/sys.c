@@ -103,8 +103,8 @@ int Y_GetPid(UserContext *user_context){
 int Y_Brk(uint32 addr){
     int page_cnt, rc; 
     uint32 new_addr = (uint32)addr;
-    uint32 new_page_bound = UP_TO_PAGE(new_addr);
-    uint32 current_page_bound = UP_TO_PAGE(user_memory.brk_high);
+    uint32 new_page_bound = USER_PAGE_NUMBER(new_addr);
+    uint32 current_page_bound = USER_PAGE_NUMBER(user_memory.brk_high);
 
     // Boudaries check
     if(new_addr > user_memory.stack_low - PAGESIZE) {
@@ -116,27 +116,31 @@ int Y_Brk(uint32 addr){
         return _FAILURE;
     }   
 
-    // Modify the brk 
+    // Modify the brk
+    log_info("new_addr: %p, brk_high: %p", new_addr, user_memory.brk_high);
     if(new_addr > user_memory.brk_high) { 
-        page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        page_cnt = new_page_bound - current_page_bound;
+        log_info("Current phy frame list size: %d, going to use :%d", available_frames->size, page_cnt);
         rc = map_page_to_frame(user_page_table, 
                         current_page_bound, 
-                        page_cnt, 
+                        new_page_bound, 
                         PROT_READ | PROT_WRITE);
         if(rc) {
                 log_err("User Break Warning: Not enough phycial memory\n");
                 return _FAILURE;
         }   
-        log_info("Y_Brk ADD DONE = %p, End = %p, New Addr = %p", user_memory.brk_low, user_memory.brk_high, addr);
-    } else if (new_page_bound < user_memory.brk_high) {
-        page_cnt = GET_PAGE_NUMBER(new_page_bound) - GET_PAGE_NUMBER(current_page_bound);
+        log_info("Current phy frame list size after malloc: %d", available_frames->size, page_cnt);
+    } else if (new_addr < user_memory.brk_high) {
+        page_cnt = new_page_bound - current_page_bound;
+        log_info("Current phy frame list size: %d, going to free %d", available_frames->size, page_cnt);
         rc = unmap_page_to_frame(user_page_table,
                             new_page_bound, 
-                            page_cnt);
+                            current_page_bound);
         if(rc) {
                 log_err("User Break Warning: Not able to release pages\n");
                 return _FAILURE;
         }   
+        log_info("Current phy frame list size after free: %d", available_frames->size, page_cnt);
     }   
     user_memory.brk_high = new_addr;
     log_info("PID %d user brk done, new addr at %p", running_proc->pid, new_addr);
@@ -160,7 +164,6 @@ int Y_Delay(UserContext *user_context){
     en_delay_queue(running_proc);
     next_schedule(user_context);
 
-    log_info("After delay, now is running PID(%d)", running_proc->pid);
 	return _SUCCESS;
 }
 
@@ -340,6 +343,7 @@ int Y_Reclaim(int id) {
         log_err("Fail to release util %d", id);
         return ERROR;
     }
+    free(util);
     return 0;
 }
 
@@ -398,8 +402,6 @@ int Y_GetPipeSize(int pipe_id) {
 
 int ValidatePtr(void *ptr, int length){
     //pointer should not be NULL and length should at least 0
-    log_info("Inside %s", __func__);
-    log_info("PTR is %p, length is %d", ptr, length);
     if(ptr == NULL || length <= 0){
         log_err("Error: NULL PTR or non positive Length");
         return 0;

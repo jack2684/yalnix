@@ -116,9 +116,7 @@ void *util_rm(int id) {
         log_err("Cannot remove from hashmap, key %d", id);
         return NULL;
     }
-    void *data = util->data;
-    free(util);
-    return data;
+    return util;
 }
 
 int util_new_id() {

@@ -142,9 +142,9 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
 
     // Try mapping
     if(page_table == kernel_page_table) {
-        //log_info("Map from page %d (%p) to page %d (%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
+        log_info("Map from page %d (%p) to page %d (%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
     } else {
-        //log_info("Map from page %d (%p) to page %d (%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
+        log_info("Map from page %d (%p) to page %d (%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
     }
     for(i = start_idx; i < end_idx && !rc; i++) {
         if(page_table[i].valid == _VALID) {

@@ -7,10 +7,12 @@
 
 #include <stdlib.h>
 #include <assert.h>
+#include <common.h>
 
 // Waits for a cvar signal, prints a message
 void Bouncer(int cvar, int mutex)
 {
+    return;
     TtyPrintf(1, "Bouncer here\n");
     while (1)
     {
@@ -62,17 +64,24 @@ void MallocMan(void)
     int npg;
     void *ptr;
 
+    int pid = GetPid();
+
     while (1)
     {
-	npg = rand() % 21;
-	TtyPrintf(2, "MallocMan: malloc'ing %d pages\n", npg);
-	ptr = malloc(PAGESIZE*npg);
-    if(ptr == NULL) {
-        TtyPrintf(2, "MallocMan: malloc %d pages fail!!!!!!!!!!\n", npg);
-    }
-	Delay(3);	
-	TtyPrintf(2, "MallocMan: freeing the stuff I just malloc'ed\n");
-	free(ptr);
+        npg = (rand() + 12) % 21;
+        ptr = malloc(PAGESIZE*npg);
+        if(ptr == NULL) {
+            user_log("PID(%d) Malloc fail this time!!!", pid);
+            TtyPrintf(2, "%d: malloc %d pages fail!!!!!!!!!!, BYE!!!!!!!!!!!!!!\n", pid, npg);
+            Exit(1);
+        } else {
+            TtyPrintf(2, "%d: mallocs %d pages\n", pid, npg);
+            user_log("PID(%d) Malloc DONE", pid);
+        }
+        Delay(3);	
+        TtyPrintf(2, "%d: freeing\n", pid);
+        user_log("PID(%d) free mem", pid);
+        free(ptr);
     }
     TtyPrintf(1, "*** I SHOULDN'T BE HERE!!!\n");
     Exit(-1);
@@ -80,6 +89,7 @@ void MallocMan(void)
 
 void SonarGuy(int cvar, int mutex)
 {
+    return;
     TtyPrintf(0, "SonarGuy here (my job is to signal Bouncer)\n");
     while (1)
     {
@@ -98,6 +108,7 @@ void SonarGuy(int cvar, int mutex)
 
 void GarbageMan(void)
 {
+    return;
     int i, j, sentLen, wordLen;
     char punc[] = ".!?;:";
     char ch;
@@ -170,10 +181,12 @@ int main(void)
     if (pid == 0)
 	GarbageMan();
 
+    int cnt;
     while(1)
     {
-	Delay(100);
-	TtyPrintf(0, "Parent woke up; going back to sleep\n");
+        cnt = (cnt + 1) % 1024;
+        Delay(60);
+        TtyPrintf(0, "Parent woke up %d times; going back to sleep\n", cnt);
     }
 
     TtyPrintf(0, "*** I SHOULDN'T BE HERE!!!\n");
