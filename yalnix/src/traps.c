@@ -50,6 +50,12 @@ char *get_sys_call_name(u_long code) {
             return "YALNIX_CVAR_BROADCAST";
         case YALNIX_CVAR_WAIT:
             return "YALNIX_CVAR_WAIT";
+        case YALNIX_SEM_INIT:
+            return "YALNIX_SEM_INIT";
+        case YALNIX_SEM_DOWN:
+            return "YALNIX_SEM_DOWN";
+        case YALNIX_SEM_UP:
+            return "YALNIX_SEM_UP";
         case YALNIX_CUSTOM_0:
             return "YALNIX_CUSTOM_0";
         default:
@@ -136,6 +142,15 @@ void trap_kernel_handler(UserContext *user_context){
             break;
         case YALNIX_CVAR_WAIT:
             user_context->regs[0] = Y_CvarWait(user_context->regs[0], user_context->regs[1], user_context);
+            break;
+        case YALNIX_SEM_INIT:
+            user_context->regs[0] = Y_SemInit(user_context->regs[0]);
+            break;
+        case YALNIX_SEM_DOWN:
+            user_context->regs[0] = Y_SemDown(user_context->regs[0], user_context);
+            break;
+        case YALNIX_SEM_UP:
+            user_context->regs[0] = Y_SemUp(user_context->regs[0]);
             break;
         case YALNIX_CUSTOM_0:
             user_context->regs[0] = Y_GetPipeSize(user_context->regs[0]);

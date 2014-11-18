@@ -21,12 +21,12 @@ typedef lock_t cvar_t;
 //    pcb_t           *owner;
 //} cvar_t;
 
-typedef struct y_Sem {
+/*typedef struct y_Sem {
     int       count;
     int       waking;
     //queue_t   waitings;
     lock_t    *lock;
-} sem_t;
+} sem_t;*/
 
 //extern hashmap_t *lock_idp;
 //extern dlist_t *lock_id_list;

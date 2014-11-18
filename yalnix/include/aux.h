@@ -14,6 +14,7 @@ enum util_type {
     LOCK,
     PIPE,
     CVAR,
+    SEM,
     NA,
 };
 

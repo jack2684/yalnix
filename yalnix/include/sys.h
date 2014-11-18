@@ -8,6 +8,7 @@
 #include "pipe.h"
 #include "tty.h"
 #include "lock.h"
+#include "sem.h"
 
 #define min(a, b) ( a > b ? b : a)
 
@@ -35,6 +36,9 @@ int Y_CvarInit(int *cvaridp);
 int Y_CvarSignal(int id);
 int Y_CvarBroadcast(int id);
 int Y_CvarWait(int cid, int lid, UserContext *user_context);
+int Y_SemInit(int value);
+int Y_SemDown(int id, UserContext *user_context);
+int Y_SemUp(int id);
 
 int ValidatePtr(void *ptr, int length);
 int ValidateCStyle(void *ptr, int type);

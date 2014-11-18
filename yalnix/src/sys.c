@@ -389,6 +389,32 @@ int Y_CvarWait(int cid, int lid, UserContext *user_context) {
     return cvar_wait(cvar, lock, user_context);
 }
 
+int Y_SemInit(int value)
+{
+    return sem_init(value) -> id;
+}
+
+int Y_SemDown(int id, UserContext *user_context) 
+{
+    sem_t *sem = (sem_t*)util_get(id);
+    if(sem == NULL) {
+        log_err("Error getting sem id %d", id);
+        return -1;
+    }
+    return sem_down(sem, user_context);
+}
+
+int Y_SemUp(int id) 
+{
+    sem_t *sem = (sem_t*)util_get(id);
+    log_info("Get sem at %p", sem);
+    if(sem == NULL) {
+        log_err("Error getting sem id %d", id);
+        return -1;
+    }
+    return sem_up(sem);
+}
+
 int Y_GetPipeSize(int pipe_id) {
     log_info("PID(%d) going to write to pipe %d", running_proc->pid, pipe_id);
     
