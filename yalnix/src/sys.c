@@ -32,7 +32,7 @@ int Y_Fork(UserContext *user_context){
 }
 
 int Y_LocalFork(UserContext *user_context) {
-    pcb_t *child = init_user_proc(running_proc);
+    pcb_t *child = init_user_thread(running_proc);
     if(child == NULL) {
         log_err("Init child process fail");
         return ERROR;
@@ -87,8 +87,9 @@ int Y_Exit(int exit_code, UserContext *user_context){
     tell_parent(running_proc);
     //log_info("After tell parent");
 
-    // Release all the utils
+    // Release all the resources
     release_utils(running_proc->utils);
+    clear_proc(running_proc);
     //log_info("After release utils");
 
     // Scheulde next process to run

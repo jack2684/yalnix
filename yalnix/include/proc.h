@@ -34,15 +34,15 @@ typedef struct y_PCB {
     int             ticks;
     int             init_done;
     int             wait_zombie;
+    int             child_thread;       // Whether it is a thread process
 
-    
     // Identity
     int             pid;
     int             ppid;
     unsigned long   uid;
     unsigned long   gid;
 
-    // Connected
+    // Relationship with other procs
     dnode_t         *list_node;          // For high performance list operation
     dlist_t         *children;          
     dlist_t         *zombie;             // FIFO list of zombie children
@@ -66,6 +66,7 @@ extern dlist_t  *pid_list;
  */
 void init_processes();
 pcb_t* init_user_proc(pcb_t *parent);
+pcb_t* init_user_thread(pcb_t *parent);
 void init_idle_proc(void);
 int en_ready_queue(pcb_t *proc);
 int proc_enqueue(dlist_t *queue, pcb_t *proc);
@@ -88,6 +89,7 @@ int proc_add_util(pcb_t *proc, int id);
 /* Parent and children functions
  */
 int free_proc(pcb_t *proc);
+int clear_proc(pcb_t *proc);
 void tell_children(pcb_t *proc);
 void tell_parent(pcb_t *proc);
 int en_wait_queue(pcb_t* proc);

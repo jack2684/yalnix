@@ -26,6 +26,10 @@ void main(int argc, char **argv) {
                 local--;
                 TtyPrintf(TTY_ID, "PID(%d) decrement: global %d, local %d\n", GetPid(), global, local);
             }
+            if(local == 0) {
+                TtyPrintf(TTY_ID, "PID(%d) local is %d, going to exit\n", GetPid(), local);
+                Exit(0);
+            }
         }
         Pause();
     }

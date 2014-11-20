@@ -63,10 +63,7 @@ void tell_children(pcb_t *proc) {
         log_info("exiting PID(%d) telling children PID(%d)", proc->pid, child->pid);
         child->parent = NULL;
         if(child->state == ZOMBIE) {
-             int rc = free_proc(child);
-             if(rc) {
-                log_err("Cannot free child PID(%d)", child);
-             }
+            free_proc(child);
         }
         node = node->next;
     }
@@ -108,12 +105,29 @@ int en_zombie_queue(pcb_t* parent, pcb_t* child) {
     return 0;
 }
 
-/* Completely free the PCB block
+/* Free the pcb
  */
 int free_proc(pcb_t *proc) {
+    int pid = proc->pid;
+    free(proc); 
+    proc = NULL;
+    id_generator_push(pid_list, pid);
+    log_info("PID(%d) is freed", pid);
+    return 0;
+}
+
+/* Completely clear the PCB block
+ */
+int clear_proc(pcb_t *proc) {
     log_info("Going to destryo process PID(%d)", proc->pid);
     int rc, pid = proc->pid;
-    rc = unmap_page_to_frame(proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
+
+    // If it is just a child process, it should only free its local area
+    if(proc->child_thread) {
+        rc = unmap_page_to_frame(proc->page_table, USER_PAGE_NUMBER(user_memory.brk_low), GET_PAGE_NUMBER(VMEM_1_SIZE));
+    } else {
+        rc = unmap_page_to_frame(proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE));
+    }
     if(rc) {
         log_err("Unable to free frames of PID(%d) page table", proc->pid);
         return 1;
@@ -127,10 +141,11 @@ int free_proc(pcb_t *proc) {
     }
     free(proc->kernel_stack_pages);
 
-    free(proc); 
-    proc = NULL;
-    id_generator_push(pid_list, pid);
-    log_info("PID(%d) is freed", pid);
+    dlist_destroy(proc->children);
+    dlist_destroy(proc->zombie);
+    dlist_destroy(proc->utils);
+
+    log_info("PID(%d) is clear", pid);
     return 0;
 }
 
@@ -227,6 +242,14 @@ int any_child_active(pcb_t *proc){
     return 0;
 }
 
+pcb_t *init_user_thread(pcb_t* parent) {
+    pcb_t *proc = init_user_proc(parent);
+    if(proc) {
+        proc->child_thread = 1;
+    }
+    return proc;
+}
+
 /* A general function to initialize user proc
  *
  * @return: A pointer to the newly created pcb;
@@ -301,6 +324,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
     }
     proc->state = READY;
     proc->wait_zombie = 0;
+    proc->child_thread = 0;
     return proc;
 }
 
