@@ -6,13 +6,22 @@
 #include "dlist.h"
 void main(void) {
     int pid = GetPid(), cpid = -1;
-    int idp;
+    int idp, cnt = 0;
     while(1) {
         // Parent randomly generate new process
         if(pid == GetPid() && percent_chance(50)) {
             cpid = Fork();
             if(cpid != 0) {
                 TtyPrintf(0, "Create child pid %d\n", cpid);
+                cnt++;
+                if(cnt == 10) {
+                    int i;
+                    for(i = 0; i < cnt; i++) {
+                        TtyPrintf(0, "Wait for %dth child\n", i);
+                        Wait();
+                    }
+                }
+                cnt = 0;
             }
         }
 
