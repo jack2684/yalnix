@@ -13,7 +13,6 @@ dlist_t *dlist_init() {
         list->tail = NULL;
         return list;
     } else {
-        list->rc = ERR_NULL_POINTER; 
         log_err("Cannot malloc for dlist!!!!");
         return NULL;
     }
@@ -21,7 +20,6 @@ dlist_t *dlist_init() {
 
 int dlist_clear(dlist_t *list) {
     if(!list) {
-        list->rc = ERR_NULL_POINTER; 
         return ERR_NULL_POINTER;
     }
     dnode_t *p = list->head, *prev;
@@ -37,7 +35,7 @@ int dlist_clear(dlist_t *list) {
 }
 
 int dlist_destroy(dlist_t *list) {
-    int rc = dlist_clear((dlist_t*)list);
+    int rc = dlist_clear(list);
     if(rc) {
         return rc;
     } else {

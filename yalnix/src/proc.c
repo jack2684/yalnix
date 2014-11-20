@@ -234,12 +234,14 @@ int any_child_active(pcb_t *proc){
  */
 pcb_t *init_user_proc(pcb_t* parent) {
     // Create pcb
+    //log_info("Inside %s", __func__);
     pcb_t *proc = (pcb_t*) malloc(sizeof(pcb_t));
     if(!proc) {
         log_err("Cannot malloc user proc!");
         return NULL;
     }
     bzero(proc, sizeof(pcb_t));
+    //log_info("Init proc done");
     
     // Create page table
     proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
@@ -249,6 +251,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
         return NULL;
     }
     bzero(proc->page_table, sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    log_info("Init page table done");
     
     // Create kernel stack page table
     proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
@@ -259,11 +262,13 @@ pcb_t *init_user_proc(pcb_t* parent) {
         return NULL;
     }
     bzero(proc->kernel_stack_pages, sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
+    //log_info("Init kernel stack done");
    
     // Init vitals
     proc->init_done = 0;
     proc->parent = (struct y_PBC*)parent;
     proc->children = dlist_init();
+    log_info("INit child list done");
     proc->zombie = dlist_init();
     proc->utils = dlist_init();
     if(proc->utils == NULL
@@ -277,6 +282,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
         free(proc);
         return NULL;
     }
+    //log_info("Init necessary linked list done");
 
     proc->pid = get_next_pid();
     if(proc->pid == -1) {
@@ -288,6 +294,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
         free(proc);
         return NULL;
     }
+    log_info("Get pid done");
 
     if(parent) {
         dlist_add_tail(parent->children, proc);
@@ -319,7 +326,7 @@ void init_init_proc(void) {
 int en_ready_queue(pcb_t *proc) {
     dnode_t *n = dlist_add_tail(ready_queue, proc);
     if(!n) {
-        _debug("Cannot enqueue the pcb\n");
+        log_err("Cannot enqueue the pcb\n");
         return 1;
     }
     //log_info("En ready_queue with PID(%d)", proc->pid);
@@ -352,6 +359,8 @@ int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_conte
                                 src_proc->page_table, 
                                 0, GET_PAGE_NUMBER(VMEM_1_SIZE), 
                                 kernel_memory.swap_addr);
+    
+    log_info("Return from alloc_frame_and_copy is %d", rc);
     if(rc) {
         log_err("PID(%d) cannot alloc or copy data from PID(%d) page table", dest_proc->pid, src_proc->pid);
         return 1;
@@ -610,8 +619,6 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         //log_info("Backup kernel context for PID(%d)", prev_proc->pid);
         memcpy(&prev_proc->kernel_context, kernel_context, sizeof(KernelContext));
     }
-    running_proc = next_proc;
-    running_proc->state = RUN;
     
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
@@ -628,6 +635,8 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
         //log_info("Init kernel context for PID(%d) done", next_proc->pid);
         next_proc->init_done = 1;
     }
+    running_proc = next_proc;
+    running_proc->state = RUN;
 
     // Load kernel stack from next processs and flush corresponding TLB
     int addr;

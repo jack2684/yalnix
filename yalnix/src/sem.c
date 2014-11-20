@@ -53,7 +53,7 @@ int sem_down(sem_t *sem, UserContext *user_context)
 			if(rc)
 			{
 				log_err("Cannot add process PID(%d) to wait queue", running_proc->pid);
-		    return 1;
+                return 1;
 			}
 			next_schedule(user_context);
 		}

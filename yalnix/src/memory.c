@@ -100,6 +100,10 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
         }
     }
     swap_pte->valid = _INVALID;
+
+    if(rc) {
+        log_err("alloc_frame_and_copy fail");
+    }
     return rc;
 }
 
@@ -203,12 +207,12 @@ int set_ptes(pte_t* page_table, int start_idx, int end_idx, int prot) {
 int unmap_page_to_frame(pte_t* page_table, int start_idx, int end_idx) {
     int rc = 0, i;
 
+    log_info("About to unmap from %d to %d", start_idx, end_idx);
     if(start_idx >= end_idx) {
         return 0;
     }
    
     // Try unmapping
-    log_info("About to unmap from %d to %d", start_idx, end_idx);
     for(i = start_idx; i < end_idx && !rc; i++) {
         //_debug("unmapping idx %d to %p with pte at %p\n", i, frame_get_pfn(frame), page_table + i);
         if(page_table[i].valid == _INVALID) {

@@ -1,8 +1,9 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
 #ifndef _SYS_H
 #define _SYS_H
-#include "common.h"
 #include "hardware.h"
+#include "yalnix.h"
+#include "common.h"
 #include "timer.h"
 #include "proc.h"
 #include "pipe.h"
@@ -42,5 +43,7 @@ int Y_SemUp(int id);
 
 int ValidatePtr(void *ptr, int length);
 int ValidateCStyle(void *ptr, int type);
+
+int Y_PS();
 #endif
 

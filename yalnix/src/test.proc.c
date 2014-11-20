@@ -34,7 +34,7 @@ void main(void) {
                 Exit(0);
             } 
         }
-        Pause();
+//        Pause();
     }
     return;
 }

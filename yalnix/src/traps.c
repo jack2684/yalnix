@@ -58,6 +58,8 @@ char *get_sys_call_name(u_long code) {
             return "YALNIX_SEM_UP";
         case YALNIX_CUSTOM_0:
             return "YALNIX_CUSTOM_0";
+        case YALNIX_CUSTOM_1:
+            return "YALNIX_CUSTOM_1";
         default:
             break;
     } 
@@ -154,6 +156,10 @@ void trap_kernel_handler(UserContext *user_context){
             break;
         case YALNIX_CUSTOM_0:
             user_context->regs[0] = Y_GetPipeSize(user_context->regs[0]);
+            break;
+        case YALNIX_CUSTOM_1:
+            Y_PS();
+            break;
         default:
             break;
     }

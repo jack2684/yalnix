@@ -26,6 +26,8 @@
 
 #define user_log(M, ...) TracePrintf(5, "[USER] >> " M "\n", ##__VA_ARGS__)
 
+#define sys_print(M, ...) TtyPrintf(0, ">>" M "\n", ##__VA_ARGS__)
+
 #define check(A, M, ...) if(!(A)) { log_err(M, ##__VA_ARGS__); errno=0; goto error; }
 
 #define sentinel(M, ...)  { log_err(M, ##__VA_ARGS__); errno=0; goto error; }

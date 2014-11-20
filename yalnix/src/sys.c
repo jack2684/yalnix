@@ -8,15 +8,17 @@ int Y_Fork(UserContext *user_context){
         log_err("Init child process fail");
         return ERROR;
     }
+    log_info("Init child pid %d done", child->pid);
     running_proc->user_context.regs[0] = child->pid;
     child->user_context.regs[0] = 0;
     
     int rc = copy_user_runtime(child, running_proc, user_context);
     if(rc) {
+        log_err("PID(%d) cannot copy PID(%d) runtime", child->pid, running_proc->pid);
         free_proc(child);
-        log_err("PID(%d) cannot copy PID(%d) runtime", child, running_proc);
         return ERROR;
     }
+    log_info("Copy user runtime for child pid %d done", child->pid);
     
     en_ready_queue(running_proc);
     pick_schedule(user_context, child);
@@ -519,6 +521,11 @@ int ValidateCStyle(void *ptr, int type){
 	}
     }
 }
+
+int Y_PS() {
+    //sys_print("PID\t\tSTATE\t\tPPID");
+}
+
 ////These are 3 custom syscalls
 //int Y_Custom0(){
 //	

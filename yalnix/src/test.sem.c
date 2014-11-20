@@ -10,7 +10,7 @@ void main(int argc, char **argv)
 	int value = 0;
     
     user_log("test.sem program has PID(%d)", GetPid());
-    rc = SemInit(&sem_id, value);
+    rc = SemInit(&sem_id, -1);
 
     TtyPrintf(TTY_ID, "%d: Successfully created sem with sem id %d\n", GetPid(), sem_id);
     i = 3;
