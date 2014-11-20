@@ -55,7 +55,6 @@ dnode_t *dlist_add_tail(dlist_t *list, void *data) {
 
 dnode_t* dlist_find_idx(dlist_t *list, int idx) {
     if(!list) {
-        list->rc = ERR_NULL_POINTER;
         return NULL;
     }
     if(idx >= list->size || idx < 0) {
@@ -74,6 +73,15 @@ dnode_t* dlist_find_idx(dlist_t *list, int idx) {
 
 dnode_t *dlist_insert(dlist_t *list, void* data, int idx) {
     dnode_t* node = dnode_init(data);
+    if(!node) {
+        log_err("INit node fail");
+        return NULL;   
+    }
+    if(node > (dnode_t*)VMEM_1_LIMIT) {
+        log_err("Weird locationi %p", node);
+        //Halt();
+        return NULL;
+    }
     if(!list->size) {               // Handle empty list
         list->head = node;
         list->tail = node;
@@ -103,24 +111,13 @@ dnode_t *dlist_insert(dlist_t *list, void* data, int idx) {
 }
 
 void* dlist_rm_head(dlist_t *list) {
-    //if(!list) {
-    //    list->rc = ERR_NULL_POINTER;
-    //    return NULL;
-    //}
-    //if(list->size) {
-    //    void* data = list->head->data;
-    //    dnode_t *node = list->head;
-    //    list->head = list->head->next;
-    //    return data;
-    //} else {
-    //    return NULL;
-    //} 
     return dlist_rm_idx(list, 0);
 }
 
 /* Noted that, dlist_rmIdx do not free the memory of the removed node!
  */
 void* dlist_rm_idx(dlist_t *list, int idx) {
+    log_info("idlist size %d, idx %d", list->size, idx);
     if(!list) {
         return NULL;
     }
@@ -135,17 +132,26 @@ void* dlist_rm_idx(dlist_t *list, int idx) {
     if(list->size == 1) {                // Only node
         rm_node = list->head;
         data = rm_node->data;
+        data = rm_node->data;
         list->head = NULL;
         list->tail = NULL;
         free(rm_node);
         list->size = 0;
         return data;
     } else if (idx == 0) {               // Remove the head
+        log_info("list->head %p", list->head);
         rm_node = list->head;
         data = rm_node->data;
+        log_info("rm_node->next %p", rm_node->next);
+        if(rm_node->next > (dnode_t*)VMEM_1_LIMIT) {
+            log_err("Weird locationi %p", rm_node->next);
+            return NULL;
+        }
         list->head = rm_node->next;
         list->head->prev = NULL;
+        log_info("Before free");
         free(rm_node);
+        log_info("DONE free");
         list->size--;
         return data;
     } else if (idx == list->size - 1) { // Remove the tail
@@ -178,7 +184,6 @@ void* dlist_rm_idx(dlist_t *list, int idx) {
 
 void *dlist_rm_this(dlist_t *list, dnode_t *node) {
     if(!list) {
-        list->rc = ERR_NULL_POINTER;
         return NULL;
     }
     void *data = node->data;

@@ -25,12 +25,19 @@ dlist_t *id_generator_init(int s, int e) {
 }
 
 int id_generator_pop(dlist_t *id_list) {
+    log_info("Inside %s", __func__);
     if(id_list->size <= 0) {
         log_err("Nothing to pop from id_list when size is %d!", id_list->size);
         return -1;
     }
+    log_info("Before dlist_rm_head, size %d", id_list->size);
 
     void *d = dlist_rm_head(id_list);
+    if(!d) {
+        log_err("Cannot get new id");
+        log_err("id_list size is %d", id_list->size);
+        return -1;
+    }
     log_info("Get pop id %d, now id_list size: %d", *((int*)d), id_list->size);
     return *((int*)d);
 }

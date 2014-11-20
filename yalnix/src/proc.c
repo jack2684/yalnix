@@ -90,17 +90,17 @@ int burn_one_zombie(pcb_t *proc, int *status_ptr) {
         log_err("Zombie list is empty!!!");
         return -1;
     }
+    log_info("Burning zombie %d, with childnode %p", zombie->pid, zombie->child_node);
     *status_ptr = zombie->exit_code;
     proc->exit_code = zombie->pid;
-    if(proc->child_node) {
+    if(zombie->child_node) {
         dlist_rm_this(proc->children, zombie->child_node);
         free_proc(zombie);
     } else {
         zombie->state = EXIT;
     }
-    return running_proc->exit_code;
+    return proc->exit_code;
 }
-
 
 /* Tell my parent I am dead, in case my parent is waiting
  */
@@ -111,9 +111,9 @@ void tell_parent(pcb_t *proc) {
         return;
     }
 
+    en_zombie_queue(parent, proc);
     if(parent->wait_zombie) {
         rm_wait_queue(parent);
-        en_zombie_queue(parent, proc);
         en_ready_queue(parent);
         parent->wait_zombie = 0;
     }
@@ -136,11 +136,13 @@ int en_zombie_queue(pcb_t* parent, pcb_t* child) {
 /* Free the pcb
  */
 int free_proc(pcb_t *proc) {
+    log_info("Going to recollect PID(%d)", proc->pid);
     int pid = proc->pid;
     free(proc); 
     proc = NULL;
+    log_info("PID(%d) is about to be  freed, id list size %d", pid, pid_list->size);
     id_generator_push(pid_list, pid);
-    log_info("PID(%d) is freed", pid);
+    log_info("PID(%d) is freed, id list size %d", pid, pid_list->size);
     return 0;
 }
 
@@ -173,7 +175,7 @@ int clear_proc(pcb_t *proc) {
     dlist_destroy(proc->zombie);
     dlist_destroy(proc->utils);
 
-    log_info("PID(%d) is clear", pid);
+    //log_info("PID(%d) is clear", pid);
     return 0;
 }
 
@@ -187,13 +189,13 @@ void init_idle_proc() {
     }
     bzero(idle_proc, sizeof(pcb_t));
     idle_proc->user_context.pc = DoDoIdle;
-    idle_proc->user_context.sp = (void *)kernel_memory.stack_low;
+    idle_proc->user_context.sp = ((void *)VMEM_0_SIZE) - WORD_LEN;
     //idle_proc->user_context.ebp = (void *)kernel_memory.stack_low;
     //idle_proc->user_context.code = YALNIX_NOP;
     //idle_proc->user_context.vector = TRAP_KERNEL;
-    idle_proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
+    idle_proc->page_table = (pte_t*) malloc(sizeof(pte_t));
     idle_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-    map_page_to_frame(idle_proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE), PROT_READ);
+    //map_page_to_frame(idle_proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE), PROT_READ);
     idle_proc->pid = get_next_pid();
     idle_proc->state = READY;
     idle_proc->init_done = 0;
@@ -319,7 +321,6 @@ pcb_t *init_user_proc(pcb_t* parent) {
     proc->init_done = 0;
     proc->parent = (struct y_PBC*)parent;
     proc->children = dlist_init();
-    log_info("INit child list done");
     proc->zombie = dlist_init();
     proc->utils = dlist_init();
     if(proc->utils == NULL
@@ -333,7 +334,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
         free(proc);
         return NULL;
     }
-    //log_info("Init necessary linked list done");
+    log_info("Init necessary linked list done");
 
     proc->pid = get_next_pid();
     if(proc->pid == -1) {
@@ -412,7 +413,6 @@ int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_conte
                                 0, GET_PAGE_NUMBER(VMEM_1_SIZE), 
                                 kernel_memory.swap_addr);
     
-    log_info("Return from alloc_frame_and_copy is %d", rc);
     if(rc) {
         log_err("PID(%d) cannot alloc or copy data from PID(%d) page table", dest_proc->pid, src_proc->pid);
         return 1;
@@ -508,7 +508,7 @@ pcb_t* de_ready_queue() {
 void round_robin_schedule(UserContext *user_context) {
     // Don't push running_proc into ready quueue if it is a idle proc
     //log_info("Inside round robin");
-    //log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
+    log_info("Round robin with queue size %d, when running PID(%d)", ready_queue->size, running_proc->pid);
     if(!ready_queue->size) {
         return;
     }   

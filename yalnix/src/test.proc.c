@@ -12,7 +12,7 @@ void main(void) {
         // Parent randomly generate new process
         if(pid == GetPid() && percent_chance(50)) {
             cpid = Fork();
-            if(cpid != 0) {
+            if(cpid > 0) {
                 cnt++;
                 TtyPrintf(0, "Create child pid %d, now child cnt is %d\n", cpid, cnt);
                 if(cnt == 10) {
@@ -23,6 +23,8 @@ void main(void) {
                     }
                     cnt = 0;
                 }
+            } else if(cpid < 0) {
+                TtyPrintf(0, "Cannot create child, process pool is empty\n");
             } else {
                 a = (int*)malloc(PAGESIZE * 50);     
             }
@@ -47,7 +49,7 @@ void main(void) {
                 free(a);
                 Exit(0);
             } 
-            int delay = rand() % 5;
+            int delay = rand() % 2;
             Delay(delay);
         }
     }

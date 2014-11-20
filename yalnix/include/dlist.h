@@ -2,6 +2,7 @@
 #ifndef _DLIST_H
 #define _DLIST_H
 #include "common.h"
+#include "hardware.h"
 
 #define ERR_NULL_POINTER 1
 #define ERR_OUT_OF_RANGE 2

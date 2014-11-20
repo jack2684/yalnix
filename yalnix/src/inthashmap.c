@@ -67,7 +67,7 @@ void *hashmap_rm(hashmap_t *hmap, uint32 key) {
     for(i = 0; i < hmap->capacity; i++) {
         idx = (hash % hmap->capacity + i) % hmap->capacity;
         if(hmap->keys[idx] == key && hmap->datas[idx] != NULL) {
-            log_info("Removing key %u, with data %p", key, hmap->datas[idx]);
+            //log_info("Removing key %u, with data %p", key, hmap->datas[idx]);
             data = hmap->datas[idx];
             hmap->datas[idx] = NULL;
             hmap->size--;
