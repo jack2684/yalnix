@@ -81,6 +81,7 @@ void restore_user_runtime(pcb_t *proc, UserContext *user_context);
 int user_stack_resize(pcb_t *proc, uint32 addr);
 int is_proc_active(pcb_t *proc);
 int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
+int copy_local_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
 void init_init_proc(void);
 int proc_add_util(pcb_t *proc, int id);
 

@@ -122,7 +122,6 @@ void* dlist_rm_head(dlist_t *list) {
  */
 void* dlist_rm_idx(dlist_t *list, int idx) {
     if(!list) {
-        list->rc = ERR_NULL_POINTER;
         return NULL;
     }
     if(idx >= list->size || idx < 0) {

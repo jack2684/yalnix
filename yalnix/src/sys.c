@@ -31,6 +31,35 @@ int Y_Fork(UserContext *user_context){
     }
 }
 
+int Y_LocalFork(UserContext *user_context) {
+    pcb_t *child = init_user_proc(running_proc);
+    if(child == NULL) {
+        log_err("Init child process fail");
+        return ERROR;
+    }
+    log_info("Init child pid %d done", child->pid);
+    running_proc->user_context.regs[0] = child->pid;
+    child->user_context.regs[0] = 0;
+    
+    int rc = copy_local_runtime(child, running_proc, user_context);
+    if(rc) {
+        log_err("PID(%d) cannot copy PID(%d) runtime", child->pid, running_proc->pid);
+        free_proc(child);
+        return ERROR;
+    }
+    log_info("Copy user runtime for child pid %d done", child->pid);
+    
+    en_ready_queue(running_proc);
+    pick_schedule(user_context, child);
+    running_proc->exit_code = running_proc->pid;
+    
+    if(running_proc == child) {
+        return 0;
+    } else {
+        return child->pid;    
+    }
+}
+
 int Y_Exec(char * filename, char* argvec[], UserContext *user_context){
     log_info("PID(%d) is going to exec %s.", running_proc->pid, filename);
     if(!ValidatePtr(filename, 1)) {
@@ -488,7 +517,7 @@ int ValidatePtr(void *ptr, int length){
     }
     //Make sure the pointer is in user space
     if((int)ptr < VMEM_1_BASE){
-        log_err("Error: PTR in Kernel Space\n");
+        log_err("Error: PTR in Kernel Space");
         return 0;
     }else if((int)ptr >= VMEM_1_LIMIT){
         log_err("Error: PTR over User Space\n");

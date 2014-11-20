@@ -63,9 +63,9 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
     int i, rc = 0;
 
     if(src_table == kernel_page_table) {
-        //log_info("Going to copy from %d(%p) to %d(%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
+        log_info("Going to copy from %d(%p) to %d(%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
     } else {
-        //log_info("Going to copy from %d(%p) to %d(%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
+        log_info("Going to copy from %d(%p) to %d(%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
     } 
    
     for(i = start_idx; i < end_idx && !rc; i++) {
@@ -73,7 +73,9 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
             dest_table[i - start_idx].valid = _INVALID;
             continue;
         }
+        log_info("Getting frame");
         frame_t *frame = rm_head_available_frame();
+        log_info("DONE getting frame");
         if(!frame) {
             log_err("Page %d cannot find available frame", i);
             unmap_page_to_frame(dest_table, start_idx, i);
@@ -107,6 +109,42 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
     return rc;
 }
 
+int share_frame(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx) {
+    uint32 src_data_addr;
+    int i, rc = 0;
+
+    if(src_table == kernel_page_table) {
+        log_info("Going to share from %d(%p) to %d(%p)", start_idx, KERNEL_PAGE_TO_ADDR(start_idx), end_idx, KERNEL_PAGE_TO_ADDR(end_idx));
+    } else {
+        log_info("Going to share from %d(%p) to %d(%p)", start_idx, USER_PAGE_TO_ADDR(start_idx), end_idx, USER_PAGE_TO_ADDR(end_idx));
+    } 
+   
+    for(i = start_idx; i < end_idx && !rc; i++) {
+        if(src_table[i].valid != _VALID) {
+            dest_table[i - start_idx].valid = _INVALID;
+            continue;
+        }
+        log_info("Getting frame");
+        frame_t *frame = rm_head_available_frame();
+        log_info("DONE getting frame");
+        if(!frame) {
+            log_err("Page %d cannot find available frame", i);
+            unmap_page_to_frame(dest_table, start_idx, i);
+            rc = NO_AVAILABLE_ERR;
+        } else {
+            dest_table[i - start_idx].valid = _VALID;
+            dest_table[i - start_idx].prot = src_table[i].prot;
+            dest_table[i - start_idx].pfn = src_table[i].pfn;
+        }
+    }
+
+    if(rc) {
+        log_err("alloc_frame_and_copy fail");
+    }
+    return rc;
+
+}
+
 /* Remove the first available frame in the frame list
  */
 frame_t *rm_head_available_frame() {
@@ -115,7 +153,9 @@ frame_t *rm_head_available_frame() {
         return NULL;
     }
 
+    log_info("dlist_rm_head begin");
     frame_t *frame = (frame_t*)dlist_rm_head(available_frames);
+    log_info("dlist_rm_head return");
     if(!frame) {
         log_err("list_rm_head error code: %d\n", available_frames->rc);
     }

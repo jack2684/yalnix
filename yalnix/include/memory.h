@@ -49,6 +49,8 @@ int map_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx, i
 int set_ptes(pte_t* page_table, int start_page_idx, int end_page_idx, int prot);
 int unmap_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx);
 int init_page_table_from(pte_t* new_page_table, pte_t* old_page_table);
+int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx, uint32 swap_addr);
+int share_frame(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx);
 void print_page_table(pte_t *pt, int s, int e);
 
 #endif

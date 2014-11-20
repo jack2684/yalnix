@@ -44,6 +44,6 @@ int Y_SemUp(int id);
 int ValidatePtr(void *ptr, int length);
 int ValidateCStyle(void *ptr, int type);
 
-int Y_PS();
+int Y_LocalFork(UserContext *user_context);
 #endif
 

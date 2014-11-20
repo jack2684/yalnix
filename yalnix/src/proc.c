@@ -369,6 +369,41 @@ int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_conte
     return 0;
 }
 
+/* Copy runtime info, but share the text and data seg
+ *
+ * @param dest_proc: process copy to
+ * @param dest_proc: process copy from
+ * @param user_context: user context
+ */
+int copy_local_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context) {
+    int rc = 0;
+    save_user_runtime(src_proc, user_context); 
+    dest_proc->user_context = src_proc->user_context;
+    rc = alloc_frame_and_copy(dest_proc->page_table + USER_PAGE_NUMBER(src_proc->mm.brk_low), 
+                                src_proc->page_table, 
+                                USER_PAGE_NUMBER(src_proc->mm.brk_low), GET_PAGE_NUMBER(VMEM_1_SIZE), 
+                                kernel_memory.swap_addr);
+    
+    log_info("Return from alloc_frame_and_copy is %d", rc);
+    if(rc) {
+        log_err("PID(%d) cannot alloc or copy data from PID(%d) page table", dest_proc->pid, src_proc->pid);
+        return 1;
+    }
+    rc = share_frame(dest_proc->page_table, 
+                                src_proc->page_table, 
+                                0, USER_PAGE_NUMBER(src_proc->mm.brk_low));
+    
+    log_info("Return from share_frame is %d", rc);
+    if(rc) {
+        log_err("PID(%d) cannot share data from PID(%d) page table", dest_proc->pid, src_proc->pid);
+        return 1;
+    }
+    
+    
+    dest_proc->mm = src_proc->mm;
+    return 0;
+}
+
 /* Safe user land runtime info
  *
  * @param proc: the pcb to be restored
@@ -622,6 +657,7 @@ KernelContext *kernel_context_switch(KernelContext *kernel_context, void *_prev_
     
     if(next_proc->init_done == 0) {
         // If just initialized (like just forked), init the context and kernel stack
+        log_info("Initing kernel stack for PID(%d)", next_proc->pid);
         next_proc->kernel_context = *kernel_context;
         int rc = alloc_frame_and_copy(next_proc->kernel_stack_pages, 
                                     kernel_page_table, 

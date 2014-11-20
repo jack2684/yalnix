@@ -158,7 +158,7 @@ void trap_kernel_handler(UserContext *user_context){
             user_context->regs[0] = Y_GetPipeSize(user_context->regs[0]);
             break;
         case YALNIX_CUSTOM_1:
-            Y_PS();
+            user_context->regs[0] = Y_LocalFork(user_context);
             break;
         default:
             break;
