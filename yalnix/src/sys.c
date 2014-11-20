@@ -130,26 +130,43 @@ int Y_Wait(int * status_ptr, UserContext *user_context){
     if(!any_child_active(running_proc) && !running_proc->zombie->size) {
         log_info("Not woth to wait!! #zombie %d, and no children is active", running_proc->zombie->size);
         running_proc->exit_code = 1;
-        return 1;       // No body treat pid 1 and child process, so I make it as exit_code
+        return ERROR;       // No body treat pid 1 and child process, so I make it as exit_code
+    }
+
+    // If I already got some zombie to collect
+    if(running_proc->zombie->size) {
+        log_info("PID(%d) already has some zombie, not going to wait!", running_proc->pid);
+        return burn_one_zombie(running_proc, status_ptr); 
+        //pcb_t* zombie = de_zombie_queue(running_proc);
+        //zombie->state == EXIT;
+        //running_proc->exit_code = zombie->pid;
+        //*status_ptr = zombie->exit_code;
+        //return running_proc->exit_code; 
     }
 
     // Wait operations
-    log_info("PID(%d) about to sleep until one of my child wake me up", running_proc->pid);
+    log_info("PID(%d) about to sleep until one of my child wake me up, zombie size is %d", running_proc->pid, running_proc->zombie->size);
     en_wait_queue(running_proc);
     next_schedule(user_context);
 
     // Back to life!
     if(running_proc->wait_zombie) {
-        log_info("PID(%d) wake up and going to run again!", running_proc->pid);
-        pcb_t* zombie = de_zombie_queue(running_proc);
-        log_info("PID(%d) get zombie %p!", running_proc->pid, zombie);
-        *status_ptr = zombie->exit_code;
-        //log_info("PID(%d) get zombie status!", running_proc->pid);
-        running_proc->exit_code = zombie->pid; 
-        //log_info("Get my zombie pid(%d) exit code %d", zombie->pid, zombie->exit_code);
-        free_proc(zombie);
-        running_proc->wait_zombie = 0;
-        return running_proc->exit_code;
+        //log_info("PID(%d) wake up and going to run again!", running_proc->pid);
+        //pcb_t* zombie = de_zombie_queue(running_proc);
+        //zombie->state == EXIT;
+        //running_proc->exit_code = zombie->pid;
+        //*status_ptr = zombie->exit_code;
+        //return running_proc->exit_code; 
+        return burn_one_zombie(running_proc, status_ptr);
+        //pcb_t* zombie = de_zombie_queue(running_proc);
+        //log_info("PID(%d) get zombie %p!", running_proc->pid, zombie);
+        //*status_ptr = zombie->exit_code;
+        ////log_info("PID(%d) get zombie status!", running_proc->pid);
+        //running_proc->exit_code = zombie->pid; 
+        ////log_info("Get my zombie pid(%d) exit code %d", zombie->pid, zombie->exit_code);
+        //free_proc(zombie);
+        //running_proc->wait_zombie = 0;
+        //return running_proc->exit_code;
     } else {
         log_info("I am not waiting");
         return 0; 
@@ -181,19 +198,19 @@ int Y_Brk(uint32 addr){
     log_info("new_addr: %p, brk_high: %p", new_addr, user_memory.brk_high);
     if(new_addr > user_memory.brk_high) { 
         page_cnt = new_page_bound - current_page_bound;
-        log_info("Current phy frame list size: %d, going to use :%d", available_frames->size, page_cnt);
+        log_info("Current phy frame list size: %d, going to use :%d", frame_remains, page_cnt);
         rc = map_page_to_frame(user_page_table, 
                         current_page_bound, 
                         new_page_bound, 
                         PROT_READ | PROT_WRITE);
         if(rc) {
-                log_err("User Break Warning: Not enough phycial memory\n");
+                log_err("User Break Warning: Not enough phycial memory");
                 return _FAILURE;
         }   
-        log_info("Current phy frame list size after malloc: %d", available_frames->size, page_cnt);
+        log_info("Current phy frame list size after malloc: %d", frame_remains, page_cnt);
     } else if (new_addr < user_memory.brk_high) {
         page_cnt = new_page_bound - current_page_bound;
-        log_info("Current phy frame list size: %d, going to free %d", available_frames->size, page_cnt);
+        log_info("Current phy frame list size: %d, going to free %d", frame_remains, page_cnt);
         rc = unmap_page_to_frame(user_page_table,
                             new_page_bound, 
                             current_page_bound);
@@ -201,7 +218,7 @@ int Y_Brk(uint32 addr){
                 log_err("User Break Warning: Not able to release pages\n");
                 return _FAILURE;
         }   
-        log_info("Current phy frame list size after free: %d", available_frames->size, page_cnt);
+        log_info("Current phy frame list size after free: %d", frame_remains, page_cnt);
     }   
     user_memory.brk_high = new_addr;
     log_info("PID %d user brk done, new addr at %p", running_proc->pid, new_addr);

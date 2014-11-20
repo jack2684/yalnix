@@ -44,6 +44,7 @@ typedef struct y_PCB {
 
     // Relationship with other procs
     dnode_t         *list_node;          // For high performance list operation
+    dnode_t         *child_node;          // For high performance list operation
     dlist_t         *children;          
     dlist_t         *zombie;             // FIFO list of zombie children
     struct y_PBC    *parent;
@@ -90,6 +91,7 @@ int proc_add_util(pcb_t *proc, int id);
  */
 int free_proc(pcb_t *proc);
 int clear_proc(pcb_t *proc);
+int burn_one_zombie(pcb_t *proc, int *status_ptr);
 void tell_children(pcb_t *proc);
 void tell_parent(pcb_t *proc);
 int en_wait_queue(pcb_t* proc);

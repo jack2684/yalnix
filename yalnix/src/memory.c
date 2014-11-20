@@ -1,14 +1,15 @@
 /* Team 3: stderr, Junjie Guan, Ziyang Wang*/
 #include "common.h"
 #include "memory.h"
-#include "list.h"
 
 pte_t   *kernel_page_table = NULL;          // Page table for kernel
 pte_t   *user_page_table = NULL;            // Page table for kernel
-dlist_t *available_frames = NULL;           // For physcial memories
+//dlist_t *available_frames = NULL;           // For physcial memories
+int     *frame_array;           // For physcial memories
 vm_t    kernel_memory;                      // Kernel virtual memories
 vm_t    user_memory;                        // User virtual memories
-uint32  total_page_number;
+int TOTALPAGES;
+int frame_remains;
 
 /* Init a frame strcut with frame number
  */
@@ -24,8 +25,8 @@ frame_t *init_frame(uint32 idx) {
 
 /* Get the actual frame number from frame struct
  */
-uint32 frame_get_pfn(frame_t* f) {
-    return (uint32)(*f);
+int frame_get_pfn(int f) {
+    return f;
 }
 
 /* Add available frame to frame list
@@ -33,16 +34,24 @@ uint32 frame_get_pfn(frame_t* f) {
  * @param pfn: the page frame number
  */
 int add_tail_available_frame(uint32 pfn) {
-    int rc;
-    frame_t *frame = init_frame(pfn);
-    
-    dnode_t *n = dlist_add_tail(available_frames, (void*)frame);
-    if(!n) {
-        _debug("Cannot add more free frame\n");
-        return MALLOC_ERR;
+    if(pfn < 0 || pfn >= TOTALPAGES  ) {
+        log_err("Range error!");
+        return -1;
     }
-
+    frame_remains++;
+    frame_array[pfn] = 1;
+    //log_info("DONE %s, add pfn %d", __func__, pfn);
     return 0;
+    //int rc;
+    //frame_t *frame = init_frame(pfn);
+    //
+    //dnode_t *n = dlist_add_tail(available_frames, (void*)frame);
+    //if(!n) {
+    //    _debug("Cannot add more free frame\n");
+    //    return MALLOC_ERR;
+    //}
+
+    //return 0;
 }
 
 /* Allocate (end_idx - start_idx) frames, and copy data from current page table.
@@ -73,9 +82,7 @@ int alloc_frame_and_copy(pte_t *dest_table, pte_t *src_table, int start_idx, int
             dest_table[i - start_idx].valid = _INVALID;
             continue;
         }
-        log_info("Getting frame");
-        frame_t *frame = rm_head_available_frame();
-        log_info("DONE getting frame");
+        int frame = rm_head_available_frame();
         if(!frame) {
             log_err("Page %d cannot find available frame", i);
             unmap_page_to_frame(dest_table, start_idx, i);
@@ -124,18 +131,9 @@ int share_frame(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx)
             dest_table[i - start_idx].valid = _INVALID;
             continue;
         }
-        log_info("Getting frame");
-        frame_t *frame = rm_head_available_frame();
-        log_info("DONE getting frame");
-        if(!frame) {
-            log_err("Page %d cannot find available frame", i);
-            unmap_page_to_frame(dest_table, start_idx, i);
-            rc = NO_AVAILABLE_ERR;
-        } else {
-            dest_table[i - start_idx].valid = _VALID;
-            dest_table[i - start_idx].prot = src_table[i].prot;
-            dest_table[i - start_idx].pfn = src_table[i].pfn;
-        }
+        dest_table[i - start_idx].valid = _VALID;
+        dest_table[i - start_idx].prot = src_table[i].prot;
+        dest_table[i - start_idx].pfn = src_table[i].pfn;
     }
 
     if(rc) {
@@ -147,19 +145,32 @@ int share_frame(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx)
 
 /* Remove the first available frame in the frame list
  */
-frame_t *rm_head_available_frame() {
-    if(dlist_is_empty(available_frames) == 1) {
-        log_err("Frame list is empty, double check size: %d!", available_frames->size);
-        return NULL;
+int rm_head_available_frame() {
+    if(frame_remains == 0) {
+        log_err("No phy memory");
+        return 0;    
     }
+    int i;
+    for(i = 1; i < TOTALPAGES; i++) {
+        if(frame_array[i] == 1) {
+            frame_array[i] = 0;
+            frame_remains--;
+            return i;
+        }
+    }
+    return 0;
+    //if(dlist_is_empty(available_frames) == 1) {
+    //    log_err("Frame list is empty, double check size: %d!", available_frames->size);
+    //    return NULL;
+    //}
 
-    log_info("dlist_rm_head begin");
-    frame_t *frame = (frame_t*)dlist_rm_head(available_frames);
-    log_info("dlist_rm_head return");
-    if(!frame) {
-        log_err("list_rm_head error code: %d\n", available_frames->rc);
-    }
-    return frame;
+    //log_info("dlist_rm_head begin");
+    //frame_t *frame = (frame_t*)dlist_rm_head(available_frames);
+    //log_info("dlist_rm_head return");
+    //if(!frame) {
+    //    log_err("list_rm_head error code: %d\n", available_frames->rc);
+    //}
+    //return frame;
 }
 
 /* Flush the TLB
@@ -195,7 +206,7 @@ int map_page_to_frame(pte_t* page_table, int start_idx, int end_idx, int prot) {
             log_info("Page %d is valid already with prot %d and pfn %d", i, page_table[i].prot, page_table[i].pfn);
             continue;
         }
-        frame_t *frame = rm_head_available_frame();
+        int frame = rm_head_available_frame();
         if(!frame) {
             log_err("Page %d cannot find available frame", i);
             unmap_page_to_frame(page_table, start_idx, i);

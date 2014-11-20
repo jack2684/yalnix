@@ -22,8 +22,11 @@ typedef struct      pte pte_t;
 typedef uint32      frame_t;
 extern pte_t        *kernel_page_table;                // Global for every one
 extern pte_t *user_page_table;
-extern uint32       total_page_number;
-extern dlist_t      *available_frames;
+//extern uint32       total_page_number;
+//extern dlist_t      *available_frames;
+extern int     *frame_array;
+extern int      TOTALPAGES;
+extern int      frame_remains;
 
 // Memory management of virtual memory
 typedef struct y_vm {
@@ -41,9 +44,9 @@ extern vm_t kernel_memory;
 extern vm_t user_memory;
 
 frame_t *init_frame(uint32 idx);
-uint32 frame_get_pfn(frame_t* f);
+int frame_get_pfn(int f);
 int add_tail_available_frame(uint32 pfn);
-frame_t *rm_head_available_frame();
+int rm_head_available_frame();
 void flush_region_TLB(pte_t* table);
 int map_page_to_frame(pte_t* page_table, int start_page_idx, int end_page_idx, int prot);
 int set_ptes(pte_t* page_table, int start_page_idx, int end_page_idx, int prot);

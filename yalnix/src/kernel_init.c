@@ -83,12 +83,13 @@ void init_kernel_page_table() {
     int i;
     int start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(kernel_memory.brk_high));
     int end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(KERNEL_STACK_BASE));
+    log_info("Adding frames");
     for(i = start_pfn; i < end_pfn; i++) {
         add_tail_available_frame(i);
     }
     // Add free pages above kernel space
     start_pfn = GET_PAGE_NUMBER(UP_TO_PAGE(VMEM_0_LIMIT));
-    end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(PMEM_BASE)) + total_page_number;
+    end_pfn = GET_PAGE_NUMBER(DOWN_TO_PAGE(PMEM_BASE)) + TOTALPAGES;
     for(i = start_pfn; i < end_pfn; i++) {
         add_tail_available_frame(i);
     }
@@ -128,9 +129,22 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     WriteRegister(REG_VECTOR_BASE, (uint32)interrupt_vector);
     
     // Memory management, linked list of frames of free memory
-    available_frames = dlist_init();
+    //available_frames = dlist_init();
+    TOTALPAGES = GET_PAGE_NUMBER(pmem_size);
+    log_info("Total pages: %d", TOTALPAGES);
+    frame_remains = 0;
+    frame_array = (int*) malloc(sizeof(int) * TOTALPAGES);
+    log_info("Return from frame array");
+    if(frame_array == 0) {
+        log_err("Cannot init frame array");
+        return;
+    }
+    int i;
+    for(i = 0; i < TOTALPAGES; i++) {
+        frame_array[i] = 0;
+    }
+
     log_info("Init frames done");
-    total_page_number = GET_PAGE_NUMBER(pmem_size);
     init_user_page_table();   
     log_info("Init user page table done");
     init_kernel_page_table();

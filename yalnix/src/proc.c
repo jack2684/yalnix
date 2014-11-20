@@ -64,7 +64,13 @@ void tell_children(pcb_t *proc) {
         child->parent = NULL;
         if(child->state == ZOMBIE) {
             free_proc(child);
+        } else if (child->child_thread) {   // Thread process should also die if I die
+            tell_children(child);
+            release_utils(child->utils);
+            clear_proc(child);
+            free_proc(child);
         }
+
         node = node->next;
     }
 }
@@ -74,6 +80,27 @@ void tell_children(pcb_t *proc) {
 pcb_t* rm_wait_queue(pcb_t* proc) {
     return dlist_rm_this(wait_queue, proc->list_node);
 }
+
+/* Process one of the zombie child,
+ *  * usually called by Wait()
+ *   */
+int burn_one_zombie(pcb_t *proc, int *status_ptr) {
+    pcb_t* zombie = de_zombie_queue(proc);
+    if(zombie == NULL) {
+        log_err("Zombie list is empty!!!");
+        return -1;
+    }
+    *status_ptr = zombie->exit_code;
+    proc->exit_code = zombie->pid;
+    if(proc->child_node) {
+        dlist_rm_this(proc->children, zombie->child_node);
+        free_proc(zombie);
+    } else {
+        zombie->state = EXIT;
+    }
+    return running_proc->exit_code;
+}
+
 
 /* Tell my parent I am dead, in case my parent is waiting
  */
@@ -88,6 +115,7 @@ void tell_parent(pcb_t *proc) {
         rm_wait_queue(parent);
         en_zombie_queue(parent, proc);
         en_ready_queue(parent);
+        parent->wait_zombie = 0;
     }
 }
 
@@ -320,7 +348,7 @@ pcb_t *init_user_proc(pcb_t* parent) {
     log_info("Get pid done");
 
     if(parent) {
-        dlist_add_tail(parent->children, proc);
+        proc->child_node = dlist_add_tail(parent->children, proc);
     }
     proc->state = READY;
     proc->wait_zombie = 0;
