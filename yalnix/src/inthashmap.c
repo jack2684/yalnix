@@ -64,22 +64,18 @@ void *hashmap_rm(hashmap_t *hmap, uint32 key) {
     int i, idx;
     void *data = NULL;
 
-    if(hmap->size == hmap->capacity) {
-        log_err("Hashmap is already full!!!", key, key);
-        return NULL;
-    }
-
     for(i = 0; i < hmap->capacity; i++) {
         idx = (hash % hmap->capacity + i) % hmap->capacity;
-        if(hmap->keys[idx] == key) {
+        if(hmap->keys[idx] == key && hmap->datas[idx] != NULL) {
+            log_info("Removing key %u, with data %p", key, hmap->datas[idx]);
             data = hmap->datas[idx];
             hmap->datas[idx] = NULL;
             hmap->size--;
             return data;
         }
     }
-
-    log_err("Cannot put the data for key %u/%d", key, key);
+   
+    log_err("Key %u/%d not found in hashmap", key, key);
     return NULL;
 }
 

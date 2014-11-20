@@ -21,6 +21,12 @@ int lock_init(int *id) {
     log_info("Get lock id %d", lock->id);
     *id = lock->id;
     lock->waits = dlist_init();
+    if(lock->waits == NULL) {
+        log_err("Cannot init lock waits");
+        util_reclaim_id(lock->id);
+        free(lock);
+        return -1;
+    }
     lock->owner = NULL;
     util_add(lock->id, lock, LOCK);
     return 0;
@@ -80,10 +86,10 @@ int lock_release(lock_t *lock) {
 
 int free_lock(lock_t *lock) {
     int id = lock->id;
-    if(lock->owner != running_proc) {
-        log_err("You cannot free some one else's lock");
-        return 1;
-    }
+    //if(lock->owner != running_proc) {
+    //    log_err("You cannot free some one else's lock");
+    //    return 1;
+    //}
     if(lock->waits->size) {
         log_warn("The waits queue of lock %d is not empty", lock->id);
     }
@@ -107,6 +113,12 @@ int cvar_init(int *id) {
     cvar->id = util_new_id();
     *id = cvar->id;
     cvar->waits = dlist_init();
+    if(cvar->waits == NULL) {
+        log_err("Cannot init cvar waits");
+        util_reclaim_id(cvar->id);
+        free(cvar);
+        return -1;
+    }
     cvar->owner = running_proc;
     util_add(cvar->id, cvar, CVAR);
     return 0;
@@ -165,10 +177,10 @@ int cvar_broadcast(cvar_t* cvar) {
 
 int free_cvar(cvar_t *cvar) {
     int id = cvar->id;
-    if(cvar->owner != running_proc) {
-        log_err("You cannot free some one else's cvar");
-        return 1;
-    }
+    //if(cvar->owner != running_proc) {
+    //    log_err("You cannot free some one else's cvar");
+    //    return 1;
+    //}
     if(cvar->waits->size) {
         log_warn("The waits queue of cvar %d is not empty", cvar->id);
     }

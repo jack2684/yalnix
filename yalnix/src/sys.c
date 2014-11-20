@@ -50,12 +50,42 @@ int Y_Exit(int exit_code, UserContext *user_context){
     running_proc->state = ZOMBIE;
 
     // Tell other people
+    //log_info("Before tell children");
     tell_children(running_proc);
+    //log_info("Before tell parent");
     tell_parent(running_proc);
+    //log_info("After tell parent");
+
+    // Release all the utils
+    release_utils(running_proc->utils);
+    //log_info("After release utils");
 
     // Scheulde next process to run
     next_schedule(user_context);
     log_info("Next schedule done (this will never reached actually)");
+    return 0;
+}
+
+int release_utils(dlist_t *utils) {
+    if(utils == NULL) {
+        log_err("Utils pointer is NULL");
+        return -1;
+    }
+    log_info("Going to release %d utils", utils->size);
+    while(utils->size) {
+        int id = *((int*)dlist_rm_head(utils));
+        if(!id) {
+            log_err("Do not get a meaningful util");
+            continue;
+        }
+        //log_info("Going to reclaim util id %d", id);
+        int rc = Y_Reclaim(id);
+        if(rc) {
+            log_err("Reclaim util id %d fail", id);
+        } else {
+            //log_info("Done reclaim util id %d ", id);
+        }
+    }
     return 0;
 }
 
@@ -92,7 +122,6 @@ int Y_Wait(int * status_ptr, UserContext *user_context){
         log_info("I am not waiting");
         return 0; 
     }
-
 }
 
 int Y_GetPid(UserContext *user_context){
@@ -254,9 +283,14 @@ int Y_TtyRead(int tty_id, void *buf, int len, UserContext *user_context)
 }
 
 int Y_PipeInit(int *pipe_idp) {
+    if(!ValidatePtr(pipe_idp, 4)) {
+        log_err("idp invalid!");
+        return ERROR;
+    }
     if(pipe_init(pipe_idp)) {
         return ERROR;
     }
+    proc_add_util(running_proc, *pipe_idp);
     return 0;
 }
 
@@ -292,9 +326,14 @@ int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
 }
 
 int Y_LockInit(int *lock_idp) {
+    if(!ValidatePtr(lock_idp, 4)){
+        log_err("idp invalid!");
+        return ERROR;
+    }
     if(lock_init(lock_idp)) {
         return ERROR;
     }
+    proc_add_util(running_proc, *lock_idp);
     return 0;
 }
 
@@ -348,9 +387,14 @@ int Y_Reclaim(int id) {
 }
 
 int Y_CvarInit(int *cvar_idp) {
+    if(!ValidatePtr(cvar_idp, 4)){
+        log_err("idp invalid!");
+        return ERROR;
+    }
     if(cvar_init(cvar_idp)){
         return ERROR;
     }
+    proc_add_util(running_proc, *cvar_idp);
     return 0;
 }
 
@@ -389,9 +433,17 @@ int Y_CvarWait(int cid, int lid, UserContext *user_context) {
     return cvar_wait(cvar, lock, user_context);
 }
 
-int Y_SemInit(int value)
+int Y_SemInit(int *sem_idp, int value)
 {
-    return sem_init(value) -> id;
+    if(!ValidatePtr(sem_idp, 4)) {
+        log_err("idp invalid!");
+        return ERROR;
+    }
+    if(sem_init(sem_idp, value)){
+        return ERROR;
+    }
+    proc_add_util(running_proc, *sem_idp);
+    return 0;
 }
 
 int Y_SemDown(int id, UserContext *user_context) 

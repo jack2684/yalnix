@@ -36,7 +36,7 @@ int Y_CvarInit(int *cvaridp);
 int Y_CvarSignal(int id);
 int Y_CvarBroadcast(int id);
 int Y_CvarWait(int cid, int lid, UserContext *user_context);
-int Y_SemInit(int value);
+int Y_SemInit(int *sem_idp, int value);
 int Y_SemDown(int id, UserContext *user_context);
 int Y_SemUp(int id);
 

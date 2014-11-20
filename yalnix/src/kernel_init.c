@@ -178,12 +178,6 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     log_info("Load program PID(%d) done pc(%p) sp(%p)", init_proc->pid, uctxt->pc, uctxt->sp);
     log_info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
 
-    void *p;
-    p = (void*)malloc(30 * PAGESIZE);
-    realloc(p, 0);
-    p = (void*)malloc(50 * PAGESIZE);
-    realloc(p, 0);
-
     init_process_kernel(idle_proc);
     restore_user_runtime(running_proc, uctxt);
     log_info("Leave kernel start with pc %p sp %p", uctxt->pc, uctxt->sp);

@@ -16,7 +16,7 @@ typedef struct
 	pcb_t *owner;
 }sem_t;
 
-sem_t *sem_init(int value);
+int sem_init(int *sem_idp, int value);
 int sem_down(sem_t *sem, UserContext *user_context);
 int sem_up(sem_t *sem);
 int free_sem(sem_t *sem);

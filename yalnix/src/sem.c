@@ -1,29 +1,34 @@
 #include "sem.h"
 
-sem_t *sem_init(int value)
+int sem_init(int *sem_idp, int value)
 {
 	sem_t * sem = (sem_t *)malloc(sizeof(sem_t));
 	
 	if(sem == NULL)
 	{
-		log_err("Init sem failed.\n");
-		return NULL;
+		log_err("Malloc sem failed.\n");
+		return -1;
 	}
 
 	sem -> id = util_new_id();
 	if(sem -> id < 0)
 	{
 		log_err("Cannot get sem id.\n");
-		return NULL;
+		return -1;
 	}
-	log_info("Get sem id %d\n", sem -> id);
 
 	sem -> waits = dlist_init();
+    if(sem->waits == NULL) {
+        log_err("Init sem waits fail");
+        util_reclaim_id(sem->id);
+        free(sem);
+    }
+    *sem_idp = sem -> id;
 	sem -> owner = NULL;
 	sem -> value = value;
 	util_add(sem -> id, sem, SEM);
 
-	return sem; 
+	return 0; 
 }
 
 int sem_down(sem_t *sem, UserContext *user_context)

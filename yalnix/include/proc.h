@@ -9,6 +9,7 @@
 #include "memory.h"
 
 #define MAX_PROCS 1024
+#define MIN_PROCS 10
 
 enum proc_stat {
     RUN,
@@ -49,7 +50,7 @@ typedef struct y_PCB {
 
     // Utilities
     char            *tty_buf;
-    dlist_t         *util_list;         // List of utils, includes lock, pipe and cvar
+    dlist_t         *utils;              // List of utils, includes lock, pipe and cvar
 } pcb_t;
 
 extern pcb_t   *init_proc;          
@@ -81,6 +82,7 @@ int user_stack_resize(pcb_t *proc, uint32 addr);
 int is_proc_active(pcb_t *proc);
 int copy_user_runtime(pcb_t *dest_proc, pcb_t *src_proc, UserContext *user_context);
 void init_init_proc(void);
+int proc_add_util(pcb_t *proc, int id);
 
 /* Parent and children functions
  */

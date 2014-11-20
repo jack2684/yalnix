@@ -1,0 +1,809 @@
+** Yalnix level 5 tracing enabled **
+** User Prog level 5 tracing enabled **
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x3c000(#30) and new addr 0x3c000(#30)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:215)[SetKernelBrk] SetKernelBrk current brk directly to 0x3c000 Done
+Yalnix     Start the kernel
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:132)[KernelStart] Init frames done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:135)[KernelStart] Init user page table done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:61)[init_kernel_page_table] Text Start=0((nil)), End=24(0x3046c)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:68)[init_kernel_page_table] heap low 0x3c000 and high 0x3c000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:69)[init_kernel_page_table] Data Start=24(0x3046c), End=30(0x3c000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:76)[init_kernel_page_table] Stack Start=126(0xfc000), End=128(0x100000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:137)[KernelStart] Init kernel page table done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:150)[KernelStart] Init VM
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:156)[KernelStart] Init pcb basic
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:24)[init_processes] Inside init_processes
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:12)[timer_init] Init delay queue
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/timer.c:14)[timer_init] Done init delay queue
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:26)[init_processes] Init timer done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:32)[init_processes] Init queue done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x3c000(#30) and new addr 0x3e000(#31)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 30 (0x3c000) to page 31 (0x3e000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:151)[map_page_to_frame] Page 30 is valid already with prot 3 and pfn 30
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 0 (0x100000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x3e000(#31) and new addr 0x40000(#32)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 31 (0x3e000) to page 32 (0x40000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x40000(#32) and new addr 0x42000(#33)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 32 (0x40000) to page 33 (0x42000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x42000(#33) and new addr 0x44000(#34)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 33 (0x42000) to page 34 (0x44000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x44000(#34) and new addr 0x46000(#35)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 34 (0x44000) to page 35 (0x46000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x46000(#35) and new addr 0x48000(#36)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 35 (0x46000) to page 36 (0x48000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x48000(#36) and new addr 0x4a000(#37)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 36 (0x48000) to page 37 (0x4a000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x4a000(#37) and new addr 0x4c000(#38)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 37 (0x4a000) to page 38 (0x4c000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/aux.c:34)[id_generator_pop] Get pop id 0, now id_list size: 1023
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:34)[init_processes] Init idle done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/aux.c:50)[init_util] Init id list
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x4c000(#38) and new addr 0x4e000(#39)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 38 (0x4c000) to page 39 (0x4e000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x4e000(#39) and new addr 0x50000(#40)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 39 (0x4e000) to page 40 (0x50000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x50000(#40) and new addr 0x52000(#41)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 40 (0x50000) to page 41 (0x52000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x52000(#41) and new addr 0x54000(#42)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 41 (0x52000) to page 42 (0x54000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x54000(#42) and new addr 0x56000(#43)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 42 (0x54000) to page 43 (0x56000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x56000(#43) and new addr 0x58000(#44)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 43 (0x56000) to page 44 (0x58000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x58000(#44) and new addr 0x5a000(#45)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 44 (0x58000) to page 45 (0x5a000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x5a000(#45) and new addr 0x5c000(#46)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 45 (0x5a000) to page 46 (0x5c000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/aux.c:57)[init_util] Init id pool
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x5c000(#46) and new addr 0x60000(#48)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 46 (0x5c000) to page 48 (0x60000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/aux.c:63)[init_util] Util init done
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:165)[KernelStart] Init init
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/aux.c:34)[id_generator_pop] Get pop id 1, now id_list size: 1022
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:48)[LoadProgram] Load program: name => src/gjj
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:164)[LoadProgram] saving arg 0 = 'src/gjj'
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:211)[unmap_page_to_frame] About to unmap from 0 to 128
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:208)[LoadProgram] text_pg1 => 0x100000, text_npg => 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:209)[LoadProgram] data_pg1 => 0x100002, data_npg => 2
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:210)[LoadProgram] stack_pg1 => 0x1fff68, stack_npg => 1
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/load.c:211)[LoadProgram] user_memory.brk_high => 0x108000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 2 (0x104000) to page 4 (0x108000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 127 (0x1fe000) to page 128 (0x200000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:183)[set_ptes] Set from page 0 (0x100000) to page 2 (0x104000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:173)[KernelStart] Get the first context
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:175)[KernelStart] Saved the first runtime
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:178)[KernelStart] Load program PID(1) done pc(0x100120) sp(0x1fff68)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:179)[KernelStart] +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x60000(#48) and new addr 0x9e000(#79)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:221)[SetKernelBrk] Kernal malloc
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:145)[map_page_to_frame] Map from page 48 (0x60000) to page 79 (0x9e000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:201)[SetKernelBrk] SetKernelBrk current brk 0x9e000(#79) and new addr 0x104000(#130)
+Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:205)[SetKernelBrk] Kernel Break: Trying to Access Stack Addr = 0x104000
+
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:189)[KernelStart] Leave kernel start with pc 0x100120 sp 0x1fff68
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 75 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/kernel_init.c:189)[KernelStart] Leave kernel start with pc 0x23a52 sp 0xfc000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x96000)
+User Prog  warning: unitialized heap!
+User Prog  initializing heap
+User Prog  brk_unlocked(10e9d8)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_BRK, with PID 1 at pc 0x10057d
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:249)[print_page_table] PRINT USER PAGE TABLE>>>>>>>>>>>>
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[0]: valid=>1	prot=>5	pfn=>177
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[1]: valid=>1	prot=>5	pfn=>178
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[2]: valid=>1	prot=>3	pfn=>179
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[3]: valid=>1	prot=>3	pfn=>180
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[4]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[5]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[6]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[7]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[8]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[9]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[10]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[11]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[12]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[13]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[14]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[15]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[16]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[17]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[18]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[19]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[20]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[21]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[22]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[23]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[24]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[25]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[26]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[27]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[28]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[29]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[30]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[31]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[32]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[33]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[34]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[35]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[36]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[37]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[38]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[39]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[40]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[41]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[42]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[43]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[44]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[45]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[46]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[47]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[48]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[49]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[50]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[51]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[52]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[53]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[54]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[55]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[56]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[57]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[58]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[59]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[60]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[61]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[62]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[63]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[64]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[65]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[66]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[67]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[68]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[69]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[70]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[71]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[72]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[73]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[74]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[75]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[76]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[77]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[78]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[79]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[80]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[81]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[82]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[83]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[84]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[85]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[86]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[87]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[88]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[89]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[90]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[91]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[92]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[93]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[94]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[95]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[96]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[97]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[98]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[99]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[100]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[101]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[102]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[103]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[104]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[105]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[106]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[107]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[108]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[109]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[110]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[111]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[112]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[113]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[114]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[115]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[116]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[117]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[118]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[119]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[120]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[121]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[122]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[123]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[124]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[125]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[126]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[127]: valid=>1	prot=>3	pfn=>181
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:254)[print_page_table] <<<<<<<<<<<<<<<PRINT TABLE DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:122)[Y_Brk] new_addr: 0x110000, brk_high: 0x108000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:125)[Y_Brk] Current phy frame list size: 297, going to use :4
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 4 (0x108000) to page 8 (0x110000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:134)[Y_Brk] Current phy frame list size after malloc: 293
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:148)[Y_Brk] PID 1 user brk done, new addr at 0x110000
+User Prog  HEAP not enough space, so going to try to grow
+User Prog  grow_heap(0x96000)
+User Prog  rounding up to 0x1a6000
+User ProgYalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:180)[trap_memory_handler] User addr 0x1fdff0 map err
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 126 (0x1fc000) to page 127 (0x1fe000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:480)[user_stack_resize] Resize PID(1) stack low from 0x1fff68 to 0x1fdff0
+  brk_unlocked(1a6000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_BRK, with PID 1 at pc 0x10057d
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:249)[print_page_table] PRINT USER PAGE TABLE>>>>>>>>>>>>
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[0]: valid=>1	prot=>5	pfn=>177
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[1]: valid=>1	prot=>5	pfn=>178
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[2]: valid=>1	prot=>3	pfn=>179
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[3]: valid=>1	prot=>3	pfn=>180
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[4]: valid=>1	prot=>3	pfn=>215
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[5]: valid=>1	prot=>3	pfn=>216
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[6]: valid=>1	prot=>3	pfn=>217
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[7]: valid=>1	prot=>3	pfn=>218
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[8]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[9]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[10]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[11]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[12]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[13]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[14]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[15]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[16]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[17]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[18]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[19]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[20]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[21]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[22]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[23]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[24]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[25]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[26]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[27]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[28]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[29]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[30]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[31]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[32]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[33]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[34]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[35]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[36]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[37]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[38]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[39]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[40]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[41]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[42]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[43]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[44]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[45]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[46]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[47]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[48]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[49]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[50]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[51]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[52]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[53]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[54]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[55]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[56]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[57]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[58]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[59]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[60]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[61]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[62]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[63]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[64]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[65]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[66]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[67]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[68]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[69]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[70]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[71]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[72]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[73]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[74]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[75]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[76]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[77]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[78]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[79]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[80]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[81]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[82]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[83]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[84]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[85]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[86]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[87]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[88]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[89]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[90]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[91]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[92]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[93]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[94]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[95]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[96]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[97]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[98]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[99]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[100]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[101]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[102]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[103]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[104]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[105]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[106]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[107]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[108]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[109]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[110]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[111]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[112]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[113]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[114]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[115]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[116]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[117]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[118]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[119]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[120]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[121]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[122]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[123]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[124]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[125]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[126]: valid=>1	prot=>3	pfn=>219
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[127]: valid=>1	prot=>3	pfn=>181
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:254)[print_page_table] <<<<<<<<<<<<<<<PRINT TABLE DONE
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:122)[Y_Brk] new_addr: 0x1a6000, brk_high: 0x110000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:125)[Y_Brk] Current phy frame list size: 292, going to use :75
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:147)[map_page_to_frame] Map from page 8 (0x110000) to page 83 (0x1a6000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:134)[Y_Brk] Current phy frame list size after malloc: 217
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/sys.c:148)[Y_Brk] PID 1 user brk done, new addr at 0x1a6000
+User Prog  sbrk(0)... current = 1a6000
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 75 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 60 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x78000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 60 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 80 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0xa0000)
+User Prog  HEAP not enough space, so going to try to grow
+User Prog  grow_heap(0xa0000)
+User Prog  rounding up to 0x248000
+User Prog  brk_unlocked(248000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_BRK, with PID 1 at pc 0x10057d
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:249)[print_page_table] PRINT USER PAGE TABLE>>>>>>>>>>>>
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[0]: valid=>1	prot=>5	pfn=>177
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[1]: valid=>1	prot=>5	pfn=>178
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[2]: valid=>1	prot=>3	pfn=>179
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[3]: valid=>1	prot=>3	pfn=>180
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[4]: valid=>1	prot=>3	pfn=>215
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[5]: valid=>1	prot=>3	pfn=>216
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[6]: valid=>1	prot=>3	pfn=>217
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[7]: valid=>1	prot=>3	pfn=>218
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[8]: valid=>1	prot=>3	pfn=>220
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[9]: valid=>1	prot=>3	pfn=>221
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[10]: valid=>1	prot=>3	pfn=>222
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[11]: valid=>1	prot=>3	pfn=>223
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[12]: valid=>1	prot=>3	pfn=>224
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[13]: valid=>1	prot=>3	pfn=>225
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[14]: valid=>1	prot=>3	pfn=>226
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[15]: valid=>1	prot=>3	pfn=>227
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[16]: valid=>1	prot=>3	pfn=>228
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[17]: valid=>1	prot=>3	pfn=>229
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[18]: valid=>1	prot=>3	pfn=>230
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[19]: valid=>1	prot=>3	pfn=>231
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[20]: valid=>1	prot=>3	pfn=>232
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[21]: valid=>1	prot=>3	pfn=>233
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[22]: valid=>1	prot=>3	pfn=>234
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[23]: valid=>1	prot=>3	pfn=>235
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[24]: valid=>1	prot=>3	pfn=>236
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[25]: valid=>1	prot=>3	pfn=>237
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[26]: valid=>1	prot=>3	pfn=>238
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[27]: valid=>1	prot=>3	pfn=>239
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[28]: valid=>1	prot=>3	pfn=>240
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[29]: valid=>1	prot=>3	pfn=>241
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[30]: valid=>1	prot=>3	pfn=>242
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[31]: valid=>1	prot=>3	pfn=>243
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[32]: valid=>1	prot=>3	pfn=>244
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[33]: valid=>1	prot=>3	pfn=>245
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[34]: valid=>1	prot=>3	pfn=>246
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[35]: valid=>1	prot=>3	pfn=>247
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[36]: valid=>1	prot=>3	pfn=>248
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[37]: valid=>1	prot=>3	pfn=>249
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[38]: valid=>1	prot=>3	pfn=>250
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[39]: valid=>1	prot=>3	pfn=>251
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[40]: valid=>1	prot=>3	pfn=>252
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[41]: valid=>1	prot=>3	pfn=>253
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[42]: valid=>1	prot=>3	pfn=>254
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[43]: valid=>1	prot=>3	pfn=>255
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[44]: valid=>1	prot=>3	pfn=>256
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[45]: valid=>1	prot=>3	pfn=>257
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[46]: valid=>1	prot=>3	pfn=>258
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[47]: valid=>1	prot=>3	pfn=>259
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[48]: valid=>1	prot=>3	pfn=>260
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[49]: valid=>1	prot=>3	pfn=>261
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[50]: valid=>1	prot=>3	pfn=>262
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[51]: valid=>1	prot=>3	pfn=>263
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[52]: valid=>1	prot=>3	pfn=>264
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[53]: valid=>1	prot=>3	pfn=>265
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[54]: valid=>1	prot=>3	pfn=>266
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[55]: valid=>1	prot=>3	pfn=>267
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[56]: valid=>1	prot=>3	pfn=>268
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[57]: valid=>1	prot=>3	pfn=>269
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[58]: valid=>1	prot=>3	pfn=>270
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[59]: valid=>1	prot=>3	pfn=>271
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[60]: valid=>1	prot=>3	pfn=>272
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[61]: valid=>1	prot=>3	pfn=>273
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[62]: valid=>1	prot=>3	pfn=>274
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[63]: valid=>1	prot=>3	pfn=>275
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[64]: valid=>1	prot=>3	pfn=>276
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[65]: valid=>1	prot=>3	pfn=>277
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[66]: valid=>1	prot=>3	pfn=>278
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[67]: valid=>1	prot=>3	pfn=>279
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[68]: valid=>1	prot=>3	pfn=>280
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[69]: valid=>1	prot=>3	pfn=>281
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[70]: valid=>1	prot=>3	pfn=>282
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[71]: valid=>1	prot=>3	pfn=>283
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[72]: valid=>1	prot=>3	pfn=>284
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[73]: valid=>1	prot=>3	pfn=>285
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[74]: valid=>1	prot=>3	pfn=>286
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[75]: valid=>1	prot=>3	pfn=>287
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[76]: valid=>1	prot=>3	pfn=>288
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[77]: valid=>1	prot=>3	pfn=>289
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[78]: valid=>1	prot=>3	pfn=>290
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[79]: valid=>1	prot=>3	pfn=>291
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[80]: valid=>1	prot=>3	pfn=>292
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[81]: valid=>1	prot=>3	pfn=>293
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[82]: valid=>1	prot=>3	pfn=>294
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[83]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[84]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[85]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[86]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[87]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[88]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[89]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[90]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[91]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[92]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[93]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[94]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[95]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[96]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[97]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[98]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[99]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[100]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[101]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[102]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[103]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[104]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[105]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[106]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[107]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[108]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[109]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[110]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[111]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[112]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[113]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[114]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[115]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[116]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[117]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[118]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[119]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[120]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[121]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[122]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[123]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[124]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[125]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[126]: valid=>1	prot=>3	pfn=>219
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[127]: valid=>1	prot=>3	pfn=>181
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:254)[print_page_table] <<<<<<<<<<<<<<<PRINT TABLE DONE
+Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/sys.c:112)[Y_Brk] New addr 0x248000  trepass the red zone below stack 0x1fff68!
+User Prog  HEAP's brk failed #1
+User Prog  HEAP Warning: grow heap failed
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 80 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 65 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x82000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 65 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 42 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x54000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 42 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 77 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x9a000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 77 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 81 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0xa2000)
+User Prog  HEAP not enough space, so going to try to grow
+User Prog  grow_heap(0xa2000)
+User Prog  rounding up to 0x24a000
+User Prog  brk_unlocked(24a000)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_BRK, with PID 1 at pc 0x10057d
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:249)[print_page_table] PRINT USER PAGE TABLE>>>>>>>>>>>>
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[0]: valid=>1	prot=>5	pfn=>177
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[1]: valid=>1	prot=>5	pfn=>178
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[2]: valid=>1	prot=>3	pfn=>179
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[3]: valid=>1	prot=>3	pfn=>180
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[4]: valid=>1	prot=>3	pfn=>215
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[5]: valid=>1	prot=>3	pfn=>216
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[6]: valid=>1	prot=>3	pfn=>217
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[7]: valid=>1	prot=>3	pfn=>218
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[8]: valid=>1	prot=>3	pfn=>220
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[9]: valid=>1	prot=>3	pfn=>221
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[10]: valid=>1	prot=>3	pfn=>222
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[11]: valid=>1	prot=>3	pfn=>223
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[12]: valid=>1	prot=>3	pfn=>224
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[13]: valid=>1	prot=>3	pfn=>225
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[14]: valid=>1	prot=>3	pfn=>226
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[15]: valid=>1	prot=>3	pfn=>227
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[16]: valid=>1	prot=>3	pfn=>228
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[17]: valid=>1	prot=>3	pfn=>229
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[18]: valid=>1	prot=>3	pfn=>230
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[19]: valid=>1	prot=>3	pfn=>231
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[20]: valid=>1	prot=>3	pfn=>232
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[21]: valid=>1	prot=>3	pfn=>233
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[22]: valid=>1	prot=>3	pfn=>234
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[23]: valid=>1	prot=>3	pfn=>235
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[24]: valid=>1	prot=>3	pfn=>236
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[25]: valid=>1	prot=>3	pfn=>237
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[26]: valid=>1	prot=>3	pfn=>238
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[27]: valid=>1	prot=>3	pfn=>239
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[28]: valid=>1	prot=>3	pfn=>240
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[29]: valid=>1	prot=>3	pfn=>241
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[30]: valid=>1	prot=>3	pfn=>242
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[31]: valid=>1	prot=>3	pfn=>243
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[32]: valid=>1	prot=>3	pfn=>244
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[33]: valid=>1	prot=>3	pfn=>245
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[34]: valid=>1	prot=>3	pfn=>246
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[35]: valid=>1	prot=>3	pfn=>247
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[36]: valid=>1	prot=>3	pfn=>248
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[37]: valid=>1	prot=>3	pfn=>249
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[38]: valid=>1	prot=>3	pfn=>250
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[39]: valid=>1	prot=>3	pfn=>251
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[40]: valid=>1	prot=>3	pfn=>252
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[41]: valid=>1	prot=>3	pfn=>253
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[42]: valid=>1	prot=>3	pfn=>254
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[43]: valid=>1	prot=>3	pfn=>255
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[44]: valid=>1	prot=>3	pfn=>256
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[45]: valid=>1	prot=>3	pfn=>257
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[46]: valid=>1	prot=>3	pfn=>258
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[47]: valid=>1	prot=>3	pfn=>259
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[48]: valid=>1	prot=>3	pfn=>260
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[49]: valid=>1	prot=>3	pfn=>261
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[50]: valid=>1	prot=>3	pfn=>262
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[51]: valid=>1	prot=>3	pfn=>263
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[52]: valid=>1	prot=>3	pfn=>264
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[53]: valid=>1	prot=>3	pfn=>265
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[54]: valid=>1	prot=>3	pfn=>266
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[55]: valid=>1	prot=>3	pfn=>267
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[56]: valid=>1	prot=>3	pfn=>268
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[57]: valid=>1	prot=>3	pfn=>269
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[58]: valid=>1	prot=>3	pfn=>270
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[59]: valid=>1	prot=>3	pfn=>271
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[60]: valid=>1	prot=>3	pfn=>272
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[61]: valid=>1	prot=>3	pfn=>273
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[62]: valid=>1	prot=>3	pfn=>274
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[63]: valid=>1	prot=>3	pfn=>275
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[64]: valid=>1	prot=>3	pfn=>276
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[65]: valid=>1	prot=>3	pfn=>277
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[66]: valid=>1	prot=>3	pfn=>278
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[67]: valid=>1	prot=>3	pfn=>279
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[68]: valid=>1	prot=>3	pfn=>280
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[69]: valid=>1	prot=>3	pfn=>281
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[70]: valid=>1	prot=>3	pfn=>282
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[71]: valid=>1	prot=>3	pfn=>283
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[72]: valid=>1	prot=>3	pfn=>284
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[73]: valid=>1	prot=>3	pfn=>285
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[74]: valid=>1	prot=>3	pfn=>286
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[75]: valid=>1	prot=>3	pfn=>287
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[76]: valid=>1	prot=>3	pfn=>288
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[77]: valid=>1	prot=>3	pfn=>289
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[78]: valid=>1	prot=>3	pfn=>290
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[79]: valid=>1	prot=>3	pfn=>291
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[80]: valid=>1	prot=>3	pfn=>292
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[81]: valid=>1	prot=>3	pfn=>293
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[82]: valid=>1	prot=>3	pfn=>294
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[83]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[84]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[85]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[86]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[87]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[88]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[89]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[90]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[91]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[92]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[93]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[94]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[95]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[96]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[97]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[98]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[99]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[100]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[101]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[102]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[103]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[104]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[105]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[106]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[107]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[108]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[109]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[110]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[111]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[112]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[113]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[114]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[115]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[116]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[117]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[118]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[119]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[120]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[121]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[122]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[123]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[124]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[125]: valid=>0	prot=>0	pfn=>0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[126]: valid=>1	prot=>3	pfn=>219
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:252)[print_page_table] pte[127]: valid=>1	prot=>3	pfn=>181
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/memory.c:254)[print_page_table] <<<<<<<<<<<<<<<PRINT TABLE DONE
+Yalnix     [ERROR] (/net/grad/gjj/yalnix/yalnix/src/sys.c:112)[Y_Brk] New addr 0x24a000  trepass the red zone below stack 0x1fff68!
+User Prog  HEAP's brk failed #1
+User Prog  HEAP Warning: grow heap failed
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 81 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 33 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x42000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 33 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 75 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x96000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to free 75 pages
+User Prog  HEAP my_free(0x1069f0)
+User Prog  HEAP found the block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+User Prog  [USER] >> PID(1) about to malloc 60 pages
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(0) to PID(1)
+User Prog  HEAP my_malloc(0x78000)
+User Prog  HEAP found a block
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_GETPID, with PID 1 at pc 0x100564
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/traps.c:66)[trap_kernel_handler] Sys call: YALNIX_TTY_WRITE, with PID 1 at pc 0x1005d0
+Yalnix     [INFO] (/net/grad/gjj/yalnix/yalnix/src/proc.c:602)[kernel_context_switch] Magic kernel switch done from PID(1) to PID(0)

@@ -144,7 +144,7 @@ void trap_kernel_handler(UserContext *user_context){
             user_context->regs[0] = Y_CvarWait(user_context->regs[0], user_context->regs[1], user_context);
             break;
         case YALNIX_SEM_INIT:
-            user_context->regs[0] = Y_SemInit(user_context->regs[0]);
+            user_context->regs[0] = Y_SemInit((int*)user_context->regs[0], user_context->regs[1]);
             break;
         case YALNIX_SEM_DOWN:
             user_context->regs[0] = Y_SemDown(user_context->regs[0], user_context);

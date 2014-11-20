@@ -3,9 +3,9 @@
 hashmap_t *idp = NULL;
 dlist_t *id_list = NULL;
 
-dlist_t *id_generator_init(int size) {
-    if(size <= 0) {
-        log_err("Size is not positive!!");
+dlist_t *id_generator_init(int s, int e) {
+    if(s <= 0 || e <= s) {
+        log_err("Range is not valid!!");
         return NULL;
     } 
 
@@ -17,7 +17,7 @@ dlist_t *id_generator_init(int size) {
     
     int i;
     int* d;
-    for(i = 0; i < size; i++) {
+    for(i = s; i < e; i++) {
         id_generator_push(id_list, i);
     }
 
@@ -48,7 +48,7 @@ int id_generator_push(dlist_t *id_list, int id) {
 
 int init_util() {
     log_info("Init id list");
-    id_list = id_generator_init(MAX_RESROUCE);
+    id_list = id_generator_init(MIN_RESOURCE, MAX_RESOURCE);
     if(id_list == NULL) {
         log_err("Cannot init id list!!!");
         return ERROR;
@@ -73,6 +73,7 @@ int util_add(int id, void *data, enum util_type type) {
     }
     util->type = type;
     util->data = data;
+    util->id = id;
     log_info("Util add id=>data %d=>%p", id, data);
     rc = hashmap_put(idp, id, util);
     if(rc) {
@@ -91,6 +92,7 @@ int util_put(int id, void *data) {
     }
     util->type = NA;
     util->data = data;
+    util->id = id;
     rc = hashmap_put(idp, id, util);
     if(rc) {
         log_err("Hash map put err, key %d", id);
@@ -127,3 +129,7 @@ int util_reclaim_id(int id) {
     id_generator_push(id_list, id);
 }
 
+int util_reclaim(int id) {
+    //deprecated
+    return 0;
+}

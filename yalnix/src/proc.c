@@ -49,7 +49,7 @@ void DoDoIdle(void) {
  */
 int get_next_pid(){
     if(pid_list == NULL) { 
-        pid_list = id_generator_init(MAX_PROCS);
+        pid_list = id_generator_init(MIN_PROCS, MAX_PROCS);
     }
     return id_generator_pop(pid_list);
 }
@@ -265,7 +265,30 @@ pcb_t *init_user_proc(pcb_t* parent) {
     proc->parent = (struct y_PBC*)parent;
     proc->children = dlist_init();
     proc->zombie = dlist_init();
+    proc->utils = dlist_init();
+    if(proc->utils == NULL
+        || proc->children == NULL
+        || proc->zombie == NULL) {
+        log_err("Initiate linked list fails!!");
+        dlist_destroy(proc->children);
+        dlist_destroy(proc->zombie);
+        dlist_destroy(proc->utils);
+        free(proc->page_table);
+        free(proc);
+        return NULL;
+    }
+
     proc->pid = get_next_pid();
+    if(proc->pid == -1) {
+        log_err("Cannot get new pid, may be too many processes");
+        dlist_destroy(proc->children);
+        dlist_destroy(proc->zombie);
+        dlist_destroy(proc->utils);
+        free(proc->page_table);
+        free(proc);
+        return NULL;
+    }
+
     if(parent) {
         dlist_add_tail(parent->children, proc);
     }
@@ -479,6 +502,23 @@ int user_stack_resize(pcb_t *proc, uint32 new_addr) {
     }
     log_info("Resize PID(%d) stack low from %p to %p", proc->pid, proc->mm.stack_low, new_addr);
     proc->mm.stack_low = new_addr;
+    return 0;
+}
+
+/* Add util to utils
+ */
+int proc_add_util(pcb_t *proc, int id) {
+    if(proc == NULL) {
+        log_err("No such NULL proc!");
+        return -1;
+    }
+    int *a = (int*)malloc(sizeof(int));
+    *a = id;
+    dnode_t *n = dlist_add_tail(proc->utils, a);
+    if(!n) {
+        log_err("Cannot add util!");
+        return -1;
+    }
     return 0;
 }
 

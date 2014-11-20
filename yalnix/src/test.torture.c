@@ -12,7 +12,6 @@
 // Waits for a cvar signal, prints a message
 void Bouncer(int cvar, int mutex)
 {
-    return;
     TtyPrintf(1, "Bouncer here\n");
     while (1)
     {
@@ -31,7 +30,6 @@ void Bouncer(int cvar, int mutex)
 // Keeps breaking in
 void ThatAnnoyingGuy(void)
 {
-    return;
     while (1)
     {
 	TtyPrintf(1, "Hey!  Hey!  You remember that time when...\n");
@@ -71,9 +69,9 @@ void MallocMan(void)
         npg = (rand() + 12) % 21;
         ptr = malloc(PAGESIZE*npg);
         if(ptr == NULL) {
-            user_log("PID(%d) Malloc fail this time!!!", pid);
-            TtyPrintf(2, "%d: malloc %d pages fail!!!!!!!!!!, BYE!!!!!!!!!!!!!!\n", pid, npg);
-            Exit(1);
+            //user_log("PID(%d) Malloc fail this time!!!", pid);
+            //TtyPrintf(2, "%d: malloc %d pages fail!!!!!!!!!!, BYE!!!!!!!!!!!!!!\n", pid, npg);
+            //Exit(1);
         } else {
             TtyPrintf(2, "%d: mallocs %d pages\n", pid, npg);
             user_log("PID(%d) Malloc DONE", pid);
@@ -89,7 +87,6 @@ void MallocMan(void)
 
 void SonarGuy(int cvar, int mutex)
 {
-    return;
     TtyPrintf(0, "SonarGuy here (my job is to signal Bouncer)\n");
     while (1)
     {
@@ -108,7 +105,6 @@ void SonarGuy(int cvar, int mutex)
 
 void GarbageMan(void)
 {
-    return;
     int i, j, sentLen, wordLen;
     char punc[] = ".!?;:";
     char ch;
