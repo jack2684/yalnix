@@ -201,7 +201,7 @@ void trap_memory_handler(UserContext *user_context){
             log_info("User addr %p map err", offending_addr);
             rc = user_stack_resize(running_proc, offending_addr);
             if(rc) {
-                log_err("Cannot resize proc user stack");
+                log_err("Cannot resize PID(%d) user stack", running_proc);
                 Y_Exit(rc, user_context);
             }
             break;
@@ -213,6 +213,8 @@ void trap_memory_handler(UserContext *user_context){
             }
             break;
         default:
+            log_err("Yalnix seg fault at %p", offending_addr);
+            Y_Exit(1, user_context);
             break;
     }
 }

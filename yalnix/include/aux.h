@@ -8,7 +8,7 @@
 #include "inthashmap.h"
 #include "dlist.h"
 
-#define MAX_RESOURCE 1024
+#define MAX_RESOURCE 512
 #define MIN_RESOURCE 10
 
 enum util_type {

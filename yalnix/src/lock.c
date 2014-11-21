@@ -111,6 +111,11 @@ int cvar_init(int *id) {
         return -1;
     }
     cvar->id = util_new_id();
+    if(cvar->id < 0) {
+        log_err("util id pool is empty");
+        free(cvar);
+        return -1;
+    }
     *id = cvar->id;
     cvar->waits = dlist_init();
     if(cvar->waits == NULL) {

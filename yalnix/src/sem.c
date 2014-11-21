@@ -6,14 +6,15 @@ int sem_init(int *sem_idp, int value)
 	
 	if(sem == NULL)
 	{
-		log_err("Malloc sem failed.\n");
+		log_err("Malloc sem failed.");
 		return -1;
 	}
 
 	sem -> id = util_new_id();
 	if(sem -> id < 0)
 	{
-		log_err("Cannot get sem id.\n");
+		log_err("Cannot get sem id.");
+        free(sem);
 		return -1;
 	}
 

@@ -8,7 +8,7 @@
 #include "aux.h"
 #include "memory.h"
 
-#define MAX_PROCS 32
+#define MAX_PROCS 128
 #define MIN_PROCS 10
 
 enum proc_stat {

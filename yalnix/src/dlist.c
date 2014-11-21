@@ -139,19 +139,19 @@ void* dlist_rm_idx(dlist_t *list, int idx) {
         list->size = 0;
         return data;
     } else if (idx == 0) {               // Remove the head
-        log_info("list->head %p", list->head);
+        //log_info("list->head %p", list->head);
         rm_node = list->head;
         data = rm_node->data;
-        log_info("rm_node->next %p", rm_node->next);
+        //log_info("rm_node->next %p", rm_node->next);
         if(rm_node->next > (dnode_t*)VMEM_1_LIMIT) {
             log_err("Weird locationi %p", rm_node->next);
             return NULL;
         }
         list->head = rm_node->next;
         list->head->prev = NULL;
-        log_info("Before free");
+        //log_info("Before free");
         free(rm_node);
-        log_info("DONE free");
+        //log_info("DONE free");
         list->size--;
         return data;
     } else if (idx == list->size - 1) { // Remove the tail

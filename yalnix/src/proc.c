@@ -140,9 +140,9 @@ int free_proc(pcb_t *proc) {
     int pid = proc->pid;
     free(proc); 
     proc = NULL;
-    log_info("PID(%d) is about to be  freed, id list size %d", pid, pid_list->size);
+    //log_info("PID(%d) is about to be  freed, id list size %d", pid, pid_list->size);
     id_generator_push(pid_list, pid);
-    log_info("PID(%d) is freed, id list size %d", pid, pid_list->size);
+    //log_info("PID(%d) is freed, id list size %d", pid, pid_list->size);
     return 0;
 }
 
