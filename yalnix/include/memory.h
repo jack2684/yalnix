@@ -27,6 +27,7 @@ extern pte_t *user_page_table;
 extern int     *frame_array;
 extern int      TOTALPAGES;
 extern int      frame_remains;
+extern int      last_frame_idx;
 
 // Memory management of virtual memory
 typedef struct y_vm {

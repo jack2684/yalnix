@@ -133,6 +133,7 @@ void KernelStart _PARAMS((char* cmd_args[],  unsigned int pmem_size, UserContext
     TOTALPAGES = GET_PAGE_NUMBER(pmem_size);
     log_info("Total pages: %d", TOTALPAGES);
     frame_remains = 0;
+    last_frame_idx = 0;
     frame_array = (int*) malloc(sizeof(int) * TOTALPAGES);
     log_info("Return from frame array");
     if(frame_array == 0) {

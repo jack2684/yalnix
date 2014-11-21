@@ -10,8 +10,10 @@ vm_t    kernel_memory;                      // Kernel virtual memories
 vm_t    user_memory;                        // User virtual memories
 int TOTALPAGES;
 int frame_remains;
+int last_frame_idx = 0;
 
 /* Init a frame strcut with frame number
+ * DEPRECATED!!!!!!
  */
 frame_t *init_frame(uint32 idx) {
     frame_t *f = (uint32*) malloc(sizeof(frame_t));
@@ -40,7 +42,7 @@ int add_tail_available_frame(uint32 pfn) {
     }
     frame_remains++;
     frame_array[pfn] = 1;
-    //log_info("DONE %s, add pfn %d", __func__, pfn);
+    last_frame_idx = pfn;
     return 0;
     //int rc;
     //frame_t *frame = init_frame(pfn);
@@ -140,7 +142,6 @@ int share_frame(pte_t *dest_table, pte_t *src_table, int start_idx, int end_idx)
         log_err("alloc_frame_and_copy fail");
     }
     return rc;
-
 }
 
 /* Remove the first available frame in the frame list
@@ -152,10 +153,12 @@ int rm_head_available_frame() {
     }
     int i;
     for(i = 1; i < TOTALPAGES; i++) {
-        if(frame_array[i] == 1) {
-            frame_array[i] = 0;
+        int idx = (last_frame_idx + i) % TOTALPAGES;
+        if(frame_array[idx] == 1) {
+            frame_array[idx] = 0;
             frame_remains--;
-            return i;
+            last_frame_idx = (idx + 1 ) % TOTALPAGES;
+            return idx;
         }
     }
     return 0;
