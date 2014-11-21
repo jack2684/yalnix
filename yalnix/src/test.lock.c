@@ -13,7 +13,7 @@ void main(int argc, char **argv)
 	int pid, lock_id, i, rc;
     
     user_log("test.lock program has PID(%d)", GetPid());
-    lock_id = LockInit();
+    LockInit(&lock_id);
 
     TtyPrintf(TTY_ID, "%d: Successfully created lock with lock id %d\n", GetPid(), lock_id);
     i = 3;

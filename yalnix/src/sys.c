@@ -106,7 +106,7 @@ int release_utils(dlist_t *utils) {
     log_info("Going to release %d utils", utils->size);
     while(utils->size) {
         int id = *((int*)dlist_rm_head(utils));
-        if(!id) {
+        if(id <= 0) {
             log_err("Do not get a meaningful util");
             continue;
         }
@@ -328,7 +328,8 @@ int Y_PipeRead(int pipe_id, void *buf, int len, UserContext *user_context) {
     pipe_t *pipe = (pipe_t*)util_get(pipe_id);
     log_info("Got pipe pointer %p", pipe);
     if(pipe == NULL) {
-        log_err("Cannot get pipe %d from hashmap", pipe->id);
+        log_err("Cannot get pipe %d from hashmap", pipe_id);
+        return ERROR;
     }
 
     return pipe_read(pipe, buf, len, user_context);
@@ -343,7 +344,8 @@ int Y_PipeWrite(int pipe_id, void *buf, int len, UserContext *user_context) {
     
     pipe_t *pipe = (pipe_t*)util_get(pipe_id);
     if(pipe == NULL) {
-        log_err("Cannot get pipe %d from hashmap", pipe->id);
+        log_err("Cannot get pipe %d from hashmap", pipe_id);
+        return ERROR;
     }
     
     return pipe_write(pipe, buf, len, user_context);
@@ -496,7 +498,8 @@ int Y_GetPipeSize(int pipe_id) {
     
     pipe_t *pipe = (pipe_t*)util_get(pipe_id);
     if(pipe == NULL) {
-        log_err("Cannot get pipe %d from hashmap", pipe->id);
+        log_err("Cannot get pipe %d from hashmap", pipe_id);
+        return ERROR;
     }
 
     return get_buff_size(pipe);

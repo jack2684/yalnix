@@ -7,10 +7,10 @@
 int do_test(int i ) {
     return 0 
         //|| i == 0
-        //|| i == 1
-        //|| i == 2
-        //|| i == 3
-        || i == 4
+        || i == 1
+        || i == 2
+        || i == 3
+        //|| i == 4
         //|| i == 5
         //|| i == 6
         ;
@@ -37,7 +37,7 @@ void main(int argc, char **argv) {
     tests[1] = "src/test.pipe";
     tests[2] = "src/test.lock";
     tests[3] = "src/test.cvar";
-    tests[3] = "src/test.bigstack";
+    tests[4] = "src/test.bigstack";
     for(i = 0; i < TEST_CNT; i++) {
         if(!do_test(i)) {
             continue;

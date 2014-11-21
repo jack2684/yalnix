@@ -40,16 +40,16 @@ void share_set() {
 
 void consume() {
     //TtyPrintf(TTY_ID, "\tPID(%d) inside %s\n", GetPid(), __func__);
-    share_get();
+    //share_get();
     resource--;
-    share_set();
+    //share_set();
 }
 
 void produce() {
     //TtyPrintf(TTY_ID, "\tPID(%d) inside %s\n", GetPid(), __func__);
-    share_get();
+    //share_get();
     resource++;
-    share_set();
+    //share_set();
 }
 
 void main(int argc, char **argv) 
@@ -57,11 +57,12 @@ void main(int argc, char **argv)
     user_log("test.cvar program has PID(%d)", GetPid());
 
     pipe_id = PipeInit();
-    share_set();
+    //share_set();
 	
-    int lockid = LockInit();	
-	int cvarid = CvarInit();
-	int pid = Fork();
+    int lockid, cvarid;
+    LockInit(&lockid);	
+	CvarInit(&cvarid);
+	int pid = Custom1();
     int cnt = 3;
     
 	if(pid == 0){
@@ -74,7 +75,7 @@ void main(int argc, char **argv)
             while(resource <= 0) {
                 TtyPrintf(TTY_ID, "PID(%d): wait\n", pid);
                 CvarWait(cvarid, lockid); 
-                share_get();
+                //share_get();
                 TtyPrintf(TTY_ID, "PID(%d): resource after wake %d\n", pid, resource);
             }
             TtyPrintf(TTY_ID, "PID(%d): consume \n", pid);

@@ -9,7 +9,7 @@
 #include "dlist.h"
 
 #define MAX_RESOURCE 512
-#define MIN_RESOURCE 10
+#define MIN_RESOURCE 1
 
 enum util_type {
     LOCK,

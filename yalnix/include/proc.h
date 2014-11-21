@@ -9,7 +9,7 @@
 #include "memory.h"
 
 #define MAX_PROCS 128
-#define MIN_PROCS 10
+#define MIN_PROCS 1
 
 enum proc_stat {
     RUN,

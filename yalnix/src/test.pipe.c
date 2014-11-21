@@ -6,7 +6,8 @@
 
 void main(int argc, char **argv) {
     user_log("test.pipe program has PID(%d)", GetPid());
-    int pipe_id = PipeInit();
+    int pipe_id; 
+    PipeInit(&pipe_id);
     char buf[100];
 
     TtyPrintf(TTY_ID, "Pipe init done, with pipe id: %d\n", pipe_id);
