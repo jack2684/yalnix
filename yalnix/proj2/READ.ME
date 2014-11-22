@@ -1,0 +1,17 @@
+brdige usage: ./bridge <#maxCar on the bridge> <car prob to Hanover (0~100)> <car prob to Norwich (0~100)> <starving threshold>
+
+Test cases that you might be interested:
+    './bridge 6 0 10 12':    In this case the bridge have ocassional traffic from one    side.
+    './bridge 6 0 50 12':    In this case the bridge have constant   traffic from one    side. 
+    './bridge 6 5 5 12':     In this case the bridge have ocassional traffic from both   side.
+    './bridge 6 20 20 12':   In this case the bridge have constant   traffic from both   side. 
+    './bridge 6 30 2 12':    In this case the bridge have constant   traffic from one    side, occasional traffic from the other. 
+
+Race conditions:
+1. Car A check the bridge low and find it safe to go. But right before it enters the bridge, some other cars jump on and maximize the load. When car A enter the bridge, it will crash.
+2. Car B check the flow and find ti safe to go. But right before it enters the bridge, the traffic changes it direction. When car B enters, there will be a collision.
+
+Starvation design:
+So I count the cars go in the same direction. If the count exceeds the threashold and there is more than one car waiting on the other side, then  I will forbid the flow on that direction, and reset the count to 0. I recommend that the starving threashold can be something larger than the max load of the bridge (may be 2 times or 3 times).
+
+*Noted that if no cars coming, the program doesn't print anything.

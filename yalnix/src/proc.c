@@ -66,6 +66,8 @@ void tell_children(pcb_t *proc) {
             free_proc(child);
         } else if (child->child_thread) {   // Thread process should also die if I die
             tell_children(child);
+            if(child->state = READY)
+                dlist_rm_this(ready_queue, child->list_node);
             release_utils(child->utils);
             clear_proc(child);
             free_proc(child);
@@ -634,7 +636,7 @@ void context_switch_to(pcb_t *next_proc, UserContext *user_context) {
     rc = KernelContextSwitch(&kernel_context_switch, running_proc, next_proc);
     if(rc) {
         log_err("Failed to execute magic function!");
-        Halt();
+        //Halt();
     }
 }
 
@@ -647,7 +649,7 @@ void init_process_kernel(pcb_t *proc) {
     rc = KernelContextSwitch(&init_newbie_kernel, proc, proc);
     if(rc) {
         log_err("Failed to execute magic function!");
-        Halt();
+        //Halt();
     }
     //log_info("Init PID(%d) kernel stack done", proc->pid);
 }
@@ -660,7 +662,7 @@ KernelContext *init_newbie_kernel(KernelContext *kernel_context, void *_prev_pcb
    
     if(next_proc->kernel_stack_pages == NULL) {
         log_err("Init kernel stack fail, pcb->kernel_stack_pages not malloc yet");
-        Halt();
+        //Halt();
     }
 
     next_proc->kernel_context = *kernel_context;
