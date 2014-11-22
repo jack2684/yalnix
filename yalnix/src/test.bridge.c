@@ -340,13 +340,14 @@ int main(int argc, char *argv[]) {
                 }  
             }
         }
-        if(!pid && (rand() % 100) < n2h ) {
+        int r = rand() % 2;
+        if(r && !pid && (rand() % 100) < n2h ) {
             cars[i % INPUT_LEN].loc = NORWICH;
             cars[i % INPUT_LEN].id = i;
             cars[i % INPUT_LEN].dir = TOHANOVER;
             oneVehicle(cars + (i % INPUT_LEN));
         }
-        if(!pid && (rand() % 100) < h2n ) {
+        if(!r && !pid && (rand() % 100) < h2n ) {
             cars[i % INPUT_LEN].loc = HANOVER;
             cars[i % INPUT_LEN].id = i;
             cars[i % INPUT_LEN].dir = TONORWICH;

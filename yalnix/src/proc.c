@@ -191,13 +191,14 @@ void init_idle_proc() {
     }
     bzero(idle_proc, sizeof(pcb_t));
     idle_proc->user_context.pc = DoDoIdle;
-    idle_proc->user_context.sp = ((void *)VMEM_0_SIZE) - WORD_LEN;
+    //idle_proc->user_context.sp = (void*)(VMEM_0_SIZE - WORD_LEN);
+    idle_proc->user_context.sp = (void *)kernel_memory.stack_low;
     //idle_proc->user_context.ebp = (void *)kernel_memory.stack_low;
     //idle_proc->user_context.code = YALNIX_NOP;
     //idle_proc->user_context.vector = TRAP_KERNEL;
-    idle_proc->page_table = (pte_t*) malloc(sizeof(pte_t));
+    idle_proc->page_table = (pte_t*) malloc(sizeof(pte_t) * GET_PAGE_NUMBER(VMEM_1_SIZE));
     idle_proc->kernel_stack_pages = (pte_t*) malloc(sizeof(pte_t) * KERNEL_STACK_MAXSIZE / PAGESIZE);
-    //map_page_to_frame(idle_proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE), PROT_READ);
+    map_page_to_frame(idle_proc->page_table, 0, GET_PAGE_NUMBER(VMEM_1_SIZE), PROT_READ);
     idle_proc->pid = get_next_pid();
     idle_proc->state = READY;
     idle_proc->init_done = 0;
